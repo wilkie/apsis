@@ -30,6 +30,7 @@ bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int hei
 	
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 	return true;
 }
 

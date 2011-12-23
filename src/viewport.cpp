@@ -22,42 +22,15 @@ unsigned int IsoTasty::Viewport::height() {
 
 void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 	renderer->setProjection(_width, _height, _rotation, _x, _z, _zoom);
+	int start_x = (int)-(map->height()/2.0f);
+	int end_x = (int)(map->height()/2.0f);
+	int start_z = (int)-(map->width()/2.0f);
+	int end_z = (int)(map->width()/2.0f);
 
-	float h = 0.5f;
-	if (_rotation >= 0.0f && _rotation <= 90.0f) {
-		for (int z = (int)-(map->width()/2.0f); z <= (int)(map->width()/2.0f); z++) {
-			for (int x = (int)(map->height()/2.0f); x >= (int)-(map->height()/2.0f); x--) {
-				renderer->drawCube((float)x,h/2.0f,(float)z,1.0f,h,1.0f);
-				//drawCubeTop((float)x,h/2.0f,(float)z,1.0f,h,1.0f);
-			}
-			//h+=0.5;
-		}
-	}
-	else if (_rotation >= 90.0f && _rotation <= 180.0f) {
-		for (int z = (int)(map->width()/2.0); z >= (int)-(map->width()/2.0); z--) {
-			for (int x = (int)(map->height()/2.0); x >= (int)-(map->height()/2.0); x--) {
-				renderer->drawCube((float)x,h/2.0f,(float)z,1.0f,h,1.0f);
-				//drawCubeTop((float)x,h/2.0,(float)z,1.0f,h,1.0f);
-			}
-			//h+=0.5;
-		}
-	}
-	else if (_rotation >= 180.0f && _rotation <= 270.0f) {
-		for (int z = (int)(map->width()/2.0); z >= (int)-(map->width()/2.0); z--) {
-			for (int x = (int)-(map->height()/2.0); x <= (int)(map->height()/2.0); x++) {
-				renderer->drawCube((float)x,h/2.0f,(float)z,1.0f,h,1.0f);
-				//drawCubeTop((float)x,h/2.0,(float)z,1.0f,h,1.0f);
-			}
-			//h+=0.5;
-		}
-	}
-	else {
-		for (int z = (int)-(map->width()/2.0); z <= (int)(map->width()/2.0); z++) {
-			for (int x = (int)-(map->height()/2.0); x <= (int)(map->height()/2.0); x++) {
-				renderer->drawCube((float)x,h/2.0f,(float)z,1.0f,h,1.0f);
-				//drawCubeTop((float)x,h/2.0,(float)z,1.0f,h,1.0f);
-			}
-			//h+=0.5;
+	for (int z = start_z; z <= end_z; z++) {
+		for (int x = end_x; x >= start_x; x--) {
+			renderer->drawCube((float)x, 0.25f,(float)z,1.0f, 0.5,1.0f);
+			renderer->drawSquare((float)x, 0.5f, (float)z, 1.0f, 1.0f);
 		}
 	}
 }
