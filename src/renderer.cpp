@@ -96,24 +96,24 @@ void IsoTasty::Renderer::drawCube(float x, float y, float z, float width, float 
 	float half_depth = depth / 2.0f;
 
 	// enable and specify pointers to vertex arrays
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glNormalPointer(GL_FLOAT, 0, normals);
-    glColorPointer(3, GL_FLOAT, 0, colors);
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, normals);
+	glColorPointer(3, GL_FLOAT, 0, colors);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-    glPushMatrix();
+	glPushMatrix();
 	glTranslatef(x, y, z);
 	glScalef(half_width, half_height, half_depth);
 
-    glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, indices);
+	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, indices);
 
-    glPopMatrix();
+	glPopMatrix();
 
-    glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 void IsoTasty::Renderer::drawSquare(float x, float y, float z, float width, float depth) {
@@ -132,7 +132,7 @@ void IsoTasty::Renderer::drawSquare(float x, float y, float z, float width, floa
 	glVertex3f(-1.0f, 0.0f,-1.0f);
 	glVertex3f(-1.0f, 0.0f, 1.0f);
 	glVertex3f( 1.0f, 0.0f, 1.0f);
-    glEnd();
+	glEnd();
 	
 	glPopMatrix();
 }
