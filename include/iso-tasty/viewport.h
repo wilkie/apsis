@@ -7,23 +7,31 @@
 namespace IsoTasty {
 	class Viewport {
 	public:
+		// Create a viewport of the world given a size
 		Viewport(unsigned int width, unsigned int height);
+
+		// Query the size of the viewport
 		unsigned int width();
 		unsigned int height();
 
+		// Manipulate the viewport focus
 		void move(double deltaX, double deltaZ);
 		void rotate(double delta);
 
+		// Draws the world as seen by this viewport
 		void draw(Renderer* renderer, Map* map);
 
 	private:
+		// The rotation of the world
 		double _rotation;
+
+		// The vector from the center of the world to the center of the viewport
 		double _x;
 		double _z;
 
+		// The size of the viewport
 		unsigned int _width;
 		unsigned int _height;
-		double _aspect;
 	};
 }
 
