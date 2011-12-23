@@ -17,6 +17,7 @@ namespace IsoTasty {
 		// Manipulate the viewport focus
 		void move(double deltaX, double deltaZ);
 		void rotate(double delta);
+		void zoom(double factor);
 
 		// Draws the world as seen by this viewport
 		void draw(Renderer* renderer, Map* map);
@@ -28,6 +29,9 @@ namespace IsoTasty {
 		// The vector from the center of the world to the center of the viewport
 		double _x;
 		double _z;
+
+		// The amount to zoom
+		double _zoom;
 
 		// The size of the viewport
 		unsigned int _width;

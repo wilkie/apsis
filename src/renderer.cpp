@@ -33,7 +33,7 @@ bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int hei
 	return true;
 }
 
-void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, double rotation, double translationX, double translationZ) {
+void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, double rotation, double translationX, double translationZ, double zoom) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
@@ -42,7 +42,7 @@ void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, 
 	glOrtho(-aspect*width/2.0, aspect*width/2.0, -aspect*height/2.0, aspect*height/2.0, -aspect*height*4, aspect*height*4);
 	glRotated(35.264, 1.0, 0.0, 0.0);
 	glRotated(rotation, 0.0, 1.0, 0.0);
-	glScaled(32.0f, 32.0f, 32.0f);
+	glScaled(32.0f * zoom, 32.0f * zoom, 32.0f * zoom);
 	glTranslated(translationX, 0, translationZ);
 	 
 	glMatrixMode(GL_MODELVIEW);

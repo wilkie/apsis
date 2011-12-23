@@ -123,6 +123,12 @@ void IsoTasty::Engine::_fireEvent(void* data) {
 		case SDLK_PERIOD:
 			_view->rotate(-15.0);
 			break;
+		case SDLK_EQUALS:
+			_view->zoom(2);
+			break;
+		case SDLK_MINUS:
+			_view->zoom(0.5);
+			break;
 		}
 	}
 }
