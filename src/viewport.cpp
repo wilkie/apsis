@@ -22,15 +22,15 @@ unsigned int IsoTasty::Viewport::height() {
 
 void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 	renderer->setProjection(_width, _height, _rotation, _x, _z, _zoom);
-	int start_x = (int)-(map->height()/2.0f);
-	int end_x = (int)(map->height()/2.0f);
-	int start_z = (int)-(map->width()/2.0f);
-	int end_z = (int)(map->width()/2.0f);
 
-	for (int z = start_z; z <= end_z; z++) {
-		for (int x = end_x; x >= start_x; x--) {
-			renderer->drawCube((float)x, 0.25f,(float)z,1.0f, 0.5,1.0f);
-			renderer->drawSquare((float)x, 0.5f, (float)z, 1.0f, 1.0f);
+	float half_height = map->height() / 2.0f;
+	float half_width = map->width() / 2.0f;
+
+	for (unsigned int z = 0; z < map->height(); z++) {
+		for (unsigned int x = 0; x < map->width(); x++) {
+			float h = map->atIndex(x, z)->height();
+			renderer->drawCube((float)x - half_width, h/2.0f,(float)z - half_height, 1.0f, h, 1.0f);
+			renderer->drawSquare((float)x - half_width, h, (float)z - half_height, 1.0f, 1.0f);
 		}
 	}
 }

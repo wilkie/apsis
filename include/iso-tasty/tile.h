@@ -5,7 +5,10 @@ namespace IsoTasty {
 	class Tile {
 	public:
 		Tile();
+		float height();
+
 	private:
+		float _height;
 	};
 }
 
