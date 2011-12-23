@@ -62,8 +62,12 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 }
 
 void IsoTasty::Viewport::move(double deltaX, double deltaZ) {
-	_x += deltaX;
-	_z += deltaZ;
+	double radians = _rotation / 180.0 * 3.1415926;
+	double cosine = cos(radians);
+	double sine = sin(radians);
+
+	_x += deltaX*cosine - deltaZ*sine;
+	_z += deltaX*sine + deltaZ*cosine;
 }
 
 void IsoTasty::Viewport::rotate(double delta) {
