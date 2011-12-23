@@ -2,11 +2,11 @@
 
 #ifndef NO_GL
 	#ifdef _WIN32
-	#include "windows.h"
+	#include <windows.h>
 	#endif
 
-	#include "GL/gl.h"
-	#include "GL/glu.h"
+	#include <GL/gl.h>
+	#include <GL/glu.h>
 #endif
 
 #include "math.h"
