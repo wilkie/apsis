@@ -1,0 +1,9 @@
+Debug
+Release
+*.ncb
+*.aps
+*.suo
+*.vcxproj.*
+ipch
+*.sdf
+*.opensdf
