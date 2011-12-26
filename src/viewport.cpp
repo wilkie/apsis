@@ -20,6 +20,18 @@ unsigned int IsoTasty::Viewport::height() {
 	return _height;
 }
 
+float cubicBezier(float p0, float p1, float p2, float p3, float t) {
+	float co1 = t;
+	float co1_2 = t*t;
+	float co1_3 = t*t*t;
+
+	float co2 = (1-t);
+	float co2_2 = (1-t)*(1-t);
+	float co2_3 = (1-t)*(1-t)*(1-t);
+
+	return co2_3*p3 + 3*co1*co2_2*p2 + 3*co1_2*co2*p1 + co1_3*p0;
+}
+
 void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 	renderer->setProjection(_width, _height, _rotation, _x, _z, _zoom);
 
@@ -35,8 +47,48 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 			for (int i = 0; i < 4; i++) {
 				heights[i] = tile->cornerHeight(i);
 			}
-			renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights);
-			renderer->drawTileTop((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights);
+
+			float p0 = tile->cornerHeight(IsoTasty::TOP_LEFT);
+			float p1 = tile->firstControl(IsoTasty::TOP_LEFT);
+			float p2 = tile->secondControl(IsoTasty::TOP_LEFT);
+			float p3 = tile->cornerHeight(IsoTasty::TOP_RIGHT);
+
+			float first_y = cubicBezier(p0,p1,p2,p3,0.33f);
+			float second_y = cubicBezier(p0,p1,p2,p3,0.67f);
+			float firsts[4] = {5.0f, 5.0f, 5.0f, 5.0f};
+			float seconds[4] = {5.0f, 5.0f, 5.0f, 5.0f};
+			firsts[IsoTasty::TOP_LEFT] = first_y;
+			seconds[IsoTasty::TOP_LEFT] = second_y;
+
+			p0 = tile->cornerHeight(IsoTasty::BOT_LEFT);
+			p1 = tile->firstControl(IsoTasty::BOT_RIGHT);
+			p2 = tile->secondControl(IsoTasty::BOT_RIGHT);
+			p3 = tile->cornerHeight(IsoTasty::BOT_RIGHT);
+			first_y = cubicBezier(p0,p1,p2,p3,0.33f);
+			second_y = cubicBezier(p0,p1,p2,p3,0.67f);
+			firsts[IsoTasty::BOT_RIGHT] = first_y;
+			seconds[IsoTasty::BOT_RIGHT] = second_y;
+
+			p0 = tile->cornerHeight(IsoTasty::TOP_RIGHT);
+			p1 = tile->firstControl(IsoTasty::TOP_RIGHT);
+			p2 = tile->secondControl(IsoTasty::TOP_RIGHT);
+			p3 = tile->cornerHeight(IsoTasty::BOT_RIGHT);
+			first_y = cubicBezier(p0,p1,p2,p3,0.33f);
+			second_y = cubicBezier(p0,p1,p2,p3,0.67f);
+			firsts[IsoTasty::TOP_RIGHT] = first_y;
+			seconds[IsoTasty::TOP_RIGHT] = second_y;
+
+			p0 = tile->cornerHeight(IsoTasty::TOP_LEFT);
+			p1 = tile->firstControl(IsoTasty::BOT_LEFT);
+			p2 = tile->secondControl(IsoTasty::BOT_LEFT);
+			p3 = tile->cornerHeight(IsoTasty::BOT_LEFT);
+			first_y = cubicBezier(p0,p1,p2,p3,0.33f);
+			second_y = cubicBezier(p0,p1,p2,p3,0.67f);
+			firsts[IsoTasty::BOT_LEFT] = first_y;
+			seconds[IsoTasty::BOT_LEFT] = second_y;
+
+			//renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, first_y, second_y);
+			renderer->drawTileTop((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
 		}
 	}
 

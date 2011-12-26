@@ -313,7 +313,7 @@ void IsoTasty::Renderer::drawSquare(float x, float y, float z, float width, floa
 	glScalef(half_width, 1.0f, half_depth);
 
 	glColor4f(0.5f, 0.5f, 0.5f, 0.3f);
-	
+
 	// Top
 	glBegin(GL_LINE_LOOP);
 	glVertex3f( 1.0f, 0.0f,-1.0f);
@@ -325,7 +325,7 @@ void IsoTasty::Renderer::drawSquare(float x, float y, float z, float width, floa
 	glPopMatrix();
 }
 
-void IsoTasty::Renderer::drawTileTop(float x, float y, float z, float width, float height, float depth, float heights[4]) {
+void IsoTasty::Renderer::drawTileTop(float x, float y, float z, float width, float height, float depth, float heights[4], float firsts[4], float seconds[4]) {
 	glPushMatrix();
 	glTranslatef(x, y, z);
 	glScalef(width, height, depth);
@@ -335,15 +335,23 @@ void IsoTasty::Renderer::drawTileTop(float x, float y, float z, float width, flo
 	// Top
 	glBegin(GL_LINE_LOOP);
 	glVertex3f( 1.0f, heights[IsoTasty::TOP_RIGHT],-1.0f);
+	glVertex3f( 0.34f, firsts[IsoTasty::TOP_LEFT],-1.0f);
+	glVertex3f(-0.34f, seconds[IsoTasty::TOP_LEFT],-1.0f);
 	glVertex3f(-1.0f, heights[IsoTasty::TOP_LEFT],-1.0f);
+	glVertex3f(-1.0f, seconds[IsoTasty::BOT_LEFT],-0.34f);
+	glVertex3f(-1.0f, firsts[IsoTasty::BOT_LEFT], 0.34f);
 	glVertex3f(-1.0f, heights[IsoTasty::BOT_LEFT], 1.0f);
+	glVertex3f(-0.34f, seconds[IsoTasty::BOT_RIGHT], 1.0f);
+	glVertex3f( 0.34f, firsts[IsoTasty::BOT_RIGHT], 1.0f);
 	glVertex3f( 1.0f, heights[IsoTasty::BOT_RIGHT], 1.0f);
+	glVertex3f( 1.0f, firsts[IsoTasty::TOP_RIGHT], 0.34f);
+	glVertex3f( 1.0f, seconds[IsoTasty::TOP_RIGHT], -0.34f);
 	glEnd();
 	
 	glPopMatrix();
 }
 
-void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float height, float depth, float heights[4]) {
+void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float height, float depth, float heights[4], float fy, float sy) {
 	// cube ///////////////////////////////////////////////////////////////////////
 	//    v6----- v5
 	//   /|      /|
