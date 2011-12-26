@@ -106,16 +106,48 @@ void IsoTasty::Engine::_fireEvent(void* data) {
 	else if (event->type == SDL_KEYDOWN) {
 		switch(event->key.keysym.sym) {
 		case SDLK_LEFT:
-			_view->move(-0.5, 0.0);
+			if (event->key.keysym.mod && (KMOD_RSHIFT | KMOD_LSHIFT)) {
+				_view->move(-0.5, 0.0);
+			}
+			else {
+				_map->x(_map->x() - 1);
+			}
 			break;
 		case SDLK_RIGHT:
-			_view->move(0.5, 0.0);
+			if (event->key.keysym.mod && (KMOD_RSHIFT | KMOD_LSHIFT)) {
+				_view->move(0.5, 0.0);
+			}
+			else {
+				_map->x(_map->x() + 1);
+			}
 			break;
 		case SDLK_UP:
-			_view->move(0.0, -0.5);
+			if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
+				_view->move(0.0, -0.5);
+			}
+			else if (event->key.keysym.mod & (KMOD_RCTRL | KMOD_LCTRL)) {
+				_map->raise(0.50);
+			}
+			else if (event->key.keysym.mod & (KMOD_RALT | KMOD_LALT)) {
+				_map->lift(0.50);
+			}
+			else {
+				_map->z(_map->z() - 1);
+			}
 			break;
 		case SDLK_DOWN:
-			_view->move(0.0, 0.5);
+			if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
+				_view->move(0.0, 0.5);
+			}
+			else if (event->key.keysym.mod & (KMOD_RCTRL | KMOD_LCTRL)) {
+				_map->raise(-0.50);
+			}
+			else if (event->key.keysym.mod & (KMOD_RALT | KMOD_LALT)) {
+				_map->lift(-0.50);
+			}
+			else {
+				_map->z(_map->z() + 1);
+			}
 			break;
 		case SDLK_COMMA:
 			_view->rotate(15.0);

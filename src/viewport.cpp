@@ -28,11 +28,26 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 
 	for (unsigned int z = 0; z < map->height(); z++) {
 		for (unsigned int x = 0; x < map->width(); x++) {
-			float h = map->atIndex(x, z)->height();
-			renderer->drawCube((float)x - half_width, h/2.0f,(float)z - half_height, 1.0f, h, 1.0f);
-			renderer->drawSquare((float)x - half_width, h, (float)z - half_height, 1.0f, 1.0f);
+			IsoTasty::Tile* tile = map->atIndex(x, z);
+			float h = 1.0f;
+			float top = tile->hover();
+			float heights[4];
+			for (int i = 0; i < 4; i++) {
+				heights[i] = tile->cornerHeight(i);
+			}
+			renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights);
+			renderer->drawTileTop((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights);
 		}
 	}
+
+	IsoTasty::Tile* tile = map->atIndex(map->x(), map->z());
+	renderer->drawSphere(
+		(float)map->x() - half_width - 0.5f, 
+		(-tile->hover() + tile->cornerHeight(IsoTasty::TOP_LEFT))/2.0f,
+		(float)map->z() - half_height - 0.5f,
+		0.25f, 0.25f, 0.25f);
+
+	//renderer->test();
 }
 
 void IsoTasty::Viewport::move(double deltaX, double deltaZ) {
