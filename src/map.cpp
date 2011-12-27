@@ -262,5 +262,7 @@ void IsoTasty::Map::lift(float amount) {
 	tile = atIndex(_x, _z);
 	for (unsigned int i = 0; i < 4; i++) {
 		tile->cornerHeight(i, tile->cornerHeight(i) + amount);
+		tile->firstControl(i, tile->firstControl(i) + amount);
+		tile->secondControl(i, tile->secondControl(i) + amount);
 	}
 }

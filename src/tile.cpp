@@ -68,8 +68,6 @@ float IsoTasty::Tile::cornerHeight(unsigned int index) {
 float IsoTasty::Tile::cornerHeight(unsigned int index, float value) {
 	if (index < 4) {
 		_cornerHeight[index] = value;
-		//_firstControl[index] = value;
-		//_secondControl[index] = value;
 		return value;
 	}
 	return 0.0f;
