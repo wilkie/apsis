@@ -4,6 +4,9 @@
 #include <string.h>
 #include <math.h>
 
+#include <stdio.h>
+#include <Windows.h>
+
 // Struct for the point data. Should put somewhere.
 struct Point {
 	float x;

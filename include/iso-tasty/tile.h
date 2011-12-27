@@ -5,8 +5,8 @@ namespace IsoTasty {
 	enum Corner {
 		TOP_LEFT = 0,
 		TOP_RIGHT,
-		BOT_LEFT,
-		BOT_RIGHT
+		BOT_RIGHT,
+		BOT_LEFT
 	};
 
 	class Tile {
@@ -29,6 +29,8 @@ namespace IsoTasty {
 		// Methods
 		float minHeight();
 		float maxHeight();
+		float minHeight(unsigned int index);
+		float maxHeight(unsigned int index);
 
 	private:
 		// Tile parameters

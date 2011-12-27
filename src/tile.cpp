@@ -19,6 +19,16 @@ float IsoTasty::Tile::minHeight() {
 	return ret;
 }
 
+// Min height of the curve indicated by the index
+float IsoTasty::Tile::minHeight(unsigned int index) {
+	float start = _cornerHeight[index];
+	float end = _cornerHeight[(index+1)%4];
+	if (start < end) {
+		return start;
+	}
+	return end;
+}
+
 float IsoTasty::Tile::maxHeight() {
 	float ret = _cornerHeight[0];
 	for (unsigned int i = 1; i < 4; i++) {
@@ -27,6 +37,16 @@ float IsoTasty::Tile::maxHeight() {
 		}
 	}
 	return ret;
+}
+
+// Max height of the curve indicated by the index
+float IsoTasty::Tile::maxHeight(unsigned int index) {
+	float start = _cornerHeight[index];
+	float end = _cornerHeight[(index+1)%4];
+	if (start > end) {
+		return start;
+	}
+	return end;
 }
 
 float IsoTasty::Tile::hover() {
@@ -63,6 +83,12 @@ float IsoTasty::Tile::firstControl(unsigned int index) {
 }
 
 float IsoTasty::Tile::firstControl(unsigned int index, float value) {
+	if (value < minHeight(index)) {
+		value = minHeight(index);
+	}
+	if (value > maxHeight(index)) {
+		value = maxHeight(index);
+	}
 	if (index < 4) {
 		_firstControl[index] = value;
 		return value;
@@ -78,6 +104,12 @@ float IsoTasty::Tile::secondControl(unsigned int index) {
 }
 
 float IsoTasty::Tile::secondControl(unsigned int index, float value) {
+	if (value < minHeight(index)) {
+		value = minHeight(index);
+	}
+	if (value > maxHeight(index)) {
+		value = maxHeight(index);
+	}
 	if (index < 4) {
 		_secondControl[index] = value;
 		return value;
