@@ -106,6 +106,7 @@ void IsoTasty::Engine::_fireEvent(void* data) {
 	else if (event->type == SDL_KEYDOWN) {
 		switch(event->key.keysym.sym) {
 		case SDLK_LEFT:
+		case SDLK_h:
 			if (event->key.keysym.mod && (KMOD_RSHIFT | KMOD_LSHIFT)) {
 				_view->move(-0.5, 0.0);
 			}
@@ -114,6 +115,7 @@ void IsoTasty::Engine::_fireEvent(void* data) {
 			}
 			break;
 		case SDLK_RIGHT:
+		case SDLK_l:
 			if (event->key.keysym.mod && (KMOD_RSHIFT | KMOD_LSHIFT)) {
 				_view->move(0.5, 0.0);
 			}
@@ -122,6 +124,7 @@ void IsoTasty::Engine::_fireEvent(void* data) {
 			}
 			break;
 		case SDLK_UP:
+		case SDLK_k:
 			if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
 				_view->move(0.0, -0.5);
 			}
@@ -136,6 +139,7 @@ void IsoTasty::Engine::_fireEvent(void* data) {
 			}
 			break;
 		case SDLK_DOWN:
+		case SDLK_j:
 			if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
 				_view->move(0.0, 0.5);
 			}
