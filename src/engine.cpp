@@ -91,6 +91,8 @@ bool IsoTasty::Engine::_startSDL() {
         return false;
     }
 
+	SDL_WM_SetCaption("IsoTasty", "IsoTasty");
+
 	return true;
 #endif
 }

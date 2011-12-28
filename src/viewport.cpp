@@ -88,6 +88,7 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 			seconds[IsoTasty::BOT_LEFT] = second_y;
 
 			//renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, first_y, second_y);
+			renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
 			renderer->drawTileTop((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
 		}
 	}
