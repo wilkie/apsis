@@ -520,8 +520,8 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
 	if (top_points[8] < top_points[1]) {
 		curveMidPos2 = top_points[8];
 	}
-	float deltaA = (curveStartPtA - curveEndPtA) / 2.0f;
-	float deltaB = (curveStartPtB - curveEndPtB) / 2.0f;
+	float deltaA = (curveStartPtA - curveEndPtA) / 3.0f;
+	float deltaB = (curveStartPtB - curveEndPtB) / 3.0f;
 	float curveMidAPt1 = curveStartPtA - deltaA;
 	float curveMidAPt2 = curveEndPtA + deltaA;
 	float curveMidBPt1 = curveStartPtB - deltaB;
@@ -531,7 +531,6 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
 	top_points[14] = abs(top_points[2] - top_points[7]) * curveMidBPt1 + curveMidPos1;
 	top_points[15] = abs(top_points[1] - top_points[8]) * curveMidBPt2 + curveMidPos2;
 
-	// v0 (bottom-right)
 	for (int i = 0; i < sizeof(lookup); i++) {
 		unsigned int index = (i*3) + 1;
 		if (lookup[i] < 16) {
