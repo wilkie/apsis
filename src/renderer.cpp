@@ -468,58 +468,74 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
 		indices[i] = i;
 	}
 
+	float top_points[16];
+	
+	// v4 - v13 - v12 - v11
+	top_points[3] = heights[IsoTasty::BOT_LEFT];
+	top_points[4] = fy[IsoTasty::BOT_LEFT];
+	top_points[5] = sy[IsoTasty::BOT_LEFT];
+	top_points[6] = heights[IsoTasty::TOP_LEFT];
+
+	// Interpolate the curve (v3-v4-v5-v6) across to (v0-v11-v10-v9)
+	top_points[0] = heights[IsoTasty::BOT_RIGHT];
+	top_points[11] = fy[IsoTasty::TOP_RIGHT];
+	top_points[10] = sy[IsoTasty::TOP_RIGHT];
+	top_points[9] = heights[IsoTasty::TOP_RIGHT];
+
+	top_points[1] = fy[IsoTasty::BOT_RIGHT];
+	top_points[2] = sy[IsoTasty::BOT_RIGHT];
+	top_points[7] = sy[IsoTasty::TOP_LEFT];
+	top_points[8] = fy[IsoTasty::TOP_LEFT];
+
+	// Determine the relative height (of the point within the curve) of each inner point
+	float curveStartHeight = abs(top_points[6] - top_points[3]);
+	float curveStartPos = top_points[6];
+	if (top_points[3] < top_points[6]) {
+		curveStartPos = top_points[3];
+	}
+	float curveStartPtA = (top_points[4] - curveStartPos) / curveStartHeight;
+	float curveStartPtB = (top_points[5] - curveStartPos) / curveStartHeight;
+	if (curveStartHeight == 0) {
+		curveStartPtA = 0;
+		curveStartPtB = 0;
+	}
+	float curveEndHeight = abs(top_points[9] - top_points[0]);
+	float curveEndPos = top_points[9];
+	if (top_points[0] < top_points[9]) {
+		curveEndPos = top_points[0];
+	}
+	float curveEndPtA = (top_points[11] - curveEndPos) / curveEndHeight;
+	float curveEndPtB = (top_points[10] - curveEndPos) / curveEndHeight;
+	if (curveEndHeight == 0) {
+		curveEndPtA = 0;
+		curveEndPtB = 0;
+	}
+
+	// Linear interpolation
+	float curveMidPos1 = top_points[2];
+	if (top_points[7] < top_points[2]) {
+		curveMidPos1 = top_points[7];
+	}
+	float curveMidPos2 = top_points[1];
+	if (top_points[8] < top_points[1]) {
+		curveMidPos2 = top_points[8];
+	}
+	float deltaA = (curveStartPtA - curveEndPtA) / 2.0f;
+	float deltaB = (curveStartPtB - curveEndPtB) / 2.0f;
+	float curveMidAPt1 = curveStartPtA - deltaA;
+	float curveMidAPt2 = curveEndPtA + deltaA;
+	float curveMidBPt1 = curveStartPtB - deltaB;
+	float curveMidBPt2 = curveEndPtB + deltaB;
+	top_points[12] = abs(top_points[1] - top_points[8]) * curveMidAPt2 + curveMidPos2;
+	top_points[13] = abs(top_points[2] - top_points[7]) * curveMidAPt1 + curveMidPos1;
+	top_points[14] = abs(top_points[2] - top_points[7]) * curveMidBPt1 + curveMidPos1;
+	top_points[15] = abs(top_points[1] - top_points[8]) * curveMidBPt2 + curveMidPos2;
+
 	// v0 (bottom-right)
 	for (int i = 0; i < sizeof(lookup); i++) {
 		unsigned int index = (i*3) + 1;
-		switch (lookup[i]) {
-		case 0:
-			vertices[index] = heights[IsoTasty::BOT_RIGHT];
-			break;
-		case 1:
-			vertices[index] = fy[IsoTasty::BOT_RIGHT];
-			break;
-		case 2:
-			vertices[index] = sy[IsoTasty::BOT_RIGHT];
-			break;
-		case 3:
-			vertices[index] = heights[IsoTasty::BOT_LEFT];
-			break;
-		case 4:
-			vertices[index] = fy[IsoTasty::BOT_LEFT];
-			break;
-		case 5:
-			vertices[index] = sy[IsoTasty::BOT_LEFT];
-			break;
-		case 6:
-			vertices[index] = heights[IsoTasty::TOP_LEFT];
-			break;
-		case 7:
-			vertices[index] = sy[IsoTasty::TOP_LEFT];
-			break;
-		case 8:
-			vertices[index] = fy[IsoTasty::TOP_LEFT];
-			break;
-		case 9:
-			vertices[index] = heights[IsoTasty::TOP_RIGHT];
-			break;
-		case 10:
-			vertices[index] = sy[IsoTasty::TOP_RIGHT];
-			break;
-		case 11:
-			vertices[index] = fy[IsoTasty::TOP_RIGHT];
-			break;
-		case 12:
-			vertices[index] = (sy[IsoTasty::TOP_RIGHT] + sy[IsoTasty::BOT_RIGHT] + heights[IsoTasty::BOT_RIGHT]) / 3.0f;
-			break;
-		case 13:
-			vertices[index] = (fy[IsoTasty::BOT_LEFT] + fy[IsoTasty::BOT_RIGHT] + heights[IsoTasty::BOT_LEFT]) / 3.0f;
-			break;
-		case 14:
-			vertices[index] = (sy[IsoTasty::BOT_LEFT] + fy[IsoTasty::TOP_LEFT] + heights[IsoTasty::TOP_LEFT]) / 3.0f;
-			break;
-		case 15:
-			vertices[index] = (fy[IsoTasty::TOP_RIGHT] + sy[IsoTasty::TOP_LEFT] + heights[IsoTasty::TOP_RIGHT]) / 3.0f;
-			break;
+		if (lookup[i] < 16) {
+			vertices[index] = top_points[lookup[i]];
 		}
 	}
 
