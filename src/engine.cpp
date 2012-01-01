@@ -10,7 +10,7 @@ IsoTasty::Engine::Engine(VideoSettings* video) {
 
 	_view = new Viewport(video->resolutionX, video->resolutionY);
 	_renderer = new Renderer();
-	newMap(100, 100);
+	newMap(25, 25);
 }
 
 void IsoTasty::Engine::newMap(unsigned int width, unsigned int height) {
