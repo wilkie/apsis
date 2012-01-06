@@ -18,20 +18,23 @@ struct Point {
 static Point* firstControlPoints(Point* rhs, Point* first, unsigned int num) {
 	Point* tmp = new Point[num];
 
-	float b = 2.0f;
-	first[0].x = rhs[0].x / b;
-	first[0].y = rhs[0].y / b;
+	float bx = 2.0f;
+	float by = 2.0f;
+	first[0].x = rhs[0].x / bx;
+	first[0].y = rhs[0].y / by;
 	for (unsigned int i = 1; i < num; i++) {
-		tmp[i].x = 1.0f / b;
-		tmp[i].y = 1.0f / b;
+		tmp[i].x = 1.0f / bx;
+		tmp[i].y = 1.0f / by;
 		if (i < num - 1) {
-			b = 4.0f - tmp[i].x;
+			bx = 4.0f - tmp[i].x;
+			by = 4.0f - tmp[i].y;
 		}
 		else {
-			b = 3.5f - tmp[i].x;
+			bx = 3.5f - tmp[i].x;
+			by = 3.5f - tmp[i].y;
 		}
-		first[i].x = (rhs[i].x - first[i - 1].x) / b;
-		first[i].y = (rhs[i].y - first[i - 1].y) / b;
+		first[i].x = (rhs[i].x - first[i - 1].x) / bx;
+		first[i].y = (rhs[i].y - first[i - 1].y) / by;
 	}
 	for (unsigned int i = 1; i < num; i++) {
 		first[num - i - 1].x -= tmp[num - i].x * first[num - i].x;
@@ -54,12 +57,12 @@ static void controlPoints(Point* points, Point* first, Point* second, unsigned i
 
 	unsigned int n = num - 1;
 
-	if (num < 1) {
+	if (n < 1) {
 		return;
 	}
 	else if (n == 1) {
 		first[0].x = (2.0f * points[0].x + points[1].x) / 3.0f;
-		first[0].y = (2.0f * points[1].y + points[1].y) / 3.0f;
+		first[0].y = (2.0f * points[0].y + points[1].y) / 3.0f;
 
 		second[0].x = 2.0f * first[0].x - points[0].x;
 		second[0].y = 2.0f * first[0].y - points[0].y;
@@ -67,8 +70,8 @@ static void controlPoints(Point* points, Point* first, Point* second, unsigned i
 		return;
 	}
 
-	Point* nodes = new Point[num];
-	for (unsigned int i = 0; i < n-1; i++) {
+	Point* nodes = new Point[n];
+	for (unsigned int i = 1; i < n-1; i++) {
 		nodes[i].x = 4.0f * points[i].x + 2.0f * points[i + 1].x;
 		nodes[i].y = 4.0f * points[i].y + 2.0f * points[i + 1].y;
 	}
@@ -77,7 +80,7 @@ static void controlPoints(Point* points, Point* first, Point* second, unsigned i
 	nodes[0].y = points[0].y + 2.0f * points[1].y;
 	nodes[n - 1].y = (8.0f * points[n - 1].y + points[n].y) / 2.0f;
 
-	firstControlPoints(nodes, first, num);
+	firstControlPoints(nodes, first, n);
 
 	for (unsigned int i = 0; i < n; i++) {
 		if (i < n - 1) {
@@ -187,8 +190,8 @@ void IsoTasty::Map::raise(float amount) {
 	Point* first;
 	Point* second;
 	line = new Point[_width+1];
-	first = new Point[_width+1];
-	second = new Point[_width+1];
+	first = new Point[_width];
+	second = new Point[_width];
 
 	for (unsigned int x = 0; x < _width; x++) {
 		tile = atIndex(x, _z);
@@ -236,7 +239,7 @@ void IsoTasty::Map::raise(float amount) {
 	line[_height].z = 0.0f;
 
 	controlPoints(line, first, second, _height+1);
-	
+
 	// Pass control points back to tiles
 
 	for (unsigned int z = 0; z < _height; z++) {
