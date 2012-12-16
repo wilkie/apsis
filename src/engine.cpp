@@ -2,7 +2,35 @@
 
 #include "math.h"
 
+namespace Event {
+  enum {
+    MOVE_LEFT = 1,
+    MOVE_RIGHT,
+    MOVE_UP,
+    MOVE_DOWN,
+  };
+}
+
 IsoTasty::Engine::Engine(VideoSettings* video) {
+  _input = new InputEngine();
+
+  // Adding some events just because
+  KeyBinding binding = {IsoTasty::Key::NONE};
+  KeyBinding binding2 = {IsoTasty::Key::NONE};
+
+  binding.key = IsoTasty::Key::LEFT;
+  binding2.key = IsoTasty::Key::JOY_POV_LEFT;
+  _input->keyBindings()->registerEvent("Move left",  Event::MOVE_LEFT, &binding, &binding2);
+  binding.key = IsoTasty::Key::RIGHT;
+  binding2.key = IsoTasty::Key::JOY_POV_RIGHT;
+  _input->keyBindings()->registerEvent("Move right", Event::MOVE_RIGHT, &binding, &binding2);
+  binding.key = IsoTasty::Key::UP;
+  binding2.key = IsoTasty::Key::JOY_POV_UP;
+  _input->keyBindings()->registerEvent("Move up",    Event::MOVE_UP, &binding, &binding2);
+  binding.key = IsoTasty::Key::DOWN;
+  binding2.key = IsoTasty::Key::JOY_POV_DOWN;
+  _input->keyBindings()->registerEvent("Move down",  Event::MOVE_DOWN, &binding, &binding2);
+
   _video = *video;
   if (!_initialize()) {
     return;
@@ -23,18 +51,19 @@ void IsoTasty::Engine::_draw() {
 }
 
 void IsoTasty::Engine::run() {
-  SDL_Event event;
+  int event;
   while(true) {
-    if (!SDL_PollEvent(&event)) {
+    event = _input->pollEvent();
+    if (event == IsoTasty::InputEngine::QUIT_EVENT) {
+      break;
+    }
+    else if (event) {
+      _fireEvent(event);
+    }
+    else {
       _draw();
       SDL_GL_SwapBuffers();
       SDL_Delay(1);
-    }
-    else {
-      if(event.type == SDL_QUIT) {
-        break;
-      }
-      _fireEvent(&event);
     }
   }
 
@@ -67,29 +96,29 @@ bool IsoTasty::Engine::_startSDL() {
   }
 
   SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
+  SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
+  SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
+  SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
 
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
-    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
+  SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
 
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,    8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,     8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,    8);
+  SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      8);
+  SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,    8);
+  SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,     8);
+  SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,    8);
 
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
+  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
 
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
+  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
 
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,        1);
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,        1);
 
   SDL_Surface* surf_display;
   if((surf_display = SDL_SetVideoMode(_video.resolutionX, _video.resolutionY, 32, SDL_HWSURFACE | SDL_OPENGL)) == NULL) {
     fprintf(stderr, "Unable to initialize SDL: SDL_SetVideoMode failed\n");
-        return false;
-    }
+    return false;
+  }
 
   SDL_WM_SetCaption("IsoTasty", "IsoTasty");
 
@@ -97,8 +126,24 @@ bool IsoTasty::Engine::_startSDL() {
 #endif
 }
 
-void IsoTasty::Engine::_fireEvent(void* data) {
-  SDL_Event* event = (SDL_Event*)data;
+void IsoTasty::Engine::_fireEvent(int event) {
+  if (_input->isEventHeld(event)) {
+    switch (event) {
+      case Event::MOVE_DOWN:
+        _map->z(_map->z() + 1);
+        break;
+      case Event::MOVE_UP:
+        _map->z(_map->z() - 1);
+        break;
+      case Event::MOVE_LEFT:
+        _map->x(_map->x() - 1);
+        break;
+      case Event::MOVE_RIGHT:
+        _map->x(_map->x() + 1);
+        break;
+    }
+  }
+  /*
   if (event->type == SDL_MOUSEBUTTONDOWN) {	
     switch(event->button.button) {
     case SDL_BUTTON_LEFT:
@@ -168,5 +213,5 @@ void IsoTasty::Engine::_fireEvent(void* data) {
       _view->zoom(0.5);
       break;
     }
-  }
+  }*/
 }

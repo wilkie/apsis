@@ -1,22 +1,26 @@
-#include "iso-tasty/input_handler.h"
+#include "iso-tasty/key_binding_repository.h"
 
-IsoTasty::InputHandler::InputHandler() {
+IsoTasty::KeyBindingRepository::KeyBindingRepository() {
 }
 
-IsoTasty::InputHandler::~InputHandler() {
+IsoTasty::KeyBindingRepository::~KeyBindingRepository() {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     delete _bindings[i];
   }
 }
 
-void IsoTasty::InputHandler::registerEvent(const char* name,
-                                           int value,
-                                           IsoTasty::KeyBinding* primary,
-                                           IsoTasty::KeyBinding* secondary) {
+void IsoTasty::KeyBindingRepository::registerEvent(const char* name,
+                                                   int event,
+                                                   IsoTasty::KeyBinding* primary,
+                                                   IsoTasty::KeyBinding* secondary) {
+  if (event < 0) {
+    throw "The event identifier cannot be less than or equal to zero";
+  }
+
   Binding* binding = new Binding();
 
-  binding->name      = name;
-  binding->value     = value;
+  binding->name  = name;
+  binding->value = event;
 
   if (primary == NULL) {
     binding->primary.key = IsoTasty::Key::NONE;
@@ -35,8 +39,8 @@ void IsoTasty::InputHandler::registerEvent(const char* name,
   _bindings.push_back(binding);
 }
 
-void IsoTasty::InputHandler::rebindPrimary(const char* name,
-                                           KeyBinding* primary) {
+void IsoTasty::KeyBindingRepository::rebindPrimary(const char* name,
+                                                   KeyBinding* primary) {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     if (strncmp(_bindings[i]->name, name, 128) == 0) {
       if (primary == NULL) {
@@ -50,8 +54,8 @@ void IsoTasty::InputHandler::rebindPrimary(const char* name,
   }
 }
 
-void IsoTasty::InputHandler::rebindSecondary(const char* name,
-                                             KeyBinding* secondary) {
+void IsoTasty::KeyBindingRepository::rebindSecondary(const char* name,
+                                                     KeyBinding* secondary) {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     if (strncmp(_bindings[i]->name, name, 128) == 0) {
       if (secondary == NULL) {
@@ -65,7 +69,7 @@ void IsoTasty::InputHandler::rebindSecondary(const char* name,
   }
 }
 
-int IsoTasty::InputHandler::yieldEvent(bool pressed, KeyBinding* binding) {
+int IsoTasty::KeyBindingRepository::yieldEvent(KeyBinding* binding) {
   int event = 0;
 
   for (unsigned int i = 0; i < _bindings.size(); i++) {
@@ -90,26 +94,5 @@ int IsoTasty::InputHandler::yieldEvent(bool pressed, KeyBinding* binding) {
     return 0;
   }
 
-  if (pressed) {
-    _held.push_back(event);
-  }
-  else {
-    for (unsigned int i = 0; i < _held.size(); i++) {
-      if (_held[i] == event) {
-        _held.erase(_held.begin() + i);
-        break;
-      }
-    }
-  }
-
   return event;
-}
-
-bool IsoTasty::InputHandler::isEventHeld(int event) {
-  for (unsigned int i = 0; i < _held.size(); i++) {
-    if (_held[i] == event) {
-      return true;
-    }
-  }
-  return false;
 }

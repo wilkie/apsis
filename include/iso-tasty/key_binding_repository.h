@@ -1,19 +1,12 @@
-#ifndef ISOTASTY_INPUT_HANDLER
-#define ISOTASTY_INPUT_HANDLER
+#ifndef ISOTASTY_KEY_BINDING_REPOSITORY
+#define ISOTASTY_KEY_BINDING_REPOSITORY
 
 #include "iso-tasty/key.h"
+#include "iso-tasty/key_binding.h"
 
 #include <vector>
 
 namespace IsoTasty {
-  struct KeyBinding {
-    Key::Code key;
-
-    bool shift;
-    bool control;
-    bool alt;
-  };
-
   struct Binding {
     const char* name;
     int         value;
@@ -25,23 +18,22 @@ namespace IsoTasty {
    *  Handles mapping between keys and events allowing for flexible control
    *    over what keys or buttons are mapped to particular functions.
    */
-  class InputHandler {
+  class KeyBindingRepository {
     public:
 
       /*
-       *  Constructs a bare input handler that can be assigned to an
-       *    Badger::Engine.
+       *  Constructs a new collection of bindings.
        */
-      InputHandler();
-      ~InputHandler();
+      KeyBindingRepository();
+      ~KeyBindingRepository();
 
       /*
        *  Creates a new binding entry with the specified name and the given
        *    defaults. Use NULL to specify no initial mapping. The parameter
-       *    value will be returned when a key is translated.
+       *    event will be returned when a key is translated.
        */
       void registerEvent(const char* name,
-                         int         value,
+                         int         event,
                          KeyBinding* primary,
                          KeyBinding* secondary);
 
@@ -59,18 +51,16 @@ namespace IsoTasty {
       void rebindSecondary(const char* name,
                            KeyBinding* secondary);
 
-      int yieldEvent(bool pressed, KeyBinding* binding);
-
-      bool isEventHeld(int event);
+      /*
+       *  Returns the event identifier that corresponds to the given key
+       *    binding.
+       */
+      int yieldEvent(KeyBinding* binding);
 
     private:
       // Stores all of the bindings
       std::vector<Binding*> _bindings;
-
-      // Stores held events
-      std::vector<int> _held;
   };
-
 }
 
 #endif

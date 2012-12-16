@@ -1,6 +1,9 @@
 #ifndef ISOTASTY_ENGINE_H
 #define ISOTASTY_ENGINE_H
 
+// Infrastructure
+#include "iso-tasty/input_engine.h"
+
 #include "iso-tasty/viewport.h"
 #include "iso-tasty/map.h"
 
@@ -21,7 +24,10 @@ namespace IsoTasty {
     Engine(VideoSettings* video);
     void newMap(unsigned int width, unsigned int height);
     void run();
+
   private:
+    InputEngine* _input;
+
     Viewport* _view;
     Renderer* _renderer;
     Map* _map;
@@ -30,7 +36,7 @@ namespace IsoTasty {
     bool _startSDL();
     bool _initialize();
     void _initViewport();
-    void _fireEvent(void* data);
+    void _fireEvent(int event);
 
     void _draw();
     void _update();
