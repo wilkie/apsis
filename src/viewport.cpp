@@ -89,16 +89,16 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 
       //renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, first_y, second_y);
 
-      renderer->drawTile((float)x - half_width, -3 * (1 / _zoom) - top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
-      renderer->drawTileTop((float)x - half_width, -3 * (1 / _zoom) - top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
+      renderer->drawTile((float)(x - half_width), (float)(-3 * (1 / _zoom) - top), (float)(z - half_height), 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
+      renderer->drawTileTop((float)(x - half_width), (float)(-3 * (1 / _zoom) - top), (float)(z - half_height), 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
     }
   }
 
   IsoTasty::Tile* tile = map->atIndex(map->x(), map->z());
   renderer->drawSphere(
-    (float)map->x() - half_width - 0.5f, 
-    -3 * (1 / _zoom) + (-tile->hover() + tile->cornerHeight(IsoTasty::TOP_LEFT))/2.0f,
-    (float)map->z() - half_height - 0.5f,
+    (float)(map->x() - half_width - 0.5f), 
+    (float)(-3 * (1 / _zoom) + (-tile->hover() + tile->cornerHeight(IsoTasty::TOP_LEFT))/2.0f),
+    (float)(map->z() - half_height - 0.5f),
     0.25f, 0.25f, 0.25f);
 
   //renderer->test();
