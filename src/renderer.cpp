@@ -11,6 +11,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include<glut.h>
 
 IsoTasty::Renderer::Renderer() {
 }
@@ -38,16 +39,35 @@ bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int hei
 void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, double rotation, double translationX, double translationZ, double zoom) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+  
+  zoom /= 2;
 
 	double dist = sqrt(1 / 3.0);
-	double aspect = (double)width/(double)height;
-	glOrtho(-aspect*width/2.0, aspect*width/2.0, -aspect*height/2.0, aspect*height/2.0, -aspect*height*4, aspect*height*4);
-	glRotated(35.264, 1.0, 0.0, 0.0);
+	double aspect = (double)width / (double)height;
+
+  double nearf = 1;
+  double farf = 20.0;
+
+  double fov = 3.1415926 / 4.0;
+
+  double top = tan(fov * 0.5) * nearf;
+  double bottom = -top;
+
+  double left = aspect * bottom;
+  double right = aspect * top;
+
+  glFrustum(left, right, bottom, top, nearf, farf);
+	//glOrtho(left*4, right*4, bottom*4, top*4, nearf, farf);
+
+  glTranslated(0, 0, -2);
+	//glRotated(35.264, 1.0, 0.0, 0.0);
+  glRotated(35.264*2, 1.0, 0.0, 0.0);
 	glRotated(rotation, 0.0, 1.0, 0.0);
-	glScaled(32.0f * zoom, 32.0f * zoom, 32.0f * zoom);
-	glTranslated(translationX, 0, translationZ);
-	 
+
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslated(translationX, 1, translationZ);
+	glScaled(zoom, zoom, zoom);
 }
 
 void IsoTasty::Renderer::drawArrays(const float vertices[], const float normals[], const float colors[], const unsigned char indices[], unsigned int num) {
@@ -109,13 +129,9 @@ void IsoTasty::Renderer::drawCube(float x, float y, float z, float width, float 
 
 	glCullFace(GL_BACK);
 
-	float half_width = width / 2.0f;
-	float half_height = height / 2.0f;
-	float half_depth = depth / 2.0f;
-
 	glPushMatrix();
 	glTranslatef(x, y, z);
-	glScalef(half_width, half_height, half_depth);
+  glScalef(width/2.0, height/2.0, depth/2.0);
 
 	drawArrays(vertices, normals, colors, indices, 24);
 

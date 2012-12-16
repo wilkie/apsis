@@ -6,10 +6,10 @@
 IsoTasty::Viewport::Viewport(unsigned int width, unsigned int height) :
   _width(width),
   _height(height),
-  _rotation(45.0),
+  _rotation(0.0),
   _x(0.0),
   _z(0.0),
-  _zoom(1.0) {
+  _zoom(0.25) {
 }
 
 unsigned int IsoTasty::Viewport::width() {
@@ -88,8 +88,9 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 			seconds[IsoTasty::BOT_LEFT] = second_y;
 
 			//renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, first_y, second_y);
-			renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
-			renderer->drawTileTop((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
+
+			renderer->drawTile((float)x - half_width, -3 * (1 / _zoom) - top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
+			renderer->drawTileTop((float)x - half_width, -3 * (1 / _zoom) - top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
 		}
 	}
 
@@ -108,8 +109,12 @@ void IsoTasty::Viewport::move(double deltaX, double deltaZ) {
 	double cosine = cos(radians);
 	double sine = sin(radians);
 
+  // Move respective of rotation
 	_x += deltaX*cosine - deltaZ*sine;
 	_z += deltaX*sine + deltaZ*cosine;
+
+  //_x += deltaX;
+  //_z += deltaZ;
 }
 
 void IsoTasty::Viewport::rotate(double delta) {
