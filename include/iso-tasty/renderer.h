@@ -8,7 +8,7 @@ namespace IsoTasty {
 	public:
 		Renderer();
 		bool initializeViewport(unsigned int width, unsigned int height);
-		void setProjection(unsigned int width, unsigned int height, 
+		void setProjection(unsigned int width, unsigned int height, bool orthographic,
 			double rotation, double translationX, double translationZ, double zoom);
 		void drawCube(float x, float y, float z, float width, float height, float depth);
 		void drawSquare(float x, float y, float z, float width, float depth);

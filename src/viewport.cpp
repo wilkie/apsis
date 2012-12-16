@@ -33,7 +33,7 @@ float cubicBezier(float p0, float p1, float p2, float p3, float t) {
 }
 
 void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
-	renderer->setProjection(_width, _height, _rotation, _x, _z, _zoom);
+	renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
 
 	float half_height = map->height() / 2.0f;
 	float half_width = map->width() / 2.0f;
@@ -97,7 +97,7 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 	IsoTasty::Tile* tile = map->atIndex(map->x(), map->z());
 	renderer->drawSphere(
 		(float)map->x() - half_width - 0.5f, 
-		(-tile->hover() + tile->cornerHeight(IsoTasty::TOP_LEFT))/2.0f,
+		-3 * (1 / _zoom) + (-tile->hover() + tile->cornerHeight(IsoTasty::TOP_LEFT))/2.0f,
 		(float)map->z() - half_height - 0.5f,
 		0.25f, 0.25f, 0.25f);
 
