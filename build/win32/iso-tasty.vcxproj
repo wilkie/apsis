@@ -67,6 +67,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\engine.cpp" />
+    <ClCompile Include="..\..\src\input_handler.cpp" />
     <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\renderer.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
@@ -76,6 +77,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\iso-tasty.h" />
     <ClInclude Include="..\..\include\iso-tasty\engine.h" />
+    <ClInclude Include="..\..\include\iso-tasty\input_handler.h" />
+    <ClInclude Include="..\..\include\iso-tasty\key.h" />
     <ClInclude Include="..\..\include\iso-tasty\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\renderer.h" />
     <ClInclude Include="..\..\include\iso-tasty\tile.h" />
