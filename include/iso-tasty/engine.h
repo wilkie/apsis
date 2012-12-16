@@ -7,34 +7,34 @@
 // This is here instead of the cpp because main() is overriden by
 // preprocessor magicks.
 #ifndef NO_SDL
-	#include <SDL/sdl.h>
+  #include <SDL/sdl.h>
 #endif
 
 namespace IsoTasty {
-	struct VideoSettings {
-		unsigned int resolutionX;
-		unsigned int resolutionY;
-	};
+  struct VideoSettings {
+    unsigned int resolutionX;
+    unsigned int resolutionY;
+  };
 
-	class Engine {
-	public:
-		Engine(VideoSettings* video);
-		void newMap(unsigned int width, unsigned int height);
-		void run();
-	private:
-		Viewport* _view;
-		Renderer* _renderer;
-		Map* _map;
-		VideoSettings _video;
+  class Engine {
+  public:
+    Engine(VideoSettings* video);
+    void newMap(unsigned int width, unsigned int height);
+    void run();
+  private:
+    Viewport* _view;
+    Renderer* _renderer;
+    Map* _map;
+    VideoSettings _video;
 
-		bool _startSDL();
-		bool _initialize();
-		void _initViewport();
-		void _fireEvent(void* data);
+    bool _startSDL();
+    bool _initialize();
+    void _initViewport();
+    void _fireEvent(void* data);
 
-		void _draw();
-		void _update();
-	};
+    void _draw();
+    void _update();
+  };
 }
 
 #endif
