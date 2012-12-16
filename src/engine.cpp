@@ -8,6 +8,23 @@ namespace Event {
     MOVE_RIGHT,
     MOVE_UP,
     MOVE_DOWN,
+
+    MOVE_SCREEN_LEFT,
+    MOVE_SCREEN_RIGHT,
+    MOVE_SCREEN_UP,
+    MOVE_SCREEN_DOWN,
+
+    LOWER,
+    RAISE,
+
+    LOWER_CLIFF,
+    RAISE_CLIFF,
+
+    ROTATE_CLOCKWISE,
+    ROTATE_COUNTER_CLOCKWISE,
+
+    ZOOM_IN,
+    ZOOM_OUT,
   };
 }
 
@@ -30,6 +47,51 @@ IsoTasty::Engine::Engine(VideoSettings* video) {
   binding.key = IsoTasty::Key::DOWN;
   binding2.key = IsoTasty::Key::JOY_POV_DOWN;
   _input->keyBindings()->registerEvent("Move down",  Event::MOVE_DOWN, &binding, &binding2);
+  
+  binding2.key = IsoTasty::Key::NONE;
+
+  binding.key = IsoTasty::Key::UP;
+  binding.shift = true;
+  _input->keyBindings()->registerEvent("Move screen up",    Event::MOVE_SCREEN_UP, &binding, &binding2);
+  binding.key = IsoTasty::Key::DOWN;
+  binding.shift = true;
+  _input->keyBindings()->registerEvent("Move screen down",  Event::MOVE_SCREEN_DOWN, &binding, &binding2);
+  binding.key = IsoTasty::Key::LEFT;
+  binding.shift = true;
+  _input->keyBindings()->registerEvent("Move screen left",  Event::MOVE_SCREEN_LEFT, &binding, &binding2);
+  binding.key = IsoTasty::Key::RIGHT;
+  binding.shift = true;
+  _input->keyBindings()->registerEvent("Move screen right", Event::MOVE_SCREEN_RIGHT, &binding, &binding2);
+  
+  binding.shift = false;
+  
+  binding.key = IsoTasty::Key::DOWN;
+  binding.control = true;
+  _input->keyBindings()->registerEvent("Lower terrain",  Event::LOWER, &binding, &binding2);
+  binding.key = IsoTasty::Key::UP;
+  binding.control = true;
+  _input->keyBindings()->registerEvent("Raise terrain",  Event::RAISE, &binding, &binding2);  
+
+  binding.control = false;
+
+  binding.key = IsoTasty::Key::DOWN;
+  binding.alt = true;
+  _input->keyBindings()->registerEvent("Lower cliff",  Event::LOWER_CLIFF, &binding, &binding2);
+  binding.key = IsoTasty::Key::UP;
+  binding.alt = true;
+  _input->keyBindings()->registerEvent("Raise cliff",  Event::RAISE_CLIFF, &binding, &binding2);
+
+  binding.alt = false;
+
+  binding.key = IsoTasty::Key::MINUS;
+  _input->keyBindings()->registerEvent("Zoom out",  Event::ZOOM_OUT, &binding, &binding2);
+  binding.key = IsoTasty::Key::EQUALS;
+  _input->keyBindings()->registerEvent("Zoom in",  Event::ZOOM_IN, &binding, &binding2);
+
+  binding.key = IsoTasty::Key::COMMA;
+  _input->keyBindings()->registerEvent("Rotate counter clockwise",  Event::ROTATE_COUNTER_CLOCKWISE, &binding, &binding2);
+  binding.key = IsoTasty::Key::PERIOD;
+  _input->keyBindings()->registerEvent("Rotate clockwise",  Event::ROTATE_CLOCKWISE, &binding, &binding2);
 
   _video = *video;
   if (!_initialize()) {
@@ -115,7 +177,8 @@ bool IsoTasty::Engine::_startSDL() {
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,        1);
 
   SDL_Surface* surf_display;
-  if((surf_display = SDL_SetVideoMode(_video.resolutionX, _video.resolutionY, 32, SDL_HWSURFACE | SDL_OPENGL)) == NULL) {
+  surf_display = SDL_SetVideoMode(_video.resolutionX, _video.resolutionY, 32, SDL_HWSURFACE | SDL_OPENGL);
+  if (surf_display == NULL) {
     fprintf(stderr, "Unable to initialize SDL: SDL_SetVideoMode failed\n");
     return false;
   }
@@ -129,6 +192,18 @@ bool IsoTasty::Engine::_startSDL() {
 void IsoTasty::Engine::_fireEvent(int event) {
   if (_input->isEventHeld(event)) {
     switch (event) {
+      case Event::RAISE_CLIFF:
+        _map->lift(0.50);
+        break;
+      case Event::LOWER_CLIFF:
+        _map->lift(-0.50);
+        break;
+      case Event::RAISE:
+        _map->raise(0.50);
+        break;
+      case Event::LOWER:
+        _map->raise(-0.50);
+        break;
       case Event::MOVE_DOWN:
         _map->z(_map->z() + 1);
         break;
@@ -141,77 +216,30 @@ void IsoTasty::Engine::_fireEvent(int event) {
       case Event::MOVE_RIGHT:
         _map->x(_map->x() + 1);
         break;
+      case Event::MOVE_SCREEN_DOWN:
+        _view->move(0, -1);
+        break;
+      case Event::MOVE_SCREEN_UP:
+        _view->move(0, 1);
+        break;
+      case Event::MOVE_SCREEN_LEFT:
+        _view->move(1, 0);
+        break;
+      case Event::MOVE_SCREEN_RIGHT:
+        _view->move(-1, 0);
+        break;
+      case Event::ROTATE_COUNTER_CLOCKWISE:
+        _view->rotate(15.0);
+        break;
+      case Event::ROTATE_CLOCKWISE:
+        _view->rotate(-15.0);
+        break;
+      case Event::ZOOM_IN:
+        _view->zoom(2.0);
+        break;
+      case Event::ZOOM_OUT:
+        _view->zoom(0.5);
+        break;
     }
   }
-  /*
-  if (event->type == SDL_MOUSEBUTTONDOWN) {	
-    switch(event->button.button) {
-    case SDL_BUTTON_LEFT:
-      break;
-    }
-  }
-  else if (event->type == SDL_KEYDOWN) {
-    switch(event->key.keysym.sym) {
-    case SDLK_LEFT:
-    case SDLK_h:
-      if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
-        _view->move(-0.5, 0.0);
-      }	
-      else {
-        _map->x(_map->x() - 1);
-      }
-      break;
-    case SDLK_RIGHT:
-    case SDLK_l:
-      if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
-        _view->move(0.5, 0.0);
-      }
-      else {
-        _map->x(_map->x() + 1);
-      }
-      break;
-    case SDLK_UP:
-    case SDLK_k:
-      if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
-        _view->move(0.0, -0.5);
-      }
-      else if (event->key.keysym.mod & (KMOD_RCTRL | KMOD_LCTRL)) {
-        _map->raise(0.50);
-      }
-      else if (event->key.keysym.mod & (KMOD_RALT | KMOD_LALT)) {
-        _map->lift(0.50);
-      }
-      else {
-        _map->z(_map->z() - 1);
-      }
-      break;
-    case SDLK_DOWN:
-    case SDLK_j:
-      if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
-        _view->move(0.0, 0.5);
-      }
-      else if (event->key.keysym.mod & (KMOD_RCTRL | KMOD_LCTRL)) {
-        _map->raise(-0.50);
-      }
-      else if (event->key.keysym.mod & (KMOD_RALT | KMOD_LALT)) {
-        _map->lift(-0.50);
-      }
-      else {
-        _map->z(_map->z() + 1);
-      }
-      break;
-    case SDLK_COMMA:
-      _view->rotate(15.0);
-      break;
-    case SDLK_PERIOD:
-      _view->rotate(-15.0);
-      break;
-    case SDLK_EQUALS:
-      _view->zoom(2);
-      break;
-    case SDLK_MINUS:
-      _view->zoom(0.5);
-      break;
-    }
-  }*/
 }

@@ -28,7 +28,9 @@ int IsoTasty::InputEngine::forceEvent(bool pressed, KeyBinding* binding) {
   }
 
   if (pressed) {
-    _held.push_back(event);
+    if (!isEventHeld(event)) {
+      _held.push_back(event);
+    }
   }
   else {
     for (unsigned int i = 0; i < _held.size(); i++) {
@@ -56,6 +58,16 @@ bool IsoTasty::InputEngine::isEventHeld(int event) {
 bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_Event* event) {
   binding->key = IsoTasty::Key::NONE;
   if (event->type == SDL_KEYDOWN || event->type == SDL_KEYUP) {
+    if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
+      binding->shift = true;
+    }
+    if (event->key.keysym.mod & (KMOD_RCTRL | KMOD_LCTRL)) {
+      binding->control = true;
+    }
+    if (event->key.keysym.mod & (KMOD_RALT | KMOD_LALT)) {
+      binding->alt = true;
+    }
+
     switch (event->key.keysym.sym) {
       case SDLK_LEFT:
         binding->key = IsoTasty::Key::LEFT;
@@ -212,6 +224,21 @@ bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_
         break;
       case SDLK_F12:
         binding->key = IsoTasty::Key::F12;
+        break;
+      case SDLK_PERIOD:
+        binding->key = IsoTasty::Key::PERIOD;
+        break;
+      case SDLK_COMMA:
+        binding->key = IsoTasty::Key::COMMA;
+        break;
+      case SDLK_MINUS:
+        binding->key = IsoTasty::Key::MINUS;
+        break;
+      case SDLK_EQUALS:
+        binding->key = IsoTasty::Key::EQUALS;
+        break;
+      case SDLK_PLUS:
+        binding->key = IsoTasty::Key::PLUS;
         break;
     }
   }

@@ -73,17 +73,19 @@ int IsoTasty::KeyBindingRepository::yieldEvent(KeyBinding* binding) {
   int event = 0;
 
   for (unsigned int i = 0; i < _bindings.size(); i++) {
-    if (_bindings[i]->primary.key     == binding->key     &&
-        _bindings[i]->primary.shift   == binding->shift   &&
-        _bindings[i]->primary.control == binding->control &&
+    if (_bindings[i]->primary.key     != IsoTasty::Key::NONE &&
+        _bindings[i]->primary.key     == binding->key        &&
+        _bindings[i]->primary.shift   == binding->shift      &&
+        _bindings[i]->primary.control == binding->control    &&
         _bindings[i]->primary.alt     == binding->alt) {
       event = _bindings[i]->value;
       break;
     }
 
-    if (_bindings[i]->secondary.key     == binding->key     &&
-        _bindings[i]->secondary.shift   == binding->shift   &&
-        _bindings[i]->secondary.control == binding->control &&
+    if (_bindings[i]->secondary.key     != IsoTasty::Key::NONE &&
+        _bindings[i]->secondary.key     == binding->key        &&
+        _bindings[i]->secondary.shift   == binding->shift      &&
+        _bindings[i]->secondary.control == binding->control    &&
         _bindings[i]->secondary.alt     == binding->alt) {
       event = _bindings[i]->value;
       break;

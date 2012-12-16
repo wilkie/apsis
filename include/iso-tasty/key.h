@@ -56,6 +56,14 @@ namespace IsoTasty {
       LEFTALT,
       RIGHTALT,
 
+      COMMA,
+      PERIOD,
+
+      MINUS,
+      EQUALS,
+
+      PLUS,
+
       A,
       B,
       C,
