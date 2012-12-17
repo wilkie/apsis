@@ -29,6 +29,15 @@ namespace Event {
 }
 
 IsoTasty::Engine::Engine(VideoSettings* video) {
+  _video = *video;
+  if (!_initialize()) {
+    return;
+  }
+
+  _view = new Viewport(video->resolutionX, video->resolutionY);
+  _renderer = new Renderer();
+  newMap(50, 50);
+
   _input = new InputEngine();
 
   // Adding some events just because
@@ -92,15 +101,6 @@ IsoTasty::Engine::Engine(VideoSettings* video) {
   _input->keyBindings()->registerEvent("Rotate counter clockwise",  Event::ROTATE_COUNTER_CLOCKWISE, &binding, &binding2);
   binding.key = IsoTasty::Key::PERIOD;
   _input->keyBindings()->registerEvent("Rotate clockwise",  Event::ROTATE_CLOCKWISE, &binding, &binding2);
-
-  _video = *video;
-  if (!_initialize()) {
-    return;
-  }
-
-  _view = new Viewport(video->resolutionX, video->resolutionY);
-  _renderer = new Renderer();
-  newMap(50, 50);
 }
 
 void IsoTasty::Engine::newMap(unsigned int width, unsigned int height) {
@@ -152,7 +152,7 @@ bool IsoTasty::Engine::_startSDL() {
   return false;
 #else
   // initialize SDL
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
     fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
     return false;
   }

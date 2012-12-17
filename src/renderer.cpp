@@ -496,6 +496,7 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   }
 
   float top_points[16];
+  float top_normals[16];
   
   // v4 - v13 - v12 - v11
   top_points[3] = heights[IsoTasty::BOT_LEFT];
@@ -504,10 +505,10 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   top_points[6] = heights[IsoTasty::TOP_LEFT];
 
   // Interpolate the curve (v3-v4-v5-v6) across to (v0-v11-v10-v9)
-  top_points[0] = heights[IsoTasty::BOT_RIGHT];
+  top_points[0]  = heights[IsoTasty::BOT_RIGHT];
   top_points[11] = fy[IsoTasty::TOP_RIGHT];
   top_points[10] = sy[IsoTasty::TOP_RIGHT];
-  top_points[9] = heights[IsoTasty::TOP_RIGHT];
+  top_points[9]  = heights[IsoTasty::TOP_RIGHT];
 
   top_points[1] = fy[IsoTasty::BOT_RIGHT];
   top_points[2] = sy[IsoTasty::BOT_RIGHT];
@@ -562,6 +563,20 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
     unsigned int index = (i*3) + 1;
     if (lookup[i] < 16) {
       vertices[index] = top_points[lookup[i]];
+    }
+  }
+
+  // Determine normals
+  
+  // v6--v7--v8--v9
+  // v5-v14-v15-v10
+  // v4-v13-v12-v11
+  // v3--v2--v1--v0
+
+  for (int i = 0; i < sizeof(lookup); i++) {
+    unsigned int index = (i*3) + 1;
+    if (lookup[i] < 16) {
+      // Determine normal of this vertex
     }
   }
 
