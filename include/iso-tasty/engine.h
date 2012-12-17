@@ -2,7 +2,7 @@
 #define ISOTASTY_ENGINE_H
 
 // Infrastructure
-#include "iso-tasty/input_engine.h"
+#include "iso-tasty/input/input_engine.h"
 #include "iso-tasty/clock.h"
 
 #include "iso-tasty/viewport.h"

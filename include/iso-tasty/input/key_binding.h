@@ -1,7 +1,7 @@
 #ifndef ISOTASTY_KEY_BINDING
 #define ISOTASTY_KEY_BINDING
 
-#include "iso-tasty/key.h"
+#include "iso-tasty/input/key.h"
 
 namespace IsoTasty {
   struct KeyBinding {

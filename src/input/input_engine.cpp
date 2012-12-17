@@ -1,4 +1,4 @@
-#include "iso-tasty/input_engine.h"
+#include "iso-tasty/input/input_engine.h"
 
 IsoTasty::InputEngine::InputEngine() {
   _bindings = new IsoTasty::KeyBindingRepository();

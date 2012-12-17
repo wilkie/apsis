@@ -1,8 +1,8 @@
 #ifndef ISOTASTY_KEY_BINDING_REPOSITORY
 #define ISOTASTY_KEY_BINDING_REPOSITORY
 
-#include "iso-tasty/key.h"
-#include "iso-tasty/key_binding.h"
+#include "iso-tasty/input/key.h"
+#include "iso-tasty/input/key_binding.h"
 
 #include <vector>
 

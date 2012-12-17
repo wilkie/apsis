@@ -72,8 +72,8 @@
     <ClCompile Include="..\..\src\geometry\line.cpp" />
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
     <ClCompile Include="..\..\src\geometry\vector3d.cpp" />
-    <ClCompile Include="..\..\src\input_engine.cpp" />
-    <ClCompile Include="..\..\src\key_binding_repository.cpp" />
+    <ClCompile Include="..\..\src\input\input_engine.cpp" />
+    <ClCompile Include="..\..\src\input\key_binding_repository.cpp" />
     <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\renderer.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
@@ -90,10 +90,10 @@
     <ClInclude Include="..\..\include\iso-tasty\geometry\point3d.h" />
     <ClInclude Include="..\..\include\iso-tasty\geometry\rectangle.h" />
     <ClInclude Include="..\..\include\iso-tasty\geometry\vector3d.h" />
-    <ClInclude Include="..\..\include\iso-tasty\input_engine.h" />
-    <ClInclude Include="..\..\include\iso-tasty\key_binding.h" />
-    <ClInclude Include="..\..\include\iso-tasty\key_binding_repository.h" />
-    <ClInclude Include="..\..\include\iso-tasty\key.h" />
+    <ClInclude Include="..\..\include\iso-tasty\input\input_engine.h" />
+    <ClInclude Include="..\..\include\iso-tasty\input\key.h" />
+    <ClInclude Include="..\..\include\iso-tasty\input\key_binding.h" />
+    <ClInclude Include="..\..\include\iso-tasty\input\key_binding_repository.h" />
     <ClInclude Include="..\..\include\iso-tasty\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\renderer.h" />
     <ClInclude Include="..\..\include\iso-tasty\tile.h" />
