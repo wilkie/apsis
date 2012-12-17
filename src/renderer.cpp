@@ -1,5 +1,7 @@
 #include "iso-tasty/renderer.h"
 
+#include "iso-tasty/geometry/vector3d.h"
+
 #ifndef NO_GL
   #ifdef _WIN32
   #include <windows.h>
@@ -390,79 +392,78 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
 
   // vertex coords array
   float vertices[] = {
-     1.000000f, 1.000000f, 1.000000f,  1.000000f, 1.000000f, 0.333333f,  0.333333f, 1.000000f, 0.333333f,  0.333333f, 1.000000f, 1.000000f,
-     0.333333f, 1.000000f, 1.000000f,  0.333333f, 1.000000f, 0.333333f, -0.333333f, 1.000000f, 0.333333f, -0.333333f, 1.000000f, 1.000000f,
-    -0.333333f, 1.000000f, 1.000000f, -0.333333f, 1.000000f, 0.333333f, -1.000000f, 1.000000f, 0.333333f, -1.000000f, 1.000000f, 1.000000f,
-    -0.333333f, 1.000000f, 0.333333f, -0.333333f, 1.000000f,-0.333333f, -1.000000f, 1.000000f,-0.333333f, -1.000000f, 1.000000f, 0.333333f,
-    -0.333333f, 1.000000f,-0.333333f, -0.333333f, 1.000000f,-1.000000f, -1.000000f, 1.000000f,-1.000000f, -1.000000f, 1.000000f,-0.333333f,
-     0.333333f, 1.000000f,-0.333333f,  0.333333f, 1.000000f,-1.000000f, -0.333333f, 1.000000f,-1.000000f, -0.333333f, 1.000000f,-0.333333f,
-     1.000000f, 1.000000f,-0.333333f,  1.000000f, 1.000000f,-1.000000f,  0.333333f, 1.000000f,-1.000000f,  0.333333f, 1.000000f,-0.333333f,
-     1.000000f, 1.000000f, 0.333333f,  1.000000f, 1.000000f,-0.333333f,  0.333333f, 1.000000f,-0.333333f,  0.333333f, 1.000000f, 0.333333f,
-     0.333333f, 1.000000f, 0.333333f,  0.333333f, 1.000000f,-0.333333f, -0.333333f, 1.000000f,-0.333333f, -0.333333f, 1.000000f, 0.333333f,
-     1.000000f,-1.000000f, 1.000000f,  1.000000f, 1.000000f, 1.000000f,  0.333333f, 1.000000f, 1.000000f,  0.333333f,-1.000000f, 1.000000f,
-     0.333333f,-1.000000f, 1.000000f,  0.333333f, 1.000000f, 1.000000f, -0.333333f, 1.000000f, 1.000000f, -0.333333f,-1.000000f, 1.000000f,
-    -0.333333f,-1.000000f, 1.000000f, -0.333333f, 1.000000f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f,-1.000000f, 1.000000f,
-    -1.000000f,-1.000000f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, 1.000000f, 0.333333f, -1.000000f,-1.000000f, 0.333333f,
-    -1.000000f,-1.000000f, 0.333333f, -1.000000f, 1.000000f, 0.333333f, -1.000000f, 1.000000f,-0.333333f, -1.000000f,-1.000000f,-0.333333f,
-    -1.000000f,-1.000000f,-0.333333f, -1.000000f, 1.000000f,-0.333333f, -1.000000f, 1.000000f,-1.000000f, -1.000000f,-1.000000f,-1.000000f,
-    -1.000000f,-1.000000f,-1.000000f, -1.000000f, 1.000000f,-1.000000f, -0.333333f, 1.000000f,-1.000000f, -0.333333f,-1.000000f,-1.000000f,
-    -0.333333f,-1.000000f,-1.000000f, -0.333333f, 1.000000f,-1.000000f,  0.333333f, 1.000000f,-1.000000f,  0.333333f,-1.000000f,-1.000000f,
-     0.333333f,-1.000000f,-1.000000f,  0.333333f, 1.000000f,-1.000000f,  1.000000f, 1.000000f,-1.000000f,  1.000000f,-1.000000f,-1.000000f,
-     1.000000f,-1.000000f,-1.000000f,  1.000000f, 1.000000f,-1.000000f,  1.000000f, 1.000000f,-0.333333f,  1.000000f,-1.000000f,-0.333333f,
-     1.000000f,-1.000000f,-0.333333f,  1.000000f, 1.000000f,-0.333333f,  1.000000f, 1.000000f, 0.333333f,  1.000000f,-1.000000f, 0.333333f,
-     1.000000f,-1.000000f, 0.333333f,  1.000000f, 1.000000f, 0.333333f,  1.000000f, 1.000000f, 1.000000f,  1.000000f,-1.000000f, 1.000000f,
+     1.000000f, 1.000000f, 1.000000f, // v0
+     0.333333f, 1.000000f, 1.000000f, // v1
+    -0.333333f, 1.000000f, 1.000000f, // v2
+    -1.000000f, 1.000000f, 1.000000f, // v3
+    -1.000000f, 1.000000f, 0.333333f, // v4
+    -1.000000f, 1.000000f,-0.333333f, // v5
+    -1.000000f, 1.000000f,-1.000000f, // v6
+    -0.333333f, 1.000000f,-1.000000f, // v7
+     0.333333f, 1.000000f,-1.000000f, // v8
+     1.000000f, 1.000000f,-1.000000f, // v9
+     1.000000f, 1.000000f,-0.333333f, // v10
+     1.000000f, 1.000000f, 0.333333f, // v11
+     0.333333f, 1.000000f, 0.333333f, // v12
+    -0.333333f, 1.000000f, 0.333333f, // v13
+    -0.333333f, 1.000000f,-0.333333f, // v14
+     0.333333f, 1.000000f,-0.333333f, // v15
+    -1.000000f,-1.000000f, 1.000000f, // v16
+    -1.000000f,-1.000000f, 0.333333f, // v17
+    -1.000000f,-1.000000f,-0.333333f, // v18
+    -1.000000f,-1.000000f,-1.000000f, // v19
+    -0.333333f,-1.000000f,-1.000000f, // v20
+     0.333333f,-1.000000f,-1.000000f, // v21
+     1.000000f,-1.000000f,-1.000000f, // v22
+     1.000000f,-1.000000f,-0.333333f, // v23
+     1.000000f,-1.000000f, 0.333333f, // v24
+     1.000000f,-1.000000f, 1.000000f, // v25
+     0.333333f,-1.000000f, 1.000000f, // v26
+    -0.333333f,-1.000000f, 1.000000f, // v27
   };
 
   // normal array
   float normals[] = {
-    1, 1, 1, -1, 1, 1, -1,-1, 1,  1,-1, 1, // v0-v11-v12-v1
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v1-v12-v13-v2
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v2-v13-v4-v3
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v13-v14-v5-v4
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v14-v7-v6-v5
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v15-v8-v7-v14
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v10-v9-v8-v15
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v11-v10-v15-v12
-    1, 1, 1,  1,-1, 1,  1,-1,-1,  1, 1,-1, // v12-v15-v14-v13
-
-    1, 1, 1,  1, 1,-1, -1, 1,-1, -1, 1, 1, // v25-v0-v1-v26
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v26-v1-v2-v27
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v27-v2-v3-v16
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v16-v3-v4-v17
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v17-v4-v5-v18
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v18-v5-v6-v19
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v19-v6-v7-v20
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v20-v7-v8-v21
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v21-v8-v9-v22
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v22-v9-v10-v23
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v23-v10-v11-v24
-   -1, 1, 1, -1, 1,-1, -1,-1,-1, -1,-1, 1, // v24-v11-v0-v25
+     1.000000f, 1.000000f, 1.000000f, // v0
+     0.333333f, 1.000000f, 1.000000f, // v1
+    -0.333333f, 1.000000f, 1.000000f, // v2
+    -1.000000f, 1.000000f, 1.000000f, // v3
+    -1.000000f, 1.000000f, 0.333333f, // v4
+    -1.000000f, 1.000000f,-0.333333f, // v5
+    -1.000000f, 1.000000f,-1.000000f, // v6
+    -0.333333f, 1.000000f,-1.000000f, // v7
+     0.333333f, 1.000000f,-1.000000f, // v8
+     1.000000f, 1.000000f,-1.000000f, // v9
+     1.000000f, 1.000000f,-0.333333f, // v10
+     1.000000f, 1.000000f, 0.333333f, // v11
+     0.333333f, 1.000000f, 0.333333f, // v12
+    -0.333333f, 1.000000f, 0.333333f, // v13
+    -0.333333f, 1.000000f,-0.333333f, // v14
+     0.333333f, 1.000000f,-0.333333f, // v15
+    -1.000000f,-1.000000f, 1.000000f, // v16
+    -1.000000f,-1.000000f, 0.333333f, // v17
+    -1.000000f,-1.000000f,-0.333333f, // v18
+    -1.000000f,-1.000000f,-1.000000f, // v19
+    -0.333333f,-1.000000f,-1.000000f, // v20
+     0.333333f,-1.000000f,-1.000000f, // v21
+     1.000000f,-1.000000f,-1.000000f, // v22
+     1.000000f,-1.000000f,-0.333333f, // v23
+     1.000000f,-1.000000f, 0.333333f, // v24
+     1.000000f,-1.000000f, 1.000000f, // v25
+     0.333333f,-1.000000f, 1.000000f, // v26
+    -0.333333f,-1.000000f, 1.000000f, // v27
   };
 
   // color array
   float colors[] = {    
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v0-v11-v12-v1
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v1-v12-v13-v2
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v2-v13-v4-v3
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v13-v14-v5-v4
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v14-v7-v6-v5
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v15-v8-v7-v14
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v10-v9-v8-v15
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v11-v10-v15-v12
-    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0, // v12-v15-v14-v13
+    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,
+    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,
+    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,
+    0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,  0, 0.5, 0,
     
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v25-v0-v1-v26
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v26-v1-v2-v27
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v27-v2-v3-v16
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v16-v3-v4-v17
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v17-v4-v5-v18
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v18-v5-v6-v19
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v19-v6-v7-v20
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v20-v7-v8-v21
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v21-v8-v9-v22
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v22-v9-v10-v23
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v23-v10-v11-v24
-    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0, // v24-v11-v0-v25
+    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0,
+    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0,
+    0.72f, 0.54f, 0,  0.72f, 0.54f, 0,  0.52f, 0.388f, 0,  0.72f, 0.388f, 0,
   };
   
   unsigned char lookup[] = {
@@ -495,58 +496,57 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
     indices[i] = i;
   }
 
-  float top_points[16];
-  float top_normals[16];
+  float top_normals[16][3];
   
   // v4 - v13 - v12 - v11
-  top_points[3] = heights[IsoTasty::BOT_LEFT];
-  top_points[4] = fy[IsoTasty::BOT_LEFT];
-  top_points[5] = sy[IsoTasty::BOT_LEFT];
-  top_points[6] = heights[IsoTasty::TOP_LEFT];
+  vertices[(3 * 3) + 1] = heights[IsoTasty::BOT_LEFT];
+  vertices[(4 * 3) + 1] = fy[IsoTasty::BOT_LEFT];
+  vertices[(5 * 3) + 1] = sy[IsoTasty::BOT_LEFT];
+  vertices[(6 * 3) + 1] = heights[IsoTasty::TOP_LEFT];
 
   // Interpolate the curve (v3-v4-v5-v6) across to (v0-v11-v10-v9)
-  top_points[0]  = heights[IsoTasty::BOT_RIGHT];
-  top_points[11] = fy[IsoTasty::TOP_RIGHT];
-  top_points[10] = sy[IsoTasty::TOP_RIGHT];
-  top_points[9]  = heights[IsoTasty::TOP_RIGHT];
+  vertices[ (0 * 3) + 1]  = heights[IsoTasty::BOT_RIGHT];
+  vertices[(11 * 3) + 1] = fy[IsoTasty::TOP_RIGHT];
+  vertices[(10 * 3) + 1] = sy[IsoTasty::TOP_RIGHT];
+  vertices[ (9 * 3) + 1]  = heights[IsoTasty::TOP_RIGHT];
 
-  top_points[1] = fy[IsoTasty::BOT_RIGHT];
-  top_points[2] = sy[IsoTasty::BOT_RIGHT];
-  top_points[7] = sy[IsoTasty::TOP_LEFT];
-  top_points[8] = fy[IsoTasty::TOP_LEFT];
+  vertices[ (1 * 3) + 1] = fy[IsoTasty::BOT_RIGHT];
+  vertices[ (2 * 3) + 1] = sy[IsoTasty::BOT_RIGHT];
+  vertices[ (7 * 3) + 1] = sy[IsoTasty::TOP_LEFT];
+  vertices[ (8 * 3) + 1] = fy[IsoTasty::TOP_LEFT];
 
   // Determine the relative height (of the point within the curve) of each inner point
-  float curveStartHeight = abs(top_points[6] - top_points[3]);
-  float curveStartPos = top_points[6];
-  if (top_points[3] < top_points[6]) {
-    curveStartPos = top_points[3];
+  float curveStartHeight = abs(vertices[(6 * 3) + 1] - vertices[(3 * 3) + 1]);
+  float curveStartPos = vertices[(6 * 3) + 1];
+  if (vertices[(3 * 3) + 1] < vertices[(6 * 3) + 1]) {
+    curveStartPos = vertices[(3 * 3) + 1];
   }
-  float curveStartPtA = (top_points[4] - curveStartPos) / curveStartHeight;
-  float curveStartPtB = (top_points[5] - curveStartPos) / curveStartHeight;
+  float curveStartPtA = (vertices[(4 * 3) + 1] - curveStartPos) / curveStartHeight;
+  float curveStartPtB = (vertices[(5 * 3) + 1] - curveStartPos) / curveStartHeight;
   if (curveStartHeight == 0) {
     curveStartPtA = 0;
     curveStartPtB = 0;
   }
-  float curveEndHeight = abs(top_points[9] - top_points[0]);
-  float curveEndPos = top_points[9];
-  if (top_points[0] < top_points[9]) {
-    curveEndPos = top_points[0];
+  float curveEndHeight = abs(vertices[(9 * 3) + 1] - vertices[(0 * 3) + 1]);
+  float curveEndPos = vertices[(9 * 3) + 1];
+  if (vertices[(0 * 3) + 1] < vertices[(9 * 3) + 1]) {
+    curveEndPos = vertices[(0 * 3) + 1];
   }
-  float curveEndPtA = (top_points[11] - curveEndPos) / curveEndHeight;
-  float curveEndPtB = (top_points[10] - curveEndPos) / curveEndHeight;
+  float curveEndPtA = (vertices[(11 * 3) + 1] - curveEndPos) / curveEndHeight;
+  float curveEndPtB = (vertices[(10 * 3) + 1] - curveEndPos) / curveEndHeight;
   if (curveEndHeight == 0) {
     curveEndPtA = 0;
     curveEndPtB = 0;
   }
 
   // Linear interpolation
-  float curveMidPos1 = top_points[2];
-  if (top_points[7] < top_points[2]) {
-    curveMidPos1 = top_points[7];
+  float curveMidPos1 = vertices[(2 * 3) + 1];
+  if (vertices[(7 * 3) + 1] < vertices[(2 * 3) + 1]) {
+    curveMidPos1 = vertices[(7 * 3) + 1];
   }
-  float curveMidPos2 = top_points[1];
-  if (top_points[8] < top_points[1]) {
-    curveMidPos2 = top_points[8];
+  float curveMidPos2 = vertices[(1 * 3) + 1];
+  if (vertices[(8 * 3) + 1] < vertices[(1 * 3) + 1]) {
+    curveMidPos2 = vertices[(8 * 3) + 1];
   }
   float deltaA = (curveStartPtA - curveEndPtA) / 3.0f;
   float deltaB = (curveStartPtB - curveEndPtB) / 3.0f;
@@ -554,17 +554,10 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   float curveMidAPt2 = curveEndPtA + deltaA;
   float curveMidBPt1 = curveStartPtB - deltaB;
   float curveMidBPt2 = curveEndPtB + deltaB;
-  top_points[12] = abs(top_points[1] - top_points[8]) * curveMidAPt2 + curveMidPos2;
-  top_points[13] = abs(top_points[2] - top_points[7]) * curveMidAPt1 + curveMidPos1;
-  top_points[14] = abs(top_points[2] - top_points[7]) * curveMidBPt1 + curveMidPos1;
-  top_points[15] = abs(top_points[1] - top_points[8]) * curveMidBPt2 + curveMidPos2;
-
-  for (int i = 0; i < sizeof(lookup); i++) {
-    unsigned int index = (i*3) + 1;
-    if (lookup[i] < 16) {
-      vertices[index] = top_points[lookup[i]];
-    }
-  }
+  vertices[(12 * 3) + 1] = abs(vertices[(1 * 3) + 1] - vertices[(8 * 3) + 1]) * curveMidAPt2 + curveMidPos2;
+  vertices[(13 * 3) + 1] = abs(vertices[(2 * 3) + 1] - vertices[(7 * 3) + 1]) * curveMidAPt1 + curveMidPos1;
+  vertices[(14 * 3) + 1] = abs(vertices[(2 * 3) + 1] - vertices[(7 * 3) + 1]) * curveMidBPt1 + curveMidPos1;
+  vertices[(15 * 3) + 1] = abs(vertices[(1 * 3) + 1] - vertices[(8 * 3) + 1]) * curveMidBPt2 + curveMidPos2;
 
   // Determine normals
   
@@ -573,6 +566,11 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   // v4-v13-v12-v11
   // v3--v2--v1--v0
 
+  Geometry::Vector3d* vectors[16];
+  for (int i = 0; i < 16; i++) {
+    //vectors[i] = new Geometry::Vector3d(top_points[i]);
+  }
+  Geometry::Vector3d v = Geometry::Vector3d(0, 0, 0);
   for (int i = 0; i < sizeof(lookup); i++) {
     unsigned int index = (i*3) + 1;
     if (lookup[i] < 16) {
@@ -586,7 +584,7 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   glTranslatef(x, y, z);
   glScalef(width, height, depth);
 
-  drawArrays(vertices, normals, colors, indices, sizeof(lookup));
+  drawArrays(vertices, normals, colors, lookup, sizeof(lookup));
 
   glPopMatrix();
 }
