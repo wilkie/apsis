@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\clock.cpp" />
     <ClCompile Include="..\..\src\engine.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
     <ClCompile Include="..\..\src\geometry\line.cpp" />
@@ -81,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\iso-tasty.h" />
+    <ClInclude Include="..\..\include\iso-tasty\clock.h" />
     <ClInclude Include="..\..\include\iso-tasty\engine.h" />
     <ClInclude Include="..\..\include\iso-tasty\geometry\circle.h" />
     <ClInclude Include="..\..\include\iso-tasty\geometry\line.h" />
