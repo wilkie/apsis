@@ -3,6 +3,7 @@
 
 // Infrastructure
 #include "iso-tasty/input_engine.h"
+#include "iso-tasty/clock.h"
 
 #include "iso-tasty/viewport.h"
 #include "iso-tasty/map.h"
@@ -32,6 +33,7 @@ namespace IsoTasty {
     Renderer* _renderer;
     Map* _map;
     VideoSettings _video;
+    Clock* _clock;
 
     bool _startSDL();
     bool _initialize();

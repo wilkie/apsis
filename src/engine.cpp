@@ -29,6 +29,8 @@ namespace Event {
 }
 
 IsoTasty::Engine::Engine(VideoSettings* video) {
+  _clock = new Clock();
+
   _video = *video;
   if (!_initialize()) {
     return;
