@@ -360,16 +360,16 @@ void IsoTasty::Renderer::drawTileTop(float x, float y, float z, float width, flo
   // Top
   glBegin(GL_LINE_LOOP);
   glVertex3f( 1.0f,  heights[IsoTasty::TOP_RIGHT], -1.0f);
-  glVertex3f( 0.34f, firsts[IsoTasty::TOP_LEFT],   -1.0f);
+  glVertex3f( 0.34f,  firsts[IsoTasty::TOP_LEFT],  -1.0f);
   glVertex3f(-0.34f, seconds[IsoTasty::TOP_LEFT],  -1.0f);
   glVertex3f(-1.0f,  heights[IsoTasty::TOP_LEFT],  -1.0f);
   glVertex3f(-1.0f,  seconds[IsoTasty::BOT_LEFT],  -0.34f);
-  glVertex3f(-1.0f,  firsts[IsoTasty::BOT_LEFT],    0.34f);
+  glVertex3f(-1.0f,   firsts[IsoTasty::BOT_LEFT],   0.34f);
   glVertex3f(-1.0f,  heights[IsoTasty::BOT_LEFT],   1.0f);
   glVertex3f(-0.34f, seconds[IsoTasty::BOT_RIGHT],  1.0f);
-  glVertex3f( 0.34f, firsts[IsoTasty::BOT_RIGHT],   1.0f);
+  glVertex3f( 0.34f,  firsts[IsoTasty::BOT_RIGHT],  1.0f);
   glVertex3f( 1.0f,  heights[IsoTasty::BOT_RIGHT],  1.0f);
-  glVertex3f( 1.0f,  firsts[IsoTasty::TOP_RIGHT],   0.34f);
+  glVertex3f( 1.0f,   firsts[IsoTasty::TOP_RIGHT],  0.34f);
   glVertex3f( 1.0f,  seconds[IsoTasty::TOP_RIGHT], -0.34f);
   glEnd();
   
@@ -505,10 +505,10 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   vertices[(6 * 3) + 1] = heights[IsoTasty::TOP_LEFT];
 
   // Interpolate the curve (v3-v4-v5-v6) across to (v0-v11-v10-v9)
-  vertices[ (0 * 3) + 1]  = heights[IsoTasty::BOT_RIGHT];
+  vertices[ (0 * 3) + 1] = heights[IsoTasty::BOT_RIGHT];
   vertices[(11 * 3) + 1] = fy[IsoTasty::TOP_RIGHT];
   vertices[(10 * 3) + 1] = sy[IsoTasty::TOP_RIGHT];
-  vertices[ (9 * 3) + 1]  = heights[IsoTasty::TOP_RIGHT];
+  vertices[ (9 * 3) + 1] = heights[IsoTasty::TOP_RIGHT];
 
   vertices[ (1 * 3) + 1] = fy[IsoTasty::BOT_RIGHT];
   vertices[ (2 * 3) + 1] = sy[IsoTasty::BOT_RIGHT];

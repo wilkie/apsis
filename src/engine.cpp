@@ -2,6 +2,10 @@
 
 #include "math.h"
 
+// Include GLEW
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 namespace Event {
   enum {
     MOVE_LEFT = 1,
@@ -30,6 +34,10 @@ namespace Event {
 
 IsoTasty::Engine::Engine(VideoSettings* video) {
   _clock = new Clock();
+  
+  // Initialize GLEW
+  glewExperimental = GL_TRUE;
+  glewInit();
 
   _video = *video;
   if (!_initialize()) {
