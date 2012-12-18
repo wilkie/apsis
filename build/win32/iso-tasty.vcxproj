@@ -42,6 +42,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -76,11 +77,15 @@
     <ClCompile Include="..\..\src\input\key_binding_repository.cpp" />
     <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\renderer.cpp" />
+    <ClCompile Include="..\..\src\support\glew.c" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\tile.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\GL\glew.h" />
+    <ClInclude Include="..\..\include\GL\glxew.h" />
+    <ClInclude Include="..\..\include\GL\wglew.h" />
     <ClInclude Include="..\..\include\iso-tasty.h" />
     <ClInclude Include="..\..\include\iso-tasty\clock.h" />
     <ClInclude Include="..\..\include\iso-tasty\engine.h" />
