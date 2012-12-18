@@ -12,20 +12,8 @@
   #include <GL/glu.h>
 #endif
 
-IsoTasty::Primitives::Program::Program(VertexShader& vertexShader) {
-  this->_program = glCreateProgram();
-  glAttachShader(this->_program, vertexShader.identifer());
-}
-
-IsoTasty::Primitives::Program::Program(VertexShader& vertexShader, FragmentShader& fragmentShader) {
-  this->_program = glCreateProgram();
-  glAttachShader(this->_program, vertexShader.identifer());
-  glAttachShader(this->_program, fragmentShader.identifer());
-}
-
-IsoTasty::Primitives::Program::Program(FragmentShader& fragmentShader) {
-  this->_program = glCreateProgram();
-  glAttachShader(this->_program, fragmentShader.identifer());
+IsoTasty::Primitives::Program::Program(unsigned int program) {
+  this->_program = program;
 }
 
 IsoTasty::Primitives::Program::~Program() {
