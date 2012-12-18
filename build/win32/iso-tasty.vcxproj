@@ -78,6 +78,7 @@
     <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp" />
     <ClCompile Include="..\..\src\primitives\program.cpp" />
+    <ClCompile Include="..\..\src\primitives\unlinked_program.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_array.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_shader.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="..\..\include\iso-tasty\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\fragment_shader.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\program.h" />
+    <ClInclude Include="..\..\include\iso-tasty\primitives\unlinked_program.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_array.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_buffer.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_shader.h" />
