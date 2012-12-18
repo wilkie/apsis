@@ -3,7 +3,7 @@
 
 namespace IsoTasty {
   namespace Primitives {
-	  class VertexShader {
+    class VertexShader {
     public:
       /*
        *  Constructs a vertex shader object from the given source.

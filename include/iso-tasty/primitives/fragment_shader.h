@@ -3,7 +3,7 @@
 
 namespace IsoTasty {
   namespace Primitives {
-	  class FragmentShader {
+    class FragmentShader {
     public:
       /*
        *  Constructs a fragment shader object from the given source.

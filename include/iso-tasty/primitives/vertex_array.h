@@ -3,7 +3,7 @@
 
 namespace IsoTasty {
   namespace Primitives {
-	  class VertexArray {
+    class VertexArray {
     public:
       /*
        *  Constructs a vertex array object.

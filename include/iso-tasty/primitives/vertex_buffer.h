@@ -3,7 +3,7 @@
 
 namespace IsoTasty {
   namespace Primitives {
-	  class VertexBuffer {
+    class VertexBuffer {
     public:
       /*
        *  Constructs a vertex buffer object.
