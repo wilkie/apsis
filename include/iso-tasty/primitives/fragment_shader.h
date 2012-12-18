@@ -9,6 +9,8 @@ namespace IsoTasty {
        *  Constructs a fragment shader object from the given source.
        */
       FragmentShader(const char* source);
+      FragmentShader(const FragmentShader&);
+      FragmentShader& operator= (const FragmentShader&);
       ~FragmentShader();
 
       /*
@@ -24,6 +26,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _fragmentShader;
+      unsigned int* _countRef;
     };
   }
 }

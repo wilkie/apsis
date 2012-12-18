@@ -14,10 +14,30 @@
 
 IsoTasty::Primitives::VertexBuffer::VertexBuffer() {
   glGenBuffers(1, &this->_vbo);
+
+  _countRef = new unsigned int[1];
+  *_countRef = 1;
+}
+
+IsoTasty::Primitives::VertexBuffer::VertexBuffer(const VertexBuffer& b) :
+  _vbo(b._vbo),
+  _countRef(b._countRef) {
+
+  // TODO: Atomic Increment
+  (*this->_countRef)++;
+}
+
+IsoTasty::Primitives::VertexBuffer& IsoTasty::Primitives::VertexBuffer::operator=(const VertexBuffer& b) {
+  return IsoTasty::Primitives::VertexBuffer(b);
 }
 
 IsoTasty::Primitives::VertexBuffer::~VertexBuffer() {
-  glDeleteBuffers(1, &this->_vbo);
+  // TODO: This needs to make use of a compare and exchange
+  (*this->_countRef)--;
+  if (*this->_countRef == 0) {
+    glDeleteBuffers(1, &this->_vbo);
+    delete this->_countRef;
+  }
 }
 
 unsigned int IsoTasty::Primitives::VertexBuffer::identifer() const {

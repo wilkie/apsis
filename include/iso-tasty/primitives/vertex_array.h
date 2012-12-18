@@ -9,6 +9,8 @@ namespace IsoTasty {
        *  Constructs a vertex array object.
        */
       VertexArray();
+      VertexArray(const VertexArray&);
+      VertexArray& operator= (const VertexArray&);
       ~VertexArray();
 
       /*
@@ -18,6 +20,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _vao;
+      unsigned int* _countRef;
     };
   }
 }

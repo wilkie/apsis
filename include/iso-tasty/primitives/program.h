@@ -9,6 +9,8 @@ namespace IsoTasty {
        *  Links the given unlinked program.
        */
       Program(unsigned int program);
+      Program(const Program&);
+      Program& operator= (const Program&);
       ~Program();
 
       /*
@@ -18,6 +20,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _program;
+      unsigned int* _countRef;
     };
   }
 }

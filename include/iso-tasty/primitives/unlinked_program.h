@@ -14,6 +14,8 @@ namespace IsoTasty {
        *  Constructs a program from a vertex shader.
        */
       UnlinkedProgram();
+      UnlinkedProgram(const UnlinkedProgram&);
+      UnlinkedProgram& operator= (const UnlinkedProgram&);
       ~UnlinkedProgram();
 
       /*
@@ -34,6 +36,7 @@ namespace IsoTasty {
     private:
       bool _linked;
       unsigned int _program;
+      unsigned int* _countRef;
     };
   }
 }

@@ -9,6 +9,8 @@ namespace IsoTasty {
        *  Constructs a vertex shader object from the given source.
        */
       VertexShader(const char* source);
+      VertexShader(const VertexShader&);
+      VertexShader& operator= (const VertexShader&);
       ~VertexShader();
 
       /*
@@ -24,6 +26,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _vertexShader;
+      unsigned int* _countRef;
     };
   }
 }

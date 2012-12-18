@@ -9,6 +9,8 @@ namespace IsoTasty {
        *  Constructs a vertex buffer object.
        */
       VertexBuffer();
+      VertexBuffer(const VertexBuffer&);
+      VertexBuffer& operator= (const VertexBuffer&);
       ~VertexBuffer();
 
       /*
@@ -18,6 +20,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _vbo;
+      unsigned int* _countRef;
     };
   }
 }
