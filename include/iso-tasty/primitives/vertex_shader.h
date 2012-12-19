@@ -1,6 +1,8 @@
 #ifndef ISOTASTY_PRIMITIVES_VERTEX_SHADER_H
 #define ISOTASTY_PRIMITIVES_VERTEX_SHADER_H
 
+#include "iso-tasty/sync/reference_counter.h"
+
 namespace IsoTasty {
   namespace Primitives {
     class VertexShader {
@@ -9,8 +11,6 @@ namespace IsoTasty {
        *  Constructs a vertex shader object from the given source.
        */
       VertexShader(const char* source);
-      VertexShader(const VertexShader&);
-      VertexShader& operator= (const VertexShader&);
       ~VertexShader();
 
       /*
@@ -26,7 +26,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _vertexShader;
-      unsigned int* _countRef;
+      Sync::ReferenceCounter _counter;
     };
   }
 }

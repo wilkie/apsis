@@ -34,10 +34,6 @@ namespace Event {
 
 IsoTasty::Engine::Engine(VideoSettings* video) {
   _clock = new Clock();
-  
-  // Initialize GLEW
-  glewExperimental = GL_TRUE;
-  glewInit();
 
   _video = *video;
   if (!_initialize()) {
@@ -47,6 +43,9 @@ IsoTasty::Engine::Engine(VideoSettings* video) {
   _view = new Viewport(video->resolutionX, video->resolutionY);
   _renderer = new Renderer();
   newMap(50, 50);
+
+  GLuint vao;
+  //glGenVertexArrays(1, &vao);
 
   _input = new InputEngine();
 
@@ -146,6 +145,10 @@ void IsoTasty::Engine::run() {
 bool IsoTasty::Engine::_initialize() {
   if (_startSDL()) {
     _initViewport();
+
+    // Initialize GLEW
+    glewExperimental = GL_TRUE;
+    glewInit();
     return true;
   }
 

@@ -14,39 +14,23 @@
 
 IsoTasty::Primitives::UnlinkedProgram::UnlinkedProgram() {
   this->_program = glCreateProgram();
-
-  _countRef = new unsigned int[1];
-  *_countRef = 1;
-}
-
-IsoTasty::Primitives::UnlinkedProgram::UnlinkedProgram(const UnlinkedProgram& b) :
-  _program(b._program),
-  _countRef(b._countRef) {
-
-  // TODO: Atomic Increment
-  (*this->_countRef)++;
-}
-
-IsoTasty::Primitives::UnlinkedProgram& IsoTasty::Primitives::UnlinkedProgram::operator=(const UnlinkedProgram& b) {
-  return IsoTasty::Primitives::UnlinkedProgram(b);
 }
 
 IsoTasty::Primitives::UnlinkedProgram::~UnlinkedProgram() {
-  // TODO: This needs to make use of a compare and exchange
-  (*this->_countRef)--;
-  if (*this->_countRef == 0) {
+  if (_counter.isAlone()) {
     if (!(this->_linked)) {
       glDeleteProgram(this->_program);
     }
-    delete this->_countRef;
   }
 }
 
 void IsoTasty::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) const {
+  if (_linked) throw "Program already linked. Cannot attach vertex shader.";
   glAttachShader(this->_program, vertexShader.identifer());
 }
 
 void IsoTasty::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) const {
+  if (_linked) throw "Program already linked. Cannot attach fragment shader.";
   glAttachShader(this->_program, fragmentShader.identifer());
 }
 

@@ -1,6 +1,8 @@
 #ifndef ISOTASTY_PRIMITIVES_FRAGMENT_SHADER_H
 #define ISOTASTY_PRIMITIVES_FRAGMENT_SHADER_H
 
+#include "iso-tasty/sync/reference_counter.h"
+
 namespace IsoTasty {
   namespace Primitives {
     class FragmentShader {
@@ -9,8 +11,6 @@ namespace IsoTasty {
        *  Constructs a fragment shader object from the given source.
        */
       FragmentShader(const char* source);
-      FragmentShader(const FragmentShader&);
-      FragmentShader& operator= (const FragmentShader&);
       ~FragmentShader();
 
       /*
@@ -26,7 +26,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _fragmentShader;
-      unsigned int* _countRef;
+      Sync::ReferenceCounter _counter;
     };
   }
 }

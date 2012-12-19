@@ -1,6 +1,8 @@
 #ifndef ISOTASTY_PRIMITIVES_VERTEX_ARRAY_H
 #define ISOTASTY_PRIMITIVES_VERTEX_ARRAY_H
 
+#include "iso-tasty/sync/reference_counter.h"
+
 namespace IsoTasty {
   namespace Primitives {
     class VertexArray {
@@ -9,8 +11,6 @@ namespace IsoTasty {
        *  Constructs a vertex array object.
        */
       VertexArray();
-      VertexArray(const VertexArray&);
-      VertexArray& operator= (const VertexArray&);
       ~VertexArray();
 
       /*
@@ -20,7 +20,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _vao;
-      unsigned int* _countRef;
+      Sync::ReferenceCounter _counter;
     };
   }
 }

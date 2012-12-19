@@ -84,6 +84,8 @@
     <ClCompile Include="..\..\src\primitives\vertex_shader.cpp" />
     <ClCompile Include="..\..\src\renderer.cpp" />
     <ClCompile Include="..\..\src\support\glew.c" />
+    <ClCompile Include="..\..\src\sync\atomic_counter.cpp" />
+    <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\tile.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
@@ -113,8 +115,14 @@
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_buffer.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_shader.h" />
     <ClInclude Include="..\..\include\iso-tasty\renderer.h" />
+    <ClInclude Include="..\..\include\iso-tasty\sync\atomic_counter.h" />
+    <ClInclude Include="..\..\include\iso-tasty\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\iso-tasty\tile.h" />
     <ClInclude Include="..\..\include\iso-tasty\viewport.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\shaders\fragment\colorize.glsl" />
+    <None Include="..\..\src\shaders\vertex\position.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,8 @@
 #ifndef ISOTASTY_PRIMITIVES_UNLINKED_PROGRAM_H
 #define ISOTASTY_PRIMITIVES_UNLINKED_PROGRAM_H
 
+#include "iso-tasty/sync/reference_counter.h"
+
 #include "iso-tasty/primitives/vertex_shader.h"
 #include "iso-tasty/primitives/fragment_shader.h"
 
@@ -14,8 +16,6 @@ namespace IsoTasty {
        *  Constructs a program from a vertex shader.
        */
       UnlinkedProgram();
-      UnlinkedProgram(const UnlinkedProgram&);
-      UnlinkedProgram& operator= (const UnlinkedProgram&);
       ~UnlinkedProgram();
 
       /*
@@ -36,7 +36,7 @@ namespace IsoTasty {
     private:
       bool _linked;
       unsigned int _program;
-      unsigned int* _countRef;
+      Sync::ReferenceCounter _counter;
     };
   }
 }

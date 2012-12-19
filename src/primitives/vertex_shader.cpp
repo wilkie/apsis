@@ -22,29 +22,11 @@ IsoTasty::Primitives::VertexShader::VertexShader(const char* source) {
   this->_vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(this->_vertexShader, 1, &source, NULL);
   glCompileShader(this->_vertexShader );
-
-  _countRef = new unsigned int[1];
-  *_countRef = 1;
-}
-
-IsoTasty::Primitives::VertexShader::VertexShader(const VertexShader& b) :
-  _vertexShader(b._vertexShader),
-  _countRef(b._countRef) {
-
-  // TODO: Atomic Increment
-  (*this->_countRef)++;
-}
-
-IsoTasty::Primitives::VertexShader& IsoTasty::Primitives::VertexShader::operator=(const VertexShader& b) {
-  return IsoTasty::Primitives::VertexShader(b);
 }
 
 IsoTasty::Primitives::VertexShader::~VertexShader() {
-  // TODO: This needs to make use of a compare and exchange
-  (*this->_countRef)--;
-  if (*this->_countRef == 0) {
+  if (_counter.isAlone()) {
     glDeleteShader(this->_vertexShader);
-    delete this->_countRef;
   }
 }
 

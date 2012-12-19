@@ -22,29 +22,11 @@ IsoTasty::Primitives::FragmentShader::FragmentShader(const char* source) {
   this->_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(this->_fragmentShader, 1, &source, NULL);
   glCompileShader(this->_fragmentShader);
-
-  _countRef = new unsigned int[1];
-  *_countRef = 1;
-}
-
-IsoTasty::Primitives::FragmentShader::FragmentShader(const FragmentShader& b) :
-  _fragmentShader(b._fragmentShader),
-  _countRef(b._countRef) {
-
-  // TODO: Atomic Increment
-  (*this->_countRef)++;
-}
-
-IsoTasty::Primitives::FragmentShader& IsoTasty::Primitives::FragmentShader::operator=(const FragmentShader& b) {
-  return IsoTasty::Primitives::FragmentShader(b);
 }
 
 IsoTasty::Primitives::FragmentShader::~FragmentShader() {
-  // TODO: This needs to make use of a compare and exchange
-  (*this->_countRef)--;
-  if (*this->_countRef == 0) {
+  if (_counter.isAlone()) {
     glDeleteShader(this->_fragmentShader);
-    delete this->_countRef;
   }
 }
 

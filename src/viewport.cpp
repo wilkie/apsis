@@ -35,6 +35,8 @@ float cubicBezier(float p0, float p1, float p2, float p3, float t) {
 void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
   renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
 
+  return;
+
   float half_height = map->height() / 2.0f;
   float half_width = map->width() / 2.0f;
 

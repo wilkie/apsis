@@ -2,6 +2,20 @@
 
 #include "iso-tasty/geometry/vector3d.h"
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
+#include "iso-tasty/primitives/fragment_shader.h"
+#include "iso-tasty/primitives/vertex_shader.h"
+#include "iso-tasty/primitives/vertex_array.h"
+#include "iso-tasty/primitives/vertex_buffer.h"
+#include "iso-tasty/primitives/unlinked_program.h"
+#include "iso-tasty/primitives/program.h"
+
 #ifndef NO_GL
   #ifdef _WIN32
   #include <windows.h>
@@ -15,7 +29,16 @@
 #include <stdio.h>
 #include<glut.h>
 
+/*IsoTasty::Primitives::VertexArray     vao;
+IsoTasty::Primitives::VertexBuffer    vbo;
+IsoTasty::Primitives::VertexShader    vs;
+IsoTasty::Primitives::FragmentShader  fs;*/
+
 IsoTasty::Renderer::Renderer() {
+  /*vao = Primitives::VertexArray();
+  vbo = Primitives::VertexBuffer();
+  vs  = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");*/
+  IsoTasty::Primitives::FragmentShader fs  = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
 }
 
 void IsoTasty::Renderer::clear() {
@@ -39,18 +62,15 @@ bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int hei
 }
 
 void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, bool orthographic, double rotation, double translationX, double translationZ, double zoom) {
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  
   zoom /= 2;
 
   double dist = sqrt(1 / 3.0);
-  double aspect = (double)width / (double)height;
+  float aspect = (double)width / (double)height;
 
-  double nearf = 1;
-  double farf = 20.0;
+  float nearf = 1;
+  float farf = 20.0;
 
-  double fov = 3.1415926 / 4.0;
+  float fov = 3.1415926 / 4.0;
 
   double top = tan(fov * 0.5) * nearf;
   double bottom = -top;
@@ -58,25 +78,32 @@ void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, 
   double left = aspect * bottom;
   double right = aspect * top;
 
-  if (orthographic) {  
-    glOrtho(left*4, right*4, bottom*4, top*4, nearf, farf);
-    glTranslated(0, 0, -5);
+  glm::mat4 projection;
 
-    glRotated(35.264, 1.0, 0.0, 0.0);
+  if (orthographic) {
+    projection = glm::ortho(left*4, right*4, bottom*4, top*4);
   }
   else {
-    glFrustum(left, right, bottom, top, nearf, farf);
-    glTranslated(0, 0, -5);
-
-    glRotated(35.264 * 2, 1.0, 0.0, 0.0);
+    projection = glm::perspective(fov, aspect, nearf, farf);
   }
-  glRotated(rotation, 0.0, 1.0, 0.0);
 
-  glMatrixMode(GL_MODELVIEW);
+  glm::mat4 view = glm::rotate(
+                     glm::translate(
+                       glm::mat4(1.0f),
+                       glm::vec3(0.0f, 0.0f, -5.0f)),
+                     35.264f, glm::vec3(1.0f, 0.0f, 0.0f));
 
-  glLoadIdentity();
-  glTranslated(translationX, 1, translationZ);
-  glScaled(zoom, zoom, zoom);
+  if (!orthographic) {
+    glm::rotate(view, 35.264f, glm::vec3(1.0f, 0.0f, 0.0f));
+  }
+
+  glm::scale(
+    glm::translate(
+      glm::rotate(view, (float)rotation, glm::vec3(0.0f, 1.0f, 0.0f)),
+      glm::vec3(translationX, 0, translationZ)),
+    glm::vec3(zoom, zoom, zoom));
+
+  glm::mat4 model = glm::mat4(1.0f);
 }
 
 void IsoTasty::Renderer::drawArrays(const float vertices[], const float normals[], const float colors[], const unsigned char indices[], unsigned int num) {
@@ -495,8 +522,6 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   for (int i = 0; i < sizeof(lookup); i++) {
     indices[i] = i;
   }
-
-  float top_normals[16][3];
   
   // v4 - v13 - v12 - v11
   vertices[(3 * 3) + 1] = heights[IsoTasty::BOT_LEFT];
@@ -566,7 +591,6 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   // v4-v13-v12-v11
   // v3--v2--v1--v0
 
-  Geometry::Vector3d* vectors[16];
   for (int i = 0; i < 16; i++) {
     //vectors[i] = new Geometry::Vector3d(top_points[i]);
   }
