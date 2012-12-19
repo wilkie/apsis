@@ -22,7 +22,7 @@ unsigned int IsoTasty::Sync::AtomicCounter::add(unsigned int value) {
   for (;;) {
     oldVal = _value;
     newVal = _value + value;
-    if (compareExchange(&_value, oldVal, newVal)) {
+    if (_compareExchange(&_value, oldVal, newVal)) {
       return newVal;
     }
   }
@@ -33,7 +33,7 @@ unsigned int IsoTasty::Sync::AtomicCounter::value() const {
 }
 
 // TODO: Maybe do something with a mutex when architectures don't support things.
-bool IsoTasty::Sync::compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
+bool IsoTasty::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
   __asm {
     // Stack:
 

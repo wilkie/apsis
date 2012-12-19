@@ -3,9 +3,6 @@
 
 namespace IsoTasty {
   namespace Sync {
-
-    bool compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange);
-
     class AtomicCounter {
     public:
       /*
@@ -35,6 +32,7 @@ namespace IsoTasty {
       unsigned int value() const;
 
     private:
+      bool _compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange);
       unsigned int _value;
     };
   }
