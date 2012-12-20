@@ -8,8 +8,12 @@
 
 #include "iso-tasty/primitives/program.h"
 
+#include <vector>
+
 namespace IsoTasty {
   namespace Primitives {
+    using namespace std;
+
     class UnlinkedProgram {
     public:
       /*
@@ -21,12 +25,17 @@ namespace IsoTasty {
       /*
        *  Attach the given vertex shader.
        */
-      void attach(VertexShader& vertexShader) const;
+      void attach(VertexShader& vertexShader);
 
       /*
        *  Attach the given fragment shader.
        */
-      void attach(FragmentShader& fragmentShader) const;
+      void attach(FragmentShader& fragmentShader);
+
+      /*
+       *  Define the fragment shader's output location.
+       */
+      void defineFragmentOutput(const char* name);
 
       /*
        *  Links the program.
@@ -36,6 +45,8 @@ namespace IsoTasty {
     private:
       bool _linked;
       unsigned int _program;
+      vector<VertexShader> _vertexShaders;
+      vector<FragmentShader> _fragmentShaders;
       Sync::ReferenceCounter _counter;
     };
   }

@@ -3,6 +3,24 @@
 #include "stdio.h"
 #include "math.h"
 
+#define GLEW_STATIC
+#include <GL/glew.h>
+#ifndef NO_GL
+  #ifdef _WIN32
+  #include <windows.h>
+  #endif
+
+  #include <GL/gl.h>
+  #include <GL/glu.h>
+#endif
+
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
 IsoTasty::Viewport::Viewport(unsigned int width, unsigned int height) :
   _width(width),
   _height(height),
@@ -10,6 +28,40 @@ IsoTasty::Viewport::Viewport(unsigned int width, unsigned int height) :
   _x(0.0),
   _z(0.0),
   _zoom(0.25) {
+
+  Primitives::VertexBuffer ebo;
+  unsigned int elements[] = {
+    0, 1, 2,
+    2, 3, 0
+  };
+  ebo.transfer(elements, sizeof(elements));
+
+  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
+
+  Primitives::UnlinkedProgram unlinked;
+  unlinked.attach(vs);
+  unlinked.attach(fs);
+  unlinked.defineFragmentOutput("outColor");
+  Primitives::Program program = unlinked.link();
+
+  Primitives::VertexBuffer vbo;
+  float vertices[] = {
+    -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
+     0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
+     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
+    -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
+  };
+  vbo.transfer(vertices, sizeof(vertices));
+
+  _vao.useProgram(program);
+  program.defineInput("position", vbo, 2, Primitives::Program::Type::Float, false, 5, 0);
+  program.defineInput("color",    vbo, 3, Primitives::Program::Type::Float, false, 5, 2);
+  _vao.bindElements(ebo);
+
+  _vao.defineUniform("model", program);
+  _vao.defineUniform("view",  program);
+  _vao.defineUniform("proj",  program);
 }
 
 unsigned int IsoTasty::Viewport::width() {
@@ -33,8 +85,63 @@ float cubicBezier(float p0, float p1, float p2, float p3, float t) {
 }
 
 void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
-  renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
+  bool orthographic = false;
+  double rotation = _rotation;
+  double translationX = _x;
+  double translationZ = _z;
+  double zoom = _zoom;
+  zoom /= 2;
 
+  float dist = sqrtf(1.0f / 3.0f);
+  float aspect = (float)_width / (float)_height;
+
+  float nearf = 1;
+  float farf = 20.0;
+
+  float fov = 45.0f;
+
+  float top = tanf(fov * 0.5f) * nearf;
+  float bottom = -top;
+
+  float left = aspect * bottom;
+  float right = aspect * top;
+
+  glm::mat4 projection;
+
+  if (orthographic) {
+    projection = glm::ortho(left*4, right*4, bottom*4, top*4);
+  }
+  else {
+    projection = glm::perspective(fov, aspect, nearf, farf);
+  }
+
+  glm::mat4 view = glm::rotate(
+                     glm::translate(
+                       glm::mat4(1.0f),
+                       glm::vec3(0.0f, 0.0f, -5.0f)),
+                     35.264f, glm::vec3(1.0f, 0.0f, 0.0f));
+
+  if (!orthographic) {
+    view = glm::rotate(view, 35.264f, glm::vec3(1.0f, 0.0f, 0.0f));
+  } 
+
+  view = glm::scale(
+           glm::translate(
+             glm::rotate(view, (float)rotation, glm::vec3(0.0f, 1.0f, 0.0f)),
+             glm::vec3(translationX, 0, translationZ)),
+           glm::vec3(zoom, zoom, zoom));
+
+  glm::mat4 model = glm::mat4(1.0);
+
+  _vao.uploadUniform("model", model);
+  _vao.uploadUniform("view",  view);
+  _vao.uploadUniform("proj",  projection);
+  //renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
+  
+  glClearColor( 0.4f, 0.4f, 0.4f, 1.0f );
+  glClear( GL_COLOR_BUFFER_BIT );
+  // Draw a rectangle from the 2 triangles using 6 indices
+  _vao.draw();
   return;
 
   float half_height = map->height() / 2.0f;

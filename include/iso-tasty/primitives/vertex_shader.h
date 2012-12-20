@@ -22,7 +22,7 @@ namespace IsoTasty {
       /*
        *  Gives the identifier for this vertex shader.
        */
-      unsigned int identifer() const;
+      unsigned int identifier() const;
 
     private:
       unsigned int _vertexShader;

@@ -4,6 +4,13 @@
 #include "iso-tasty/renderer.h"
 #include "iso-tasty/map.h"
 
+#include "iso-tasty/primitives/fragment_shader.h"
+#include "iso-tasty/primitives/vertex_shader.h"
+#include "iso-tasty/primitives/vertex_array.h"
+#include "iso-tasty/primitives/vertex_buffer.h"
+#include "iso-tasty/primitives/unlinked_program.h"
+#include "iso-tasty/primitives/program.h"
+
 namespace IsoTasty {
   class Viewport {
   public:
@@ -36,6 +43,8 @@ namespace IsoTasty {
     // The size of the viewport
     unsigned int _width;
     unsigned int _height;
+
+    Primitives::VertexArray _vao;
   };
 }
 

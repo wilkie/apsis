@@ -1,0 +1,37 @@
+#include "iso-tasty/primitives/texture.h"
+
+// Include GLEW
+#define GLEW_STATIC
+#include <GL/glew.h>
+
+#ifndef NO_GL
+  #ifdef _WIN32
+  #include <windows.h>
+  #endif
+
+  #include <GL/gl.h>
+  #include <GL/glu.h>
+#endif
+
+#include "SOIL.h"
+
+IsoTasty::Primitives::Texture::Texture(const char* name) {
+  glGenTextures(1, &_texture);
+
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, _texture);
+
+  unsigned char* image = SOIL_load_image(name, (int*)&_width, (int*)&_height, 0, SOIL_LOAD_RGB);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+  SOIL_free_image_data(image);
+}
+
+IsoTasty::Primitives::Texture::~Texture() {
+  if (_counter.isAlone()) {
+    glDeleteTextures(1, &_texture);
+  }
+}
+
+unsigned int IsoTasty::Primitives::Texture::identifier() const {
+  return this->_texture;
+}

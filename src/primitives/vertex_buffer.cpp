@@ -1,6 +1,7 @@
 #include "iso-tasty/primitives/vertex_buffer.h"
 
 // Include GLEW
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #ifndef NO_GL
@@ -18,10 +19,20 @@ IsoTasty::Primitives::VertexBuffer::VertexBuffer() {
 
 IsoTasty::Primitives::VertexBuffer::~VertexBuffer() {
   if (_counter.isAlone()) {
-    glDeleteBuffers(1, &this->_vbo);
+    //glDeleteBuffers(1, &this->_vbo);
   }
 }
 
-unsigned int IsoTasty::Primitives::VertexBuffer::identifer() const {
+void IsoTasty::Primitives::VertexBuffer::transfer(float elements[], unsigned int count) {
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * 4, elements, GL_STATIC_DRAW);
+}
+
+void IsoTasty::Primitives::VertexBuffer::transfer(unsigned int elements[], unsigned int count) {
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * 4, elements, GL_STATIC_DRAW);
+}
+
+unsigned int IsoTasty::Primitives::VertexBuffer::identifier() const {
   return this->_vbo;
 }

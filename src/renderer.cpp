@@ -50,6 +50,7 @@ void IsoTasty::Renderer::clear() {
 }
 
 bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int height) {
+  return true;
   glClearColor(0, 0, 0, 0);
   glClearDepth(1.0f);
  

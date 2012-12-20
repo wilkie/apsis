@@ -1,6 +1,7 @@
 #include "iso-tasty/primitives/unlinked_program.h"
 
 // Include GLEW
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #ifndef NO_GL
@@ -12,7 +13,8 @@
   #include <GL/glu.h>
 #endif
 
-IsoTasty::Primitives::UnlinkedProgram::UnlinkedProgram() {
+IsoTasty::Primitives::UnlinkedProgram::UnlinkedProgram() :
+  _linked(false) {
   this->_program = glCreateProgram();
 }
 
@@ -24,17 +26,25 @@ IsoTasty::Primitives::UnlinkedProgram::~UnlinkedProgram() {
   }
 }
 
-void IsoTasty::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) const {
+void IsoTasty::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) {
   if (_linked) throw "Program already linked. Cannot attach vertex shader.";
-  glAttachShader(this->_program, vertexShader.identifer());
+  _vertexShaders.push_back(vertexShader);
+  glAttachShader(this->_program, vertexShader.identifier());
 }
 
-void IsoTasty::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) const {
+void IsoTasty::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) {
   if (_linked) throw "Program already linked. Cannot attach fragment shader.";
-  glAttachShader(this->_program, fragmentShader.identifer());
+  _fragmentShaders.push_back(fragmentShader);
+  glAttachShader(this->_program, fragmentShader.identifier());
+}
+
+void IsoTasty::Primitives::UnlinkedProgram::defineFragmentOutput(const char* name) {
+  glBindFragDataLocation(this->_program, 0, name);
 }
 
 IsoTasty::Primitives::Program IsoTasty::Primitives::UnlinkedProgram::link() {
+  if (_linked) throw "Program already linked. Cannot link again.";
+  glLinkProgram(_program);
   _linked = true;
-  return Program(_program);
+  return Program(_program, _vertexShaders, _fragmentShaders);
 }

@@ -14,9 +14,15 @@ namespace IsoTasty {
       ~VertexBuffer();
 
       /*
+       *  Copies the given data to the buffer.
+       */
+      void transfer(float elements[], unsigned int count);
+      void transfer(unsigned int elements[], unsigned int count);
+
+      /*
        *  Gives the identifier for this vertex buffer.
        */
-      unsigned int identifer() const;
+      unsigned int identifier() const;
 
     private:
       unsigned int _vbo;

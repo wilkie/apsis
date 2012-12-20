@@ -13,6 +13,7 @@ namespace IsoTasty {
        */
       ReferenceCounter();
       ReferenceCounter(const ReferenceCounter&);
+      ReferenceCounter& operator= (const ReferenceCounter&);
       ~ReferenceCounter();
 
       /*
@@ -26,8 +27,6 @@ namespace IsoTasty {
       unsigned int value() const;
 
     private:
-      // Do not allow this; it isn't useful in the intended usecase anyway.
-      ReferenceCounter& operator= (const ReferenceCounter&);
 
       AtomicCounter* _counter;
     };

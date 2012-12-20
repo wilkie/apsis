@@ -42,7 +42,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -78,12 +78,17 @@
     <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp" />
     <ClCompile Include="..\..\src\primitives\program.cpp" />
+    <ClCompile Include="..\..\src\primitives\texture.cpp" />
     <ClCompile Include="..\..\src\primitives\unlinked_program.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_array.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_shader.cpp" />
     <ClCompile Include="..\..\src\renderer.cpp" />
-    <ClCompile Include="..\..\src\support\glew.c" />
+    <ClCompile Include="..\..\src\support\glew\glew.c" />
+    <ClCompile Include="..\..\src\support\soil\image_DXT.c" />
+    <ClCompile Include="..\..\src\support\soil\image_helper.c" />
+    <ClCompile Include="..\..\src\support\soil\SOIL.c" />
+    <ClCompile Include="..\..\src\support\soil\stb_image_aug.c" />
     <ClCompile Include="..\..\src\sync\atomic_counter.cpp" />
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
@@ -110,6 +115,7 @@
     <ClInclude Include="..\..\include\iso-tasty\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\fragment_shader.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\program.h" />
+    <ClInclude Include="..\..\include\iso-tasty\primitives\texture.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\unlinked_program.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_array.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_buffer.h" />
@@ -119,6 +125,12 @@
     <ClInclude Include="..\..\include\iso-tasty\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\iso-tasty\tile.h" />
     <ClInclude Include="..\..\include\iso-tasty\viewport.h" />
+    <ClInclude Include="..\..\include\SOIL.h" />
+    <ClInclude Include="..\..\src\support\soil\image_DXT.h" />
+    <ClInclude Include="..\..\src\support\soil\image_helper.h" />
+    <ClInclude Include="..\..\src\support\soil\stbi_DDS_aug.h" />
+    <ClInclude Include="..\..\src\support\soil\stbi_DDS_aug_c.h" />
+    <ClInclude Include="..\..\src\support\soil\stb_image_aug.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\shaders\fragment\colorize.glsl" />

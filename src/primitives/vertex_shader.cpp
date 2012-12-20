@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 // Include GLEW
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #ifndef NO_GL
@@ -31,7 +32,7 @@ IsoTasty::Primitives::VertexShader::~VertexShader() {
 }
 
 IsoTasty::Primitives::VertexShader IsoTasty::Primitives::VertexShader::fromFile(const char* path) {
-  FILE* f = fopen(path, "r");
+  FILE* f = fopen(path, "rb");
   if (f == NULL) {
     throw "Shader not found.";
   }
@@ -49,9 +50,7 @@ IsoTasty::Primitives::VertexShader IsoTasty::Primitives::VertexShader::fromFile(
     throw "Memory depleted";
   }
 
-  for (unsigned int i = 0; !feof(f); i++) {
-    source[i] = getc(f);
-  }
+  fread(source, 1, file_length, f);
 
   source[file_length] = 0;
 
@@ -62,6 +61,6 @@ IsoTasty::Primitives::VertexShader IsoTasty::Primitives::VertexShader::fromFile(
   return ret;
 }
 
-unsigned int IsoTasty::Primitives::VertexShader::identifer() const {
+unsigned int IsoTasty::Primitives::VertexShader::identifier() const {
   return this->_vertexShader;
 }

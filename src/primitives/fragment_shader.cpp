@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 // Include GLEW
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #ifndef NO_GL
@@ -26,12 +27,12 @@ IsoTasty::Primitives::FragmentShader::FragmentShader(const char* source) {
 
 IsoTasty::Primitives::FragmentShader::~FragmentShader() {
   if (_counter.isAlone()) {
-    glDeleteShader(this->_fragmentShader);
+    //glDeleteShader(this->_fragmentShader);
   }
 }
 
 IsoTasty::Primitives::FragmentShader IsoTasty::Primitives::FragmentShader::fromFile(const char* path) {
-  FILE* f = fopen(path, "r");
+  FILE* f = fopen(path, "rb");
   if (f == NULL) {
     throw "Shader not found.";
   }
@@ -49,9 +50,7 @@ IsoTasty::Primitives::FragmentShader IsoTasty::Primitives::FragmentShader::fromF
     throw "Memory depleted";
   }
 
-  for (unsigned int i = 0; !feof(f); i++) {
-    source[i] = getc(f);
-  }
+  fread(source, 1, file_length, f);
 
   source[file_length] = 0;
 
@@ -62,6 +61,6 @@ IsoTasty::Primitives::FragmentShader IsoTasty::Primitives::FragmentShader::fromF
   return ret;
 }
 
-unsigned int IsoTasty::Primitives::FragmentShader::identifer() const {
+unsigned int IsoTasty::Primitives::FragmentShader::identifier() const {
   return this->_fragmentShader;
 }

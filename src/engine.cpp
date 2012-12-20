@@ -44,9 +44,6 @@ IsoTasty::Engine::Engine(VideoSettings* video) {
   _renderer = new Renderer();
   newMap(50, 50);
 
-  GLuint vao;
-  //glGenVertexArrays(1, &vao);
-
   _input = new InputEngine();
 
   // Adding some events just because
@@ -175,7 +172,7 @@ bool IsoTasty::Engine::_startSDL() {
   SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
   SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
 
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
+  //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
   SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
 
   SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      8);
