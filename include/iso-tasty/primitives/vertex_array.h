@@ -76,9 +76,9 @@ namespace IsoTasty {
 
       Sync::ReferenceCounter _counter;
 
-      std::vector<Program>         _programs;
-      std::map<unsigned int, bool> _textures;
-      std::map<std::string, int>   _uniforms;
+      std::vector<Program>            _programs;
+      std::map<unsigned int, Texture> _textures;
+      std::map<std::string, int>      _uniforms;
     };
   }
 }

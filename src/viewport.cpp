@@ -47,21 +47,29 @@ IsoTasty::Viewport::Viewport(unsigned int width, unsigned int height) :
 
   Primitives::VertexBuffer vbo;
   float vertices[] = {
-    -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-     0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
-     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-    -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
+  //  Position      Color             Texcoords
+      -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
+       0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
+       0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+      -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
   };
   vbo.transfer(vertices, sizeof(vertices));
 
+  Primitives::Texture t = Primitives::Texture("../../resources/sample.png");
+
   _vao.useProgram(program);
-  program.defineInput("position", vbo, 2, Primitives::Program::Type::Float, false, 5, 0);
-  program.defineInput("color",    vbo, 3, Primitives::Program::Type::Float, false, 5, 2);
+  program.defineInput("position", vbo, 2, Primitives::Program::Type::Float, false, 7, 0);
+  program.defineInput("color",    vbo, 3, Primitives::Program::Type::Float, false, 7, 2);
+  program.defineInput("texcoord", vbo, 2, Primitives::Program::Type::Float, false, 7, 5);
   _vao.bindElements(ebo);
 
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
   _vao.defineUniform("proj",  program);
+  _vao.defineUniform("tex",   program);
+
+  _vao.bindTexture(0, t);
+  _vao.uploadUniform("tex", 0);
 }
 
 unsigned int IsoTasty::Viewport::width() {

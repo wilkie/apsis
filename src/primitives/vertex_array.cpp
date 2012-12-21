@@ -84,10 +84,12 @@ void IsoTasty::Primitives::VertexArray::uploadUniform(int identifier,
 }
 
 void IsoTasty::Primitives::VertexArray::bindTexture(unsigned int slot, Texture& texture) {
-  std::map<unsigned int, bool>::iterator it = _textures.find(slot);
-  _textures.erase(it);
+  std::map<unsigned int, Texture>::iterator it = _textures.find(slot);
+  if (it != _textures.end()) {
+    _textures.erase(it);
+  }
 
-  _textures[slot] = true;
+  _textures.insert(_textures.begin(), std::pair<unsigned int, Texture>(slot, texture));
 
   if (slot > 31) {
     throw "Cannot bind texture. Slot too high.";

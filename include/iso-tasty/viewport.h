@@ -10,6 +10,7 @@
 #include "iso-tasty/primitives/vertex_buffer.h"
 #include "iso-tasty/primitives/unlinked_program.h"
 #include "iso-tasty/primitives/program.h"
+#include "iso-tasty/primitives/texture.h"
 
 namespace IsoTasty {
   class Viewport {
