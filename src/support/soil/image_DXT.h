@@ -10,10 +10,6 @@
 #ifndef HEADER_IMAGE_DXT
 #define HEADER_IMAGE_DXT
 
-#ifdef _WIN32
-  #define _CRT_SECURE_NO_WARNINGS
-#endif
-
 /**
 	Converts an image from an array of unsigned chars (RGB or RGBA) to
 	DXT1 or DXT5, then saves the converted image to disk.

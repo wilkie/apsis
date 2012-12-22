@@ -66,10 +66,6 @@
 #ifndef HEADER_STB_IMAGE_AUGMENTED
 #define HEADER_STB_IMAGE_AUGMENTED
 
-#ifdef _WIN32
-  #define _CRT_SECURE_NO_WARNINGS
-#endif
-
 ////   begin header file  ////////////////////////////////////////////////////
 //
 // Limitations:

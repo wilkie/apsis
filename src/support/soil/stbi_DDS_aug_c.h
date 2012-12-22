@@ -2,10 +2,6 @@
 ///	DDS file support, does decoding, _not_ direct uploading
 ///	(use SOIL for that ;-)
 
-#ifdef _WIN32
-  #define _CRT_SECURE_NO_WARNINGS
-#endif
-
 ///	A bunch of DirectDraw Surface structures and flags
 typedef struct {
     unsigned int    dwMagic;

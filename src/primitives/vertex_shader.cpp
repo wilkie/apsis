@@ -1,9 +1,5 @@
 #include "iso-tasty/primitives/vertex_shader.h"
 
-#ifdef _WIN32
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <stdio.h>
 
 // Include GLEW
