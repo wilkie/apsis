@@ -33,6 +33,11 @@ void IsoTasty::Primitives::VertexArray::use() {
 void IsoTasty::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
   glBindVertexArray(this->_vao);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.identifier());
+
+  if (_elementBuffer.size() > 0) {
+    _elementBuffer.clear();
+  }
+  _elementBuffer.push_back(buffer);
 }
 
 void IsoTasty::Primitives::VertexArray::useProgram(Program& program) {
@@ -49,13 +54,21 @@ void IsoTasty::Primitives::VertexArray::useProgram(Program& program) {
 }
 
 void IsoTasty::Primitives::VertexArray::draw() {
+  unsigned int count = 0;
+  if (_elementBuffer.size() > 0) {
+    count = _elementBuffer[0].count();
+  }
+
   glBindVertexArray(this->_vao);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
 }
 
 int IsoTasty::Primitives::VertexArray::defineUniform(const char* name, Program& program) {
   useProgram(program);
   GLint uniform = glGetUniformLocation(program.identifier(), name);
+  if (uniform < 0) {
+    throw "Cannot upload uniform. Uniform not found.";
+  }
   std::string key = name;
   _uniforms[name] = uniform;
   return uniform;

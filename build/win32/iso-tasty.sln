@@ -2,11 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iso-tasty", "iso-tasty.vcxproj", "{559F58DF-1E22-49BF-A853-45169DFFB2D7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{30BB4431-EE15-43DC-AC23-247FAD574746} = {30BB4431-EE15-43DC-AC23-247FAD574746}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "..\assimp\assimp.vcxproj", "{30BB4431-EE15-43DC-AC23-247FAD574746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,10 +13,6 @@ Global
 		{559F58DF-1E22-49BF-A853-45169DFFB2D7}.Debug|Win32.Build.0 = Debug|Win32
 		{559F58DF-1E22-49BF-A853-45169DFFB2D7}.Release|Win32.ActiveCfg = Release|Win32
 		{559F58DF-1E22-49BF-A853-45169DFFB2D7}.Release|Win32.Build.0 = Release|Win32
-		{30BB4431-EE15-43DC-AC23-247FAD574746}.Debug|Win32.ActiveCfg = Debug|Win32
-		{30BB4431-EE15-43DC-AC23-247FAD574746}.Debug|Win32.Build.0 = Debug|Win32
-		{30BB4431-EE15-43DC-AC23-247FAD574746}.Release|Win32.ActiveCfg = Release|Win32
-		{30BB4431-EE15-43DC-AC23-247FAD574746}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

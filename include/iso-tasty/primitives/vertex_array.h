@@ -79,6 +79,8 @@ namespace IsoTasty {
       std::vector<Program>            _programs;
       std::map<unsigned int, Texture> _textures;
       std::map<std::string, int>      _uniforms;
+
+      std::vector<VertexBuffer> _elementBuffer;
     };
   }
 }

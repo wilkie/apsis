@@ -16,8 +16,13 @@ namespace IsoTasty {
       /*
        *  Copies the given data to the buffer.
        */
-      void transfer(float elements[], unsigned int count);
-      void transfer(unsigned int elements[], unsigned int count);
+      void transfer(const float* elements, unsigned int count);
+      void transfer(const unsigned int* elements, unsigned int count);
+
+      /*
+       *  Returns the number of elements in the buffer.
+       */
+      unsigned int count() const;
 
       /*
        *  Gives the identifier for this vertex buffer.
@@ -26,6 +31,7 @@ namespace IsoTasty {
 
     private:
       unsigned int _vbo;
+      unsigned int _count;
       Sync::ReferenceCounter _counter;
     };
   }

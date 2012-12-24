@@ -45,6 +45,11 @@ void IsoTasty::Primitives::UnlinkedProgram::defineFragmentOutput(const char* nam
 IsoTasty::Primitives::Program IsoTasty::Primitives::UnlinkedProgram::link() {
   if (_linked) throw "Program already linked. Cannot link again.";
   glLinkProgram(_program);
+  GLint status;
+  glGetProgramiv(_program, GL_LINK_STATUS, &status);
+  if (status != GL_TRUE) {
+    throw "Cannot link program";
+  }
   _linked = true;
   return Program(_program, _vertexShaders, _fragmentShaders);
 }

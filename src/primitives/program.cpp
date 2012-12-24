@@ -39,6 +39,9 @@ void IsoTasty::Primitives::Program::defineInput(const char* name,
                                                 unsigned int  offset) const {
   glUseProgram(this->_program);
   GLint posAttrib = glGetAttribLocation(this->_program, name);
+  if (posAttrib < 0) {
+    throw "Cannot define input. Input not found.";
+  }
   glBindBuffer(GL_ARRAY_BUFFER, buffer.identifier());
   glEnableVertexAttribArray(posAttrib);
 
@@ -57,12 +60,18 @@ void IsoTasty::Primitives::Program::defineInput(const char* name,
 void IsoTasty::Primitives::Program::uploadUniform(const char* name,
                                                   glm::mat4&  mat) const {
   GLint uniform = glGetUniformLocation(this->_program, name);
+  if (uniform < 0) {
+    throw "Cannot upload uniform. Uniform not found.";
+  }
   glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 void IsoTasty::Primitives::Program::uploadUniform(const char* name,
                                                   int         value) const {
   GLint uniform = glGetUniformLocation(this->_program, name);
+  if (uniform < 0) {
+    throw "Cannot upload uniform. Uniform not found.";
+  }
   glUniform1i(uniform, value);
 }
 

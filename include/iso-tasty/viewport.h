@@ -12,6 +12,8 @@
 #include "iso-tasty/primitives/program.h"
 #include "iso-tasty/primitives/texture.h"
 
+#include "iso-tasty/model/thing.h"
+
 namespace IsoTasty {
   class Viewport {
   public:
@@ -45,7 +47,7 @@ namespace IsoTasty {
     unsigned int _width;
     unsigned int _height;
 
-    Primitives::VertexArray _vao;
+    std::vector<Model::Thing> _things;
   };
 }
 

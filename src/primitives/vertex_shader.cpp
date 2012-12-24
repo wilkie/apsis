@@ -18,7 +18,16 @@
 IsoTasty::Primitives::VertexShader::VertexShader(const char* source) {
   this->_vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(this->_vertexShader, 1, &source, NULL);
-  glCompileShader(this->_vertexShader );
+  glCompileShader(this->_vertexShader);
+  GLint status;
+  glGetShaderiv(this->_vertexShader, GL_COMPILE_STATUS, &status);
+  if (status != GL_TRUE) {
+    // Get errors
+    GLchar buffer[2048];
+    GLsizei buffer_len;
+    glGetShaderInfoLog(this->_vertexShader, sizeof(buffer), &buffer_len, buffer);
+    throw buffer;
+  }
 }
 
 IsoTasty::Primitives::VertexShader::~VertexShader() {

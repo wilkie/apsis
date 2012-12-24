@@ -5,6 +5,7 @@
 
 #define GLEW_STATIC
 #include <GL/glew.h>
+
 #ifndef NO_GL
   #ifdef _WIN32
   #include <windows.h>
@@ -28,48 +29,8 @@ IsoTasty::Viewport::Viewport(unsigned int width, unsigned int height) :
   _x(0.0),
   _z(0.0),
   _zoom(0.25) {
-
-  Primitives::VertexBuffer ebo;
-  unsigned int elements[] = {
-    0, 1, 2,
-    2, 3, 0
-  };
-  ebo.transfer(elements, sizeof(elements));
-
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
-
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
-
-  Primitives::VertexBuffer vbo;
-  float vertices[] = {
-  //  Position      Color             Texcoords
-      -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-       0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-       0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-      -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
-  };
-  vbo.transfer(vertices, sizeof(vertices));
-
-  Primitives::Texture t = Primitives::Texture("../../resources/sample.png");
-
-  _vao.useProgram(program);
-  program.defineInput("position", vbo, 2, Primitives::Program::Type::Float, false, 7, 0);
-  program.defineInput("color",    vbo, 3, Primitives::Program::Type::Float, false, 7, 2);
-  program.defineInput("texcoord", vbo, 2, Primitives::Program::Type::Float, false, 7, 5);
-  _vao.bindElements(ebo);
-
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-  _vao.defineUniform("tex",   program);
-
-  _vao.bindTexture(0, t);
-  _vao.uploadUniform("tex", 0);
+  Model::Thing thing = Model::Thing("../../resources/unit_cube.dae");
+  _things.push_back(thing);
 }
 
 unsigned int IsoTasty::Viewport::width() {
@@ -141,15 +102,16 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 
   glm::mat4 model = glm::mat4(1.0);
 
-  _vao.uploadUniform("model", model);
-  _vao.uploadUniform("view",  view);
-  _vao.uploadUniform("proj",  projection);
   //renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
   
-  glClearColor( 0.4f, 0.4f, 0.4f, 1.0f );
-  glClear( GL_COLOR_BUFFER_BIT );
-  // Draw a rectangle from the 2 triangles using 6 indices
-  _vao.draw();
+  glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+  glEnable(GL_DEPTH_TEST);
+
+  for (unsigned int i = 0; i < _things.size(); i++) {
+    _things[i].draw(projection, view, model);
+  }
   return;
 
   float half_height = map->height() / 2.0f;

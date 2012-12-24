@@ -19,6 +19,15 @@ IsoTasty::Primitives::FragmentShader::FragmentShader(const char* source) {
   this->_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(this->_fragmentShader, 1, &source, NULL);
   glCompileShader(this->_fragmentShader);
+  GLint status;
+  glGetShaderiv(this->_fragmentShader, GL_COMPILE_STATUS, &status);
+  if (status != GL_TRUE) {
+    // Get errors
+    GLchar buffer[2048];
+    GLsizei buffer_len;
+    glGetShaderInfoLog(this->_fragmentShader, sizeof(buffer), &buffer_len, buffer);
+    throw buffer;
+  }
 }
 
 IsoTasty::Primitives::FragmentShader::~FragmentShader() {
