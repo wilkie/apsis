@@ -96,6 +96,42 @@ void IsoTasty::Primitives::VertexArray::uploadUniform(int identifier,
   glUniform1i(identifier, value);
 }
 
+void IsoTasty::Primitives::VertexArray::uploadUniform(const char* name,
+                                                      float       value) const {
+  std::string key = name;
+  GLint uniform = _uniforms.find(key)->second;
+  uploadUniform(uniform, value);
+}
+
+void IsoTasty::Primitives::VertexArray::uploadUniform(int   identifier,
+                                                      float value) const {
+  glUniform1f(identifier, value);
+}
+
+void IsoTasty::Primitives::VertexArray::uploadUniform(const char* name,
+                                                      glm::vec3&  value) const {
+  std::string key = name;
+  GLint uniform = _uniforms.find(key)->second;
+  uploadUniform(uniform, value);
+}
+
+void IsoTasty::Primitives::VertexArray::uploadUniform(int        identifier,
+                                                      glm::vec3& value) const {
+  glUniform3fv(identifier, 1, glm::value_ptr(value));
+}
+
+void IsoTasty::Primitives::VertexArray::uploadUniform(const char* name,
+                                                      glm::vec4&  value) const {
+  std::string key = name;
+  GLint uniform = _uniforms.find(key)->second;
+  uploadUniform(uniform, value);
+}
+
+void IsoTasty::Primitives::VertexArray::uploadUniform(int        identifier,
+                                                      glm::vec4& value) const {
+  glUniform4fv(identifier, 1, glm::value_ptr(value));
+}
+
 void IsoTasty::Primitives::VertexArray::bindTexture(unsigned int slot, Texture& texture) {
   std::map<unsigned int, Texture>::iterator it = _textures.find(slot);
   if (it != _textures.end()) {

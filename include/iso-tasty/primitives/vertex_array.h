@@ -55,6 +55,24 @@ namespace IsoTasty {
       void uploadUniform(int identifier, int value) const;
 
       /*
+       *  Transfer a float to a uniform.
+       */
+      void uploadUniform(const char* name, float value) const;
+      void uploadUniform(int identifier, float value) const;
+
+      /*
+       *  Transfer a 3d vector to a uniform.
+       */
+      void uploadUniform(const char* name, glm::vec3& value) const;
+      void uploadUniform(int identifier, glm::vec3& value) const;
+
+      /*
+       *  Transfer a 4d vector to a uniform.
+       */
+      void uploadUniform(const char* name, glm::vec4& value) const;
+      void uploadUniform(int identifier, glm::vec4& value) const;
+
+      /*
        *  Bind a texture.
        */
       void bindTexture(unsigned int slot, Texture& texture);

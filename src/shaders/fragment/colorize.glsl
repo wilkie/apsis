@@ -6,6 +6,8 @@ out vec4 outColor;
 
 uniform sampler2D tex;
 
+vec4 directional_lighting(vec4);
+
 void main() {
-  outColor = texture(tex, Texcoord);
+  outColor = directional_lighting(texture(tex, Texcoord));
 }

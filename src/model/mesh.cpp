@@ -41,25 +41,37 @@ IsoTasty::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
+  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/directional_lighting.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);
   unlinked.attach(fs);
+  unlinked.attach(ls);
   unlinked.defineFragmentOutput("outColor");
   Primitives::Program program = unlinked.link();
 
   _vao.useProgram(program);
   program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 8, 0);
-  //program.defineInput("normal",   _vbo, 3, Primitives::Program::Type::Float, false, 8, 3);
-  //program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 8, 6);
+  program.defineInput("normal",   _vbo, 3, Primitives::Program::Type::Float, false, 8, 3);
+  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 8, 6);
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
   _vao.defineUniform("proj",  program);
+
+  _vao.defineUniform("light.ambient_intensity",  program);
+  _vao.defineUniform("light.diffuse_intensity",  program);
+  _vao.defineUniform("light.color",  program);
+  _vao.defineUniform("light.direction",  program);
 
   Primitives::Texture t = Primitives::Texture("../../resources/sample.png");
   _vao.defineUniform("tex", program);
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
+
+  _vao.uploadUniform("light.ambient_intensity", 0.5f);
+  _vao.uploadUniform("light.diffuse_intensity", 0.9f);
+  _vao.uploadUniform("light.direction", glm::vec3(0.0, 0.0, 1.0));
+  _vao.uploadUniform("light.color", glm::vec3(1.0, 0.0, 1.0));
 }
 
 IsoTasty::Model::Mesh::~Mesh() {

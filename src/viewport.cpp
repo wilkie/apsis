@@ -104,7 +104,7 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
 
   //renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
   
-  glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   glEnable(GL_DEPTH_TEST);
