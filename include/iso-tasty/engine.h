@@ -3,7 +3,7 @@
 
 // Infrastructure
 #include "iso-tasty/input/input_engine.h"
-#include "iso-tasty/clock.h"
+#include "iso-tasty/sync/clock.h"
 
 #include "iso-tasty/viewport.h"
 #include "iso-tasty/map.h"

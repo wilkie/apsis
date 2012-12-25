@@ -68,7 +68,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\clock.cpp" />
     <ClCompile Include="..\..\src\engine.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
     <ClCompile Include="..\..\src\geometry\line.cpp" />
@@ -232,6 +231,7 @@
     <ClCompile Include="..\..\src\support\zlib\trees.c" />
     <ClCompile Include="..\..\src\support\zlib\zutil.c" />
     <ClCompile Include="..\..\src\sync\atomic_counter.cpp" />
+    <ClCompile Include="..\..\src\sync\clock.cpp" />
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\tile.cpp" />
@@ -242,7 +242,6 @@
     <ClInclude Include="..\..\include\GL\glxew.h" />
     <ClInclude Include="..\..\include\GL\wglew.h" />
     <ClInclude Include="..\..\include\iso-tasty.h" />
-    <ClInclude Include="..\..\include\iso-tasty\clock.h" />
     <ClInclude Include="..\..\include\iso-tasty\engine.h" />
     <ClInclude Include="..\..\include\iso-tasty\geometry\circle.h" />
     <ClInclude Include="..\..\include\iso-tasty\geometry\line.h" />
@@ -267,6 +266,7 @@
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_shader.h" />
     <ClInclude Include="..\..\include\iso-tasty\renderer.h" />
     <ClInclude Include="..\..\include\iso-tasty\sync\atomic_counter.h" />
+    <ClInclude Include="..\..\include\iso-tasty\sync\clock.h" />
     <ClInclude Include="..\..\include\iso-tasty\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\iso-tasty\tile.h" />
     <ClInclude Include="..\..\include\iso-tasty\viewport.h" />
