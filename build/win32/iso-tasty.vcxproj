@@ -76,6 +76,7 @@
     <ClCompile Include="..\..\src\input\key_binding_repository.cpp" />
     <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\model\animation.cpp" />
+    <ClCompile Include="..\..\src\model\light.cpp" />
     <ClCompile Include="..\..\src\model\material.cpp" />
     <ClCompile Include="..\..\src\model\mesh.cpp" />
     <ClCompile Include="..\..\src\model\thing.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="..\..\include\iso-tasty\input\key_binding_repository.h" />
     <ClInclude Include="..\..\include\iso-tasty\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\animation.h" />
+    <ClInclude Include="..\..\include\iso-tasty\model\light.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\material.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\mesh.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\thing.h" />
