@@ -57,9 +57,12 @@ IsoTasty::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
   _vao.defineUniform("proj",  program);
+  _vao.defineUniform("camera",  program);
 
-  _vao.defineUniform("light.ambient_intensity",  program);
-  _vao.defineUniform("light.diffuse_intensity",  program);
+  _vao.defineUniform("material.ambient_intensity",  program);
+  _vao.defineUniform("material.diffuse_intensity",  program);
+  _vao.defineUniform("material.specular_intensity",  program);
+  _vao.defineUniform("material.shininess",  program);
   _vao.defineUniform("light.color",  program);
   _vao.defineUniform("light.direction",  program);
 
@@ -68,18 +71,22 @@ IsoTasty::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
-  _vao.uploadUniform("light.ambient_intensity", 0.5f);
-  _vao.uploadUniform("light.diffuse_intensity", 0.9f);
-  _vao.uploadUniform("light.direction", glm::vec3(0.0, 0.0, 1.0));
+  _materials.push_back(Material(0.2f, 5.0f, 8.0f, 15.0f));
+
+  _vao.uploadUniform("material.ambient_intensity", _materials[0].ambientIntensity());
+  _vao.uploadUniform("material.diffuse_intensity", _materials[0].diffuseIntensity());
+  _vao.uploadUniform("material.specular_intensity",  _materials[0].specularIntensity());
+  _vao.uploadUniform("material.shininess",  _materials[0].shininess());
+
+  _vao.uploadUniform("light.direction", glm::vec3(0.0, 1.0, 0.0));
   _vao.uploadUniform("light.color", glm::vec3(1.0, 0.0, 1.0));
 }
 
-IsoTasty::Model::Mesh::~Mesh() {
-}
-
-void IsoTasty::Model::Mesh::draw(glm::mat4& projection, glm::mat4& view, glm::mat4& model) {
+void IsoTasty::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model) {
   _vao.uploadUniform("proj", projection);
-  _vao.uploadUniform("view", view);
+  _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
+
+  _vao.uploadUniform("camera", camera.eye());
   _vao.draw();
 }

@@ -1,7 +1,5 @@
 #include "iso-tasty/renderer.h"
 
-#include "iso-tasty/geometry/vector3d.h"
-
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
@@ -593,9 +591,9 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   // v3--v2--v1--v0
 
   for (int i = 0; i < 16; i++) {
-    //vectors[i] = new Geometry::Vector3d(top_points[i]);
+    //vectors[i] = glm::vec3(top_points[i]);
   }
-  Geometry::Vector3d v = Geometry::Vector3d(0, 0, 0);
+  glm::vec3 v = glm::vec3(0.0f, 0.0f, 0.0f);
   for (int i = 0; i < sizeof(lookup); i++) {
     unsigned int index = (i*3) + 1;
     if (lookup[i] < 16) {

@@ -29,8 +29,11 @@ IsoTasty::Viewport::Viewport(unsigned int width, unsigned int height) :
   _x(0.0),
   _z(0.0),
   _zoom(0.25) {
-  Model::Thing thing = Model::Thing("../../resources/unit_cube.dae");
+
+  Model::Thing thing = Model::Thing("../../resources/monkey.dae");
+
   _things.push_back(thing);
+  _cameras.push_back(Primitives::Camera(glm::vec3(_x, 4.0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5)));
 }
 
 unsigned int IsoTasty::Viewport::width() {
@@ -100,6 +103,8 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
              glm::vec3(translationX, 0, translationZ)),
            glm::vec3(zoom, zoom, zoom));
 
+  view = _cameras[0].view();
+
   glm::mat4 model = glm::mat4(1.0);
 
   //renderer->setProjection(_width, _height, false, _rotation, _x, _z, _zoom);
@@ -110,7 +115,7 @@ void IsoTasty::Viewport::draw(Renderer* renderer, Map* map) {
   glEnable(GL_DEPTH_TEST);
 
   for (unsigned int i = 0; i < _things.size(); i++) {
-    _things[i].draw(projection, view, model);
+    _things[i].draw(projection, _cameras[0], model);
   }
   return;
 
@@ -192,6 +197,7 @@ void IsoTasty::Viewport::move(double deltaX, double deltaZ) {
   _x += deltaX*cosine - deltaZ*sine;
   _z += deltaX*sine + deltaZ*cosine;
 
+  _cameras[0] = Primitives::Camera(glm::vec3(_x, 4.0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5));
   //_x += deltaX;
   //_z += deltaZ;
 }

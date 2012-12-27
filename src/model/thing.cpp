@@ -89,8 +89,10 @@ void IsoTasty::Model::Thing::_addMaterial(const void* mat_ptr) {
   }
 }
 
-void IsoTasty::Model::Thing::draw(glm::mat4& projection, glm::mat4& view, glm::mat4& model) {
+void IsoTasty::Model::Thing::draw(glm::mat4& projection,
+                                  Primitives::Camera& camera,
+                                  glm::mat4& model) {
   for (unsigned int i = 0; i < _meshes.size(); i++) {
-    _meshes[i].draw(projection, view, model);
+    _meshes[i].draw(projection, camera, model);
   }
 }

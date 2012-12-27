@@ -1,8 +1,9 @@
 #ifndef ISOTASTY_MODEL_MESH_H
 #define ISOTASTY_MODEL_MESH_H
 
-#include "iso-tasty/sync/reference_counter.h"
+#include "iso-tasty/model/material.h"
 
+#include "iso-tasty/primitives/camera.h"
 #include "iso-tasty/primitives/vertex_array.h"
 #include "iso-tasty/primitives/vertex_buffer.h"
 
@@ -18,17 +19,16 @@ namespace IsoTasty {
            std::vector<glm::vec3>& normals,
            std::vector<glm::vec2>& textureCoords,
            std::vector<unsigned int>& elements);
-      ~Mesh();
 
-      void draw(glm::mat4& projection, glm::mat4& view, glm::mat4& model);
+      void draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model);
 
     private:
-      Sync::ReferenceCounter _counter;
-
       Primitives::VertexArray _vao;
 
       Primitives::VertexBuffer _vbo;
       Primitives::VertexBuffer _ebo;
+
+      std::vector<Material> _materials;
     };
   }
 }

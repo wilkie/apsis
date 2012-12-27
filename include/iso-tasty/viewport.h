@@ -4,6 +4,8 @@
 #include "iso-tasty/renderer.h"
 #include "iso-tasty/map.h"
 
+#include "iso-tasty/primitives/camera.h"
+
 #include "iso-tasty/primitives/fragment_shader.h"
 #include "iso-tasty/primitives/vertex_shader.h"
 #include "iso-tasty/primitives/vertex_array.h"
@@ -48,6 +50,7 @@ namespace IsoTasty {
     unsigned int _height;
 
     std::vector<Model::Thing> _things;
+    std::vector<Primitives::Camera> _cameras;
   };
 }
 
