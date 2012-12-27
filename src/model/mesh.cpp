@@ -72,14 +72,17 @@ IsoTasty::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("tex", 0);
 
   _materials.push_back(Material(0.2f, 5.0f, 8.0f, 15.0f));
+  _lights.push_back(Light(glm::vec3(0.0),
+                          glm::vec3(0.0, 1.0, 0.0),
+                          glm::vec3(1.0, 0.0, 1.0)));
 
   _vao.uploadUniform("material.ambient_intensity", _materials[0].ambientIntensity());
   _vao.uploadUniform("material.diffuse_intensity", _materials[0].diffuseIntensity());
   _vao.uploadUniform("material.specular_intensity",  _materials[0].specularIntensity());
   _vao.uploadUniform("material.shininess",  _materials[0].shininess());
 
-  _vao.uploadUniform("light.direction", glm::vec3(0.0, 1.0, 0.0));
-  _vao.uploadUniform("light.color", glm::vec3(1.0, 0.0, 1.0));
+  _vao.uploadUniform("light.direction", _lights[0].direction());
+  _vao.uploadUniform("light.color", _lights[0].color());
 }
 
 void IsoTasty::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model) {

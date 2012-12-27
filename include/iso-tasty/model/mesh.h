@@ -2,6 +2,7 @@
 #define ISOTASTY_MODEL_MESH_H
 
 #include "iso-tasty/model/material.h"
+#include "iso-tasty/model/light.h"
 
 #include "iso-tasty/primitives/camera.h"
 #include "iso-tasty/primitives/vertex_array.h"
@@ -29,6 +30,7 @@ namespace IsoTasty {
       Primitives::VertexBuffer _ebo;
 
       std::vector<Material> _materials;
+      std::vector<Light> _lights;
     };
   }
 }
