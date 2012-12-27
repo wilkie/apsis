@@ -11,7 +11,8 @@ namespace IsoTasty {
        *  Constructs a new representation of a light.
        */
       Light(glm::vec3& position,
-            glm::vec3& direction);
+            glm::vec3& direction,
+            glm::vec3& color);
 
       /*
        *  Retrieve the position of the light.
@@ -23,9 +24,15 @@ namespace IsoTasty {
        */
       glm::vec3& direction();
 
+      /*
+       *  Retrieve the color of the light.
+       */
+      glm::vec3& color();
+
     private:
       glm::vec3 _position;
       glm::vec3 _direction;
+      glm::vec3 _color;
     };
   }
 }
