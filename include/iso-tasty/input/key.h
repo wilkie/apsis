@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_KEY_H
-#define ISOTASTY_KEY_H
+#ifndef APSIS_KEY_H
+#define APSIS_KEY_H
 
 #undef DELETE
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Key {
     enum Code {
       NONE,

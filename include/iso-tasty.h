@@ -1,4 +1,4 @@
-/*	Iso-Tasty -- The OpenSource Isometric Game Engine  */
+/*	Iso-Tasty -- The OpenSource Isometric Game Apsis  */
 
 #include "iso-tasty/engine.h"
 #include "iso-tasty/map.h"

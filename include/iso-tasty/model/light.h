@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_MODEL_LIGHT_H
-#define ISOTASTY_MODEL_LIGHT_H
+#ifndef APSIS_MODEL_LIGHT_H
+#define APSIS_MODEL_LIGHT_H
 
 #include "glm/glm.hpp"
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Model {
     class Light {
     public:

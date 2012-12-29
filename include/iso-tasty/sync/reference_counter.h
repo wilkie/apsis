@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_SYNC_REFERENCE_COUNTER_H
-#define ISOTASTY_SYNC_REFERENCE_COUNTER_H
+#ifndef APSIS_SYNC_REFERENCE_COUNTER_H
+#define APSIS_SYNC_REFERENCE_COUNTER_H
 
 #include "iso-tasty/sync/atomic_counter.h"
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Sync {
     class ReferenceCounter {
     public:

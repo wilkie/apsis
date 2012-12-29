@@ -95,7 +95,7 @@ static void controlPoints(Point* points, Point* first, Point* second, unsigned i
   delete [] nodes;
 }
 
-IsoTasty::Map::Map(unsigned int width, unsigned int height) :
+Apsis::Map::Map(unsigned int width, unsigned int height) :
   _width(width),
   _height(height),
   _x(width/2), 
@@ -109,27 +109,27 @@ IsoTasty::Map::Map(unsigned int width, unsigned int height) :
   }
 }
 
-IsoTasty::Map::~Map() {
+Apsis::Map::~Map() {
   delete [] _map;
 }
 
-unsigned int IsoTasty::Map::width() {
+unsigned int Apsis::Map::width() {
   return _width;
 }
 
-unsigned int IsoTasty::Map::height() {
+unsigned int Apsis::Map::height() {
   return _height;
 }
 
-IsoTasty::Tile* IsoTasty::Map::atIndex(unsigned int x, unsigned int z) {
+Apsis::Tile* Apsis::Map::atIndex(unsigned int x, unsigned int z) {
   return _map[_width * x + z];
 }
 
-unsigned int IsoTasty::Map::x() {
+unsigned int Apsis::Map::x() {
   return _x;
 }
 
-unsigned int IsoTasty::Map::x(unsigned int value) {
+unsigned int Apsis::Map::x(unsigned int value) {
   _x = value;
   if (_x >= _width) {
     _x = _width-1;
@@ -137,11 +137,11 @@ unsigned int IsoTasty::Map::x(unsigned int value) {
   return _x;
 }
 
-unsigned int IsoTasty::Map::z() {
+unsigned int Apsis::Map::z() {
   return _z;
 }
 
-unsigned int IsoTasty::Map::z(unsigned int value) {
+unsigned int Apsis::Map::z(unsigned int value) {
   _z = value;
   if (_z >= _height) {
     _z = _height-1;
@@ -149,37 +149,37 @@ unsigned int IsoTasty::Map::z(unsigned int value) {
   return _z;
 }
 
-void IsoTasty::Map::raise(float amount) {
+void Apsis::Map::raise(float amount) {
   // Every tile this touches is raised a little bit
-  IsoTasty::Tile* tile;
+  Apsis::Tile* tile;
   float old_height;
 
   if (_x != _width && _z != _height) {
     // Bottom Right
     tile = atIndex(_x, _z);
-    old_height = tile->cornerHeight(IsoTasty::TOP_LEFT);
-    tile->cornerHeight(IsoTasty::TOP_LEFT, old_height + amount);
+    old_height = tile->cornerHeight(Apsis::TOP_LEFT);
+    tile->cornerHeight(Apsis::TOP_LEFT, old_height + amount);
   }
 
   if (_x != 0 && _z != _height) {
     // Bottom Left
     tile = atIndex(_x-1, _z);
-    old_height = tile->cornerHeight(IsoTasty::TOP_RIGHT);
-    tile->cornerHeight(IsoTasty::TOP_RIGHT, old_height + amount);
+    old_height = tile->cornerHeight(Apsis::TOP_RIGHT);
+    tile->cornerHeight(Apsis::TOP_RIGHT, old_height + amount);
   }
 
   if (_x != _width && _z != 0) {
     // Top Right
     tile = atIndex(_x, _z-1);
-    old_height = tile->cornerHeight(IsoTasty::BOT_LEFT);
-    tile->cornerHeight(IsoTasty::BOT_LEFT, old_height + amount);
+    old_height = tile->cornerHeight(Apsis::BOT_LEFT);
+    tile->cornerHeight(Apsis::BOT_LEFT, old_height + amount);
   }
 
   if (_x != 0 && _z != 0) {
     // Top Left
     tile = atIndex(_x-1, _z-1);
-    old_height = tile->cornerHeight(IsoTasty::BOT_RIGHT);
-    tile->cornerHeight(IsoTasty::BOT_RIGHT, old_height + amount);
+    old_height = tile->cornerHeight(Apsis::BOT_RIGHT);
+    tile->cornerHeight(Apsis::BOT_RIGHT, old_height + amount);
   }
 
   // Regenerate curve points along this point
@@ -196,11 +196,11 @@ void IsoTasty::Map::raise(float amount) {
   for (unsigned int x = 0; x < _width; x++) {
     tile = atIndex(x, _z);
     line[x].x = (float)x;
-    line[x].y = tile->cornerHeight(IsoTasty::TOP_LEFT);
+    line[x].y = tile->cornerHeight(Apsis::TOP_LEFT);
     line[x].z = 0.0f; // does not matter
   }
   line[_width].x = (float)_width;
-  line[_width].y = tile->cornerHeight(IsoTasty::TOP_RIGHT);
+  line[_width].y = tile->cornerHeight(Apsis::TOP_RIGHT);
   line[_width].z = 0.0f;
 
   controlPoints(line, first, second, _width+1);
@@ -209,12 +209,12 @@ void IsoTasty::Map::raise(float amount) {
 
   for (unsigned int x = 0; x < _width; x++) {
     tile = atIndex(x, _z);
-    tile->firstControl(IsoTasty::TOP_LEFT, first[x].y);
-    tile->secondControl(IsoTasty::TOP_LEFT, second[x].y);
+    tile->firstControl(Apsis::TOP_LEFT, first[x].y);
+    tile->secondControl(Apsis::TOP_LEFT, second[x].y);
     if (_z != 0) {
       tile = atIndex(x, _z-1);
-      tile->firstControl(IsoTasty::BOT_RIGHT, first[x].y);
-      tile->secondControl(IsoTasty::BOT_RIGHT, second[x].y);
+      tile->firstControl(Apsis::BOT_RIGHT, first[x].y);
+      tile->secondControl(Apsis::BOT_RIGHT, second[x].y);
     }
   }
 
@@ -231,11 +231,11 @@ void IsoTasty::Map::raise(float amount) {
   for (unsigned int z = 0; z < _height; z++) {
     tile = atIndex(_x, z);
     line[z].x = (float)z; // does not matter
-    line[z].y = tile->cornerHeight(IsoTasty::TOP_LEFT);
+    line[z].y = tile->cornerHeight(Apsis::TOP_LEFT);
     line[z].z = 0.0f;
   }
   line[_height].x = (float)_height;
-  line[_height].y = tile->cornerHeight(IsoTasty::BOT_LEFT);
+  line[_height].y = tile->cornerHeight(Apsis::BOT_LEFT);
   line[_height].z = 0.0f;
 
   controlPoints(line, first, second, _height+1);
@@ -244,12 +244,12 @@ void IsoTasty::Map::raise(float amount) {
 
   for (unsigned int z = 0; z < _height; z++) {
     tile = atIndex(_x, z);
-    tile->firstControl(IsoTasty::BOT_LEFT, first[z].y);
-    tile->secondControl(IsoTasty::BOT_LEFT, second[z].y);
+    tile->firstControl(Apsis::BOT_LEFT, first[z].y);
+    tile->secondControl(Apsis::BOT_LEFT, second[z].y);
     if (_x != 0) {
       tile = atIndex(_x-1, z);
-      tile->firstControl(IsoTasty::TOP_RIGHT, first[z].y);
-      tile->secondControl(IsoTasty::TOP_RIGHT, second[z].y);
+      tile->firstControl(Apsis::TOP_RIGHT, first[z].y);
+      tile->secondControl(Apsis::TOP_RIGHT, second[z].y);
     }
   }
 
@@ -258,9 +258,9 @@ void IsoTasty::Map::raise(float amount) {
   delete [] line;
 }
 
-void IsoTasty::Map::lift(float amount) {
+void Apsis::Map::lift(float amount) {
   // Just the one tile is raised at all corners
-  IsoTasty::Tile* tile;
+  Apsis::Tile* tile;
 
   tile = atIndex(_x, _z);
   for (unsigned int i = 0; i < 4; i++) {

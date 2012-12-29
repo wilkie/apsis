@@ -1,7 +1,7 @@
-#ifndef ISOTASTY_CLOCK_H
-#define ISOTASTY_CLOCK_H
+#ifndef APSIS_CLOCK_H
+#define APSIS_CLOCK_H
 
-namespace IsoTasty {
+namespace Apsis {
   /*
    *  Maintains a stopwatch that will return the elapsed time since the
    *    previous call.

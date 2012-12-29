@@ -1,5 +1,5 @@
 // Copyright (C) 2002-2005 Nikolaus Gebhardt
-// This file is part of the "Irrlicht Engine" and the "irrXML" project.
+// This file is part of the "Irrlicht Apsis" and the "irrXML" project.
 // For conditions of distribution and use, see copyright notice in irrlicht.h and/or irrXML.h
 
 // Need to include Assimp, too. We're using Assimp's version of fast_atof

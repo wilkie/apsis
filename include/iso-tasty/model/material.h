@@ -1,7 +1,7 @@
-#ifndef ISOTASTY_MODEL_MATERIAL_H
-#define ISOTASTY_MODEL_MATERIAL_H
+#ifndef APSIS_MODEL_MATERIAL_H
+#define APSIS_MODEL_MATERIAL_H
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Model {
     class Material {
     public:

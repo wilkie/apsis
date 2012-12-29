@@ -1,7 +1,7 @@
 #include "iso-tasty/input/input_engine.h"
 
-IsoTasty::InputEngine::InputEngine() {
-  _bindings = new IsoTasty::KeyBindingRepository();
+Apsis::InputEngine::InputEngine() {
+  _bindings = new Apsis::KeyBindingRepository();
 
 #ifndef NO_SDL
   // Enable the joystick
@@ -12,15 +12,15 @@ IsoTasty::InputEngine::InputEngine() {
 #endif
 }
 
-IsoTasty::InputEngine::~InputEngine() {
+Apsis::InputEngine::~InputEngine() {
   delete _bindings;
 }
 
-IsoTasty::KeyBindingRepository* IsoTasty::InputEngine::keyBindings() {
+Apsis::KeyBindingRepository* Apsis::InputEngine::keyBindings() {
   return _bindings;
 }
 
-int IsoTasty::InputEngine::forceEvent(bool pressed, KeyBinding* binding) {
+int Apsis::InputEngine::forceEvent(bool pressed, KeyBinding* binding) {
   int event = _bindings->yieldEvent(binding);
 
   if (event == 0) {
@@ -44,7 +44,7 @@ int IsoTasty::InputEngine::forceEvent(bool pressed, KeyBinding* binding) {
   return event;
 }
 
-bool IsoTasty::InputEngine::isEventHeld(int event) {
+bool Apsis::InputEngine::isEventHeld(int event) {
   for (unsigned int i = 0; i < _held.size(); i++) {
     if (_held[i] == event) {
       return true;
@@ -55,8 +55,8 @@ bool IsoTasty::InputEngine::isEventHeld(int event) {
 
 #ifndef NO_SDL
 // OMG LONG FUNCTION JEEZ WEEZ CHEEZ WIZ (tm).
-bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_Event* event) {
-  binding->key = IsoTasty::Key::NONE;
+bool Apsis::InputEngine::_translateSDLKey(Apsis::KeyBinding* binding, SDL_Event* event) {
+  binding->key = Apsis::Key::NONE;
   if (event->type == SDL_KEYDOWN || event->type == SDL_KEYUP) {
     if (event->key.keysym.mod & (KMOD_RSHIFT | KMOD_LSHIFT)) {
       binding->shift = true;
@@ -70,201 +70,201 @@ bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_
 
     switch (event->key.keysym.sym) {
       case SDLK_LEFT:
-        binding->key = IsoTasty::Key::LEFT;
+        binding->key = Apsis::Key::LEFT;
         break;
       case SDLK_RIGHT:
-        binding->key = IsoTasty::Key::RIGHT;
+        binding->key = Apsis::Key::RIGHT;
         break;
       case SDLK_UP:
-        binding->key = IsoTasty::Key::UP;
+        binding->key = Apsis::Key::UP;
         break;
       case SDLK_DOWN:
-        binding->key = IsoTasty::Key::DOWN;
+        binding->key = Apsis::Key::DOWN;
         break;
       case SDLK_a:
-        binding->key = IsoTasty::Key::A;
+        binding->key = Apsis::Key::A;
         break;
       case SDLK_b:
-        binding->key = IsoTasty::Key::B;
+        binding->key = Apsis::Key::B;
         break;
       case SDLK_c:
-        binding->key = IsoTasty::Key::C;
+        binding->key = Apsis::Key::C;
         break;
       case SDLK_d:
-        binding->key = IsoTasty::Key::D;
+        binding->key = Apsis::Key::D;
         break;
       case SDLK_e:
-        binding->key = IsoTasty::Key::E;
+        binding->key = Apsis::Key::E;
         break;
       case SDLK_f:
-        binding->key = IsoTasty::Key::F;
+        binding->key = Apsis::Key::F;
         break;
       case SDLK_g:
-        binding->key = IsoTasty::Key::G;
+        binding->key = Apsis::Key::G;
         break;
       case SDLK_h:
-        binding->key = IsoTasty::Key::H;
+        binding->key = Apsis::Key::H;
         break;
       case SDLK_i:
-        binding->key = IsoTasty::Key::I;
+        binding->key = Apsis::Key::I;
         break;
       case SDLK_j:
-        binding->key = IsoTasty::Key::J;
+        binding->key = Apsis::Key::J;
         break;
       case SDLK_k:
-        binding->key = IsoTasty::Key::K;
+        binding->key = Apsis::Key::K;
         break;
       case SDLK_l:
-        binding->key = IsoTasty::Key::L;
+        binding->key = Apsis::Key::L;
         break;
       case SDLK_m:
-        binding->key = IsoTasty::Key::M;
+        binding->key = Apsis::Key::M;
         break;
       case SDLK_n:
-        binding->key = IsoTasty::Key::N;
+        binding->key = Apsis::Key::N;
         break;
       case SDLK_o:
-        binding->key = IsoTasty::Key::O;
+        binding->key = Apsis::Key::O;
         break;
       case SDLK_p:
-        binding->key = IsoTasty::Key::P;
+        binding->key = Apsis::Key::P;
         break;
       case SDLK_q:
-        binding->key = IsoTasty::Key::Q;
+        binding->key = Apsis::Key::Q;
         break;
       case SDLK_r:
-        binding->key = IsoTasty::Key::R;
+        binding->key = Apsis::Key::R;
         break;
       case SDLK_s:
-        binding->key = IsoTasty::Key::S;
+        binding->key = Apsis::Key::S;
         break;
       case SDLK_t:
-        binding->key = IsoTasty::Key::T;
+        binding->key = Apsis::Key::T;
         break;
       case SDLK_u:
-        binding->key = IsoTasty::Key::U;
+        binding->key = Apsis::Key::U;
         break;
       case SDLK_v:
-        binding->key = IsoTasty::Key::V;
+        binding->key = Apsis::Key::V;
         break;
       case SDLK_w:
-        binding->key = IsoTasty::Key::W;
+        binding->key = Apsis::Key::W;
         break;
       case SDLK_x:
-        binding->key = IsoTasty::Key::X;
+        binding->key = Apsis::Key::X;
         break;
       case SDLK_y:
-        binding->key = IsoTasty::Key::Y;
+        binding->key = Apsis::Key::Y;
         break;
       case SDLK_z:
-        binding->key = IsoTasty::Key::Z;
+        binding->key = Apsis::Key::Z;
         break;
       case SDLK_1:
-        binding->key = IsoTasty::Key::NUM1;
+        binding->key = Apsis::Key::NUM1;
         break;
       case SDLK_2:
-        binding->key = IsoTasty::Key::NUM2;
+        binding->key = Apsis::Key::NUM2;
         break;
       case SDLK_3:
-        binding->key = IsoTasty::Key::NUM3;
+        binding->key = Apsis::Key::NUM3;
         break;
       case SDLK_4:
-        binding->key = IsoTasty::Key::NUM4;
+        binding->key = Apsis::Key::NUM4;
         break;
       case SDLK_5:
-        binding->key = IsoTasty::Key::NUM5;
+        binding->key = Apsis::Key::NUM5;
         break;
       case SDLK_6:
-        binding->key = IsoTasty::Key::NUM6;
+        binding->key = Apsis::Key::NUM6;
         break;
       case SDLK_7:
-        binding->key = IsoTasty::Key::NUM7;
+        binding->key = Apsis::Key::NUM7;
         break;
       case SDLK_8:
-        binding->key = IsoTasty::Key::NUM8;
+        binding->key = Apsis::Key::NUM8;
         break;
       case SDLK_9:
-        binding->key = IsoTasty::Key::NUM9;
+        binding->key = Apsis::Key::NUM9;
         break;
       case SDLK_0:
-        binding->key = IsoTasty::Key::NUM0;
+        binding->key = Apsis::Key::NUM0;
         break;
       case SDLK_F1:
-        binding->key = IsoTasty::Key::F1;
+        binding->key = Apsis::Key::F1;
         break;
       case SDLK_F2:
-        binding->key = IsoTasty::Key::F2;
+        binding->key = Apsis::Key::F2;
         break;
       case SDLK_F3:
-        binding->key = IsoTasty::Key::F3;
+        binding->key = Apsis::Key::F3;
         break;
       case SDLK_F4:
-        binding->key = IsoTasty::Key::F4;
+        binding->key = Apsis::Key::F4;
         break;
       case SDLK_F5:
-        binding->key = IsoTasty::Key::F5;
+        binding->key = Apsis::Key::F5;
         break;
       case SDLK_F6:
-        binding->key = IsoTasty::Key::F6;
+        binding->key = Apsis::Key::F6;
         break;
       case SDLK_F7:
-        binding->key = IsoTasty::Key::F7;
+        binding->key = Apsis::Key::F7;
         break;
       case SDLK_F8:
-        binding->key = IsoTasty::Key::F8;
+        binding->key = Apsis::Key::F8;
         break;
       case SDLK_F9:
-        binding->key = IsoTasty::Key::F9;
+        binding->key = Apsis::Key::F9;
         break;
       case SDLK_F10:
-        binding->key = IsoTasty::Key::F10;
+        binding->key = Apsis::Key::F10;
         break;
       case SDLK_F11:
-        binding->key = IsoTasty::Key::F11;
+        binding->key = Apsis::Key::F11;
         break;
       case SDLK_F12:
-        binding->key = IsoTasty::Key::F12;
+        binding->key = Apsis::Key::F12;
         break;
       case SDLK_PERIOD:
-        binding->key = IsoTasty::Key::PERIOD;
+        binding->key = Apsis::Key::PERIOD;
         break;
       case SDLK_COMMA:
-        binding->key = IsoTasty::Key::COMMA;
+        binding->key = Apsis::Key::COMMA;
         break;
       case SDLK_MINUS:
-        binding->key = IsoTasty::Key::MINUS;
+        binding->key = Apsis::Key::MINUS;
         break;
       case SDLK_EQUALS:
-        binding->key = IsoTasty::Key::EQUALS;
+        binding->key = Apsis::Key::EQUALS;
         break;
       case SDLK_PLUS:
-        binding->key = IsoTasty::Key::PLUS;
+        binding->key = Apsis::Key::PLUS;
         break;
     }
   }
   else if (event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEBUTTONUP) {
-    binding->key = (IsoTasty::Key::Code)(IsoTasty::Key::MOUSE_0 + event->button.button - 1);
+    binding->key = (Apsis::Key::Code)(Apsis::Key::MOUSE_0 + event->button.button - 1);
   }
   else if (event->type == SDL_JOYBUTTONDOWN) {
-    binding->key = (IsoTasty::Key::Code)(IsoTasty::Key::JOY_0 + event->jbutton.button);
+    binding->key = (Apsis::Key::Code)(Apsis::Key::JOY_0 + event->jbutton.button);
   }
   else if (event->type == SDL_JOYAXISMOTION) {
     if (event->jaxis.axis == 0) {
       // Left-Right
       if (event->jaxis.value < 0) {
-        binding->key = IsoTasty::Key::JOY_LEFT;
+        binding->key = Apsis::Key::JOY_LEFT;
       }
       else {
-        binding->key = IsoTasty::Key::JOY_RIGHT;
+        binding->key = Apsis::Key::JOY_RIGHT;
       }
     }
     else if (event->jaxis.axis == 1) {
       // Up-Down
       if (event->jaxis.value < 0) {
-        binding->key = IsoTasty::Key::JOY_UP;
+        binding->key = Apsis::Key::JOY_UP;
       }
       else {
-        binding->key = IsoTasty::Key::JOY_DOWN;
+        binding->key = Apsis::Key::JOY_DOWN;
       }
     }
 
@@ -273,7 +273,7 @@ bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_
   }
   else if (event->type == SDL_JOYHATMOTION) {
     // Hats are a bitmask that has a base of:
-    int mask = IsoTasty::Key::JOY_POV_UP - 1;
+    int mask = Apsis::Key::JOY_POV_UP - 1;
 
     if (event->jhat.value & SDL_HAT_UP) {
       mask |= 0x1;
@@ -288,7 +288,7 @@ bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_
       mask |= 0x8;
     }
 
-    binding->key = (IsoTasty::Key::Code)mask;
+    binding->key = (Apsis::Key::Code)mask;
     return (mask && 0xf);
   }
 
@@ -304,14 +304,14 @@ bool IsoTasty::InputEngine::_translateSDLKey(IsoTasty::KeyBinding* binding, SDL_
 #else
 #endif
 
-int IsoTasty::InputEngine::pollEvent() {
+int Apsis::InputEngine::pollEvent() {
 #ifndef NO_SDL
   SDL_Event event;
   if (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) {
       return -1;
     }
-    IsoTasty::KeyBinding binding = {IsoTasty::Key::NONE};
+    Apsis::KeyBinding binding = {Apsis::Key::NONE};
     bool pressed = _translateSDLKey(&binding, &event);
 
     return forceEvent(pressed, &binding);

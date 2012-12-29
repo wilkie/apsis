@@ -1,11 +1,11 @@
-#ifndef ISOTASTY_GEOMETRY_CIRCLE_H
-#define ISOTASTY_GEOMETRY_CIRCLE_H
+#ifndef APSIS_GEOMETRY_CIRCLE_H
+#define APSIS_GEOMETRY_CIRCLE_H
 
 #include "iso-tasty/geometry/point.h"
 #include "iso-tasty/geometry/rectangle.h"
 #include "iso-tasty/geometry/line.h"
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Geometry {
     struct Circle {
       public:

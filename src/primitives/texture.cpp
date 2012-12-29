@@ -15,7 +15,7 @@
 
 #include "SOIL.h"
 
-IsoTasty::Primitives::Texture::Texture(const char* name) {
+Apsis::Primitives::Texture::Texture(const char* name) {
   glGenTextures(1, &_texture);
 
   glActiveTexture(GL_TEXTURE0);
@@ -31,12 +31,12 @@ IsoTasty::Primitives::Texture::Texture(const char* name) {
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 }
 
-IsoTasty::Primitives::Texture::~Texture() {
+Apsis::Primitives::Texture::~Texture() {
   if (_counter.isAlone()) {
     glDeleteTextures(1, &_texture);
   }
 }
 
-unsigned int IsoTasty::Primitives::Texture::identifier() const {
+unsigned int Apsis::Primitives::Texture::identifier() const {
   return this->_texture;
 }

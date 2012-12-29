@@ -6,7 +6,7 @@
 #include "iso-tasty/primitives/unlinked_program.h"
 #include "iso-tasty/primitives/program.h"
 
-IsoTasty::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
+Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
                             std::vector<glm::vec3>& normals,
                             std::vector<glm::vec2>& textureCoords,
                             std::vector<unsigned int>& elements) {
@@ -85,7 +85,7 @@ IsoTasty::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("light.color", _lights[0].color());
 }
 
-void IsoTasty::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model) {
+void Apsis::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model) {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);

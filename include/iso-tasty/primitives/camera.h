@@ -1,11 +1,11 @@
-#ifndef ISOTASTY_PRIMITIVES_CAMERA_H
-#define ISOTASTY_PRIMITIVES_CAMERA_H
+#ifndef APSIS_PRIMITIVES_CAMERA_H
+#define APSIS_PRIMITIVES_CAMERA_H
 
 #include <glm/glm.hpp>
 
 #include <vector>
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Primitives {
     class Camera {
     public:

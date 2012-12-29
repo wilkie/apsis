@@ -2,11 +2,11 @@
 
 #include <math.h>
 
-void IsoTasty::Geometry::Line::unit(IsoTasty::Geometry::Line* line) {
+void Apsis::Geometry::Line::unit(Apsis::Geometry::Line* line) {
   unit(line, 1.0);
 }
 
-void IsoTasty::Geometry::Line::unit(IsoTasty::Geometry::Line* line, double magnitude) {
+void Apsis::Geometry::Line::unit(Apsis::Geometry::Line* line, double magnitude) {
   double magnitudeX = points[1].x - points[0].x;
   double magnitudeY = points[1].y - points[0].y;
 
@@ -23,7 +23,7 @@ void IsoTasty::Geometry::Line::unit(IsoTasty::Geometry::Line* line, double magni
   line->points[1].y = points[0].y + magnitudeY * magnitude;
 }
 
-double IsoTasty::Geometry::Line::magnitude() {
+double Apsis::Geometry::Line::magnitude() {
   double magnitudeX = points[1].x - points[0].x;
   double magnitudeY = points[1].y - points[0].y;
 
@@ -33,7 +33,7 @@ double IsoTasty::Geometry::Line::magnitude() {
   return magnitude;
 }
 
-bool IsoTasty::Geometry::Line::intersects(Line* line) {
+bool Apsis::Geometry::Line::intersects(Line* line) {
   double x1  = points[0].x;
   double x2  = line->points[0].x;
 
@@ -66,7 +66,7 @@ bool IsoTasty::Geometry::Line::intersects(Line* line) {
   return false;
 }
 
-bool IsoTasty::Geometry::Line::clips(Line* line, Point* point) {
+bool Apsis::Geometry::Line::clips(Line* line, Point* point) {
   double x1, x2, x3, x4;
   double y1, y2, y3, y4;
 

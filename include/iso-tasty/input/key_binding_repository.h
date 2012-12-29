@@ -1,12 +1,12 @@
-#ifndef ISOTASTY_KEY_BINDING_REPOSITORY
-#define ISOTASTY_KEY_BINDING_REPOSITORY
+#ifndef APSIS_KEY_BINDING_REPOSITORY
+#define APSIS_KEY_BINDING_REPOSITORY
 
 #include "iso-tasty/input/key.h"
 #include "iso-tasty/input/key_binding.h"
 
 #include <vector>
 
-namespace IsoTasty {
+namespace Apsis {
   struct Binding {
     const char* name;
     int         value;

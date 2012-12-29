@@ -1,15 +1,15 @@
 #include "iso-tasty/sync/reference_counter.h"
 
-IsoTasty::Sync::ReferenceCounter::ReferenceCounter() {
-  _counter = new IsoTasty::Sync::AtomicCounter(1);
+Apsis::Sync::ReferenceCounter::ReferenceCounter() {
+  _counter = new Apsis::Sync::AtomicCounter(1);
 }
 
-IsoTasty::Sync::ReferenceCounter::ReferenceCounter(const ReferenceCounter& b) :
+Apsis::Sync::ReferenceCounter::ReferenceCounter(const ReferenceCounter& b) :
   _counter(b._counter) {
   _counter->increment();
 }
 
-IsoTasty::Sync::ReferenceCounter& IsoTasty::Sync::ReferenceCounter::operator= (const IsoTasty::Sync::ReferenceCounter& b) {
+Apsis::Sync::ReferenceCounter& Apsis::Sync::ReferenceCounter::operator= (const Apsis::Sync::ReferenceCounter& b) {
   // Decrement our counter
   if (isAlone()) {
     delete _counter;
@@ -27,7 +27,7 @@ IsoTasty::Sync::ReferenceCounter& IsoTasty::Sync::ReferenceCounter::operator= (c
   return *this;
 }
 
-IsoTasty::Sync::ReferenceCounter::~ReferenceCounter() {
+Apsis::Sync::ReferenceCounter::~ReferenceCounter() {
   if (isAlone()) {
     delete _counter;
   }
@@ -36,10 +36,10 @@ IsoTasty::Sync::ReferenceCounter::~ReferenceCounter() {
   }
 }
 
-bool IsoTasty::Sync::ReferenceCounter::isAlone() const {
+bool Apsis::Sync::ReferenceCounter::isAlone() const {
   return _counter->value() == 1;
 }
 
-unsigned int IsoTasty::Sync::ReferenceCounter::value() const {
+unsigned int Apsis::Sync::ReferenceCounter::value() const {
   return _counter->value();
 }

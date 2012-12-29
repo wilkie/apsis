@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_MODEL_MESH_H
-#define ISOTASTY_MODEL_MESH_H
+#ifndef APSIS_MODEL_MESH_H
+#define APSIS_MODEL_MESH_H
 
 #include "iso-tasty/model/material.h"
 #include "iso-tasty/model/light.h"
@@ -12,7 +12,7 @@
 
 #include <vector>
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Model {
     class Mesh {
     public:

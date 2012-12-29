@@ -1,7 +1,7 @@
-#ifndef ISOTASTY_GEOMETRY_POINT3D_H
-#define ISOTASTY_GEOMETRY_POINT3D_H
+#ifndef APSIS_GEOMETRY_POINT3D_H
+#define APSIS_GEOMETRY_POINT3D_H
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Geometry {
     struct Point3d {
       // The x, y and z coordinates of the object's footprint in the world.

@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  @brief Implementation of the MD3 importer class 
  * 
  *  Sources: 
- *     http://www.gamers.org/dEngine/quake3/UQ3S
+ *     http://www.gamers.org/dApsis/quake3/UQ3S
  *     http://linux.ucla.edu/~phaethon/q3/formats/md3format.html
  *     http://www.heppler.com/shader/shader/
  */

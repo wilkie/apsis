@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_KEY_BINDING
-#define ISOTASTY_KEY_BINDING
+#ifndef APSIS_KEY_BINDING
+#define APSIS_KEY_BINDING
 
 #include "iso-tasty/input/key.h"
 
-namespace IsoTasty {
+namespace Apsis {
   struct KeyBinding {
     Key::Code key;
 

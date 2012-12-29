@@ -1,6 +1,6 @@
 #include "iso-tasty/model/material.h"
 
-IsoTasty::Model::Material::Material(float ambientIntensity,
+Apsis::Model::Material::Material(float ambientIntensity,
                                     float diffuseIntensity,
                                     float specularIntensity,
                                     float shininess) :
@@ -10,18 +10,18 @@ IsoTasty::Model::Material::Material(float ambientIntensity,
   _shininess(shininess) {
 }
 
-float IsoTasty::Model::Material::shininess() {
+float Apsis::Model::Material::shininess() {
   return _shininess;
 }
 
-float IsoTasty::Model::Material::diffuseIntensity() {
+float Apsis::Model::Material::diffuseIntensity() {
   return _diffuseIntensity;
 }
 
-float IsoTasty::Model::Material::specularIntensity() {
+float Apsis::Model::Material::specularIntensity() {
   return _specularIntensity;
 }
 
-float IsoTasty::Model::Material::ambientIntensity() {
+float Apsis::Model::Material::ambientIntensity() {
   return _ambientIntensity;
 }

@@ -1,7 +1,7 @@
-#ifndef ISOTASTY_TILE_H
-#define ISOTASTY_TILE_H
+#ifndef APSIS_TILE_H
+#define APSIS_TILE_H
 
-namespace IsoTasty {
+namespace Apsis {
   enum Corner {
     TOP_LEFT = 0,
     TOP_RIGHT,

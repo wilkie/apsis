@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_PRIMITIVES_VERTEX_SHADER_H
-#define ISOTASTY_PRIMITIVES_VERTEX_SHADER_H
+#ifndef APSIS_PRIMITIVES_VERTEX_SHADER_H
+#define APSIS_PRIMITIVES_VERTEX_SHADER_H
 
 #include "iso-tasty/sync/reference_counter.h"
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Primitives {
     class VertexShader {
     public:

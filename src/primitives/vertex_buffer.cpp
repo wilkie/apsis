@@ -13,34 +13,34 @@
   #include <GL/glu.h>
 #endif
 
-IsoTasty::Primitives::VertexBuffer::VertexBuffer() {
+Apsis::Primitives::VertexBuffer::VertexBuffer() {
   glGenBuffers(1, &this->_vbo);
 }
 
-IsoTasty::Primitives::VertexBuffer::~VertexBuffer() {
+Apsis::Primitives::VertexBuffer::~VertexBuffer() {
   if (_counter.isAlone()) {
     //glDeleteBuffers(1, &this->_vbo);
   }
 }
 
-void IsoTasty::Primitives::VertexBuffer::transfer(const float* elements, unsigned int count) {
+void Apsis::Primitives::VertexBuffer::transfer(const float* elements, unsigned int count) {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * 4, elements, GL_STATIC_DRAW);
 
   _count = count;
 }
 
-void IsoTasty::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count) {
+void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count) {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * 4, elements, GL_STATIC_DRAW);
 
   _count = count;
 }
 
-unsigned int IsoTasty::Primitives::VertexBuffer::count() const {
+unsigned int Apsis::Primitives::VertexBuffer::count() const {
   return _count;
 }
 
-unsigned int IsoTasty::Primitives::VertexBuffer::identifier() const {
+unsigned int Apsis::Primitives::VertexBuffer::identifier() const {
   return this->_vbo;
 }

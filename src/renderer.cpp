@@ -27,19 +27,19 @@
 #include <stdio.h>
 #include<glut.h>
 
-/*IsoTasty::Primitives::VertexArray     vao;
-IsoTasty::Primitives::VertexBuffer    vbo;
-IsoTasty::Primitives::VertexShader    vs;
-IsoTasty::Primitives::FragmentShader  fs;*/
+/*Apsis::Primitives::VertexArray     vao;
+Apsis::Primitives::VertexBuffer    vbo;
+Apsis::Primitives::VertexShader    vs;
+Apsis::Primitives::FragmentShader  fs;*/
 
-IsoTasty::Renderer::Renderer() {
+Apsis::Renderer::Renderer() {
   /*vao = Primitives::VertexArray();
   vbo = Primitives::VertexBuffer();
   vs  = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");*/
-  IsoTasty::Primitives::FragmentShader fs  = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
+  Apsis::Primitives::FragmentShader fs  = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
 }
 
-void IsoTasty::Renderer::clear() {
+void Apsis::Renderer::clear() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glLoadIdentity();
@@ -47,7 +47,7 @@ void IsoTasty::Renderer::clear() {
   glColor3d(1.0, 1.0, 1.0);
 }
 
-bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int height) {
+bool Apsis::Renderer::initializeViewport(unsigned int width, unsigned int height) {
   return true;
   glClearColor(0, 0, 0, 0);
   glClearDepth(1.0f);
@@ -60,7 +60,7 @@ bool IsoTasty::Renderer::initializeViewport(unsigned int width, unsigned int hei
   return true;
 }
 
-void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, bool orthographic, double rotation, double translationX, double translationZ, double zoom) {
+void Apsis::Renderer::setProjection(unsigned int width, unsigned int height, bool orthographic, double rotation, double translationX, double translationZ, double zoom) {
   zoom /= 2;
 
   double dist = sqrt(1 / 3.0);
@@ -105,7 +105,7 @@ void IsoTasty::Renderer::setProjection(unsigned int width, unsigned int height, 
   glm::mat4 model = glm::mat4(1.0f);
 }
 
-void IsoTasty::Renderer::drawArrays(const float vertices[], const float normals[], const float colors[], const unsigned char indices[], unsigned int num) {
+void Apsis::Renderer::drawArrays(const float vertices[], const float normals[], const float colors[], const unsigned char indices[], unsigned int num) {
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -121,7 +121,7 @@ void IsoTasty::Renderer::drawArrays(const float vertices[], const float normals[
   glDisableClientState(GL_NORMAL_ARRAY);
 }
 
-void IsoTasty::Renderer::drawCube(float x, float y, float z, float width, float height, float depth) {
+void Apsis::Renderer::drawCube(float x, float y, float z, float width, float height, float depth) {
   // cube ///////////////////////////////////////////////////////////////////////
   //    v6----- v5
   //   /|      /|
@@ -173,7 +173,7 @@ void IsoTasty::Renderer::drawCube(float x, float y, float z, float width, float 
   glPopMatrix();
 }
 
-void IsoTasty::Renderer::test() {
+void Apsis::Renderer::test() {
   float width = 1.0f;
   float height = 1.0f;
   float depth = 1.0f;
@@ -303,7 +303,7 @@ void IsoTasty::Renderer::test() {
   glPopMatrix();
 }
 
-void IsoTasty::Renderer::drawSphere(float x, float y, float z, float width, float height, float depth) {
+void Apsis::Renderer::drawSphere(float x, float y, float z, float width, float height, float depth) {
   // cube ///////////////////////////////////////////////////////////////////////
   //    v6----- v5
   //   /|      /|
@@ -355,7 +355,7 @@ void IsoTasty::Renderer::drawSphere(float x, float y, float z, float width, floa
   glPopMatrix();
 }
 
-void IsoTasty::Renderer::drawSquare(float x, float y, float z, float width, float depth) {
+void Apsis::Renderer::drawSquare(float x, float y, float z, float width, float depth) {
   float half_width = width / 2.0f;
   float half_depth = depth / 2.0f;
   
@@ -376,7 +376,7 @@ void IsoTasty::Renderer::drawSquare(float x, float y, float z, float width, floa
   glPopMatrix();
 }
 
-void IsoTasty::Renderer::drawTileTop(float x, float y, float z, float width, float height, float depth, float heights[4], float firsts[4], float seconds[4]) {
+void Apsis::Renderer::drawTileTop(float x, float y, float z, float width, float height, float depth, float heights[4], float firsts[4], float seconds[4]) {
   glPushMatrix();
   glTranslatef(x, y, z);
   glScalef(width, height, depth);
@@ -385,24 +385,24 @@ void IsoTasty::Renderer::drawTileTop(float x, float y, float z, float width, flo
   
   // Top
   glBegin(GL_LINE_LOOP);
-  glVertex3f( 1.0f,  heights[IsoTasty::TOP_RIGHT], -1.0f);
-  glVertex3f( 0.34f,  firsts[IsoTasty::TOP_LEFT],  -1.0f);
-  glVertex3f(-0.34f, seconds[IsoTasty::TOP_LEFT],  -1.0f);
-  glVertex3f(-1.0f,  heights[IsoTasty::TOP_LEFT],  -1.0f);
-  glVertex3f(-1.0f,  seconds[IsoTasty::BOT_LEFT],  -0.34f);
-  glVertex3f(-1.0f,   firsts[IsoTasty::BOT_LEFT],   0.34f);
-  glVertex3f(-1.0f,  heights[IsoTasty::BOT_LEFT],   1.0f);
-  glVertex3f(-0.34f, seconds[IsoTasty::BOT_RIGHT],  1.0f);
-  glVertex3f( 0.34f,  firsts[IsoTasty::BOT_RIGHT],  1.0f);
-  glVertex3f( 1.0f,  heights[IsoTasty::BOT_RIGHT],  1.0f);
-  glVertex3f( 1.0f,   firsts[IsoTasty::TOP_RIGHT],  0.34f);
-  glVertex3f( 1.0f,  seconds[IsoTasty::TOP_RIGHT], -0.34f);
+  glVertex3f( 1.0f,  heights[Apsis::TOP_RIGHT], -1.0f);
+  glVertex3f( 0.34f,  firsts[Apsis::TOP_LEFT],  -1.0f);
+  glVertex3f(-0.34f, seconds[Apsis::TOP_LEFT],  -1.0f);
+  glVertex3f(-1.0f,  heights[Apsis::TOP_LEFT],  -1.0f);
+  glVertex3f(-1.0f,  seconds[Apsis::BOT_LEFT],  -0.34f);
+  glVertex3f(-1.0f,   firsts[Apsis::BOT_LEFT],   0.34f);
+  glVertex3f(-1.0f,  heights[Apsis::BOT_LEFT],   1.0f);
+  glVertex3f(-0.34f, seconds[Apsis::BOT_RIGHT],  1.0f);
+  glVertex3f( 0.34f,  firsts[Apsis::BOT_RIGHT],  1.0f);
+  glVertex3f( 1.0f,  heights[Apsis::BOT_RIGHT],  1.0f);
+  glVertex3f( 1.0f,   firsts[Apsis::TOP_RIGHT],  0.34f);
+  glVertex3f( 1.0f,  seconds[Apsis::TOP_RIGHT], -0.34f);
   glEnd();
   
   glPopMatrix();
 }
 
-void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float height, float depth, float heights[4], float fy[4], float sy[4]) {
+void Apsis::Renderer::drawTile(float x, float y, float z, float width, float height, float depth, float heights[4], float fy[4], float sy[4]) {
   // cube ///////////////////////////////////////////////////////////////////////
   // It is complicated...
   //
@@ -523,21 +523,21 @@ void IsoTasty::Renderer::drawTile(float x, float y, float z, float width, float 
   }
   
   // v4 - v13 - v12 - v11
-  vertices[(3 * 3) + 1] = heights[IsoTasty::BOT_LEFT];
-  vertices[(4 * 3) + 1] = fy[IsoTasty::BOT_LEFT];
-  vertices[(5 * 3) + 1] = sy[IsoTasty::BOT_LEFT];
-  vertices[(6 * 3) + 1] = heights[IsoTasty::TOP_LEFT];
+  vertices[(3 * 3) + 1] = heights[Apsis::BOT_LEFT];
+  vertices[(4 * 3) + 1] = fy[Apsis::BOT_LEFT];
+  vertices[(5 * 3) + 1] = sy[Apsis::BOT_LEFT];
+  vertices[(6 * 3) + 1] = heights[Apsis::TOP_LEFT];
 
   // Interpolate the curve (v3-v4-v5-v6) across to (v0-v11-v10-v9)
-  vertices[ (0 * 3) + 1] = heights[IsoTasty::BOT_RIGHT];
-  vertices[(11 * 3) + 1] = fy[IsoTasty::TOP_RIGHT];
-  vertices[(10 * 3) + 1] = sy[IsoTasty::TOP_RIGHT];
-  vertices[ (9 * 3) + 1] = heights[IsoTasty::TOP_RIGHT];
+  vertices[ (0 * 3) + 1] = heights[Apsis::BOT_RIGHT];
+  vertices[(11 * 3) + 1] = fy[Apsis::TOP_RIGHT];
+  vertices[(10 * 3) + 1] = sy[Apsis::TOP_RIGHT];
+  vertices[ (9 * 3) + 1] = heights[Apsis::TOP_RIGHT];
 
-  vertices[ (1 * 3) + 1] = fy[IsoTasty::BOT_RIGHT];
-  vertices[ (2 * 3) + 1] = sy[IsoTasty::BOT_RIGHT];
-  vertices[ (7 * 3) + 1] = sy[IsoTasty::TOP_LEFT];
-  vertices[ (8 * 3) + 1] = fy[IsoTasty::TOP_LEFT];
+  vertices[ (1 * 3) + 1] = fy[Apsis::BOT_RIGHT];
+  vertices[ (2 * 3) + 1] = sy[Apsis::BOT_RIGHT];
+  vertices[ (7 * 3) + 1] = sy[Apsis::TOP_LEFT];
+  vertices[ (8 * 3) + 1] = fy[Apsis::TOP_LEFT];
 
   // Determine the relative height (of the point within the curve) of each inner point
   float curveStartHeight = abs(vertices[(6 * 3) + 1] - vertices[(3 * 3) + 1]);

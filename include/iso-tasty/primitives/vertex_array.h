@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_PRIMITIVES_VERTEX_ARRAY_H
-#define ISOTASTY_PRIMITIVES_VERTEX_ARRAY_H
+#ifndef APSIS_PRIMITIVES_VERTEX_ARRAY_H
+#define APSIS_PRIMITIVES_VERTEX_ARRAY_H
 
 #include "iso-tasty/sync/reference_counter.h"
 
@@ -13,7 +13,7 @@
 
 #include <glm/glm.hpp>
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Primitives {
     class VertexArray {
     public:

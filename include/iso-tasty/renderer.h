@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_RENDERER_H
-#define ISOTASTY_RENDERER_H
+#ifndef APSIS_RENDERER_H
+#define APSIS_RENDERER_H
 
 #include "iso-tasty/tile.h"
 
-namespace IsoTasty {
+namespace Apsis {
   class Renderer {
   public:
     Renderer();

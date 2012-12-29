@@ -1,22 +1,22 @@
 #include "iso-tasty/sync/atomic_counter.h"
 
-IsoTasty::Sync::AtomicCounter::AtomicCounter() {
+Apsis::Sync::AtomicCounter::AtomicCounter() {
   AtomicCounter(0);
 }
 
-IsoTasty::Sync::AtomicCounter::AtomicCounter(unsigned int value) :
+Apsis::Sync::AtomicCounter::AtomicCounter(unsigned int value) :
   _value(value) {
 }
 
-unsigned int IsoTasty::Sync::AtomicCounter::increment() {
+unsigned int Apsis::Sync::AtomicCounter::increment() {
   return add((unsigned int)1);
 }
 
-unsigned int IsoTasty::Sync::AtomicCounter::decrement() {
+unsigned int Apsis::Sync::AtomicCounter::decrement() {
   return add((unsigned int)-1);
 }
 
-unsigned int IsoTasty::Sync::AtomicCounter::add(unsigned int value) {
+unsigned int Apsis::Sync::AtomicCounter::add(unsigned int value) {
   unsigned int oldVal;
   unsigned int newVal;
   for (;;) {
@@ -28,12 +28,12 @@ unsigned int IsoTasty::Sync::AtomicCounter::add(unsigned int value) {
   }
 }
 
-unsigned int IsoTasty::Sync::AtomicCounter::value() const {
+unsigned int Apsis::Sync::AtomicCounter::value() const {
   return _value;
 }
 
 // TODO: Maybe do something with a mutex when architectures don't support things.
-bool IsoTasty::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
+bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
   __asm {
     // Stack:
 

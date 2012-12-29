@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-bool IsoTasty::Geometry::Circle::intersects(Rectangle* rectangle) {
+bool Apsis::Geometry::Circle::intersects(Rectangle* rectangle) {
   bool intersects = false;
   Line l;
 
@@ -38,7 +38,7 @@ bool IsoTasty::Geometry::Circle::intersects(Rectangle* rectangle) {
   return intersects;
 }
 
-unsigned int IsoTasty::Geometry::Circle::clip(Rectangle* rectangle, Point intersectionPoints[4]) {
+unsigned int Apsis::Geometry::Circle::clip(Rectangle* rectangle, Point intersectionPoints[4]) {
   unsigned int numberPoints = 0;
   Line l;
 
@@ -78,7 +78,7 @@ unsigned int IsoTasty::Geometry::Circle::clip(Rectangle* rectangle, Point inters
   return numberPoints;
 }
 
-bool IsoTasty::Geometry::Circle::intersects(Line* line) {
+bool Apsis::Geometry::Circle::intersects(Line* line) {
   double x1, y1, x2, y2;
   x1 = line->points[0].x - position.x;
   x2 = line->points[1].x - position.x;
@@ -176,7 +176,7 @@ bool IsoTasty::Geometry::Circle::intersects(Line* line) {
   return false;
 }
 
-bool IsoTasty::Geometry::Circle::clip(Line* line) {
+bool Apsis::Geometry::Circle::clip(Line* line) {
   // Flip line so that points[0] is inside circle
   bool flipped = false;
   if (contains(line)) {
@@ -281,18 +281,18 @@ bool IsoTasty::Geometry::Circle::clip(Line* line) {
   return hasClipped;
 }
 
-bool IsoTasty::Geometry::Circle::intersects(Circle* circle) {
+bool Apsis::Geometry::Circle::intersects(Circle* circle) {
   Line l;
   l.points[0] = position;
   l.points[1] = circle->position;
   return l.magnitude() < (radius + circle->radius);
 }
 
-bool IsoTasty::Geometry::Circle::contains(Line* line) {
+bool Apsis::Geometry::Circle::contains(Line* line) {
   return contains(&line->points[0]) && contains(&line->points[1]);
 }
 
-bool IsoTasty::Geometry::Circle::contains(Point* point) {
+bool Apsis::Geometry::Circle::contains(Point* point) {
   double dx = point->x - position.x;
   double dy = point->y - position.y;
 
@@ -301,7 +301,7 @@ bool IsoTasty::Geometry::Circle::contains(Point* point) {
   return distance <= radius;
 }
 
-bool IsoTasty::Geometry::Circle::on(Point* point) {
+bool Apsis::Geometry::Circle::on(Point* point) {
   double dx = point->x - position.x;
   double dy = point->y - position.y;
 

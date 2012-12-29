@@ -15,7 +15,7 @@
   #include <GL/glu.h>
 #endif
 
-IsoTasty::Primitives::VertexShader::VertexShader(const char* source) {
+Apsis::Primitives::VertexShader::VertexShader(const char* source) {
   this->_vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(this->_vertexShader, 1, &source, NULL);
   glCompileShader(this->_vertexShader);
@@ -30,13 +30,13 @@ IsoTasty::Primitives::VertexShader::VertexShader(const char* source) {
   }
 }
 
-IsoTasty::Primitives::VertexShader::~VertexShader() {
+Apsis::Primitives::VertexShader::~VertexShader() {
   if (_counter.isAlone()) {
     glDeleteShader(this->_vertexShader);
   }
 }
 
-IsoTasty::Primitives::VertexShader IsoTasty::Primitives::VertexShader::fromFile(const char* path) {
+Apsis::Primitives::VertexShader Apsis::Primitives::VertexShader::fromFile(const char* path) {
   FILE* f = fopen(path, "rb");
   if (f == NULL) {
     throw "Shader not found.";
@@ -66,6 +66,6 @@ IsoTasty::Primitives::VertexShader IsoTasty::Primitives::VertexShader::fromFile(
   return ret;
 }
 
-unsigned int IsoTasty::Primitives::VertexShader::identifier() const {
+unsigned int Apsis::Primitives::VertexShader::identifier() const {
   return this->_vertexShader;
 }

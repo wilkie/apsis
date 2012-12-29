@@ -6,7 +6,7 @@
 
 #include <vector>
 
-IsoTasty::Model::Thing::Thing(const char* path) {
+Apsis::Model::Thing::Thing(const char* path) {
   Assimp::Importer Importer;
 
   const aiScene* pScene = Importer.ReadFile(path, aiProcess_Triangulate |
@@ -29,10 +29,10 @@ IsoTasty::Model::Thing::Thing(const char* path) {
   }
 }
 
-IsoTasty::Model::Thing::~Thing() {
+Apsis::Model::Thing::~Thing() {
 }
 
-void IsoTasty::Model::Thing::_addMesh(const void* mesh_ptr) {
+void Apsis::Model::Thing::_addMesh(const void* mesh_ptr) {
   const aiMesh* mesh = (const aiMesh*)mesh_ptr;
 
   unsigned int materialIndex = mesh->mMaterialIndex;
@@ -74,7 +74,7 @@ void IsoTasty::Model::Thing::_addMesh(const void* mesh_ptr) {
   _meshes.push_back(Mesh(vertices, normals, textureCoords, elements));
 }
 
-void IsoTasty::Model::Thing::_addMaterial(const void* mat_ptr) {
+void Apsis::Model::Thing::_addMaterial(const void* mat_ptr) {
   const aiMaterial* mat = (const aiMaterial*)mat_ptr;
 
   unsigned int textureCount = mat->GetTextureCount(aiTextureType_DIFFUSE);
@@ -89,7 +89,7 @@ void IsoTasty::Model::Thing::_addMaterial(const void* mat_ptr) {
   }
 }
 
-void IsoTasty::Model::Thing::draw(glm::mat4& projection,
+void Apsis::Model::Thing::draw(glm::mat4& projection,
                                   Primitives::Camera& camera,
                                   glm::mat4& model) {
   for (unsigned int i = 0; i < _meshes.size(); i++) {

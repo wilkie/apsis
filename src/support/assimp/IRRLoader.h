@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 /** @file IRRLoader.h
- *  @brief Declaration of the .irrMesh (Irrlight Engine Mesh Format)
+ *  @brief Declaration of the .irrMesh (Irrlight Apsis Mesh Format)
  *  importer class.
  */
 #ifndef AI_IRRLOADER_H_INCLUDED
@@ -55,7 +55,7 @@ namespace Assimp	{
 // ---------------------------------------------------------------------------
 /** Irr importer class.
  *
- * Irr is the native scene file format of the Irrlight engine and its editor
+ * Irr is the native scene file format of the Irrlight Apsis and its editor
  * irrEdit. As IrrEdit itself is capable of importing quite many file formats,
  * it might be a good file format for data exchange.
  */

@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_ENGINE_H
-#define ISOTASTY_ENGINE_H
+#ifndef APSIS_APSIS_H
+#define APSIS_APSIS_H
 
 // Infrastructure
 #include "iso-tasty/input/input_engine.h"
@@ -14,7 +14,7 @@
   #include <SDL/sdl.h>
 #endif
 
-namespace IsoTasty {
+namespace Apsis {
   struct VideoSettings {
     unsigned int resolutionX;
     unsigned int resolutionY;

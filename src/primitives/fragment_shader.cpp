@@ -15,7 +15,7 @@
   #include <GL/glu.h>
 #endif
 
-IsoTasty::Primitives::FragmentShader::FragmentShader(const char* source) {
+Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
   this->_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(this->_fragmentShader, 1, &source, NULL);
   glCompileShader(this->_fragmentShader);
@@ -30,13 +30,13 @@ IsoTasty::Primitives::FragmentShader::FragmentShader(const char* source) {
   }
 }
 
-IsoTasty::Primitives::FragmentShader::~FragmentShader() {
+Apsis::Primitives::FragmentShader::~FragmentShader() {
   if (_counter.isAlone()) {
     //glDeleteShader(this->_fragmentShader);
   }
 }
 
-IsoTasty::Primitives::FragmentShader IsoTasty::Primitives::FragmentShader::fromFile(const char* path) {
+Apsis::Primitives::FragmentShader Apsis::Primitives::FragmentShader::fromFile(const char* path) {
   FILE* f = fopen(path, "rb");
   if (f == NULL) {
     throw "Shader not found.";
@@ -66,6 +66,6 @@ IsoTasty::Primitives::FragmentShader IsoTasty::Primitives::FragmentShader::fromF
   return ret;
 }
 
-unsigned int IsoTasty::Primitives::FragmentShader::identifier() const {
+unsigned int Apsis::Primitives::FragmentShader::identifier() const {
   return this->_fragmentShader;
 }

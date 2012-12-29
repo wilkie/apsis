@@ -1,18 +1,18 @@
 #include "iso-tasty/input/key_binding_repository.h"
 
-IsoTasty::KeyBindingRepository::KeyBindingRepository() {
+Apsis::KeyBindingRepository::KeyBindingRepository() {
 }
 
-IsoTasty::KeyBindingRepository::~KeyBindingRepository() {
+Apsis::KeyBindingRepository::~KeyBindingRepository() {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     delete _bindings[i];
   }
 }
 
-void IsoTasty::KeyBindingRepository::registerEvent(const char* name,
+void Apsis::KeyBindingRepository::registerEvent(const char* name,
                                                    int event,
-                                                   IsoTasty::KeyBinding* primary,
-                                                   IsoTasty::KeyBinding* secondary) {
+                                                   Apsis::KeyBinding* primary,
+                                                   Apsis::KeyBinding* secondary) {
   if (event < 0) {
     throw "The event identifier cannot be less than or equal to zero";
   }
@@ -23,14 +23,14 @@ void IsoTasty::KeyBindingRepository::registerEvent(const char* name,
   binding->value = event;
 
   if (primary == NULL) {
-    binding->primary.key = IsoTasty::Key::NONE;
+    binding->primary.key = Apsis::Key::NONE;
   }
   else {
     binding->primary = *primary;
   }
 
   if (secondary == NULL) {
-    binding->secondary.key = IsoTasty::Key::NONE;
+    binding->secondary.key = Apsis::Key::NONE;
   }
   else {
     binding->secondary = *secondary;
@@ -39,12 +39,12 @@ void IsoTasty::KeyBindingRepository::registerEvent(const char* name,
   _bindings.push_back(binding);
 }
 
-void IsoTasty::KeyBindingRepository::rebindPrimary(const char* name,
+void Apsis::KeyBindingRepository::rebindPrimary(const char* name,
                                                    KeyBinding* primary) {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     if (strncmp(_bindings[i]->name, name, 128) == 0) {
       if (primary == NULL) {
-        _bindings[i]->primary.key = IsoTasty::Key::NONE;
+        _bindings[i]->primary.key = Apsis::Key::NONE;
       }
       else {
         _bindings[i]->primary = *primary;
@@ -54,12 +54,12 @@ void IsoTasty::KeyBindingRepository::rebindPrimary(const char* name,
   }
 }
 
-void IsoTasty::KeyBindingRepository::rebindSecondary(const char* name,
+void Apsis::KeyBindingRepository::rebindSecondary(const char* name,
                                                      KeyBinding* secondary) {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     if (strncmp(_bindings[i]->name, name, 128) == 0) {
       if (secondary == NULL) {
-        _bindings[i]->secondary.key = IsoTasty::Key::NONE;
+        _bindings[i]->secondary.key = Apsis::Key::NONE;
       }
       else {
         _bindings[i]->secondary = *secondary;
@@ -69,11 +69,11 @@ void IsoTasty::KeyBindingRepository::rebindSecondary(const char* name,
   }
 }
 
-int IsoTasty::KeyBindingRepository::yieldEvent(KeyBinding* binding) {
+int Apsis::KeyBindingRepository::yieldEvent(KeyBinding* binding) {
   int event = 0;
 
   for (unsigned int i = 0; i < _bindings.size(); i++) {
-    if (_bindings[i]->primary.key     != IsoTasty::Key::NONE &&
+    if (_bindings[i]->primary.key     != Apsis::Key::NONE &&
         _bindings[i]->primary.key     == binding->key        &&
         _bindings[i]->primary.shift   == binding->shift      &&
         _bindings[i]->primary.control == binding->control    &&
@@ -82,7 +82,7 @@ int IsoTasty::KeyBindingRepository::yieldEvent(KeyBinding* binding) {
       break;
     }
 
-    if (_bindings[i]->secondary.key     != IsoTasty::Key::NONE &&
+    if (_bindings[i]->secondary.key     != Apsis::Key::NONE &&
         _bindings[i]->secondary.key     == binding->key        &&
         _bindings[i]->secondary.shift   == binding->shift      &&
         _bindings[i]->secondary.control == binding->control    &&

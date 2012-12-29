@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_PRIMITIVES_PROGRAM_H
-#define ISOTASTY_PRIMITIVES_PROGRAM_H
+#ifndef APSIS_PRIMITIVES_PROGRAM_H
+#define APSIS_PRIMITIVES_PROGRAM_H
 
 #include "iso-tasty/sync/reference_counter.h"
 
@@ -12,7 +12,7 @@
 
 #include <vector>
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Primitives {
     class Program {
     public:

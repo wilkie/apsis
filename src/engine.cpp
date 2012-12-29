@@ -32,7 +32,7 @@ namespace Event {
   };
 }
 
-IsoTasty::Engine::Engine(VideoSettings* video) {
+Apsis::Engine::Engine(VideoSettings* video) {
   _clock = new Clock();
 
   _video = *video;
@@ -47,82 +47,82 @@ IsoTasty::Engine::Engine(VideoSettings* video) {
   _input = new InputEngine();
 
   // Adding some events just because
-  KeyBinding binding = {IsoTasty::Key::NONE};
-  KeyBinding binding2 = {IsoTasty::Key::NONE};
+  KeyBinding binding = {Apsis::Key::NONE};
+  KeyBinding binding2 = {Apsis::Key::NONE};
 
-  binding.key = IsoTasty::Key::LEFT;
-  binding2.key = IsoTasty::Key::JOY_POV_LEFT;
+  binding.key = Apsis::Key::LEFT;
+  binding2.key = Apsis::Key::JOY_POV_LEFT;
   _input->keyBindings()->registerEvent("Move left",  Event::MOVE_LEFT, &binding, &binding2);
-  binding.key = IsoTasty::Key::RIGHT;
-  binding2.key = IsoTasty::Key::JOY_POV_RIGHT;
+  binding.key = Apsis::Key::RIGHT;
+  binding2.key = Apsis::Key::JOY_POV_RIGHT;
   _input->keyBindings()->registerEvent("Move right", Event::MOVE_RIGHT, &binding, &binding2);
-  binding.key = IsoTasty::Key::UP;
-  binding2.key = IsoTasty::Key::JOY_POV_UP;
+  binding.key = Apsis::Key::UP;
+  binding2.key = Apsis::Key::JOY_POV_UP;
   _input->keyBindings()->registerEvent("Move up",    Event::MOVE_UP, &binding, &binding2);
-  binding.key = IsoTasty::Key::DOWN;
-  binding2.key = IsoTasty::Key::JOY_POV_DOWN;
+  binding.key = Apsis::Key::DOWN;
+  binding2.key = Apsis::Key::JOY_POV_DOWN;
   _input->keyBindings()->registerEvent("Move down",  Event::MOVE_DOWN, &binding, &binding2);
   
-  binding2.key = IsoTasty::Key::NONE;
+  binding2.key = Apsis::Key::NONE;
 
-  binding.key = IsoTasty::Key::UP;
+  binding.key = Apsis::Key::UP;
   binding.shift = true;
   _input->keyBindings()->registerEvent("Move screen up",    Event::MOVE_SCREEN_UP, &binding, &binding2);
-  binding.key = IsoTasty::Key::DOWN;
+  binding.key = Apsis::Key::DOWN;
   binding.shift = true;
   _input->keyBindings()->registerEvent("Move screen down",  Event::MOVE_SCREEN_DOWN, &binding, &binding2);
-  binding.key = IsoTasty::Key::LEFT;
+  binding.key = Apsis::Key::LEFT;
   binding.shift = true;
   _input->keyBindings()->registerEvent("Move screen left",  Event::MOVE_SCREEN_LEFT, &binding, &binding2);
-  binding.key = IsoTasty::Key::RIGHT;
+  binding.key = Apsis::Key::RIGHT;
   binding.shift = true;
   _input->keyBindings()->registerEvent("Move screen right", Event::MOVE_SCREEN_RIGHT, &binding, &binding2);
   
   binding.shift = false;
   
-  binding.key = IsoTasty::Key::DOWN;
+  binding.key = Apsis::Key::DOWN;
   binding.control = true;
   _input->keyBindings()->registerEvent("Lower terrain",  Event::LOWER, &binding, &binding2);
-  binding.key = IsoTasty::Key::UP;
+  binding.key = Apsis::Key::UP;
   binding.control = true;
   _input->keyBindings()->registerEvent("Raise terrain",  Event::RAISE, &binding, &binding2);  
 
   binding.control = false;
 
-  binding.key = IsoTasty::Key::DOWN;
+  binding.key = Apsis::Key::DOWN;
   binding.alt = true;
   _input->keyBindings()->registerEvent("Lower cliff",  Event::LOWER_CLIFF, &binding, &binding2);
-  binding.key = IsoTasty::Key::UP;
+  binding.key = Apsis::Key::UP;
   binding.alt = true;
   _input->keyBindings()->registerEvent("Raise cliff",  Event::RAISE_CLIFF, &binding, &binding2);
 
   binding.alt = false;
 
-  binding.key = IsoTasty::Key::MINUS;
+  binding.key = Apsis::Key::MINUS;
   _input->keyBindings()->registerEvent("Zoom out",  Event::ZOOM_OUT, &binding, &binding2);
-  binding.key = IsoTasty::Key::EQUALS;
+  binding.key = Apsis::Key::EQUALS;
   _input->keyBindings()->registerEvent("Zoom in",  Event::ZOOM_IN, &binding, &binding2);
 
-  binding.key = IsoTasty::Key::COMMA;
+  binding.key = Apsis::Key::COMMA;
   _input->keyBindings()->registerEvent("Rotate counter clockwise",  Event::ROTATE_COUNTER_CLOCKWISE, &binding, &binding2);
-  binding.key = IsoTasty::Key::PERIOD;
+  binding.key = Apsis::Key::PERIOD;
   _input->keyBindings()->registerEvent("Rotate clockwise",  Event::ROTATE_CLOCKWISE, &binding, &binding2);
 }
 
-void IsoTasty::Engine::newMap(unsigned int width, unsigned int height) {
+void Apsis::Engine::newMap(unsigned int width, unsigned int height) {
   _map = new Map(width, height);
 }
 
-void IsoTasty::Engine::_draw() {
+void Apsis::Engine::_draw() {
   _renderer->clear();
   _view->draw(_renderer, _map);
 }
 
-void IsoTasty::Engine::run() {
+void Apsis::Engine::run() {
   int event;
   while(true) {
     event = _input->pollEvent();
-    if (event == IsoTasty::InputEngine::QUIT_EVENT) {
+    if (event == Apsis::InputEngine::QUIT_EVENT) {
       break;
     }
     else if (event) {
@@ -139,7 +139,7 @@ void IsoTasty::Engine::run() {
   SDL_Quit();
 }
 
-bool IsoTasty::Engine::_initialize() {
+bool Apsis::Engine::_initialize() {
   if (_startSDL()) {
     _initViewport();
 
@@ -149,15 +149,15 @@ bool IsoTasty::Engine::_initialize() {
     return true;
   }
 
-  fprintf(stderr, "Engine cannot initialize.");
+  fprintf(stderr, "Apsis cannot initialize.");
   return false;
 }
 
-void IsoTasty::Engine::_initViewport() {
+void Apsis::Engine::_initViewport() {
   _renderer->initializeViewport(_video.resolutionX, _video.resolutionY);
 }
 
-bool IsoTasty::Engine::_startSDL() {
+bool Apsis::Engine::_startSDL() {
 #ifdef NO_SDL
   return false;
 #else
@@ -193,13 +193,13 @@ bool IsoTasty::Engine::_startSDL() {
     return false;
   }
 
-  SDL_WM_SetCaption("IsoTasty", "IsoTasty");
+  SDL_WM_SetCaption("Apsis", "Apsis");
 
   return true;
 #endif
 }
 
-void IsoTasty::Engine::_fireEvent(int event) {
+void Apsis::Engine::_fireEvent(int event) {
   if (_input->isEventHeld(event)) {
     switch (event) {
       case Event::RAISE_CLIFF:

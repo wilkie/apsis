@@ -16,7 +16,7 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-IsoTasty::Primitives::Program::Program(unsigned int program,
+Apsis::Primitives::Program::Program(unsigned int program,
                                        std::vector<VertexShader> vertexShaders,
                                        std::vector<FragmentShader> fragmentShaders) :
   _program(program),
@@ -24,13 +24,13 @@ IsoTasty::Primitives::Program::Program(unsigned int program,
   _fragmentShaders(fragmentShaders) {
 }
 
-IsoTasty::Primitives::Program::~Program() {
+Apsis::Primitives::Program::~Program() {
   if (_counter.isAlone() && this->_program != 0) {
     glDeleteProgram(this->_program);
   }
 }
 
-void IsoTasty::Primitives::Program::defineInput(const char* name,
+void Apsis::Primitives::Program::defineInput(const char* name,
                                                 VertexBuffer& buffer,
                                                 unsigned int  numberOfComponents,
                                                 Type          type,
@@ -57,7 +57,7 @@ void IsoTasty::Primitives::Program::defineInput(const char* name,
                         stride * glsize, (GLvoid*)(offset * glsize));
 }
 
-void IsoTasty::Primitives::Program::uploadUniform(const char* name,
+void Apsis::Primitives::Program::uploadUniform(const char* name,
                                                   glm::mat4&  mat) const {
   GLint uniform = glGetUniformLocation(this->_program, name);
   if (uniform < 0) {
@@ -66,7 +66,7 @@ void IsoTasty::Primitives::Program::uploadUniform(const char* name,
   glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
-void IsoTasty::Primitives::Program::uploadUniform(const char* name,
+void Apsis::Primitives::Program::uploadUniform(const char* name,
                                                   int         value) const {
   GLint uniform = glGetUniformLocation(this->_program, name);
   if (uniform < 0) {
@@ -75,6 +75,6 @@ void IsoTasty::Primitives::Program::uploadUniform(const char* name,
   glUniform1i(uniform, value);
 }
 
-unsigned int IsoTasty::Primitives::Program::identifier() const {
+unsigned int Apsis::Primitives::Program::identifier() const {
   return this->_program;
 }

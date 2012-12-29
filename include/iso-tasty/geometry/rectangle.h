@@ -1,10 +1,10 @@
-#ifndef ISOTASTY_GEOMETRY_RECTANGLE_H
-#define ISOTASTY_GEOMETRY_RECTANGLE_H
+#ifndef APSIS_GEOMETRY_RECTANGLE_H
+#define APSIS_GEOMETRY_RECTANGLE_H
 
 #include "iso-tasty/geometry/line.h"
 #include "iso-tasty/geometry/point.h"
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Geometry {
     struct Rectangle {
       double x;

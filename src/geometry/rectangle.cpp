@@ -1,6 +1,6 @@
 #include "iso-tasty/geometry/rectangle.h"
 
-bool IsoTasty::Geometry::Rectangle::intersects(Rectangle* rectangle) {
+bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) {
   bool doesNotIntersect = false;
   doesNotIntersect |= rectangle->x > (x + width);
   doesNotIntersect |= x            > (rectangle->x + rectangle->width);
@@ -9,7 +9,7 @@ bool IsoTasty::Geometry::Rectangle::intersects(Rectangle* rectangle) {
   return !doesNotIntersect;
 }
 
-bool IsoTasty::Geometry::Rectangle::intersects(Line* line) {
+bool Apsis::Geometry::Rectangle::intersects(Line* line) {
   double deltaX = (line->points[1].x - line->points[0].x);
   double deltaY = (line->points[1].y - line->points[0].y);
 
@@ -113,7 +113,7 @@ bool IsoTasty::Geometry::Rectangle::intersects(Line* line) {
   return true;
 }
 
-bool IsoTasty::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
+bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
   double deltaX = (line->points[1].x - line->points[0].x);
   double deltaY = (line->points[1].y - line->points[0].y);
 
@@ -254,7 +254,7 @@ bool IsoTasty::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax)
   return true;
 }
 
-bool IsoTasty::Geometry::Rectangle::contains(Point* point) {
+bool Apsis::Geometry::Rectangle::contains(Point* point) {
   double halfWidth  = width  / 2.0;
   double halfHeight = height / 2.0;
 
@@ -266,7 +266,7 @@ bool IsoTasty::Geometry::Rectangle::contains(Point* point) {
   return containsPoint;
 }
 
-bool IsoTasty::Geometry::Rectangle::on(Point* point) {
+bool Apsis::Geometry::Rectangle::on(Point* point) {
   double halfWidth  = width  / 2.0;
   double halfHeight = height / 2.0;
 
@@ -294,7 +294,7 @@ bool IsoTasty::Geometry::Rectangle::on(Point* point) {
   return false;
 }
 
-bool IsoTasty::Geometry::Rectangle::corner(Point* point) {
+bool Apsis::Geometry::Rectangle::corner(Point* point) {
   double halfWidth  = width  / 2.0;
   double halfHeight = height / 2.0;
 
@@ -322,7 +322,7 @@ bool IsoTasty::Geometry::Rectangle::corner(Point* point) {
   return false;
 }
 
-bool IsoTasty::Geometry::Rectangle::on(Line* line) {
+bool Apsis::Geometry::Rectangle::on(Line* line) {
   if (line->points[0].x == line->points[1].x || line->points[0].y == line->points[1].y) {
 	return this->on(&line->points[0]) && this->on(&line->points[1]);
   }
@@ -330,7 +330,7 @@ bool IsoTasty::Geometry::Rectangle::on(Line* line) {
   return false;
 }
 
-void IsoTasty::Geometry::Rectangle::points(Point points[4]) {
+void Apsis::Geometry::Rectangle::points(Point points[4]) {
   double halfWidth  = width / 2.0;
   double halfHeight = height / 2.0;
 
@@ -347,7 +347,7 @@ void IsoTasty::Geometry::Rectangle::points(Point points[4]) {
   points[3].y = y + halfHeight;
 }
 
-void IsoTasty::Geometry::Rectangle::lines(Line lines[4]) {
+void Apsis::Geometry::Rectangle::lines(Line lines[4]) {
   Point points[4];
   this->points(points);
 

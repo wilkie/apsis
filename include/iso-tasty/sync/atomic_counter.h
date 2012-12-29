@@ -1,7 +1,7 @@
-#ifndef ISOTASTY_SYNC_ATOMIC_COUNTER_H
-#define ISOTASTY_SYNC_ATOMIC_COUNTER_H
+#ifndef APSIS_SYNC_ATOMIC_COUNTER_H
+#define APSIS_SYNC_ATOMIC_COUNTER_H
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Sync {
     class AtomicCounter {
     public:

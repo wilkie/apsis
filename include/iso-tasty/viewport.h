@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_VIEWPORT_H
-#define ISOTASTY_VIEWPORT_H
+#ifndef APSIS_VIEWPORT_H
+#define APSIS_VIEWPORT_H
 
 #include "iso-tasty/renderer.h"
 #include "iso-tasty/map.h"
@@ -16,7 +16,7 @@
 
 #include "iso-tasty/model/thing.h"
 
-namespace IsoTasty {
+namespace Apsis {
   class Viewport {
   public:
     // Create a viewport of the world given a size

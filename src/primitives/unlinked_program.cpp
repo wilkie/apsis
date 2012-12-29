@@ -13,12 +13,12 @@
   #include <GL/glu.h>
 #endif
 
-IsoTasty::Primitives::UnlinkedProgram::UnlinkedProgram() :
+Apsis::Primitives::UnlinkedProgram::UnlinkedProgram() :
   _linked(false) {
   this->_program = glCreateProgram();
 }
 
-IsoTasty::Primitives::UnlinkedProgram::~UnlinkedProgram() {
+Apsis::Primitives::UnlinkedProgram::~UnlinkedProgram() {
   if (_counter.isAlone()) {
     if (!(this->_linked)) {
       glDeleteProgram(this->_program);
@@ -26,23 +26,23 @@ IsoTasty::Primitives::UnlinkedProgram::~UnlinkedProgram() {
   }
 }
 
-void IsoTasty::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) {
+void Apsis::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) {
   if (_linked) throw "Program already linked. Cannot attach vertex shader.";
   _vertexShaders.push_back(vertexShader);
   glAttachShader(this->_program, vertexShader.identifier());
 }
 
-void IsoTasty::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) {
+void Apsis::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) {
   if (_linked) throw "Program already linked. Cannot attach fragment shader.";
   _fragmentShaders.push_back(fragmentShader);
   glAttachShader(this->_program, fragmentShader.identifier());
 }
 
-void IsoTasty::Primitives::UnlinkedProgram::defineFragmentOutput(const char* name) {
+void Apsis::Primitives::UnlinkedProgram::defineFragmentOutput(const char* name) {
   glBindFragDataLocation(this->_program, 0, name);
 }
 
-IsoTasty::Primitives::Program IsoTasty::Primitives::UnlinkedProgram::link() {
+Apsis::Primitives::Program Apsis::Primitives::UnlinkedProgram::link() {
   if (_linked) throw "Program already linked. Cannot link again.";
   glLinkProgram(_program);
   GLint status;

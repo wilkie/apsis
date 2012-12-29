@@ -6,12 +6,12 @@
 #include <Windows.h>
 
 int main(int argc, char** argv) {
-  // initialize engine
-  IsoTasty::VideoSettings settings;
+  // initialize Apsis
+  Apsis::VideoSettings settings;
   settings.resolutionX = WIDTH;
   settings.resolutionY = HEIGHT;
   try {
-    IsoTasty::Engine* engine = new IsoTasty::Engine(&settings);
+    Apsis::Engine* engine = new Apsis::Engine(&settings);
     engine->run();
   }
   catch (char* msg) {

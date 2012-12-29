@@ -73,7 +73,7 @@ struct ColladaMeshIndex
 	}
 };
 
-/** Loader class to read Collada scenes. Collada is over-engineered to death, with every new iteration bringing
+/** Loader class to read Collada scenes. Collada is over-Apsisered to death, with every new iteration bringing
  * more useless stuff, so I limited the data to what I think is useful for games. 
 */
 class ColladaLoader : public BaseImporter

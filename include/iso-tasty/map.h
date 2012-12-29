@@ -1,9 +1,9 @@
-#ifndef ISOTASTY_MAP_H
-#define ISOTASTY_MAP_H
+#ifndef APSIS_MAP_H
+#define APSIS_MAP_H
 
 #include "iso-tasty/tile.h"
 
-namespace IsoTasty {
+namespace Apsis {
 	class Map {
 	public:
 		Map(unsigned int width, unsigned int height);

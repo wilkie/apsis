@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_INPUT_ENGINE
-#define ISOTASTY_INPUT_ENGINE
+#ifndef APSIS_INPUT_ENGINE
+#define APSIS_INPUT_ENGINE
 
 #ifndef NO_SDL
 #include <SDL/SDL.h>
@@ -11,7 +11,7 @@
 
 #include <vector>
 
-namespace IsoTasty {
+namespace Apsis {
   /*
    *  Handles mapping between keys and events allowing for flexible control
    *    over what keys or buttons are mapped to particular functions.
@@ -21,8 +21,8 @@ namespace IsoTasty {
       static const int QUIT_EVENT = -1;
 
       /*
-       *  Constructs a bare input engine that can be assigned to an
-       *    IsoTasty::Engine.
+       *  Constructs a bare input Apsis that can be assigned to an
+       *    Apsis::Apsis.
        */
       InputEngine();
       ~InputEngine();
@@ -59,7 +59,7 @@ namespace IsoTasty {
       /*
        *  Converts the given SDL_Event into a KeyBinding context.
        */
-      static bool _translateSDLKey(IsoTasty::KeyBinding* binding, SDL_Event* event);
+      static bool _translateSDLKey(Apsis::KeyBinding* binding, SDL_Event* event);
 
       /*
        *  Handles SDL input events.

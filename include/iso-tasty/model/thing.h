@@ -1,5 +1,5 @@
-#ifndef ISOTASTY_MODEL_THING_H
-#define ISOTASTY_MODEL_THING_H
+#ifndef APSIS_MODEL_THING_H
+#define APSIS_MODEL_THING_H
 
 #include "iso-tasty/sync/reference_counter.h"
 
@@ -7,7 +7,7 @@
 
 #include "iso-tasty/model/mesh.h"
 
-namespace IsoTasty {
+namespace Apsis {
   namespace Model {
     class Thing {
     public:

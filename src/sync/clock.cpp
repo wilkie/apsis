@@ -6,7 +6,7 @@
   #include <sys/time.h>
 #endif
 
-namespace IsoTasty {
+namespace Apsis {
   struct ClockPlatformInternal {
 #ifdef _WIN32
     LARGE_INTEGER _freq, _start, _end;
@@ -14,7 +14,7 @@ namespace IsoTasty {
   };
 }
 
-IsoTasty::Clock::Clock() {
+Apsis::Clock::Clock() {
 #ifdef _WIN32
   ClockPlatformInternal* clock = new ClockPlatformInternal;
   _internal = (void*)clock;
@@ -23,7 +23,7 @@ IsoTasty::Clock::Clock() {
 #endif
 }
 
-double IsoTasty::Clock::elapsedTime() {
+double Apsis::Clock::elapsedTime() {
 #ifdef _WIN32
   ClockPlatformInternal* clock = (ClockPlatformInternal*)_internal;
   QueryPerformanceCounter(&clock->_end);
