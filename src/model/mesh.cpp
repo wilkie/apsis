@@ -63,6 +63,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.defineUniform("material.diffuse_intensity",  program);
   _vao.defineUniform("material.specular_intensity",  program);
   _vao.defineUniform("material.shininess",  program);
+  _vao.defineUniform("material.emission",  program);
   _vao.defineUniform("light.color",  program);
   _vao.defineUniform("light.direction",  program);
 
@@ -71,7 +72,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
-  _materials.push_back(Material(0.2f, 5.0f, 8.0f, 15.0f));
+  _materials.push_back(Material(0.2f, 5.0f, 8.0f, glm::vec3(1.0, 0.0, 0.0), 15.0f));
   _lights.push_back(Light(glm::vec3(0.0),
                           glm::vec3(0.0, 1.0, 0.0),
                           glm::vec3(1.0, 0.0, 1.0)));
@@ -80,6 +81,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("material.diffuse_intensity", _materials[0].diffuseIntensity());
   _vao.uploadUniform("material.specular_intensity",  _materials[0].specularIntensity());
   _vao.uploadUniform("material.shininess",  _materials[0].shininess());
+  _vao.uploadUniform("material.emission",  _materials[0].emission());
 
   _vao.uploadUniform("light.direction", _lights[0].direction());
   _vao.uploadUniform("light.color", _lights[0].color());

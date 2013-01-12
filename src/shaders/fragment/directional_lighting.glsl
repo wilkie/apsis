@@ -13,6 +13,7 @@ struct Material {
   float diffuse_intensity;
   float specular_intensity;
   float shininess;
+  vec3  emission;
 };
 
 uniform DirectionalLight light;
@@ -40,9 +41,10 @@ vec4 specular_lighting() {
     factor = pow(factor, material.shininess);
     return vec4(light.color, 1.0f) * material.specular_intensity * max(0.0, factor);
   }
+
   return vec4(0.0, 0.0, 0.0, 0.0);
 }
 
 vec4 directional_lighting(vec4 color) {
-  return color * (ambient_lighting() + diffuse_lighting() + specular_lighting());
+  return color * (vec4(material.emission, 1.0) + ambient_lighting() + diffuse_lighting() + specular_lighting());
 }
