@@ -17,8 +17,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Apsis::Primitives::Program::Program(unsigned int program,
-                                       std::vector<VertexShader> vertexShaders,
-                                       std::vector<FragmentShader> fragmentShaders) :
+                                    std::vector<VertexShader> vertexShaders,
+                                    std::vector<FragmentShader> fragmentShaders) :
   _program(program),
   _vertexShaders(vertexShaders),
   _fragmentShaders(fragmentShaders) {

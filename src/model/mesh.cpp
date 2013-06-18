@@ -7,9 +7,9 @@
 #include "iso-tasty/primitives/program.h"
 
 Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
-                            std::vector<glm::vec3>& normals,
-                            std::vector<glm::vec2>& textureCoords,
-                            std::vector<unsigned int>& elements) {
+                         std::vector<glm::vec3>& normals,
+                         std::vector<glm::vec2>& textureCoords,
+                         std::vector<unsigned int>& elements) {
   // Create buffer array
   float* vert_array = new float[8 * vertices.size()];
 
@@ -93,5 +93,6 @@ void Apsis::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera,
   _vao.uploadUniform("model", model);
 
   _vao.uploadUniform("camera", camera.eye());
+
   _vao.draw();
 }

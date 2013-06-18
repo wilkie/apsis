@@ -2,7 +2,6 @@
 #define APSIS_VIEWPORT_H
 
 #include "iso-tasty/renderer.h"
-#include "iso-tasty/map.h"
 
 #include "iso-tasty/primitives/camera.h"
 
@@ -15,6 +14,8 @@
 #include "iso-tasty/primitives/texture.h"
 
 #include "iso-tasty/model/thing.h"
+
+#include "iso-tasty/world/terrain.h"
 
 namespace Apsis {
   class Viewport {
@@ -32,7 +33,7 @@ namespace Apsis {
     void zoom(double factor);
 
     // Draws the world as seen by this viewport
-    void draw(Renderer* renderer, Map* map);
+    void draw(Renderer* renderer, World::Terrain* map);
 
   private:
     // The rotation of the world
@@ -51,6 +52,8 @@ namespace Apsis {
 
     std::vector<Model::Thing> _things;
     std::vector<Primitives::Camera> _cameras;
+
+    World::Terrain* _terrain;
   };
 }
 

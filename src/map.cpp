@@ -7,104 +7,16 @@
 #include <stdio.h>
 #include <Windows.h>
 
-// Struct for the point data. Should put somewhere.
-struct Point {
-  float x;
-  float y;
-  float z;
-};
-
-// Helper function for controlPoints()
-static Point* firstControlPoints(Point* rhs, Point* first, unsigned int num) {
-  Point* tmp = new Point[num];
-
-  float bx = 2.0f;
-  float by = 2.0f;
-  first[0].x = rhs[0].x / bx;
-  first[0].y = rhs[0].y / by;
-  for (unsigned int i = 1; i < num; i++) {
-    tmp[i].x = 1.0f / bx;
-    tmp[i].y = 1.0f / by;
-    if (i < num - 1) {
-      bx = 4.0f - tmp[i].x;
-      by = 4.0f - tmp[i].y;
-    }
-    else {
-      bx = 3.5f - tmp[i].x;
-      by = 3.5f - tmp[i].y;
-    }
-    first[i].x = (rhs[i].x - first[i - 1].x) / bx;
-    first[i].y = (rhs[i].y - first[i - 1].y) / by;
-  }
-  for (unsigned int i = 1; i < num; i++) {
-    first[num - i - 1].x -= tmp[num - i].x * first[num - i].x;
-    first[num - i - 1].y -= tmp[num - i].y * first[num - i].y;
-  }
-  delete [] tmp;
-  return first;
-}
-
-// This is a routine that gives you control points for a smooth curve through the given
-// points. It is based on solving the derivative of the cubic bezier routine.
-
-// It was based upon my own math and the code of http://www.codeproject.com/KB/graphics/BezierSpline.aspx
-// Adapted for 3d points and C++ by myself.
-static void controlPoints(Point* points, Point* first, Point* second, unsigned int num) {
-
-  if (points == NULL) {
-    return;
-  }
-
-  unsigned int n = num - 1;
-
-  if (n < 1) {
-    return;
-  }
-  else if (n == 1) {
-    first[0].x = (2.0f * points[0].x + points[1].x) / 3.0f;
-    first[0].y = (2.0f * points[0].y + points[1].y) / 3.0f;
-
-    second[0].x = 2.0f * first[0].x - points[0].x;
-    second[0].y = 2.0f * first[0].y - points[0].y;
-
-    return;
-  }
-
-  Point* nodes = new Point[n];
-  for (unsigned int i = 1; i < n-1; i++) {
-    nodes[i].x = 4.0f * points[i].x + 2.0f * points[i + 1].x;
-    nodes[i].y = 4.0f * points[i].y + 2.0f * points[i + 1].y;
-  }
-  nodes[0].x = points[0].x + 2.0f * points[1].x;
-  nodes[n - 1].x = (8.0f * points[n - 1].x + points[n].x) / 2.0f;
-  nodes[0].y = points[0].y + 2.0f * points[1].y;
-  nodes[n - 1].y = (8.0f * points[n - 1].y + points[n].y) / 2.0f;
-
-  firstControlPoints(nodes, first, n);
-
-  for (unsigned int i = 0; i < n; i++) {
-    if (i < n - 1) {
-      second[i].x = 2.0f * points[i + 1].x - first[i + 1].x;
-      second[i].y = 2.0f * points[i + 1].y - first[i + 1].y;
-    }
-    else {
-      second[i].x = (points[n].x + first[n - 1].x) / 2.0f;
-      second[i].y = (points[n].y + first[n - 1].y) / 2.0f;
-    }
-  }
-  delete [] nodes;
-}
-
 Apsis::Map::Map(unsigned int width, unsigned int height) :
   _width(width),
   _height(height),
   _x(width/2), 
   _z(height/2) {
-  _map = new Tile*[width * height];
+  _map = new World::Tile*[width * height];
   for (unsigned int x = 0; x < width; x++) {
     for (unsigned int z = 0; z < height; z++) {
       unsigned int offset = (_width * x + z) * 44;
-      _map[_width * x + z] = new Tile();
+      _map[_width * x + z] = new World::Tile();
     }
   }
 }
@@ -121,7 +33,7 @@ unsigned int Apsis::Map::height() {
   return _height;
 }
 
-Apsis::Tile* Apsis::Map::atIndex(unsigned int x, unsigned int z) {
+Apsis::World::Tile* Apsis::Map::atIndex(unsigned int x, unsigned int z) {
   return _map[_width * x + z];
 }
 
@@ -151,7 +63,7 @@ unsigned int Apsis::Map::z(unsigned int value) {
 
 void Apsis::Map::raise(float amount) {
   // Every tile this touches is raised a little bit
-  Apsis::Tile* tile;
+  Apsis::World::Tile* tile;
   float old_height;
 
   if (_x != _width && _z != _height) {
@@ -186,12 +98,12 @@ void Apsis::Map::raise(float amount) {
 
   // Horizontal
 
-  Point* line;
-  Point* first;
-  Point* second;
-  line = new Point[_width+1];
-  first = new Point[_width];
-  second = new Point[_width];
+  Apsis::Geometry::Point3d* line;
+  Apsis::Geometry::Point3d* first;
+  Apsis::Geometry::Point3d* second;
+  line = new Apsis::Geometry::Point3d[_width+1];
+  first = new Apsis::Geometry::Point3d[_width];
+  second = new Apsis::Geometry::Point3d[_width];
 
   for (unsigned int x = 0; x < _width; x++) {
     tile = atIndex(x, _z);

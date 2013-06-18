@@ -5,9 +5,9 @@ namespace Apsis {
   namespace Geometry {
     struct Point3d {
       // The x, y and z coordinates of the object's footprint in the world.
-      double x;
-      double y;
-      double z;
+      float x;
+      float y;
+      float z;
     };
   }
 }

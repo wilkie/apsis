@@ -1,7 +1,7 @@
 #include "iso-tasty.h"
 
-#define WIDTH 960
-#define HEIGHT 540
+#define WIDTH 1536
+#define HEIGHT 864
 
 #include <Windows.h>
 

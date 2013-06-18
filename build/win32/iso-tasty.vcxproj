@@ -74,7 +74,6 @@
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
     <ClCompile Include="..\..\src\input\input_engine.cpp" />
     <ClCompile Include="..\..\src\input\key_binding_repository.cpp" />
-    <ClCompile Include="..\..\src\map.cpp" />
     <ClCompile Include="..\..\src\model\animation.cpp" />
     <ClCompile Include="..\..\src\model\light.cpp" />
     <ClCompile Include="..\..\src\model\material.cpp" />
@@ -82,6 +81,7 @@
     <ClCompile Include="..\..\src\model\thing.cpp" />
     <ClCompile Include="..\..\src\primitives\camera.cpp" />
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp" />
+    <ClCompile Include="..\..\src\primitives\frame_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\program.cpp" />
     <ClCompile Include="..\..\src\primitives\texture.cpp" />
     <ClCompile Include="..\..\src\primitives\unlinked_program.cpp" />
@@ -236,8 +236,9 @@
     <ClCompile Include="..\..\src\sync\clock.cpp" />
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
-    <ClCompile Include="..\..\src\tile.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
+    <ClCompile Include="..\..\src\world\terrain.cpp" />
+    <ClCompile Include="..\..\src\world\tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\GL\glew.h" />
@@ -254,7 +255,6 @@
     <ClInclude Include="..\..\include\iso-tasty\input\key.h" />
     <ClInclude Include="..\..\include\iso-tasty\input\key_binding.h" />
     <ClInclude Include="..\..\include\iso-tasty\input\key_binding_repository.h" />
-    <ClInclude Include="..\..\include\iso-tasty\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\animation.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\light.h" />
     <ClInclude Include="..\..\include\iso-tasty\model\material.h" />
@@ -262,6 +262,7 @@
     <ClInclude Include="..\..\include\iso-tasty\model\thing.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\camera.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\fragment_shader.h" />
+    <ClInclude Include="..\..\include\iso-tasty\primitives\frame_buffer.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\program.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\texture.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\unlinked_program.h" />
@@ -272,8 +273,9 @@
     <ClInclude Include="..\..\include\iso-tasty\sync\atomic_counter.h" />
     <ClInclude Include="..\..\include\iso-tasty\sync\clock.h" />
     <ClInclude Include="..\..\include\iso-tasty\sync\reference_counter.h" />
-    <ClInclude Include="..\..\include\iso-tasty\tile.h" />
     <ClInclude Include="..\..\include\iso-tasty\viewport.h" />
+    <ClInclude Include="..\..\include\iso-tasty\world\terrain.h" />
+    <ClInclude Include="..\..\include\iso-tasty\world\tile.h" />
     <ClInclude Include="..\..\include\SOIL.h" />
     <ClInclude Include="..\..\src\support\assimp\3DSHelper.h" />
     <ClInclude Include="..\..\src\support\assimp\3DSLoader.h" />

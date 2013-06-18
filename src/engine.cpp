@@ -110,12 +110,12 @@ Apsis::Engine::Engine(VideoSettings* video) {
 }
 
 void Apsis::Engine::newMap(unsigned int width, unsigned int height) {
-  _map = new Map(width, height);
+  //_map = new Map(width, height);
 }
 
 void Apsis::Engine::_draw() {
   _renderer->clear();
-  _view->draw(_renderer, _map);
+  _view->draw(_renderer, NULL);
 }
 
 void Apsis::Engine::run() {
@@ -203,28 +203,28 @@ void Apsis::Engine::_fireEvent(int event) {
   if (_input->isEventHeld(event)) {
     switch (event) {
       case Event::RAISE_CLIFF:
-        _map->lift(0.50);
+        //_map->lift(0.50);
         break;
       case Event::LOWER_CLIFF:
-        _map->lift(-0.50);
+        //_map->lift(-0.50);
         break;
       case Event::RAISE:
-        _map->raise(0.50);
+        //_map->raise(0.50);
         break;
       case Event::LOWER:
-        _map->raise(-0.50);
+        //_map->raise(-0.50);
         break;
       case Event::MOVE_DOWN:
-        _map->z(_map->z() + 1);
+        //_map->z(_map->z() + 1);
         break;
       case Event::MOVE_UP:
-        _map->z(_map->z() - 1);
+        //_map->z(_map->z() - 1);
         break;
       case Event::MOVE_LEFT:
-        _map->x(_map->x() - 1);
+        //_map->x(_map->x() - 1);
         break;
       case Event::MOVE_RIGHT:
-        _map->x(_map->x() + 1);
+        //_map->x(_map->x() + 1);
         break;
       case Event::MOVE_SCREEN_DOWN:
         _view->move(0, -1);

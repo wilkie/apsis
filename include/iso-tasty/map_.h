@@ -1,7 +1,7 @@
 #ifndef APSIS_MAP_H
 #define APSIS_MAP_H
 
-#include "iso-tasty/tile.h"
+#include "iso-tasty/world/tile.h"
 
 namespace Apsis {
 	class Map {
@@ -22,12 +22,12 @@ namespace Apsis {
 		void raise(float amount);
 		void lift(float amount);
 
-		Tile* atIndex(unsigned int x, unsigned int z);
+		Apsis::World::Tile* atIndex(unsigned int x, unsigned int z);
 	private:
 		unsigned int _width;
 		unsigned int _height;
 
-		Tile** _map;
+		Apsis::World::Tile** _map;
 
 		unsigned int _x;
 		unsigned int _z;

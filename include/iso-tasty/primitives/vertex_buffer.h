@@ -29,6 +29,8 @@ namespace Apsis {
        */
       unsigned int identifier() const;
 
+      void bind() const;
+
     private:
       unsigned int _vbo;
       unsigned int _count;

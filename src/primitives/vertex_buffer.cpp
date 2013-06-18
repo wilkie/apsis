@@ -44,3 +44,6 @@ unsigned int Apsis::Primitives::VertexBuffer::count() const {
 unsigned int Apsis::Primitives::VertexBuffer::identifier() const {
   return this->_vbo;
 }
+
+void Apsis::Primitives::VertexBuffer::bind() const {
+}

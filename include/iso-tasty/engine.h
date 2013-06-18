@@ -6,7 +6,7 @@
 #include "iso-tasty/sync/clock.h"
 
 #include "iso-tasty/viewport.h"
-#include "iso-tasty/map.h"
+#include "iso-tasty/world/terrain.h"
 
 // This is here instead of the cpp because main() is overriden by
 // preprocessor magicks.
@@ -31,7 +31,6 @@ namespace Apsis {
 
     Viewport* _view;
     Renderer* _renderer;
-    Map* _map;
     VideoSettings _video;
     Clock* _clock;
 

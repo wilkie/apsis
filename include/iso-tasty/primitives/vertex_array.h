@@ -80,9 +80,14 @@ namespace Apsis {
       void use();
 
       /*
-       *  Render.
+       *  Render as triangles.
        */
       void draw();
+
+      /*
+       *  Render as quads.
+       */
+      void drawQuads();
 
       /*
        *  Gives the identifier for this vertex array.

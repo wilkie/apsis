@@ -28,12 +28,16 @@ Apsis::Viewport::Viewport(unsigned int width, unsigned int height) :
   _rotation(0.0),
   _x(0.0),
   _z(0.0),
-  _zoom(0.25) {
+  _zoom(4.0) {
 
   Model::Thing thing = Model::Thing("../../resources/monkey.dae");
 
   _things.push_back(thing);
-  _cameras.push_back(Primitives::Camera(glm::vec3(_x, 4.0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5)));
+  _cameras.push_back(Primitives::Camera(glm::vec3(_x, 0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5)));
+
+  _terrain = new Apsis::World::Terrain(200, 200);
+
+  this->move(0, 0);
 }
 
 unsigned int Apsis::Viewport::width() {
@@ -45,18 +49,18 @@ unsigned int Apsis::Viewport::height() {
 }
 
 float cubicBezier(float p0, float p1, float p2, float p3, float t) {
-  float co1 = t;
+  float co1_1 = t;
   float co1_2 = t*t;
   float co1_3 = t*t*t;
 
-  float co2 = (1-t);
+  float co2_1 = (1-t);
   float co2_2 = (1-t)*(1-t);
   float co2_3 = (1-t)*(1-t)*(1-t);
 
-  return co2_3*p3 + 3*co1*co2_2*p2 + 3*co1_2*co2*p1 + co1_3*p0;
+  return co2_3*p3 + 3*co1_1*co2_2*p2 + 3*co1_2*co2_1*p1 + co1_3*p0;
 }
 
-void Apsis::Viewport::draw(Renderer* renderer, Map* map) {
+void Apsis::Viewport::draw(Renderer* renderer, World::Terrain* map) {
   bool orthographic = false;
   double rotation = _rotation;
   double translationX = _x;
@@ -103,7 +107,7 @@ void Apsis::Viewport::draw(Renderer* renderer, Map* map) {
              glm::vec3(translationX, 0, translationZ)),
            glm::vec3(zoom, zoom, zoom));
 
-  view = _cameras[0].view();
+  //view = _cameras[0].view();
 
   glm::mat4 model = glm::mat4(1.0);
 
@@ -117,75 +121,22 @@ void Apsis::Viewport::draw(Renderer* renderer, Map* map) {
   for (unsigned int i = 0; i < _things.size(); i++) {
     _things[i].draw(projection, _cameras[0], model);
   }
+
+  this->_terrain->draw(projection, _cameras[0], model);
+
   return;
 
-  float half_height = map->height() / 2.0f;
-  float half_width = map->width() / 2.0f;
+  /*
+  
 
-  for (unsigned int z = 0; z < map->height(); z++) {
-    for (unsigned int x = 0; x < map->width(); x++) {
-      Apsis::Tile* tile = map->atIndex(x, z);
-      float h = 1.0f;
-      float top = tile->hover();
-      float heights[4];
-      for (int i = 0; i < 4; i++) {
-        heights[i] = tile->cornerHeight(i);
-      }
-
-      float p0 = tile->cornerHeight(Apsis::TOP_LEFT);
-      float p1 = tile->firstControl(Apsis::TOP_LEFT);
-      float p2 = tile->secondControl(Apsis::TOP_LEFT);
-      float p3 = tile->cornerHeight(Apsis::TOP_RIGHT);
-
-      float first_y = cubicBezier(p0,p1,p2,p3,0.33f);
-      float second_y = cubicBezier(p0,p1,p2,p3,0.67f);
-      float firsts[4] = {5.0f, 5.0f, 5.0f, 5.0f};
-      float seconds[4] = {5.0f, 5.0f, 5.0f, 5.0f};
-      firsts[Apsis::TOP_LEFT] = first_y;
-      seconds[Apsis::TOP_LEFT] = second_y;
-
-      p0 = tile->cornerHeight(Apsis::BOT_LEFT);
-      p1 = tile->firstControl(Apsis::BOT_RIGHT);
-      p2 = tile->secondControl(Apsis::BOT_RIGHT);
-      p3 = tile->cornerHeight(Apsis::BOT_RIGHT);
-      first_y = cubicBezier(p0,p1,p2,p3,0.33f);
-      second_y = cubicBezier(p0,p1,p2,p3,0.67f);
-      firsts[Apsis::BOT_RIGHT] = first_y;
-      seconds[Apsis::BOT_RIGHT] = second_y;
-
-      p0 = tile->cornerHeight(Apsis::TOP_RIGHT);
-      p1 = tile->firstControl(Apsis::TOP_RIGHT);
-      p2 = tile->secondControl(Apsis::TOP_RIGHT);
-      p3 = tile->cornerHeight(Apsis::BOT_RIGHT);
-      first_y = cubicBezier(p0,p1,p2,p3,0.33f);
-      second_y = cubicBezier(p0,p1,p2,p3,0.67f);
-      firsts[Apsis::TOP_RIGHT] = first_y;
-      seconds[Apsis::TOP_RIGHT] = second_y;
-
-      p0 = tile->cornerHeight(Apsis::TOP_LEFT);
-      p1 = tile->firstControl(Apsis::BOT_LEFT);
-      p2 = tile->secondControl(Apsis::BOT_LEFT);
-      p3 = tile->cornerHeight(Apsis::BOT_LEFT);
-      first_y = cubicBezier(p0,p1,p2,p3,0.33f);
-      second_y = cubicBezier(p0,p1,p2,p3,0.67f);
-      firsts[Apsis::BOT_LEFT] = first_y;
-      seconds[Apsis::BOT_LEFT] = second_y;
-
-      //renderer->drawTile((float)x - half_width, -top, (float)z - half_height, 0.5f, 0.5f, 0.5f, heights, first_y, second_y);
-
-      renderer->drawTile((float)(x - half_width), (float)(-3 * (1 / _zoom) - top), (float)(z - half_height), 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
-      renderer->drawTileTop((float)(x - half_width), (float)(-3 * (1 / _zoom) - top), (float)(z - half_height), 0.5f, 0.5f, 0.5f, heights, firsts, seconds);
-    }
-  }
-
-  Apsis::Tile* tile = map->atIndex(map->x(), map->z());
+  Apsis::World::Tile* tile = map->atIndex(map->x(), map->z());
   renderer->drawSphere(
     (float)(map->x() - half_width - 0.5f), 
     (float)(-3 * (1 / _zoom) + (-tile->hover() + tile->cornerHeight(Apsis::TOP_LEFT))/2.0f),
     (float)(map->z() - half_height - 0.5f),
     0.25f, 0.25f, 0.25f);
 
-  //renderer->test();
+  //renderer->test();*/
 }
 
 void Apsis::Viewport::move(double deltaX, double deltaZ) {
@@ -194,12 +145,10 @@ void Apsis::Viewport::move(double deltaX, double deltaZ) {
   double sine = sin(radians);
 
   // Move respective of rotation
-  _x += deltaX*cosine - deltaZ*sine;
-  _z += deltaX*sine + deltaZ*cosine;
+  _x -= deltaX*sine + deltaZ*cosine;
+  _z += deltaX*cosine - deltaZ*sine;
 
-  _cameras[0] = Primitives::Camera(glm::vec3(_x, 4.0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5));
-  //_x += deltaX;
-  //_z += deltaZ;
+  _cameras[0] = Primitives::Camera(glm::vec3(_x, _zoom, _z), glm::vec3(_x, 0.0, _z+5.0), glm::normalize(glm::vec3(cosine, 1.0, sine)));
 }
 
 void Apsis::Viewport::rotate(double delta) {
@@ -209,8 +158,12 @@ void Apsis::Viewport::rotate(double delta) {
   _rotation += 360.0;
   _rotation += delta;
   _rotation = fmod(_rotation, 360.0);
+
+  this->move(0, 0);
 }
 
 void Apsis::Viewport::zoom(double factor) {
-  _zoom *= factor;
+  _zoom /= factor;
+
+  this->move(0, 0);
 }
