@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp" />
     <ClCompile Include="..\..\src\primitives\frame_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\program.cpp" />
+    <ClCompile Include="..\..\src\primitives\sprite_sheet.cpp" />
     <ClCompile Include="..\..\src\primitives\texture.cpp" />
     <ClCompile Include="..\..\src\primitives\unlinked_program.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_array.cpp" />
@@ -237,6 +238,7 @@
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
+    <ClCompile Include="..\..\src\world\map.cpp" />
     <ClCompile Include="..\..\src\world\terrain.cpp" />
     <ClCompile Include="..\..\src\world\tile.cpp" />
   </ItemGroup>
@@ -264,6 +266,7 @@
     <ClInclude Include="..\..\include\iso-tasty\primitives\fragment_shader.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\frame_buffer.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\program.h" />
+    <ClInclude Include="..\..\include\iso-tasty\primitives\sprite_sheet.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\texture.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\unlinked_program.h" />
     <ClInclude Include="..\..\include\iso-tasty\primitives\vertex_array.h" />
@@ -274,6 +277,7 @@
     <ClInclude Include="..\..\include\iso-tasty\sync\clock.h" />
     <ClInclude Include="..\..\include\iso-tasty\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\iso-tasty\viewport.h" />
+    <ClInclude Include="..\..\include\iso-tasty\world\map.h" />
     <ClInclude Include="..\..\include\iso-tasty\world\terrain.h" />
     <ClInclude Include="..\..\include\iso-tasty\world\tile.h" />
     <ClInclude Include="..\..\include\SOIL.h" />

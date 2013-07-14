@@ -12,6 +12,7 @@ namespace Apsis {
   namespace World {
     class Tile {
     public:
+      Tile();
       Tile(float cornerHeight[4]);
 
       // Properties
@@ -27,6 +28,12 @@ namespace Apsis {
       float secondControl(unsigned int index);
       float secondControl(unsigned int index, float value);
 
+      bool  passable();
+      bool  passable(bool value);
+
+      unsigned int spriteIndex();
+      unsigned int spriteIndex(unsigned int value);
+
       // Methods
       float minHeight();
       float maxHeight();
@@ -36,10 +43,15 @@ namespace Apsis {
     private:
       // Tile parameters
       float _height;
+
       float _hover;
+
       float _cornerHeight[4];
       float _firstControl[4];
       float _secondControl[4];
+
+      bool         _passable;
+      unsigned int _spriteIndex;
     };
   };
 }

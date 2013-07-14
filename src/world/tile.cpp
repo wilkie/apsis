@@ -1,5 +1,14 @@
 #include "iso-tasty/world/tile.h"
 
+Apsis::World::Tile::Tile() :
+  _hover(0.0f) {
+  for (int i = 0; i < 4; i++) {
+    _cornerHeight[i] = 5.0f;
+    _firstControl[i] = 5.0f;
+    _secondControl[i] = 5.0f;
+  }
+}
+
 Apsis::World::Tile::Tile(float cornerHeight[4]) :
   _hover(0.0f) {
   for (int i = 0; i < 4; i++) {
@@ -113,4 +122,22 @@ float Apsis::World::Tile::secondControl(unsigned int index, float value) {
     return value;
   }
   return 0.0f;
+}
+
+bool Apsis::World::Tile::passable() {
+  return _passable;
+}
+
+bool Apsis::World::Tile::passable(bool value) {
+  _passable = value;
+  return _passable;
+}
+
+unsigned int Apsis::World::Tile::spriteIndex() {
+  return _spriteIndex;
+}
+
+unsigned int Apsis::World::Tile::spriteIndex(unsigned int value) {
+  _spriteIndex = value;
+  return _spriteIndex;
 }

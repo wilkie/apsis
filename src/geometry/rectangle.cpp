@@ -83,8 +83,8 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
       r = q[i] / p[i];
       if (r > tMax) {
         return false;
-	  }
-	  else if (r > tMin) {
+      }
+      else if (r > tMin) {
         tMin = r;
       }
     }
@@ -93,15 +93,15 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
       r = q[i] / p[i];
       if (r < tMin) {
         return false;
-	  }
-	  else if (r < tMax) {
+      }
+      else if (r < tMax) {
         tMax = r;
       }
     }
     else if (p[i] == 0.0 && q[i] < 0.0) {
       // Reject
       return false;
-	}
+    }
   }
 
   if (tMin > tMax) {
@@ -188,8 +188,8 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
       r = q[i] / p[i];
       if (r > *tMax) {
         return false;
-	  }
-	  else if (r > *tMin) {
+    }
+    else if (r > *tMin) {
         *tMin = r;
         if (i < 2) {
           pMin.x = exactPosition[i];
@@ -206,8 +206,8 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
       r = q[i] / p[i];
       if (r < *tMin) {
         return false;
-	  }
-	  else if (r < *tMax) {
+      }
+      else if (r < *tMax) {
         *tMax = r;
         if (i < 2) {
           pMax.x = exactPosition[i];
@@ -222,7 +222,7 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
     else if (p[i] == 0.0 && q[i] < 0.0) {
       // Reject
       return false;
-	}
+    }
   }
 
   if (*tMin > *tMax) {
@@ -276,19 +276,19 @@ bool Apsis::Geometry::Rectangle::on(Point* point) {
   double bottom = y + halfHeight;
 
   if (point->x == left && point->y >= top && point->y <= bottom) {
-	  return true;
+    return true;
   }
 
   if (point->x == right && point->y >= top && point->y <= bottom) {
-	  return true;
+    return true;
   }
   
   if (point->y == top && point->x >= left && point->x <= right) {
-	  return true;
+    return true;
   }
   
   if (point->y == bottom && point->x >= left && point->x <= right) {
-	  return true;
+    return true;
   }
 
   return false;
@@ -304,19 +304,19 @@ bool Apsis::Geometry::Rectangle::corner(Point* point) {
   double bottom = y + halfHeight;
 
   if (point->x == left && point->y == top) {
-	  return true;
+    return true;
   }
 
   if (point->x == left && point->y == bottom) {
-	  return true;
+    return true;
   }
   
   if (point->x == right && point->y == top) {
-	  return true;
+    return true;
   }
   
   if (point->x == right && point->y == bottom) {
-	  return true;
+    return true;
   }
 
   return false;
@@ -324,7 +324,7 @@ bool Apsis::Geometry::Rectangle::corner(Point* point) {
 
 bool Apsis::Geometry::Rectangle::on(Line* line) {
   if (line->points[0].x == line->points[1].x || line->points[0].y == line->points[1].y) {
-	return this->on(&line->points[0]) && this->on(&line->points[1]);
+  return this->on(&line->points[0]) && this->on(&line->points[1]);
   }
 
   return false;
