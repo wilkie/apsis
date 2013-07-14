@@ -68,6 +68,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\actor\sprite.cpp" />
+    <ClCompile Include="..\..\src\agent\map_collider.cpp" />
     <ClCompile Include="..\..\src\engine.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
     <ClCompile Include="..\..\src\geometry\line.cpp" />
@@ -244,6 +246,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis.h" />
+    <ClInclude Include="..\..\include\apsis\actor\sprite.h" />
+    <ClInclude Include="..\..\include\apsis\agent\map_collider.h" />
     <ClInclude Include="..\..\include\apsis\geometry\circle.h" />
     <ClInclude Include="..\..\include\apsis\geometry\line.h" />
     <ClInclude Include="..\..\include\apsis\geometry\point.h" />
