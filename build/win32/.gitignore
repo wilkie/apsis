@@ -3,7 +3,7 @@ Release
 *.ncb
 *.aps
 *.suo
-*.vcxproj.*
+*.vcxproj.user
 ipch
 *.sdf
 *.opensdf

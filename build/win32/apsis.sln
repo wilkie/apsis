@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iso-tasty", "iso-tasty.vcxproj", "{559F58DF-1E22-49BF-A853-45169DFFB2D7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "apsis", "apsis.vcxproj", "{559F58DF-1E22-49BF-A853-45169DFFB2D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
