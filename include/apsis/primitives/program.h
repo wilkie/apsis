@@ -16,9 +16,11 @@ namespace Apsis {
   namespace Primitives {
     class Program {
     public:
-      typedef enum {
-        Float,
-      } Type;
+      struct Type {
+        enum Types {
+          Float
+        };
+      };
 
       /*
        *  Links the given unlinked program.
@@ -35,7 +37,7 @@ namespace Apsis {
       void defineInput(const char*   name,
                        VertexBuffer& buffer,
                        unsigned int  numberOfComponents,
-                       Type          type,
+                       Type::Types   type,
                        bool          normalized,
                        unsigned int  stride,
                        unsigned int  offset) const;

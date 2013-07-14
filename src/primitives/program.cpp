@@ -33,7 +33,7 @@ Apsis::Primitives::Program::~Program() {
 void Apsis::Primitives::Program::defineInput(const char* name,
                                                 VertexBuffer& buffer,
                                                 unsigned int  numberOfComponents,
-                                                Type          type,
+                                                Type::Types   type,
                                                 bool          normalized,
                                                 unsigned int  stride,
                                                 unsigned int  offset) const {
