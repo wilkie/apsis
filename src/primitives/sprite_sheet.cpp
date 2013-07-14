@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/sprite_sheet.h"
+#include "apsis/primitives/sprite_sheet.h"
 
 #ifndef NO_GL
   #ifdef _WIN32

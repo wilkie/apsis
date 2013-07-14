@@ -1,8 +1,8 @@
 #ifndef APSIS_KEY_BINDING_REPOSITORY
 #define APSIS_KEY_BINDING_REPOSITORY
 
-#include "iso-tasty/input/key.h"
-#include "iso-tasty/input/key_binding.h"
+#include "apsis/input/key.h"
+#include "apsis/input/key_binding.h"
 
 #include <vector>
 

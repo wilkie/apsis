@@ -1,8 +1,8 @@
 #ifndef APSIS_WORLD_MAP_H
 #define APSIS_WORLD_MAP_H
 
-#include "iso-tasty/world/tile.h"
-#include "iso-tasty/primitives/sprite_sheet.h"
+#include "apsis/world/tile.h"
+#include "apsis/primitives/sprite_sheet.h"
 
 #include <vector>
 

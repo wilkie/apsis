@@ -1,11 +1,11 @@
 #ifndef APSIS_PRIMITIVES_VERTEX_ARRAY_H
 #define APSIS_PRIMITIVES_VERTEX_ARRAY_H
 
-#include "iso-tasty/sync/reference_counter.h"
+#include "apsis/sync/reference_counter.h"
 
-#include "iso-tasty/primitives/vertex_buffer.h"
-#include "iso-tasty/primitives/program.h"
-#include "iso-tasty/primitives/texture.h"
+#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitives/program.h"
+#include "apsis/primitives/texture.h"
 
 #include <vector>
 #include <map>

@@ -1,12 +1,12 @@
 #ifndef APSIS_MODEL_MESH_H
 #define APSIS_MODEL_MESH_H
 
-#include "iso-tasty/model/material.h"
-#include "iso-tasty/model/light.h"
+#include "apsis/model/material.h"
+#include "apsis/model/light.h"
 
-#include "iso-tasty/primitives/camera.h"
-#include "iso-tasty/primitives/vertex_array.h"
-#include "iso-tasty/primitives/vertex_buffer.h"
+#include "apsis/primitives/camera.h"
+#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_buffer.h"
 
 #include <glm/glm.hpp>
 

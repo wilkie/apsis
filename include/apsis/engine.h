@@ -2,11 +2,11 @@
 #define APSIS_APSIS_H
 
 // Infrastructure
-#include "iso-tasty/input/input_engine.h"
-#include "iso-tasty/sync/clock.h"
+#include "apsis/input/input_engine.h"
+#include "apsis/sync/clock.h"
 
-#include "iso-tasty/viewport.h"
-#include "iso-tasty/world/terrain.h"
+#include "apsis/viewport.h"
+#include "apsis/world/terrain.h"
 
 // This is here instead of the cpp because main() is overriden by
 // preprocessor magicks.

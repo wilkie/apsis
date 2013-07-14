@@ -1,4 +1,4 @@
-#include "iso-tasty/sync/clock.h"
+#include "apsis/sync/clock.h"
 
 #ifdef _WIN32
   #include <windows.h>

@@ -1,7 +1,7 @@
 #ifndef APSIS_GEOMETRY_LINE_H
 #define APSIS_GEOMETRY_LINE_H
 
-#include "iso-tasty/geometry/point.h"
+#include "apsis/geometry/point.h"
 
 namespace Apsis {
   namespace Geometry {

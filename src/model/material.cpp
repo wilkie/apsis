@@ -1,4 +1,4 @@
-#include "iso-tasty/model/material.h"
+#include "apsis/model/material.h"
 
 Apsis::Model::Material::Material(float ambientIntensity,
                                  float diffuseIntensity,

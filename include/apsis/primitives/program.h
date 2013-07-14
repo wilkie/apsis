@@ -1,12 +1,12 @@
 #ifndef APSIS_PRIMITIVES_PROGRAM_H
 #define APSIS_PRIMITIVES_PROGRAM_H
 
-#include "iso-tasty/sync/reference_counter.h"
+#include "apsis/sync/reference_counter.h"
 
-#include "iso-tasty/primitives/vertex_buffer.h"
+#include "apsis/primitives/vertex_buffer.h"
 
-#include "iso-tasty/primitives/vertex_shader.h"
-#include "iso-tasty/primitives/fragment_shader.h"
+#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitives/fragment_shader.h"
 
 #include <glm/glm.hpp>
 

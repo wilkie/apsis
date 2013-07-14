@@ -1,9 +1,9 @@
 #ifndef APSIS_GEOMETRY_CIRCLE_H
 #define APSIS_GEOMETRY_CIRCLE_H
 
-#include "iso-tasty/geometry/point.h"
-#include "iso-tasty/geometry/rectangle.h"
-#include "iso-tasty/geometry/line.h"
+#include "apsis/geometry/point.h"
+#include "apsis/geometry/rectangle.h"
+#include "apsis/geometry/line.h"
 
 namespace Apsis {
   namespace Geometry {

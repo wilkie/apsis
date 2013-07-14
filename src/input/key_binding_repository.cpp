@@ -1,4 +1,4 @@
-#include "iso-tasty/input/key_binding_repository.h"
+#include "apsis/input/key_binding_repository.h"
 
 Apsis::KeyBindingRepository::KeyBindingRepository() {
 }

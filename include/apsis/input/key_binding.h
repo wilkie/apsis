@@ -1,7 +1,7 @@
 #ifndef APSIS_KEY_BINDING
 #define APSIS_KEY_BINDING
 
-#include "iso-tasty/input/key.h"
+#include "apsis/input/key.h"
 
 namespace Apsis {
   struct KeyBinding {

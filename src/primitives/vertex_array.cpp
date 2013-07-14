@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_array.h"
 
 // Include GLEW
 #define GLEW_STATIC

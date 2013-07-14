@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/frame_buffer.h"
+#include "apsis/primitives/frame_buffer.h"
 
 // Include GLEW
 #define GLEW_STATIC

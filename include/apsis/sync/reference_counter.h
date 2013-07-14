@@ -1,7 +1,7 @@
 #ifndef APSIS_SYNC_REFERENCE_COUNTER_H
 #define APSIS_SYNC_REFERENCE_COUNTER_H
 
-#include "iso-tasty/sync/atomic_counter.h"
+#include "apsis/sync/atomic_counter.h"
 
 namespace Apsis {
   namespace Sync {

@@ -1,7 +1,7 @@
 #ifndef APSIS_RENDERER_H
 #define APSIS_RENDERER_H
 
-#include "iso-tasty/world/tile.h"
+#include "apsis/world/tile.h"
 
 namespace Apsis {
   class Renderer {
@@ -19,7 +19,7 @@ namespace Apsis {
     void clear();
 
     void test();
-  
+
   private:
   };
 }

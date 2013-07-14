@@ -1,11 +1,11 @@
 #ifndef APSIS_MODEL_THING_H
 #define APSIS_MODEL_THING_H
 
-#include "iso-tasty/sync/reference_counter.h"
+#include "apsis/sync/reference_counter.h"
 
-#include "iso-tasty/primitives/camera.h"
+#include "apsis/primitives/camera.h"
 
-#include "iso-tasty/model/mesh.h"
+#include "apsis/model/mesh.h"
 
 namespace Apsis {
   namespace Model {

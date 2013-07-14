@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/fragment_shader.h"
+#include "apsis/primitives/fragment_shader.h"
 
 #include <stdio.h>
 

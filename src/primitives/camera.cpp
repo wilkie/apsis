@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/camera.h"
+#include "apsis/primitives/camera.h"
 
 // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include <glm/gtc/matrix_transform.hpp>

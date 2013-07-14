@@ -1,10 +1,10 @@
-#include "iso-tasty/model/mesh.h"
+#include "apsis/model/mesh.h"
 
-#include "iso-tasty/primitives/fragment_shader.h"
-#include "iso-tasty/primitives/vertex_shader.h"
+#include "apsis/primitives/fragment_shader.h"
+#include "apsis/primitives/vertex_shader.h"
 
-#include "iso-tasty/primitives/unlinked_program.h"
-#include "iso-tasty/primitives/program.h"
+#include "apsis/primitives/unlinked_program.h"
+#include "apsis/primitives/program.h"
 
 Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
                          std::vector<glm::vec3>& normals,

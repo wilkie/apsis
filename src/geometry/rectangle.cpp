@@ -1,4 +1,4 @@
-#include "iso-tasty/geometry/rectangle.h"
+#include "apsis/geometry/rectangle.h"
 
 bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) {
   bool doesNotIntersect = false;

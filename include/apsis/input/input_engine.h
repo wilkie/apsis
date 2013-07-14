@@ -5,9 +5,9 @@
 #include <SDL/SDL.h>
 #endif
 
-#include "iso-tasty/input/key.h"
-#include "iso-tasty/input/key_binding.h"
-#include "iso-tasty/input/key_binding_repository.h"
+#include "apsis/input/key.h"
+#include "apsis/input/key_binding.h"
+#include "apsis/input/key_binding_repository.h"
 
 #include <vector>
 

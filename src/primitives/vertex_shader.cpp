@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/vertex_shader.h"
+#include "apsis/primitives/vertex_shader.h"
 
 #include <stdio.h>
 

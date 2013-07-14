@@ -1,12 +1,12 @@
-#include "iso-tasty/world/terrain.h"
+#include "apsis/world/terrain.h"
 
-#include "iso-tasty/primitives/fragment_shader.h"
-#include "iso-tasty/primitives/vertex_shader.h"
+#include "apsis/primitives/fragment_shader.h"
+#include "apsis/primitives/vertex_shader.h"
 
-#include "iso-tasty/primitives/unlinked_program.h"
-#include "iso-tasty/primitives/program.h"
+#include "apsis/primitives/unlinked_program.h"
+#include "apsis/primitives/program.h"
 
-#include "iso-tasty/geometry/point3d.h"
+#include "apsis/geometry/point3d.h"
 
 // Helper function for controlPoints()
 static Apsis::Geometry::Point3d* firstControlPoints(Apsis::Geometry::Point3d* rhs, Apsis::Geometry::Point3d* first, unsigned int num) {

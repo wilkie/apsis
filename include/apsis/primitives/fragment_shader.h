@@ -1,7 +1,7 @@
 #ifndef APSIS_PRIMITIVES_FRAGMENT_SHADER_H
 #define APSIS_PRIMITIVES_FRAGMENT_SHADER_H
 
-#include "iso-tasty/sync/reference_counter.h"
+#include "apsis/sync/reference_counter.h"
 
 namespace Apsis {
   namespace Primitives {

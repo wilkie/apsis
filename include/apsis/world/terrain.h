@@ -1,14 +1,14 @@
 #ifndef APSIS_WORLD_TERRAIN_H
 #define APSIS_WORLD_TERRAIN_H
 
-#include "iso-tasty/model/material.h"
-#include "iso-tasty/model/light.h"
+#include "apsis/model/material.h"
+#include "apsis/model/light.h"
 
-#include "iso-tasty/primitives/camera.h"
-#include "iso-tasty/primitives/vertex_array.h"
-#include "iso-tasty/primitives/vertex_buffer.h"
+#include "apsis/primitives/camera.h"
+#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_buffer.h"
 
-#include "iso-tasty/world/tile.h"
+#include "apsis/world/tile.h"
 
 #include <glm/glm.hpp>
 

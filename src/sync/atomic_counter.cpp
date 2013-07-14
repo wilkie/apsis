@@ -1,4 +1,4 @@
-#include "iso-tasty/sync/atomic_counter.h"
+#include "apsis/sync/atomic_counter.h"
 
 Apsis::Sync::AtomicCounter::AtomicCounter() {
   AtomicCounter(0);

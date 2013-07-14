@@ -1,4 +1,4 @@
-#include "iso-tasty/primitives/unlinked_program.h"
+#include "apsis/primitives/unlinked_program.h"
 
 // Include GLEW
 #define GLEW_STATIC

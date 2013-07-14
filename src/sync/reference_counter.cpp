@@ -1,4 +1,4 @@
-#include "iso-tasty/sync/reference_counter.h"
+#include "apsis/sync/reference_counter.h"
 
 Apsis::Sync::ReferenceCounter::ReferenceCounter() {
   _counter = new Apsis::Sync::AtomicCounter(1);

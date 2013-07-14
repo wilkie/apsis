@@ -1,4 +1,4 @@
-#include "iso-tasty/renderer.h"
+#include "apsis/renderer.h"
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
@@ -7,12 +7,12 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-#include "iso-tasty/primitives/fragment_shader.h"
-#include "iso-tasty/primitives/vertex_shader.h"
-#include "iso-tasty/primitives/vertex_array.h"
-#include "iso-tasty/primitives/vertex_buffer.h"
-#include "iso-tasty/primitives/unlinked_program.h"
-#include "iso-tasty/primitives/program.h"
+#include "apsis/primitives/fragment_shader.h"
+#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitives/unlinked_program.h"
+#include "apsis/primitives/program.h"
 
 #ifndef NO_GL
   #ifdef _WIN32

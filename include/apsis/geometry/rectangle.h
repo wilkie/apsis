@@ -1,8 +1,8 @@
 #ifndef APSIS_GEOMETRY_RECTANGLE_H
 #define APSIS_GEOMETRY_RECTANGLE_H
 
-#include "iso-tasty/geometry/line.h"
-#include "iso-tasty/geometry/point.h"
+#include "apsis/geometry/line.h"
+#include "apsis/geometry/point.h"
 
 namespace Apsis {
   namespace Geometry {

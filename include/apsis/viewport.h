@@ -1,21 +1,21 @@
 #ifndef APSIS_VIEWPORT_H
 #define APSIS_VIEWPORT_H
 
-#include "iso-tasty/renderer.h"
+#include "apsis/renderer.h"
 
-#include "iso-tasty/primitives/camera.h"
+#include "apsis/primitives/camera.h"
 
-#include "iso-tasty/primitives/fragment_shader.h"
-#include "iso-tasty/primitives/vertex_shader.h"
-#include "iso-tasty/primitives/vertex_array.h"
-#include "iso-tasty/primitives/vertex_buffer.h"
-#include "iso-tasty/primitives/unlinked_program.h"
-#include "iso-tasty/primitives/program.h"
-#include "iso-tasty/primitives/texture.h"
+#include "apsis/primitives/fragment_shader.h"
+#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitives/unlinked_program.h"
+#include "apsis/primitives/program.h"
+#include "apsis/primitives/texture.h"
 
-#include "iso-tasty/model/thing.h"
+#include "apsis/model/thing.h"
 
-#include "iso-tasty/world/terrain.h"
+#include "apsis/world/terrain.h"
 
 namespace Apsis {
   class Viewport {
