@@ -611,3 +611,67 @@ void Apsis::Renderer::drawTile(float x, float y, float z, float width, float hei
 
   glPopMatrix();
 }
+
+void Apsis::Renderer::drawSquare(double x,     double y,
+                                 double width, double height,
+                                 double tu,    double tv,
+                                 double tw,    double th,
+                                 double depth) {
+  // square ////////////////////////////////////////////////////////////////////
+  //  v1------v0
+  //  |       |
+  //  |       |
+  //  |       |
+  //  v2------v3
+
+  // vertex coords array
+  static const double vertices[] = {
+    1, 1, 0, -1, 1, 0, -1, -1, 0, 1, -1, 0}; // v0-v1-v2-v3
+
+  // normal array
+  static const double normals[] = {
+    0, 0, 1,  0, 0, 1,  0,  0, 1, 0,  0, 1}; // v0-v1-v2-v3
+
+  double texture_coords[] = {
+    tu+tw, tv, tu, tv, tu, tv+th, tu+tw, tv+th}; // v0-v1-v2-v3
+
+  static const unsigned char indices[] = {0, 1, 2, 3};
+
+  glCullFace(GL_BACK);
+
+  double half_width = width / 2.0;
+  double half_height = height / 2.0;
+
+  glPushMatrix();
+  glTranslated(x, y, depth);
+  glScaled(half_width, half_height, 1);
+
+  drawArrays(vertices, normals, indices, texture_coords, 4);
+
+  glPopMatrix();
+}
+
+void Apsis::Renderer::drawArrays(const double vertices[],
+                                  const double normals[],
+                                  const unsigned char indices[],
+                                  const double texture_coords[],
+                                  unsigned int num) {
+
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+  glNormalPointer(GL_DOUBLE, 0, normals);
+  glVertexPointer(3, GL_DOUBLE, 0, vertices);
+  glTexCoordPointer(2, GL_DOUBLE, 0, texture_coords);
+
+  glDrawElements(GL_QUADS, num, GL_UNSIGNED_BYTE, indices);
+
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void Apsis::Renderer::bindTexture(unsigned int texture) {
+  glBindTexture(GL_TEXTURE_2D, texture);
+}

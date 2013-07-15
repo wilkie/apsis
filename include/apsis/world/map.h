@@ -1,6 +1,7 @@
 #ifndef APSIS_WORLD_MAP_H
 #define APSIS_WORLD_MAP_H
 
+#include "apsis/renderer.h"
 #include "apsis/world/tile.h"
 #include "apsis/primitives/sprite_sheet.h"
 
@@ -40,6 +41,11 @@ namespace Apsis {
          *  Returns the Badger::SpriteSheet being used to draw the map.
          */
         Apsis::Primitives::SpriteSheet* spriteSheet();
+
+        /*
+         *  Renders the map.
+         */
+        void draw(Apsis::Renderer& renderer);
 
       private:
 

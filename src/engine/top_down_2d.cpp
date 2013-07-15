@@ -4,32 +4,56 @@
 #include "apsis/input/key.h"
 
 #include "math.h"
-/*
-Engine
-  
-  Apsis::Event event;
 
-  Apsis::Clock clock;
+ /*
+  *  Construct an Engine initialized with the given display configuration
+  */
+Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
+  _backend.initialize(video);
+
+  _input = new Apsis::InputEngine();
+
+  Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/floortiles.png");
+  _map = new Apsis::World::Map(32, 30, sheet);
+
+  Apsis::World::Actor* player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 250, 175);
+}
+
+void Apsis::Engine::TopDown2d::run() {
+  int event;
+  Apsis::Event core_event;
 
   while(true) {
-    if (backend.poll(event)) {
-      game_event = input_engine.post(event);
-
-      handle_game_event(game_event);
+    if (_backend.poll(core_event)) {
+      event = _input->post(core_event);
+      if (event == Apsis::InputEngine::QUIT_EVENT) {
+        break;
+      }
+      else if (event) {
+        _fireEvent(event);
+      }
     }
+    _draw();
+    _backend.swap();
+  }
 
-    double elapsed = clock.elapsedTime();
+  _backend.quit();
+}
 
-    world.update(elapsed);
+void Apsis::Engine::TopDown2d::_draw() {
+  _renderer->clear();
+  _map->draw(*_renderer);
+}
 
-    foreach actor in actors {
-      actor.update(elasped);
-    }
+void Apsis::Engine::TopDown2d::_update() {
+}
 
-    world.draw();
-
-    foreach actor in actors {
-      actor.draw();
+void Apsis::Engine::TopDown2d::_fireEvent(int event) {
+  if (_input->isEventHeld(event)) {
+    switch (event) {
+    case 0:
+    default:
+      break;
     }
   }
-  */
+}

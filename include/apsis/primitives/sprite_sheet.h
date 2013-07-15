@@ -120,10 +120,10 @@ namespace Apsis {
 
         // Yields the filename of the sprite description file from the given
         //   image filename.
-        char*        _determineStatSheetFilename(const char* filename);
+        char* _determineStatSheetFilename(const char* filename);
 
         // Parse the description file from the given image filename.
-        void         _loadStatSheet(const char* filename);
+        void  _loadStatSheet(const char* filename);
     };
   }
 }

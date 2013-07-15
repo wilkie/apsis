@@ -32,7 +32,7 @@ namespace Event {
   };
 }
 
-Apsis::Engine::Engine(Apsis::Settings::Video& video) {
+Apsis::Engine_::Engine_(Apsis::Settings::Video& video) {
   _clock = new Clock();
 
   _video = video;
@@ -107,16 +107,16 @@ Apsis::Engine::Engine(Apsis::Settings::Video& video) {
   _input->keyBindings()->registerEvent("Rotate clockwise",  ::Event::ROTATE_CLOCKWISE, &binding, &binding2);
 }
 
-void Apsis::Engine::newMap(unsigned int width, unsigned int height) {
+void Apsis::Engine_::newMap(unsigned int width, unsigned int height) {
   //_map = new Map(width, height);
 }
 
-void Apsis::Engine::_draw() {
+void Apsis::Engine_::_draw() {
   _renderer->clear();
   _view->draw(_renderer, NULL);
 }
 
-void Apsis::Engine::run() {
+void Apsis::Engine_::run() {
   int event;
   Apsis::Event core_event;
 
@@ -138,7 +138,7 @@ void Apsis::Engine::run() {
   _backend.quit();
 }
 
-void Apsis::Engine::_fireEvent(int event) {
+void Apsis::Engine_::_fireEvent(int event) {
   if (_input->isEventHeld(event)) {
     switch (event) {
     case ::Event::RAISE_CLIFF:

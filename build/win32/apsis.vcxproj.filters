@@ -1119,7 +1119,6 @@
       <Filter>input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\engine.h" />
-    <ClInclude Include="..\..\include\apsis\map_.h" />
     <ClInclude Include="..\..\include\apsis\renderer.h" />
     <ClInclude Include="..\..\include\apsis\viewport.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h">

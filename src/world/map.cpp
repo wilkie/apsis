@@ -49,3 +49,28 @@ void Apsis::World::Map::_generateWalls() {
     }
   }
 }
+
+void Apsis::World::Map::draw(Apsis::Renderer& renderer) {
+  renderer.bindTexture(_spriteSheet->texture());
+  
+  double coords[4];
+
+  // Render all background tiles
+  //renderer.depthTest(false);
+  for (long y = this->height() - 1; y >= 0; y--) {
+    for (long x = 0; x < (long)this->width(); x++) {
+      Tile* tile = this->tile(x, y);
+      if (!tile->passable()) {
+        continue;
+      }
+
+      this->spriteSheet()->textureCoordinates(tile->spriteIndex(), coords);
+
+      Apsis::Primitives::Sprite* sprite = this->spriteSheet()->sprite(tile->spriteIndex());
+      /*renderer.drawSquare(x * 32.0, y * 32.0,
+                          sprite->width, sprite->height,
+                          coords[0], coords[1], coords[2], coords[3],
+                          0);*/
+    }
+  }
+}

@@ -17,9 +17,9 @@
 #endif
 
 namespace Apsis {
-  class Engine {
+  class Engine_ {
   public:
-    Engine(Apsis::Settings::Video& video);
+    Engine_(Apsis::Settings::Video& video);
     void newMap(unsigned int width, unsigned int height);
     void run();
 

@@ -1,5 +1,6 @@
 #include "apsis.h"
 #include "apsis/world/actor.h"
+#include "apsis/engine/top_down_2d.h"
 
 #define WIDTH 1536
 #define HEIGHT 864
@@ -13,8 +14,7 @@ int main(int argc, char** argv) {
   settings.resolutionX = WIDTH;
   settings.resolutionY = HEIGHT;
   try {
-    Apsis::Engine* engine = new Apsis::Engine(settings);
-    //Apsis::World::Actor* player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 250, 175);
+    Apsis::Engine::TopDown2d* engine = new Apsis::Engine::TopDown2d(settings);
     engine->run();
   }
   catch (char* msg) {

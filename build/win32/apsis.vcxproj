@@ -268,7 +268,6 @@
     <ClInclude Include="..\..\include\apsis\input\key.h" />
     <ClInclude Include="..\..\include\apsis\input\key_binding.h" />
     <ClInclude Include="..\..\include\apsis\input\key_binding_repository.h" />
-    <ClInclude Include="..\..\include\apsis\map_.h" />
     <ClInclude Include="..\..\include\apsis\model\animation.h" />
     <ClInclude Include="..\..\include\apsis\model\light.h" />
     <ClInclude Include="..\..\include\apsis\model\material.h" />
