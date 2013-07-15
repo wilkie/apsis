@@ -38,8 +38,6 @@ namespace Apsis {
 
         // Internal storage
         Apsis::Settings::Video _video;
-        Renderer*     _renderer;
-        Viewport*     _mainViewport;
         Apsis::InputEngine* _input;
 
         Apsis::World::Map* _map;
