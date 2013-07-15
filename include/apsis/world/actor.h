@@ -1,5 +1,5 @@
-#ifndef APSIS_ACTOR_SPRITE_H
-#define APSIS_ACTOR_SPRITE_H
+#ifndef APSIS_WORLD_ACTOR_H
+#define APSIS_WORLD_ACTOR_H
 
 // Actors: interact with worlds
 // Sprite: 2d actor
@@ -16,13 +16,14 @@
 // decide where the actor actually moves and fires events.
 
 #include <apsis/primitives/sprite_sheet.h>
-#include <apsis/agent/map_collider.h>
+#include <apsis/agent/impeder.h>
+#include <apsis/agent/mover.h>
 #include <apsis/geometry/rectangle.h>
 
 #include <vector>
 
 namespace Apsis {
-  namespace Actor {
+  namespace World {
     struct AnimationFrame {
       Apsis::Primitives::Sprite* sprite;
       double textureCoordinates[4];
@@ -33,30 +34,30 @@ namespace Apsis {
       std::vector<AnimationFrame*> frames;
     };
 
-    class Sprite {
+    class Actor {
       public:
         /*
-         *  Constructs a Badger::Actor using the actor files in the
+         *  Constructs a Apsis::Sprite using the actor files in the
          *    given filepath. The sprite used is defined by the given
-         *    Badger::SpriteSheet.
+         *    Apsis::Primitives::SpriteSheet.
          */
-        Sprite(const char* actorFile,
-              unsigned int x,
-              unsigned int y);
-        ~Sprite();
+        Actor(const char* actorFile,
+               unsigned int x,
+               unsigned int y);
+        ~Actor();
 
         /*
-         *  Return: the Badger::SpriteSheet for the Badger::Actor.
+         *  Return: the Apsis::Primitives::SpriteSheet for the Apsis::Sprite.
          */
         Apsis::Primitives::SpriteSheet* spriteSheet();
 
         /*
-         *  Return: the Badger::Rectangle for the Badger::Actor.
+         *  Return: the Apsis::Geometry::Rectangle for the Apsis::Sprite.
          */
         Apsis::Geometry::Rectangle position();
 
         /*
-         *  Sets the current animation to be played by this Badger::Actor.
+         *  Sets the current animation to be played by this Apsis::Sprite.
          */
         void animate(const char* animationName);
 
@@ -72,21 +73,29 @@ namespace Apsis {
         void textureCoordinates(double coords[4]);
 
         /*
-         *  Returns the Badger::Sprite for the current sprite for this
-         *    Badger::Actor.
+         *  Returns the Apsis::Primitives::Sprite for the current sprite for this
+         *    Apsis::Sprite.
          */
         Apsis::Primitives::Sprite* sprite();
 
         /*
-         *  Updates the current time for the Actor. Affects animations and movements.
+         *  Updates the current time for the Sprite. Affects animations and movements.
          */
-        void update(double elapsed, Apsis::Agent::MapCollider* collider);
+        void update(double elapsed);
+
+        void move(Apsis::Geometry::Point& to);
 
         // Set the current state for the Actor.
-        void setCurrentState(const char* stateName);
+        void state(const char* stateName);
 
         // Return the current state for the Actor.
-        const char* currentState();
+        const char* state();
+
+        // Add the given agent that will provide movement to the actor.
+        void attachMover(Apsis::Agent::Mover& agent);
+
+        // Add the given agent that will alter intended movement.
+        void attachImpeder(Apsis::Agent::Impeder& agent);
 
       private:
 
@@ -104,7 +113,7 @@ namespace Apsis {
 
         // Stores the current state of the character. State
         // determines how the character updates.
-        const char* _currentState;
+        const char* _state;
 
         // Stores the details about animations.
         std::vector<Animation*> _animations;
@@ -124,6 +133,10 @@ namespace Apsis {
 
         // Creates a new state.
         char* _newState(const char* name);
+
+        // Before Move Agents
+        std::vector<Apsis::Agent::Impeder> _impederAgents;
+        std::vector<Apsis::Agent::Mover> _moverAgents;
     };
   }
 }

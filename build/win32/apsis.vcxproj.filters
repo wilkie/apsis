@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\src\actor\sprite.cpp">
-      <Filter>actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\map_collider.cpp">
-      <Filter>agent</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\geometry\circle.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
@@ -518,14 +512,29 @@
     <ClCompile Include="..\..\src\renderer.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
+    <ClCompile Include="..\..\src\engine\top_down_2d.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\backend\sdl.cpp">
+      <Filter>backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\actor.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\mover.cpp">
+      <Filter>agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\impeder.cpp">
+      <Filter>agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp">
+      <Filter>agent\impeders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp">
+      <Filter>agent\impeders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\apsis\actor\sprite.h">
-      <Filter>actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\map_collider.h">
-      <Filter>agent</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
       <Filter>support\SOIL</Filter>
     </ClInclude>
@@ -1097,11 +1106,39 @@
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis.h" />
+    <ClInclude Include="..\..\include\apsis\engine\top_down_2d.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\settings\video.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\backend\sdl.h">
+      <Filter>backend</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\input\event.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine.h" />
+    <ClInclude Include="..\..\include\apsis\map_.h" />
+    <ClInclude Include="..\..\include\apsis\renderer.h" />
+    <ClInclude Include="..\..\include\apsis\viewport.h" />
+    <ClInclude Include="..\..\include\apsis\world\actor.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\mover.h">
+      <Filter>agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\impeder.h">
+      <Filter>agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h">
+      <Filter>agent\impeders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h">
+      <Filter>agent\impeders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="actor">
-      <UniqueIdentifier>{343dcd07-ddc0-4abf-bb08-d0df751e7e07}</UniqueIdentifier>
-    </Filter>
     <Filter Include="agent">
       <UniqueIdentifier>{b5fbbac0-429a-40b3-a651-a28b0f3b7217}</UniqueIdentifier>
     </Filter>
@@ -1161,6 +1198,18 @@
     </Filter>
     <Filter Include="support\clipper">
       <UniqueIdentifier>{088ee522-c30c-4c28-afa3-69a83b3f3f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{b98f4150-e91e-4523-a8e5-56f71ea09a83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="settings">
+      <UniqueIdentifier>{b14fb9db-3454-4a50-9e6f-48c140c38f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="backend">
+      <UniqueIdentifier>{2316a014-58dc-4064-8f8d-abf00d62dd48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="agent\impeders">
+      <UniqueIdentifier>{52e615f2-7a7e-4ca3-8c9e-3ba0c22dfc83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

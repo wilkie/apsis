@@ -55,7 +55,7 @@ namespace Apsis {
        *  Returns the event identifier that corresponds to the given key
        *    binding.
        */
-      int yieldEvent(KeyBinding* binding);
+      int yieldEvent(KeyBinding& binding);
 
     private:
       // Stores all of the bindings

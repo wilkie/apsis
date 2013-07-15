@@ -39,9 +39,9 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 
   _vao.bindElements(_ebo);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
-  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/directional_lighting.glsl");
+  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/colorize.glsl");
+  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("src/shaders/fragment/directional_lighting.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);
@@ -67,7 +67,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.defineUniform("light.color",  program);
   _vao.defineUniform("light.direction",  program);
 
-  Primitives::Texture t = Primitives::Texture("../../resources/sample.png");
+  Primitives::Texture t = Primitives::Texture("resources/sample.png");
   _vao.defineUniform("tex", program);
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);

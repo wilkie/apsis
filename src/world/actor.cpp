@@ -1,6 +1,6 @@
-#include "apsis/actor/sprite.h"
+#include "apsis/world/actor.h"
 
-Apsis::Actor::Sprite::~Sprite() {
+Apsis::World::Actor::~Actor() {
   // Deallocate animations
   for (unsigned int i = 0; i < _animations.size(); i++) {
     for (unsigned int j = 0; j < _animations[i]->frames.size(); j++) {
@@ -10,9 +10,9 @@ Apsis::Actor::Sprite::~Sprite() {
   }
 }
 
-Apsis::Actor::Sprite::Sprite(const char* actorFile,
-                             unsigned int x,
-                             unsigned int y) {
+Apsis::World::Actor::Actor(const char* actorFile,
+                           unsigned int x,
+                           unsigned int y) {
   _currentAnimation = NULL;
   _currentFrame = 0;
   _frame = NULL;
@@ -45,7 +45,7 @@ Apsis::Actor::Sprite::Sprite(const char* actorFile,
       _newState(val);
     }
     else if (strcmp(key, "default_state") == 0) {
-      setCurrentState(val);
+      state(val);
     }
     else {
       // Animation
@@ -68,41 +68,41 @@ Apsis::Actor::Sprite::Sprite(const char* actorFile,
   }
 }
 
-Apsis::Actor::Animation* Apsis::Actor::Sprite::_newAnimation(const char* name) {
+Apsis::World::Animation* Apsis::World::Actor::_newAnimation(const char* name) {
   Animation* ret = new Animation;
   strncpy(ret->name, name, 128);
   _animations.push_back(ret);
   return ret;
 }
 
-char* Apsis::Actor::Sprite::_newState(const char* name) {
+char* Apsis::World::Actor::_newState(const char* name) {
   char* ret = new char[129];
   strncpy(ret, name, 128);
   _states.push_back(ret);
   return ret;
 }
 
-void Apsis::Actor::Sprite::setCurrentState(const char* stateName) {
+void Apsis::World::Actor::state(const char* stateName) {
   for (unsigned int i = 0; i < _states.size(); i++) {
     if (strncmp(_states[i], stateName, 128) == 0) {
-      _currentState = _states[i];
+      _state = _states[i];
     }
   }
 }
 
-const char* Apsis::Actor::Sprite::currentState() {
-  return _currentState;
+const char* Apsis::World::Actor::state() {
+  return _state;
 }
 
-Apsis::Primitives::SpriteSheet* Apsis::Actor::Sprite::spriteSheet() {
+Apsis::Primitives::SpriteSheet* Apsis::World::Actor::spriteSheet() {
   return _spriteSheet;
 }
 
-Apsis::Geometry::Rectangle Apsis::Actor::Sprite::position() {
+Apsis::Geometry::Rectangle Apsis::World::Actor::position() {
   return _position;
 }
 
-void Apsis::Actor::Sprite::animate(const char* animationName) {
+void Apsis::World::Actor::animate(const char* animationName) {
   // Look-up the animation
   for (unsigned int i = 0; i < _animations.size(); i++) {
     if (strncmp(_animations[i]->name, animationName, 128) == 0) {
@@ -114,7 +114,7 @@ void Apsis::Actor::Sprite::animate(const char* animationName) {
   }
 }
 
-void Apsis::Actor::Sprite::nextFrame() {
+void Apsis::World::Actor::nextFrame() {
   _currentFrame += 1;
   if (_currentAnimation->frames.size() == 0) {
     _currentFrame = 0;
@@ -126,18 +126,26 @@ void Apsis::Actor::Sprite::nextFrame() {
   _currentTime = 0;
 }
 
-void Apsis::Actor::Sprite::textureCoordinates(double coords[4]) {
+void Apsis::World::Actor::textureCoordinates(double coords[4]) {
   coords[0] = _frame->textureCoordinates[0];
   coords[1] = _frame->textureCoordinates[1];
   coords[2] = _frame->textureCoordinates[2];
   coords[3] = _frame->textureCoordinates[3];
 }
 
-Apsis::Primitives::Sprite* Apsis::Actor::Sprite::sprite() {
+Apsis::Primitives::Sprite* Apsis::World::Actor::sprite() {
   return _frame->sprite;
 }
 
-void Apsis::Actor::Sprite::update(double elapsed, Apsis::Agent::MapCollider* collider) {
+void Apsis::World::Actor::attachMover(Apsis::Agent::Mover& agent) {
+  _moverAgents.push_back(agent);
+}
+
+void Apsis::World::Actor::attachImpeder(Apsis::Agent::Impeder& agent) {
+  _impederAgents.push_back(agent);
+}
+
+void Apsis::World::Actor::update(double elapsed) {
   _currentTime += elapsed;
   if (_currentTime > 0.08) {
     nextFrame();
@@ -148,23 +156,33 @@ void Apsis::Actor::Sprite::update(double elapsed, Apsis::Agent::MapCollider* col
   to.y = _position.y;
 
   // update actor information based on the state
-  if (strcmp(_currentState, "walk_up") == 0) {
+  if (strcmp(_state, "walk_up") == 0) {
     to.y += _moveRate * elapsed;
   }
-  else if (strcmp(_currentState, "walk_down") == 0) {
+  else if (strcmp(_state, "walk_down") == 0) {
     to.y -= _moveRate * elapsed;
   }
-  else if (strcmp(_currentState, "walk_left") == 0) {
+  else if (strcmp(_state, "walk_left") == 0) {
     to.x -= _moveRate * elapsed;
   }
-  else if (strcmp(_currentState, "walk_right") == 0) {
+  else if (strcmp(_state, "walk_right") == 0) {
     to.x += _moveRate * elapsed;
   }
   else {
     return;
   }
+  
+  for (unsigned int i = 0; i < _moverAgents.size(); i++) {
+    if (_moverAgents[i].update(_position, to)) {
+      this->move(to);
+    }
+  }
+}
 
-  collider->move(&_position, &to);
+void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
+  for (unsigned int i = 0; i < _impederAgents.size(); i++) {
+    _impederAgents[i].update(_position, to);
+  }
 
   _position.x = to.x;
   _position.y = to.y;

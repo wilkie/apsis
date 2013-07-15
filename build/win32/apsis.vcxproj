@@ -68,9 +68,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\actor\sprite.cpp" />
-    <ClCompile Include="..\..\src\agent\map_collider.cpp" />
+    <ClCompile Include="..\..\src\agent\impeder.cpp" />
+    <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp" />
+    <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
+    <ClCompile Include="..\..\src\agent\mover.cpp" />
+    <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine.cpp" />
+    <ClCompile Include="..\..\src\engine\top_down_2d.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
     <ClCompile Include="..\..\src\geometry\line.cpp" />
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
@@ -241,22 +245,30 @@
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
     <ClCompile Include="..\..\src\world\map.cpp" />
+    <ClCompile Include="..\..\src\world\actor.cpp" />
     <ClCompile Include="..\..\src\world\terrain.cpp" />
     <ClCompile Include="..\..\src\world\tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis.h" />
-    <ClInclude Include="..\..\include\apsis\actor\sprite.h" />
-    <ClInclude Include="..\..\include\apsis\agent\map_collider.h" />
+    <ClInclude Include="..\..\include\apsis\agent\impeder.h" />
+    <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h" />
+    <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h" />
+    <ClInclude Include="..\..\include\apsis\agent\mover.h" />
+    <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
+    <ClInclude Include="..\..\include\apsis\engine.h" />
+    <ClInclude Include="..\..\include\apsis\engine\top_down_2d.h" />
     <ClInclude Include="..\..\include\apsis\geometry\circle.h" />
     <ClInclude Include="..\..\include\apsis\geometry\line.h" />
     <ClInclude Include="..\..\include\apsis\geometry\point.h" />
     <ClInclude Include="..\..\include\apsis\geometry\point3d.h" />
     <ClInclude Include="..\..\include\apsis\geometry\rectangle.h" />
+    <ClInclude Include="..\..\include\apsis\input\event.h" />
     <ClInclude Include="..\..\include\apsis\input\input_engine.h" />
     <ClInclude Include="..\..\include\apsis\input\key.h" />
     <ClInclude Include="..\..\include\apsis\input\key_binding.h" />
     <ClInclude Include="..\..\include\apsis\input\key_binding_repository.h" />
+    <ClInclude Include="..\..\include\apsis\map_.h" />
     <ClInclude Include="..\..\include\apsis\model\animation.h" />
     <ClInclude Include="..\..\include\apsis\model\light.h" />
     <ClInclude Include="..\..\include\apsis\model\material.h" />
@@ -272,10 +284,14 @@
     <ClInclude Include="..\..\include\apsis\primitives\vertex_array.h" />
     <ClInclude Include="..\..\include\apsis\primitives\vertex_buffer.h" />
     <ClInclude Include="..\..\include\apsis\primitives\vertex_shader.h" />
+    <ClInclude Include="..\..\include\apsis\renderer.h" />
+    <ClInclude Include="..\..\include\apsis\settings\video.h" />
     <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h" />
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h" />
+    <ClInclude Include="..\..\include\apsis\viewport.h" />
     <ClInclude Include="..\..\include\apsis\world\map.h" />
+    <ClInclude Include="..\..\include\apsis\world\actor.h" />
     <ClInclude Include="..\..\include\apsis\world\terrain.h" />
     <ClInclude Include="..\..\include\apsis\world\tile.h" />
     <ClInclude Include="..\..\include\SOIL.h" />

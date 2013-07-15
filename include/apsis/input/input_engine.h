@@ -5,6 +5,7 @@
 #include <SDL/SDL.h>
 #endif
 
+#include "apsis/input/event.h"
 #include "apsis/input/key.h"
 #include "apsis/input/key_binding.h"
 #include "apsis/input/key_binding_repository.h"
@@ -21,8 +22,8 @@ namespace Apsis {
       static const int QUIT_EVENT = -1;
 
       /*
-       *  Constructs a bare input Apsis that can be assigned to an
-       *    Apsis::Apsis.
+       *  Constructs a bare input engine that can be assigned to an
+       *    Apsis::Engine.
        */
       InputEngine();
       ~InputEngine();
@@ -34,14 +35,10 @@ namespace Apsis {
       KeyBindingRepository* keyBindings();
 
       /*
-       *  Returns whether or not there are pending input requests.
+       *  Posts the input event and returns the bound event identifier
+       *    for any action that has been triggered.
        */
-      int pollEvent();
-
-      /*
-       *  Simulates the given key binding press or release.
-       */
-      int forceEvent(bool pressed, KeyBinding* binding);
+      int post(Apsis::Event& event);
 
       /*
        *  Returns true when the given event is pressed.
@@ -54,18 +51,6 @@ namespace Apsis {
 
       // Stores held events
       std::vector<int> _held;
-
-#ifndef NO_SDL
-      /*
-       *  Converts the given SDL_Event into a KeyBinding context.
-       */
-      static bool _translateSDLKey(Apsis::KeyBinding* binding, SDL_Event* event);
-
-      /*
-       *  Handles SDL input events.
-       */
-      int _SDLPollEvent();
-#endif
   };
 
 }

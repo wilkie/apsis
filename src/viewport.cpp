@@ -30,7 +30,7 @@ Apsis::Viewport::Viewport(unsigned int width, unsigned int height) :
   _z(0.0),
   _zoom(4.0) {
 
-  Model::Thing thing = Model::Thing("../../resources/monkey.dae");
+  Model::Thing thing = Model::Thing("resources/monkey.dae");
 
   _things.push_back(thing);
   _cameras.push_back(Primitives::Camera(glm::vec3(_x, 0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5)));

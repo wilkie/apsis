@@ -8,6 +8,8 @@
 #include "apsis/viewport.h"
 #include "apsis/world/terrain.h"
 
+#include "apsis/backend/sdl.h"
+
 // This is here instead of the cpp because main() is overriden by
 // preprocessor magicks.
 #ifndef NO_SDL
@@ -15,14 +17,9 @@
 #endif
 
 namespace Apsis {
-  struct VideoSettings {
-    unsigned int resolutionX;
-    unsigned int resolutionY;
-  };
-
   class Engine {
   public:
-    Engine(VideoSettings* video);
+    Engine(Apsis::Settings::Video& video);
     void newMap(unsigned int width, unsigned int height);
     void run();
 
@@ -31,12 +28,12 @@ namespace Apsis {
 
     Viewport* _view;
     Renderer* _renderer;
-    VideoSettings _video;
+    Apsis::Settings::Video _video;
     Clock* _clock;
 
-    bool _startSDL();
-    bool _initialize();
-    void _initViewport();
+    // Backend... can be swapped out for something else
+    Apsis::Backend::Sdl _backend;
+
     void _fireEvent(int event);
 
     void _draw();

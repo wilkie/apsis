@@ -1,40 +1,40 @@
-#include "apsis/agent/map_collider.h"
+#include "apsis/agent/impeders/map_collider.h"
 
 #include "apsis/geometry/point.h"
 #include <math.h>
 
-Apsis::Agent::MapCollider::MapCollider(Apsis::World::Map* map)
+Apsis::Agent::Impeders::MapCollider::MapCollider(Apsis::World::Map* map)
   : _map(map) {
 }
 
-bool Apsis::Agent::MapCollider::move(Apsis::Geometry::Rectangle* from,
-                                     Apsis::Geometry::Point* to) {
+bool Apsis::Agent::Impeders::MapCollider::update(Apsis::Geometry::Rectangle& from,
+                                       Apsis::Geometry::Point& to) {
   // For every point px, py in the set of 4 defined by given Rectangle
   Apsis::Geometry::Point points[4];
   Apsis::Geometry::Point toPoints[4];
 
-  double halfWidth  = ceil(from->width  / 2.0);
-  double halfHeight = ceil(from->height / 2.0);
+  double halfWidth  = ceil(from.width  / 2.0);
+  double halfHeight = ceil(from.height / 2.0);
 
-  points[0].x = from->x - halfWidth;
-  points[0].y = from->y - halfHeight;
-  toPoints[0].x = to->x - halfWidth;
-  toPoints[0].y = to->y - halfHeight;
+  points[0].x = from.x - halfWidth;
+  points[0].y = from.y - halfHeight;
+  toPoints[0].x = to.x - halfWidth;
+  toPoints[0].y = to.y - halfHeight;
 
-  points[1].x = from->x + halfWidth;
-  points[1].y = from->y - halfHeight;
-  toPoints[1].x = to->x + halfWidth;
-  toPoints[1].y = to->y - halfHeight;
+  points[1].x = from.x + halfWidth;
+  points[1].y = from.y - halfHeight;
+  toPoints[1].x = to.x + halfWidth;
+  toPoints[1].y = to.y - halfHeight;
 
-  points[2].x = from->x + halfWidth;
-  points[2].y = from->y + halfHeight;
-  toPoints[2].x = to->x + halfWidth;
-  toPoints[2].y = to->y + halfHeight;
+  points[2].x = from.x + halfWidth;
+  points[2].y = from.y + halfHeight;
+  toPoints[2].x = to.x + halfWidth;
+  toPoints[2].y = to.y + halfHeight;
 
-  points[3].x = from->x - halfWidth;
-  points[3].y = from->y + halfHeight;
-  toPoints[3].x = to->x - halfWidth;
-  toPoints[3].y = to->y + halfHeight;
+  points[3].x = from.x - halfWidth;
+  points[3].y = from.y + halfHeight;
+  toPoints[3].x = to.x - halfWidth;
+  toPoints[3].y = to.y + halfHeight;
 
   Apsis::Geometry::Line vectors[4];
   for (int i = 0; i < 4; i++) {
@@ -126,6 +126,6 @@ bool Apsis::Agent::MapCollider::move(Apsis::Geometry::Rectangle* from,
   }
 
   // Get the actual point we should move to
-  *to = calculatedPoint;
+  to = calculatedPoint;
   return false;
 }

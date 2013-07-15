@@ -35,8 +35,8 @@ Apsis::Primitives::FragmentShader  fs;*/
 Apsis::Renderer::Renderer() {
   /*vao = Primitives::VertexArray();
   vbo = Primitives::VertexBuffer();
-  vs  = Primitives::VertexShader::fromFile("../../src/shaders/vertex/position.glsl");*/
-  Apsis::Primitives::FragmentShader fs  = Primitives::FragmentShader::fromFile("../../src/shaders/fragment/colorize.glsl");
+  vs  = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");*/
+  Apsis::Primitives::FragmentShader fs  = Primitives::FragmentShader::fromFile("src/shaders/fragment/colorize.glsl");
 }
 
 void Apsis::Renderer::clear() {
