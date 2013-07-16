@@ -26,7 +26,7 @@ namespace Apsis {
   namespace World {
     struct AnimationFrame {
       Apsis::Primitives::Sprite* sprite;
-      double textureCoordinates[4];
+      float textureCoordinates[4];
     };
 
     struct Animation {
@@ -96,6 +96,11 @@ namespace Apsis {
 
         // Add the given agent that will alter intended movement.
         void attachImpeder(Apsis::Agent::Impeder& agent);
+
+        // Draws the actor
+        void draw(glm::mat4& projection,
+                  Primitives::Camera& camera,
+                  glm::mat4& model);
 
       private:
 

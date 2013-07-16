@@ -19,18 +19,12 @@ Apsis::Primitives::SpriteSheet::~SpriteSheet() {
 }
 
 Apsis::Primitives::SpriteSheet::SpriteSheet(const char* filename) {
-  _texture = SOIL_load_OGL_texture_with_dimensions(filename,
-                                                   SOIL_LOAD_AUTO,     // channels
-                                                   SOIL_CREATE_NEW_ID, // texture_id
-                                                   SOIL_FLAG_INVERT_Y,
-                                                   &_width,
-                                                   &_height);
+  _texture = new Apsis::Primitives::Texture(filename);
+  _width = _texture->width();
+  _height = _texture->height();
 
   // Set GL texture options
-  glBindTexture(GL_TEXTURE_2D, _texture);
-
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glBindTexture(GL_TEXTURE_2D, _texture->identifier());
 
   _loadStatSheet(filename);
 }
@@ -71,11 +65,11 @@ void Apsis::Primitives::SpriteSheet::_loadStatSheet(const char* filename) {
   delete [] stat_sheet;
 }
 
-unsigned int Apsis::Primitives::SpriteSheet::texture() {
+Apsis::Primitives::Texture* Apsis::Primitives::SpriteSheet::texture() {
   return _texture;
 }
 
-void Apsis::Primitives::SpriteSheet::textureCoordinates(unsigned int index, double coords[4]) {
+void Apsis::Primitives::SpriteSheet::textureCoordinates(unsigned int index, float coords[4]) {
   Sprite* sprite = _sprites[index];
 
   double tu = (double)sprite->x      / (double)_width;
@@ -83,13 +77,13 @@ void Apsis::Primitives::SpriteSheet::textureCoordinates(unsigned int index, doub
   double tw = (double)sprite->width  / (double)_width;
   double th = (double)sprite->height / (double)_height;
 
-  coords[0] = tu;
-  coords[1] = tv;
-  coords[2] = tw;
-  coords[3] = th;
+  coords[0] = (float)tu;
+  coords[1] = (float)tv;
+  coords[2] = (float)tw;
+  coords[3] = (float)th;
 }
 
-bool Apsis::Primitives::SpriteSheet::textureCoordinates(const char* name, double coords[4]) {
+bool Apsis::Primitives::SpriteSheet::textureCoordinates(const char* name, float coords[4]) {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     if (strncmp(name, _sprites[i]->name, 64) == 0) {
       textureCoordinates(i, coords);

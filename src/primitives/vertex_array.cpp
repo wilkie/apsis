@@ -79,68 +79,72 @@ int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& pro
   useProgram(program);
   GLint uniform = glGetUniformLocation(program.identifier(), name);
   if (uniform < 0) {
-    throw "Cannot upload uniform. Uniform not found.";
+    char error[1024];
+    sprintf(error, "VertexArray.defineUniform: Error: Cannot upload uniform %.250s. Uniform not found.", name);
+    throw error;
   }
   std::string key = name;
   _uniforms[name] = uniform;
   return uniform;
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name, glm::mat4& mat) const {
+void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
+                                                   glm::mat4& mat) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, mat);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int identifier, glm::mat4& mat) const {
+void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
+                                                   glm::mat4& mat) const {
   glUniformMatrix4fv(identifier, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                      int         value) const {
+                                                   int         value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
-                                                      int value) const {
+                                                   int value) const {
   glUniform1i(identifier, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                      float       value) const {
+                                                   float       value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int   identifier,
-                                                      float value) const {
+                                                   float value) const {
   glUniform1f(identifier, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                      glm::vec3&  value) const {
+                                                   glm::vec3&  value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int        identifier,
-                                                      glm::vec3& value) const {
+                                                   glm::vec3& value) const {
   glUniform3fv(identifier, 1, glm::value_ptr(value));
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                      glm::vec4&  value) const {
+                                                   glm::vec4&  value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int        identifier,
-                                                      glm::vec4& value) const {
+                                                   glm::vec4& value) const {
   glUniform4fv(identifier, 1, glm::value_ptr(value));
 }
 

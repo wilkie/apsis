@@ -1227,5 +1227,8 @@
     <None Include="..\..\src\support\assimp\SmoothingGroups.inl">
       <Filter>support\assimp</Filter>
     </None>
+    <None Include="..\..\src\shaders\fragment\flat.glsl">
+      <Filter>shaders\fragment</Filter>
+    </None>
   </ItemGroup>
 </Project>

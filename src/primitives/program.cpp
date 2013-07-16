@@ -31,17 +31,20 @@ Apsis::Primitives::Program::~Program() {
 }
 
 void Apsis::Primitives::Program::defineInput(const char* name,
-                                                VertexBuffer& buffer,
-                                                unsigned int  numberOfComponents,
-                                                Type::Types   type,
-                                                bool          normalized,
-                                                unsigned int  stride,
-                                                unsigned int  offset) const {
+                                             VertexBuffer& buffer,
+                                             unsigned int  numberOfComponents,
+                                             Type::Types   type,
+                                             bool          normalized,
+                                             unsigned int  stride,
+                                             unsigned int  offset) const {
   glUseProgram(this->_program);
   GLint posAttrib = glGetAttribLocation(this->_program, name);
   if (posAttrib < 0) {
-    throw "Cannot define input. Input not found.";
+    char error[1024];
+    sprintf(error, "Program.defineInput: Error: Cannot define input %.250s. Input not found.", name);
+    throw error;
   }
+
   glBindBuffer(GL_ARRAY_BUFFER, buffer.identifier());
   glEnableVertexAttribArray(posAttrib);
 

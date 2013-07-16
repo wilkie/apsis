@@ -16,6 +16,16 @@ namespace Apsis {
       ~Texture();
 
       /*
+       *  Gives the width for this texture.
+       */
+      unsigned int width();
+
+      /*
+       *  Gives the height for this texture.
+       */
+      unsigned int height();
+
+      /*
        *  Gives the identifier for this texture.
        */
       unsigned int identifier() const;

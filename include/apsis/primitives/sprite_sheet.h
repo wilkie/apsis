@@ -1,7 +1,7 @@
 #ifndef APSIS_PRIMITIVES_SPRITE_SHEET_H
 #define APSIS_PRIMITIVES_SPRITE_SHEET_H
 
-#include <SDL/SDL_image.h>
+#include "apsis/primitives/texture.h"
 
 #include <vector>
 
@@ -67,16 +67,16 @@ namespace Apsis {
         ~SpriteSheet();
 
         /*
-         *  Returns: The texture id usable by the Renderer.
+         *  Returns: The Texture for this SpriteSheet.
          */
-        unsigned int texture();
+        Apsis::Primitives::Texture* texture();
 
         /*
          *  Fills the given coordinate array with the texture coordinates of the
          *    given sprite. The sprite index is assigned by the order in which
          *    sprites are listed in the description file.
          */
-        void textureCoordinates(unsigned int index, double coords[4]);
+        void textureCoordinates(unsigned int index, float coords[4]);
 
         /*
          *  Fills the given coordinate array with the texture coordinates of the
@@ -84,7 +84,7 @@ namespace Apsis {
          *    with the one described by the description file.
          *  Returns: true when the sprite is found, false otherwise.
          */
-        bool textureCoordinates(const char* name, double coords[4]);
+        bool textureCoordinates(const char* name, float coords[4]);
 
         /*
          *  Returns: the Sprite at the given index.
@@ -108,8 +108,8 @@ namespace Apsis {
 
       private:
 
-        // The OpenGL texture index.
-        unsigned int _texture;
+        // The texture.
+        Apsis::Primitives::Texture* _texture;
 
         // The width and height of the sprite texture.
         unsigned int _width;

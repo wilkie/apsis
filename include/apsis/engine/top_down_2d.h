@@ -51,6 +51,8 @@ namespace Apsis {
         // Called to update all game objects
         void _update();
 
+        float _zoom;
+
         void _fireEvent(int event);
     };
   }

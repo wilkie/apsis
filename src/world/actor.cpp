@@ -187,3 +187,8 @@ void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
   _position.x = to.x;
   _position.y = to.y;
 }
+
+void Apsis::World::Actor::draw(glm::mat4& projection,
+                               Primitives::Camera& camera,
+                               glm::mat4& model) {
+}

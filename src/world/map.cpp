@@ -64,57 +64,63 @@ Apsis::World::Map::Map(unsigned int width,
   
   unsigned int i = 0;
   unsigned int ei = 0;
+  unsigned int ti = 0;
+
   for (unsigned int h = 0; h < height; h++) {
     for (unsigned int w = 0; w < width; w++) {
-      _vertices[i * 8 + 0] = (float)w;
+      float coords[4];
+      _spriteSheet->textureCoordinates(_tiles[ti].spriteIndex(), coords);
+      ti++;
+
+      _vertices[i * 8 + 0] = (float)w*32.0f;
       _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = (float)h;
+      _vertices[i * 8 + 2] = (float)h*32.0f;
 
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
     
-      _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
+      _vertices[i * 8 + 6] = coords[0]; //textureCoords[i].x;
+      _vertices[i * 8 + 7] = coords[1]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 8 + 0] = (float)w + 1.0f;
+      _vertices[i * 8 + 0] = ((float)w + 1.0f)*32.0f;
       _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = (float)h;
+      _vertices[i * 8 + 2] = (float)h*32.0f;
 
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
     
-      _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
-
-      i++;
-      
-      _vertices[i * 8 + 0] = (float)w + 1.0f;
-      _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = (float)h + 1.0f;
-
-      _vertices[i * 8 + 3] = 0.0;
-      _vertices[i * 8 + 4] = 1.0;
-      _vertices[i * 8 + 5] = 0.0;
-    
-      _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
+      _vertices[i * 8 + 6] = coords[0] + coords[2]; //textureCoords[i].x;
+      _vertices[i * 8 + 7] = coords[1]; //textureCoords[i].y;
 
       i++;
       
-      _vertices[i * 8 + 0] = (float)w;
+      _vertices[i * 8 + 0] = ((float)w + 1.0f)*32.0f;
       _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = (float)h + 1.0f;
+      _vertices[i * 8 + 2] = ((float)h + 1.0f)*32.0f;
 
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
     
-      _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
+      _vertices[i * 8 + 6] = coords[0] + coords[2]; //textureCoords[i].x;
+      _vertices[i * 8 + 7] = coords[1] + coords[3]; //textureCoords[i].y;
+
+      i++;
+      
+      _vertices[i * 8 + 0] = (float)w*32.0f;
+      _vertices[i * 8 + 1] = 0.0f;
+      _vertices[i * 8 + 2] = ((float)h + 1.0f)*32.0f;
+
+      _vertices[i * 8 + 3] = 0.0;
+      _vertices[i * 8 + 4] = 1.0;
+      _vertices[i * 8 + 5] = 0.0;
+    
+      _vertices[i * 8 + 6] = coords[0]; //textureCoords[i].x;
+      _vertices[i * 8 + 7] = coords[1] + coords[3]; //textureCoords[i].y;
 
       i++;
 
@@ -134,55 +140,25 @@ Apsis::World::Map::Map(unsigned int width,
   _vao.bindElements(_ebo);
 
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/colorize.glsl");
-  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("src/shaders/fragment/directional_lighting.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);
   unlinked.attach(fs);
-  unlinked.attach(ls);
   unlinked.defineFragmentOutput("outColor");
   Primitives::Program program = unlinked.link();
 
   _vao.useProgram(program);
   program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 8, 0);
-  program.defineInput("normal",   _vbo, 3, Primitives::Program::Type::Float, false, 8, 3);
   program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 8, 6);
 
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
   _vao.defineUniform("proj",  program);
-  _vao.defineUniform("camera",  program);
 
-  _vao.defineUniform("material.ambient_intensity",  program);
-  _vao.defineUniform("material.diffuse_intensity",  program);
-  _vao.defineUniform("material.specular_intensity",  program);
-  _vao.defineUniform("material.shininess",  program);
-  _vao.defineUniform("material.emission",  program);
-  _vao.defineUniform("light.color",  program);
-  _vao.defineUniform("light.direction",  program);
-
-  Primitives::Texture t = Primitives::Texture("resources/sample.png");
   _vao.defineUniform("tex", program);
-  _vao.bindTexture(0, t);
+  _vao.bindTexture(0, *_spriteSheet->texture());
   _vao.uploadUniform("tex", 0);
-
-  Apsis::Model::Material material = Apsis::Model::Material(0.2f, 5.0f, 8.0f,
-                                                           glm::vec3(1.0, 0.0, 0.0),
-                                                           15.0f);
-
-  Apsis::Model::Light light = Apsis::Model::Light(glm::vec3(0.0),
-                                                  glm::vec3(0.0, 1.0, 0.0),
-                                                  glm::vec3(1.0, 0.0, 1.0));
-
-  _vao.uploadUniform("material.ambient_intensity", material.ambientIntensity());
-  _vao.uploadUniform("material.diffuse_intensity", material.diffuseIntensity());
-  _vao.uploadUniform("material.specular_intensity",  material.specularIntensity());
-  _vao.uploadUniform("material.shininess",  material.shininess());
-  _vao.uploadUniform("material.emission",  material.emission());
-
-  _vao.uploadUniform("light.direction", light.direction());
-  _vao.uploadUniform("light.color", light.color());
 }
 
 unsigned int Apsis::World::Map::width() {
@@ -236,7 +212,8 @@ void Apsis::World::Map::draw(glm::mat4& projection,
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
-
+  
+  _vao.bindTexture(0, *_spriteSheet->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.draw();
 }

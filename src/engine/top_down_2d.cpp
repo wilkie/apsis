@@ -19,6 +19,7 @@
   */
 Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _backend.initialize(video);
+  _video = video;
 
   _input = new Apsis::InputEngine();
 
@@ -55,9 +56,9 @@ void Apsis::Engine::TopDown2d::_draw() {
   double translationX = 0.0;
   double translationZ = 0.0;
   double zoom = 1.0;
-  zoom /= 2;
+  _zoom = 3.0f;
+  zoom = 1.0f/_zoom;
 
-  float dist = sqrtf(1.0f / 3.0f);
   float aspect = (float)_video.resolutionX / (float)_video.resolutionY;
 
   float nearf = 1;
@@ -73,28 +74,15 @@ void Apsis::Engine::TopDown2d::_draw() {
 
   glm::mat4 projection;
 
+  float half_height = _video.resolutionY/2.0f;
+  float half_width  = _video.resolutionX/2.0f;
+
   if (orthographic) {
-    projection = glm::ortho(left*4, right*4, bottom*4, top*4);
+    projection = glm::ortho(-half_width * zoom, half_width * zoom, -half_height * zoom, half_height * zoom);
   }
   else {
     projection = glm::perspective(fov, aspect, nearf, farf);
   }
-
-  glm::mat4 view = glm::rotate(
-                     glm::translate(
-                       glm::mat4(1.0f),
-                       glm::vec3(0.0f, 0.0f, -5.0f)),
-                     35.264f, glm::vec3(1.0f, 0.0f, 0.0f));
-
-  if (!orthographic) {
-    view = glm::rotate(view, 35.264f, glm::vec3(1.0f, 0.0f, 0.0f));
-  } 
-
-  view = glm::scale(
-           glm::translate(
-             glm::rotate(view, (float)rotation, glm::vec3(0.0f, 1.0f, 0.0f)),
-             glm::vec3(translationX, 0, translationZ)),
-           glm::vec3(zoom, zoom, zoom));
 
   glm::mat4 model = glm::mat4(1.0);
   
