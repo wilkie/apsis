@@ -86,7 +86,7 @@ void Apsis::Engine::TopDown2d::_draw() {
 
   glm::mat4 model = glm::mat4(1.0);
   
-  _map->draw(projection, Primitives::Camera(glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 0.0), glm::normalize(glm::vec3(1.0, 0.0, 0.0))), model);
+  _map->draw(projection, Primitives::Camera(glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 0.0), glm::normalize(glm::vec3(0.0, 0.0, -1.0))), model);
 }
 
 void Apsis::Engine::TopDown2d::_update() {
