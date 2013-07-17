@@ -23,12 +23,12 @@ Apsis::Clock::Clock() {
 #endif
 }
 
-double Apsis::Clock::elapsedTime() {
+float Apsis::Clock::elapsedTime() {
 #ifdef _WIN32
   ClockPlatformInternal* clock = (ClockPlatformInternal*)_internal;
   QueryPerformanceCounter(&clock->_end);
   LONGLONG amt = (clock->_end.QuadPart - clock->_start.QuadPart) * 1000 / clock->_freq.QuadPart;
   clock->_start = clock->_end;
-  return (double)amt / 1000.0;
+  return (float)amt / 1000.0f;
 #endif
 }

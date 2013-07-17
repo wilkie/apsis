@@ -61,6 +61,7 @@ void Apsis::Primitives::SpriteSheet::_loadStatSheet(const char* filename) {
                                     &sprite->center_x,
                                     &sprite->center_y);
   }
+  fclose(f);
 
   delete [] stat_sheet;
 }
@@ -72,15 +73,25 @@ Apsis::Primitives::Texture* Apsis::Primitives::SpriteSheet::texture() {
 void Apsis::Primitives::SpriteSheet::textureCoordinates(unsigned int index, float coords[4]) {
   Sprite* sprite = _sprites[index];
 
-  double tu = (double)sprite->x      / (double)_width;
-  double tv = (double)sprite->y      / (double)_height;
-  double tw = (double)sprite->width  / (double)_width;
-  double th = (double)sprite->height / (double)_height;
+  float tu = ((float)sprite->x + 0.1f)  / (float)_width;
+  float tv = ((float)sprite->y + 0.1f)  / (float)_height;
+  float tu2 = ((float)sprite->x - 0.1f + (float)sprite->width)  / (float)_width;
+  float tv2 = ((float)sprite->y - 0.1f + (float)sprite->height)  / (float)_height;
+
+  if (tu < 0.0)  { tu = 0.0; }
+  if (tv < 0.0)  { tv = 0.0; }
+  if (tu2 < 0.0) { tu2 = 0.0; }
+  if (tv2 < 0.0) { tv2 = 0.0; }
+
+  if (tu > 1.0)  { tu = 1.0; }
+  if (tv > 1.0)  { tv = 1.0; }
+  if (tu2 > 1.0) { tu2 = 1.0; }
+  if (tv2 > 1.0) { tv2 = 1.0; }
 
   coords[0] = (float)tu;
   coords[1] = (float)tv;
-  coords[2] = (float)tw;
-  coords[3] = (float)th;
+  coords[2] = (float)tu2;
+  coords[3] = (float)tv2;
 }
 
 bool Apsis::Primitives::SpriteSheet::textureCoordinates(const char* name, float coords[4]) {

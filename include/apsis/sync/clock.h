@@ -16,7 +16,7 @@ namespace Apsis {
       /*
        *  Returns: The fraction of seconds since the last call to elapsedTime.
        */
-      double elapsedTime();
+      float elapsedTime();
 
     private:
       // Internal storage; depends on platform

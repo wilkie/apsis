@@ -60,7 +60,7 @@ Apsis::World::Map::Map(unsigned int width,
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   3 per normal,
   //                                   2 per texcoord
-  this->_vertices = new float[8 * vertices_size];
+  this->_vertices = new float[5 * vertices_size];
   
   unsigned int i = 0;
   unsigned int ei = 0;
@@ -72,69 +72,53 @@ Apsis::World::Map::Map(unsigned int width,
       _spriteSheet->textureCoordinates(_tiles[ti].spriteIndex(), coords);
       ti++;
 
-      _vertices[i * 8 + 0] = (float)w*32.0f;
-      _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = (float)h*32.0f;
+      _vertices[i * 5 + 0] = (float)w*32.0f;
+      _vertices[i * 5 + 1] = 0.0f;
+      _vertices[i * 5 + 2] = (float)h*32.0f;
 
-      _vertices[i * 8 + 3] = 0.0;
-      _vertices[i * 8 + 4] = 1.0;
-      _vertices[i * 8 + 5] = 0.0;
-    
-      _vertices[i * 8 + 6] = coords[0]; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = coords[1]; //textureCoords[i].y;
+      _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
+      _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 8 + 0] = ((float)w + 1.0f)*32.0f;
-      _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = (float)h*32.0f;
+      _vertices[i * 5 + 0] = ((float)w + 1.0f)*32.0f;
+      _vertices[i * 5 + 1] = 0.0f;
+      _vertices[i * 5 + 2] = (float)h*32.0f;
 
-      _vertices[i * 8 + 3] = 0.0;
-      _vertices[i * 8 + 4] = 1.0;
-      _vertices[i * 8 + 5] = 0.0;
-    
-      _vertices[i * 8 + 6] = coords[0] + coords[2]; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = coords[1]; //textureCoords[i].y;
+      _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
+      _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
-      
-      _vertices[i * 8 + 0] = ((float)w + 1.0f)*32.0f;
-      _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = ((float)h + 1.0f)*32.0f;
 
-      _vertices[i * 8 + 3] = 0.0;
-      _vertices[i * 8 + 4] = 1.0;
-      _vertices[i * 8 + 5] = 0.0;
-    
-      _vertices[i * 8 + 6] = coords[0] + coords[2]; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = coords[1] + coords[3]; //textureCoords[i].y;
+      _vertices[i * 5 + 0] = ((float)w + 1.0f)*32.0f;
+      _vertices[i * 5 + 1] = 0.0f;
+      _vertices[i * 5 + 2] = ((float)h + 1.0f)*32.0f;
+
+      _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
+      _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
       i++;
-      
-      _vertices[i * 8 + 0] = (float)w*32.0f;
-      _vertices[i * 8 + 1] = 0.0f;
-      _vertices[i * 8 + 2] = ((float)h + 1.0f)*32.0f;
 
-      _vertices[i * 8 + 3] = 0.0;
-      _vertices[i * 8 + 4] = 1.0;
-      _vertices[i * 8 + 5] = 0.0;
-    
-      _vertices[i * 8 + 6] = coords[0]; //textureCoords[i].x;
-      _vertices[i * 8 + 7] = coords[1] + coords[3]; //textureCoords[i].y;
+      _vertices[i * 5 + 0] = (float)w*32.0f;
+      _vertices[i * 5 + 1] = 0.0f;
+      _vertices[i * 5 + 2] = ((float)h + 1.0f)*32.0f;
+
+      _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
+      _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
       i++;
 
       _elements[ei] = i-4; ei++;
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-1; ei++;
-      
+
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-2; ei++;
       _elements[ei] = i-1; ei++;
     }
   }
 
-  _vbo.transfer(_vertices, 8 * vertices_size);
+  _vbo.transfer(_vertices, 5 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
   _vao.bindElements(_ebo);
@@ -149,8 +133,8 @@ Apsis::World::Map::Map(unsigned int width,
   Primitives::Program program = unlinked.link();
 
   _vao.useProgram(program);
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 8, 0);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 8, 6);
+  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
+  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
 
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
@@ -189,26 +173,6 @@ void Apsis::World::Map::_generateWalls() {
 void Apsis::World::Map::draw(glm::mat4& projection,
                              Primitives::Camera& camera,
                              glm::mat4& model) {
-/*  double coords[4];
-
-  // Render all background tiles
-  //renderer.depthTest(false);
-  for (long y = this->height() - 1; y >= 0; y--) {
-    for (long x = 0; x < (long)this->width(); x++) {
-      Tile* tile = this->tile(x, y);
-      if (!tile->passable()) {
-        continue;
-      }
-
-      this->spriteSheet()->textureCoordinates(tile->spriteIndex(), coords);
-
-      Apsis::Primitives::Sprite* sprite = this->spriteSheet()->sprite(tile->spriteIndex());
-      /*renderer.drawSquare(x * 32.0, y * 32.0,
-                          sprite->width, sprite->height,
-                          coords[0], coords[1], coords[2], coords[3],
-                          0);*
-    }
-  }*/
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);

@@ -16,14 +16,19 @@
 #include "SOIL.h"
 
 Apsis::Primitives::Texture::Texture(const char* name) {
-  glGenTextures(1, &_texture);
+  
+  _texture = SOIL_load_OGL_texture_with_dimensions(name,
+                                                   SOIL_LOAD_RGBA,
+                                                   SOIL_CREATE_NEW_ID,
+                                                   0,
+                                                   &_width,
+                                                   &_height);
 
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, _texture);
 
-  unsigned char* image = SOIL_load_image(name, (int*)&_width, (int*)&_height, 0, SOIL_LOAD_RGB);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-  SOIL_free_image_data(image);
+  glEnable (GL_BLEND);
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );

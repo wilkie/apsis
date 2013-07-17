@@ -293,6 +293,9 @@ void Apsis::Backend::Sdl::quit() {
   // Uninitialize the joystick
   //joystick = SDL_JoystickOpen(0);
 
+  // Uninitialize the timer
+  SDL_QuitSubSystem(SDL_INIT_TIMER);
+
   // Destruct SDL
   SDL_Quit();
 #endif
@@ -347,6 +350,13 @@ bool Apsis::Backend::Sdl::_start() {
   if((surf_display = SDL_SetVideoMode(_video.resolutionX, _video.resolutionY, 32, SDL_HWSURFACE | SDL_OPENGL)) == NULL) {
     fprintf(stderr, "Unable to initialize SDL: SDL_SetVideoMode failed: %s\n", SDL_GetError());
     return false;
+  }
+  
+  if (SDL_InitSubSystem(SDL_INIT_TIMER) < 0) {
+    // Error
+    char error[1024];
+    sprintf(error, "Unable to initialize SDL: SDL_InitSubSystem(SDL_INIT_TIMER) failed: %s\n", SDL_GetError());
+    throw error;
   }
 
   SDL_WM_SetCaption("Apsis", "Apsis");

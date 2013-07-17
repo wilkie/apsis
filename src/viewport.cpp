@@ -33,7 +33,7 @@ Apsis::Viewport::Viewport(unsigned int width, unsigned int height) :
   Model::Thing thing = Model::Thing("resources/monkey.dae");
 
   _things.push_back(thing);
-  _cameras.push_back(Primitives::Camera(glm::vec3(_x, 0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5)));
+  _cameras.push_back(Primitives::Camera(glm::vec3(_x, 0, _z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.5, 1.0, 0.5), 1.0));
 
   _terrain = new Apsis::World::Terrain(200, 200);
 
@@ -148,7 +148,7 @@ void Apsis::Viewport::move(double deltaX, double deltaZ) {
   _x -= deltaX*sine + deltaZ*cosine;
   _z += deltaX*cosine - deltaZ*sine;
 
-  _cameras[0] = Primitives::Camera(glm::vec3(_x, _zoom, _z), glm::vec3(_x, 0.0, _z+5.0), glm::normalize(glm::vec3(cosine, 1.0, sine)));
+  _cameras[0] = Primitives::Camera(glm::vec3(_x, _zoom, _z), glm::vec3(_x, 0.0, _z+5.0), glm::normalize(glm::vec3(cosine, 1.0, sine)),1.0);
 }
 
 void Apsis::Viewport::rotate(double delta) {

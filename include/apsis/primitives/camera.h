@@ -13,7 +13,16 @@ namespace Apsis {
        *  Creates a camera at the given position looking at the given point and
        *    oriented the given direction with the given zoom.
        */
-      Camera(glm::vec3& position, glm::vec3& target, glm::vec3& up);
+      Camera(glm::vec3& position,
+             glm::vec3& target,
+             glm::vec3& up,
+             float zoom);
+
+      /*
+       *  Creates a camera for a 2d environment.
+       */
+      Camera(glm::vec2& position,
+             float zoom);
 
       /*
        *  Return a reference to the view matrix.

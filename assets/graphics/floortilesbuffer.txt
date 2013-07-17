@@ -1,0 +1,24 @@
+stone_floor_1   0,     0, 32, 32
+stone_floor_2   33,    0, 32, 32
+stone_floor_3   66,    0, 32, 32
+stone_floor_4   99,    0, 32, 32
+stone_hole_1    132,   0, 32, 32
+
+desert_1        165,   0, 32, 32
+stump_1         198,   0, 32, 32
+
+stone_floor_lr  0,    33, 32, 32
+stone_floor_tlr 33,   33, 32, 32
+stone_floor_l   66,   33, 32, 32
+stone_floor_r   99,   33, 32, 32
+stone_floor_dt  132,  33, 32, 32
+stone_floor_db  165,  33, 32, 32
+
+stone_floor_tl  0,    66, 32, 32
+stone_floor_t   33,   66, 32, 32
+stone_floor_tr  66,   66, 32, 32
+
+wall_1          0,   123, 32, 40
+wall_2          33,  123, 32, 40
+wall_3          66,  123, 32, 40
+wall_4          99,  123, 32, 40
