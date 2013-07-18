@@ -8,7 +8,7 @@ Apsis::Agent::Impeders::MapCollider::MapCollider(Apsis::World::Map* map)
 }
 
 bool Apsis::Agent::Impeders::MapCollider::update(Apsis::Geometry::Rectangle& from,
-                                       Apsis::Geometry::Point& to) {
+                                                 Apsis::Geometry::Point& to) {
   // For every point px, py in the set of 4 defined by given Rectangle
   Apsis::Geometry::Point points[4];
   Apsis::Geometry::Point toPoints[4];

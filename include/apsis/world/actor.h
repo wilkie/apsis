@@ -47,8 +47,8 @@ namespace Apsis {
          *    Apsis::Primitives::SpriteSheet.
          */
         Actor(const char* actorFile,
-               unsigned int x,
-               unsigned int y);
+              unsigned int x,
+              unsigned int y);
         ~Actor();
 
         /*
@@ -104,8 +104,7 @@ namespace Apsis {
 
         // Draws the actor
         void draw(glm::mat4& projection,
-                  Primitives::Camera& camera,
-                  glm::mat4& model);
+                  Primitives::Camera& camera);
 
       private:
 

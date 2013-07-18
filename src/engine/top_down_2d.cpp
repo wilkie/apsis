@@ -74,7 +74,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/floortilesbuffer.png");
   _map = new Apsis::World::Map(32, 30, sheet);
 
-  _player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 250, 175);
+  _player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 32, 32);
 }
 
 void Apsis::Engine::TopDown2d::run() {
@@ -134,13 +134,14 @@ void Apsis::Engine::TopDown2d::_draw() {
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
 
+  Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom);
+
   _map->draw(projection,
-             Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom),
+             camera,
              glm::mat4(1.0));
 
   _player1->draw(projection,
-                 Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom),
-                 glm::mat4(1.0));
+                 camera);
 }
 
 void Apsis::Engine::TopDown2d::_update(float elapsed) {

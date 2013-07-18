@@ -6,6 +6,13 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
 Apsis::World::Actor::~Actor() {
   // Deallocate animations
   for (unsigned int i = 0; i < _animations.size(); i++) {
@@ -97,36 +104,36 @@ Apsis::World::Actor::Actor(const char* actorFile,
     _spriteSheet->textureCoordinates(si, coords);
     Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(si); 
 
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + 200.0f;
+    _vertices[i * 5 + 0] = -(float)sprite->center_x;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + 200.0f;
+    _vertices[i * 5 + 2] = -(float)sprite->center_y;
 
     _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
     i++;
 
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + 200.0f + (float)sprite->width;
+    _vertices[i * 5 + 0] = -(float)sprite->center_x + (float)sprite->width;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + 200.0f;
+    _vertices[i * 5 + 2] = -(float)sprite->center_y;
 
     _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
     i++;
       
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + 200.0f + (float)sprite->width;
+    _vertices[i * 5 + 0] = -(float)sprite->center_x + (float)sprite->width;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + 200.0f + (float)sprite->height;
+    _vertices[i * 5 + 2] = -(float)sprite->center_y + (float)sprite->height;
 
     _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
     i++;
       
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + 200.0f;
+    _vertices[i * 5 + 0] = -(float)sprite->center_x;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + 200.0f + (float)sprite->height;
+    _vertices[i * 5 + 2] = -(float)sprite->center_y + (float)sprite->height;
 
     _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
@@ -290,8 +297,10 @@ void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
 }
 
 void Apsis::World::Actor::draw(glm::mat4& projection,
-                               Primitives::Camera& camera,
-                               glm::mat4& model) {
+                               Primitives::Camera& camera) {
+  glm::mat4 model = glm::translate(glm::mat4(1.0),
+                                   glm::vec3(_position.x, 0.0, _position.y));
+
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
