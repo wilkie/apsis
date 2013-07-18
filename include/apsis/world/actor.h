@@ -20,12 +20,17 @@
 #include <apsis/agent/mover.h>
 #include <apsis/geometry/rectangle.h>
 
+#include "apsis/primitives/camera.h"
+#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_buffer.h"
+
 #include <vector>
 
 namespace Apsis {
   namespace World {
     struct AnimationFrame {
       Apsis::Primitives::Sprite* sprite;
+      unsigned int spriteIndex;
       float textureCoordinates[4];
     };
 
@@ -81,7 +86,7 @@ namespace Apsis {
         /*
          *  Updates the current time for the Sprite. Affects animations and movements.
          */
-        void update(double elapsed);
+        void update(float elapsed);
 
         void move(Apsis::Geometry::Point& to);
 
@@ -131,7 +136,7 @@ namespace Apsis {
         AnimationFrame* _frame;
 
         // time since last frame.
-        double _currentTime;
+        float _currentTime;
 
         // Creates a new animation structure.
         Animation* _newAnimation(const char* name);
@@ -142,6 +147,14 @@ namespace Apsis {
         // Before Move Agents
         std::vector<Apsis::Agent::Impeder> _impederAgents;
         std::vector<Apsis::Agent::Mover> _moverAgents;
+
+        Primitives::VertexArray _vao;
+
+        float* _vertices;
+        Primitives::VertexBuffer _vbo;
+
+        unsigned int* _elements;
+        Primitives::VertexBuffer _ebo;
     };
   }
 }

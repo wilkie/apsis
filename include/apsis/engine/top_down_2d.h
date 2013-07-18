@@ -41,6 +41,7 @@ namespace Apsis {
         Apsis::InputEngine* _input;
 
         Apsis::World::Map* _map;
+        Apsis::World::Actor* _player1;
 
         // Backend... can be swapped out for something else
         Apsis::Backend::Sdl _backend;

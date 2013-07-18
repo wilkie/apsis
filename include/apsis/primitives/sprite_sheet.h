@@ -95,7 +95,12 @@ namespace Apsis {
          *  Returns: the Sprite by it's description.
          */
         Sprite* sprite(const char* name);
-      
+
+        /*
+         *  Returns: the number of sprites contained in the sheet.
+         */
+        unsigned int count();
+
         /*
          *  Returns: -1 when no more sprites match, or the index
          *    of the next available sprite that matches the wildcard

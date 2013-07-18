@@ -74,7 +74,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/floortilesbuffer.png");
   _map = new Apsis::World::Map(32, 30, sheet);
 
-  Apsis::World::Actor* player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 250, 175);
+  _player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 250, 175);
 }
 
 void Apsis::Engine::TopDown2d::run() {
@@ -137,23 +137,27 @@ void Apsis::Engine::TopDown2d::_draw() {
   _map->draw(projection,
              Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom),
              glm::mat4(1.0));
+
+  _player1->draw(projection,
+                 Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom),
+                 glm::mat4(1.0));
 }
 
 void Apsis::Engine::TopDown2d::_update(float elapsed) {
   if (_input->isEventHeld(MOVE_DOWN)) {
-    _z += 32*6*elapsed;
+    _z += 32*16*elapsed;
   }
   
   if (_input->isEventHeld(MOVE_UP)) {
-    _z -= 32*6*elapsed;
+    _z -= 32*16*elapsed;
   }
 
   if (_input->isEventHeld(MOVE_LEFT)) {
-    _x -= 32*6*elapsed;
+    _x -= 32*16*elapsed;
   }
   
   if (_input->isEventHeld(MOVE_RIGHT)) {
-    _x += 32*6*elapsed;
+    _x += 32*16*elapsed;
   }
   
   if (_input->isEventHeld(ZOOM_OUT)) {
@@ -167,21 +171,23 @@ void Apsis::Engine::TopDown2d::_update(float elapsed) {
     _zoom += 1.0f * elapsed;
   }
 
-  if (_x > ((_map->width() * 32.0 - _video.resolutionX/2.0f/_zoom))) {
-    _x = ((_map->width() * 32.0 - _video.resolutionX/2.0f/_zoom));
+  if (_x > ((_map->width() * 32.0f - _video.resolutionX/2.0f/_zoom))) {
+    _x = ((_map->width() * 32.0f - _video.resolutionX/2.0f/_zoom));
   }
 
   if (_x < (_video.resolutionX/2.0f/_zoom)) {
     _x = (_video.resolutionX/2.0f/_zoom);
   }
 
-  if (_z > ((_map->height() * 32.0 - _video.resolutionY/2.0f/_zoom))) {
-    _z = ((_map->height() * 32.0 - _video.resolutionY/2.0f/_zoom));
+  if (_z > ((_map->height() * 32.0f - _video.resolutionY/2.0f/_zoom))) {
+    _z = ((_map->height() * 32.0f - _video.resolutionY/2.0f/_zoom));
   }
 
   if (_z < (_video.resolutionY/2.0f/_zoom)) {
     _z = (_video.resolutionY/2.0f/_zoom);
   }
+
+  _player1->update(elapsed);
 }
 
 void Apsis::Engine::TopDown2d::_fireEvent(int event) {

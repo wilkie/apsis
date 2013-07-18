@@ -9,9 +9,6 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
-#include "apsis/model/material.h"
-#include "apsis/model/light.h"
-
 Apsis::World::Map::Map(unsigned int width,
                        unsigned int height,
                        Apsis::Primitives::SpriteSheet* spriteSheet) :
@@ -27,13 +24,8 @@ Apsis::World::Map::Map(unsigned int width,
 
   _generateWalls();
 
-  //_tiles[9 + 6 * _width].passable = false;
-  //_tiles[7 + 6 * _width].passable = false;
-  //_tiles[8 + 4 * _width].passable = false;
-
   _spriteSheet = spriteSheet;
 
-  
   // width = 3, height = 2 creates map like this:
   //
   //   +---+---+---+
@@ -58,7 +50,6 @@ Apsis::World::Map::Map(unsigned int width,
   _elements = new unsigned int[elements_size];
 
   // 8 values for each logical vertex: 3 per axis coordinate,
-  //                                   3 per normal,
   //                                   2 per texcoord
   this->_vertices = new float[5 * vertices_size];
   
@@ -70,29 +61,30 @@ Apsis::World::Map::Map(unsigned int width,
     for (unsigned int w = 0; w < width; w++) {
       float coords[4];
       _spriteSheet->textureCoordinates(_tiles[ti].spriteIndex(), coords);
+      Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(_tiles[ti].spriteIndex());
       ti++;
 
       _vertices[i * 5 + 0] = (float)w*32.0f;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*32.0f;
+      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f - sprite->height;
 
       _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 5 + 0] = ((float)w + 1.0f)*32.0f;
+      _vertices[i * 5 + 0] = (float)w*32.0f + sprite->width;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*32.0f;
+      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f - sprite->height;
 
       _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
-
-      _vertices[i * 5 + 0] = ((float)w + 1.0f)*32.0f;
+      
+      _vertices[i * 5 + 0] = (float)w*32.0f + sprite->width;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = ((float)h + 1.0f)*32.0f;
+      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f;
 
       _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
@@ -101,7 +93,7 @@ Apsis::World::Map::Map(unsigned int width,
 
       _vertices[i * 5 + 0] = (float)w*32.0f;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = ((float)h + 1.0f)*32.0f;
+      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f;
 
       _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;

@@ -85,9 +85,19 @@ namespace Apsis {
       void draw();
 
       /*
+       *  Render the range of the elements array as triangles.
+       */
+      void drawRange(unsigned int start, unsigned int count);
+
+      /*
        *  Render as quads.
        */
       void drawQuads();
+
+      /*
+       *  Render the range of the elements array as quads.
+       */
+      void drawQuadsRange(unsigned int start, unsigned int count);
 
       /*
        *  Gives the identifier for this vertex array.

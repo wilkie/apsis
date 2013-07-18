@@ -153,3 +153,7 @@ int Apsis::Primitives::SpriteSheet::enumerateSprites(const char* wildcard, unsig
 
   return -1;
 }
+
+unsigned int Apsis::Primitives::SpriteSheet::count() {
+  return _sprites.size();
+}

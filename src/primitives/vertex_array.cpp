@@ -65,14 +65,36 @@ void Apsis::Primitives::VertexArray::draw() {
   glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
 }
 
+void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) {
+  glBindVertexArray(this->_vao);
+
+  if (_elementBuffer.size() > 0) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
+  }
+
+  glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
+}
+
 void Apsis::Primitives::VertexArray::drawQuads() {
+  glBindVertexArray(this->_vao);
+
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
     count = _elementBuffer[0].count();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
   }
 
-  glBindVertexArray(this->_vao);
   glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, 0);
+}
+
+void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) {
+  glBindVertexArray(this->_vao);
+
+  if (_elementBuffer.size() > 0) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
+  }
+
+  glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
 }
 
 int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& program) {
