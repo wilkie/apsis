@@ -245,11 +245,11 @@ Apsis::Primitives::Sprite* Apsis::World::Actor::sprite() {
   return _frame->sprite;
 }
 
-void Apsis::World::Actor::attachMover(Apsis::Agent::Mover& agent) {
+void Apsis::World::Actor::attachMover(Apsis::Agent::Mover* agent) {
   _moverAgents.push_back(agent);
 }
 
-void Apsis::World::Actor::attachImpeder(Apsis::Agent::Impeder& agent) {
+void Apsis::World::Actor::attachImpeder(Apsis::Agent::Impeder* agent) {
   _impederAgents.push_back(agent);
 }
 
@@ -276,12 +276,9 @@ void Apsis::World::Actor::update(float elapsed) {
   else if (strcmp(_state, "walk_right") == 0) {
     to.x += _moveRate * elapsed;
   }
-  else {
-    return;
-  }
   
   for (unsigned int i = 0; i < _moverAgents.size(); i++) {
-    if (_moverAgents[i].update(_position, to)) {
+    if (_moverAgents[i]->update(elapsed, _currentStates, _position, to)) {
       this->move(to);
     }
   }
@@ -289,7 +286,7 @@ void Apsis::World::Actor::update(float elapsed) {
 
 void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
   for (unsigned int i = 0; i < _impederAgents.size(); i++) {
-    _impederAgents[i].update(_position, to);
+    _impederAgents[i]->update(_currentStates, _position, to);
   }
 
   _position.x = to.x;
@@ -308,4 +305,22 @@ void Apsis::World::Actor::draw(glm::mat4& projection,
   _vao.bindTexture(0, *_spriteSheet->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.drawRange(_frame->spriteIndex * 6, 6);
+}
+
+char* Apsis::World::Actor::rules() {
+  char* ret = new char[1024];
+
+  strcpy(ret, "");
+
+  for (unsigned int i = 0; i < _moverAgents.size(); i++) {
+    strcat(ret, _moverAgents[i]->rule());
+    strcat(ret, "\n");
+  }
+
+  for (unsigned int i = 0; i < _impederAgents.size(); i++) {
+    strcat(ret, _impederAgents[i]->rule());
+    strcat(ret, "\n");
+  }
+
+  return ret;
 }

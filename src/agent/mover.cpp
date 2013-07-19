@@ -5,6 +5,13 @@
 Apsis::Agent::Mover::Mover() {
 }
 
-bool Apsis::Agent::Mover::update(Apsis::Geometry::Rectangle& original, Apsis::Geometry::Point& updated) {
+bool Apsis::Agent::Mover::update(float elapsed,
+                                 std::set<unsigned int>& states,
+                                 Apsis::Geometry::Rectangle& original,
+                                 Apsis::Geometry::Point& updated) {
   return false;
+}
+
+char* Apsis::Agent::Mover::rule() {
+  return "Unknown move rule";
 }

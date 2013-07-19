@@ -8,6 +8,8 @@
 
 #include "apsis/agent/impeder.h"
 
+#include <set>
+
 namespace Apsis {
   namespace World {
     class Actor;
@@ -16,17 +18,22 @@ namespace Apsis {
   namespace Agent {
     namespace Impeders {
       class MapCollider : public Apsis::Agent::Impeder {
-        public:
-          MapCollider(Apsis::World::Map* map);
+      public:
+        MapCollider(Apsis::World::Map* map);
 
-          /*
-           *  Update intended point and return reason for change.
-           */
-          virtual bool update(Apsis::Geometry::Rectangle& original,
-                              Apsis::Geometry::Point& intended);
+        /*
+          *  Update intended point and return reason for change.
+          */
+        virtual bool update(std::set<unsigned int>& states,
+                            Apsis::Geometry::Rectangle& original,
+                            Apsis::Geometry::Point& intended);
+        virtual char* rule();
+      private:
+        bool _canFall(Apsis::Geometry::Rectangle& from);
+        bool _canJump(Apsis::Geometry::Rectangle& from);
+        bool _againstWall(Apsis::Geometry::Rectangle& from, bool checkLeft);
 
-        private:
-          Apsis::World::Map* _map;
+        Apsis::World::Map* _map;
       };
     }
   }

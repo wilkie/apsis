@@ -13,6 +13,31 @@
 #include <vector>
 
 namespace Apsis {
+  struct Action {
+    enum Actions {
+      PLAYER_1_LEFT = 0x1000,
+      PLAYER_1_RIGHT,
+      PLAYER_1_UP,
+      PLAYER_1_DOWN,
+      PLAYER_1_JUMP
+    };
+  };
+
+  struct State {
+    enum States {
+      MOVING_LEFT = 0x1000,
+      MOVING_RIGHT,
+      MOVING_UP,
+      MOVING_DOWN,
+      JUMPING,
+      CAN_JUMP,
+      COLLIDE_LEFT_WITH_MAP,
+      COLLIDE_RIGHT_WITH_MAP,
+      COLLIDE_UP_WITH_MAP,
+      COLLIDE_DOWN_WITH_MAP,
+    };
+  };
+
   /*
    *  Handles mapping between keys and events allowing for flexible control
    *    over what keys or buttons are mapped to particular functions.

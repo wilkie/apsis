@@ -190,6 +190,18 @@ static bool _translateSDLKey(Apsis::KeyBinding* binding, SDL_Event* event) {
       case SDLK_PLUS:
         binding->key = Apsis::Key::PLUS;
         break;
+      case SDLK_LCTRL:
+        binding->key = Apsis::Key::LEFTCONTROL;
+        break;
+      case SDLK_RCTRL:
+        binding->key = Apsis::Key::RIGHTCONTROL;
+        break;
+      case SDLK_LALT:
+        binding->key = Apsis::Key::LEFTALT;
+        break;
+      case SDLK_RALT:
+        binding->key = Apsis::Key::RIGHTALT;
+        break;
     }
   }
   else if (event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEBUTTONUP) {

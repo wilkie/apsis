@@ -6,6 +6,8 @@
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
+#include <set>
+
 namespace Apsis {
   namespace Agent {
     class Mover {
@@ -15,8 +17,12 @@ namespace Apsis {
       /*
        *  Update intended point and return reason for change.
        */
-      virtual bool update(Apsis::Geometry::Rectangle& original,
+      virtual bool update(float elapsed,
+                          std::set<unsigned int>& states,
+                          Apsis::Geometry::Rectangle& original,
                           Apsis::Geometry::Point& updated);
+
+      virtual char* rule();
     };
   }
 }

@@ -533,6 +533,36 @@
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp">
       <Filter>agent\impeders</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\up.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\down.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\left.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\right.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\gridlock_down.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\gridlock_left.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\gridlock_right.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\gridlock_up.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\jump.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\fall.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1136,6 +1166,36 @@
     <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h">
       <Filter>agent\impeders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\up.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\down.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\left.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\right.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_down.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_left.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_right.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_up.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\jump.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\fall.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="agent">
@@ -1209,6 +1269,9 @@
     </Filter>
     <Filter Include="agent\impeders">
       <UniqueIdentifier>{52e615f2-7a7e-4ca3-8c9e-3ba0c22dfc83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="agent\movers">
+      <UniqueIdentifier>{020da31e-9f82-40d2-9ef0-d2272695c6fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

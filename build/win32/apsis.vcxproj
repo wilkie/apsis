@@ -43,6 +43,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -72,6 +73,16 @@
     <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp" />
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
     <ClCompile Include="..\..\src\agent\mover.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\down.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\fall.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\gridlock_down.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\gridlock_left.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\gridlock_right.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\gridlock_up.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\jump.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\left.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\right.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\up.cpp" />
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine.cpp" />
     <ClCompile Include="..\..\src\engine\top_down_2d.cpp" />
@@ -255,6 +266,16 @@
     <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\mover.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\down.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\fall.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_down.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_left.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_right.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_up.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\jump.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\left.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\right.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\up.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
     <ClInclude Include="..\..\include\apsis\engine.h" />
     <ClInclude Include="..\..\include\apsis\engine\top_down_2d.h" />

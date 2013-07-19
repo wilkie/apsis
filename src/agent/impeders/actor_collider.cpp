@@ -4,7 +4,13 @@ Apsis::Agent::Impeders::ActorCollider::ActorCollider(std::vector<Apsis::World::A
   _actors = &list;
 }
 
-bool Apsis::Agent::Impeders::ActorCollider::update(Apsis::Geometry::Point& original, Apsis::Geometry::Point& intended) {
+bool Apsis::Agent::Impeders::ActorCollider::update(std::set<unsigned int>& states,
+                                                   Apsis::Geometry::Point& original,
+                                                   Apsis::Geometry::Point& intended) {
   // Collide with actors
   return false;
+}
+
+char* Apsis::Agent::Impeders::ActorCollider::rule() {
+  return "can not move through actors";
 }

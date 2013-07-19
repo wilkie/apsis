@@ -25,6 +25,7 @@
 #include "apsis/primitives/vertex_buffer.h"
 
 #include <vector>
+#include <set>
 
 namespace Apsis {
   namespace World {
@@ -97,14 +98,17 @@ namespace Apsis {
         const char* state();
 
         // Add the given agent that will provide movement to the actor.
-        void attachMover(Apsis::Agent::Mover& agent);
+        void attachMover(Apsis::Agent::Mover* agent);
 
         // Add the given agent that will alter intended movement.
-        void attachImpeder(Apsis::Agent::Impeder& agent);
+        void attachImpeder(Apsis::Agent::Impeder* agent);
 
         // Draws the actor
         void draw(glm::mat4& projection,
                   Primitives::Camera& camera);
+
+        // List rules
+        char* rules();
 
       private:
 
@@ -119,6 +123,9 @@ namespace Apsis {
 
         // Stores all possible states for the Actor.
         std::vector<char*> _states;
+
+        // States the Actor current has enabled.
+        std::set<unsigned int> _currentStates;
 
         // Stores the current state of the character. State
         // determines how the character updates.
@@ -144,8 +151,8 @@ namespace Apsis {
         char* _newState(const char* name);
 
         // Before Move Agents
-        std::vector<Apsis::Agent::Impeder> _impederAgents;
-        std::vector<Apsis::Agent::Mover> _moverAgents;
+        std::vector<Apsis::Agent::Impeder*> _impederAgents;
+        std::vector<Apsis::Agent::Mover*>   _moverAgents;
 
         Primitives::VertexArray _vao;
 

@@ -16,7 +16,7 @@ namespace Apsis {
       bool intersects(Rectangle* rectangle);
       bool intersects(Line* line);
 
-  	  bool clip(Line* line, double* tMin, double* tMax);
+  	  unsigned int clip(Line* line, double* tMin, double* tMax);
 
       bool contains(Point* point);
 

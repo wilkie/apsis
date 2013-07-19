@@ -6,6 +6,8 @@
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
+#include <set>
+
 namespace Apsis {
   namespace Agent {
     class Impeder {
@@ -15,8 +17,10 @@ namespace Apsis {
       /*
        *  Update intended point and return reason for change.
        */
-      virtual bool update(Apsis::Geometry::Rectangle& original,
+      virtual bool update(std::set<unsigned int>& states,
+                          Apsis::Geometry::Rectangle& original,
                           Apsis::Geometry::Point& intended);
+      virtual char* rule();
     };
   }
 }

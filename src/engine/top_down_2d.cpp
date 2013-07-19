@@ -16,6 +16,18 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
+#include "apsis/agent/impeders/map_collider.h"
+#include "apsis/agent/movers/down.h"
+#include "apsis/agent/movers/gridlock_down.h"
+#include "apsis/agent/movers/up.h"
+#include "apsis/agent/movers/gridlock_up.h"
+#include "apsis/agent/movers/left.h"
+#include "apsis/agent/movers/gridlock_left.h"
+#include "apsis/agent/movers/right.h"
+#include "apsis/agent/movers/gridlock_right.h"
+#include "apsis/agent/movers/jump.h"
+#include "apsis/agent/movers/fall.h"
+
 #ifndef NO_GL
   #ifdef _WIN32
   #include <windows.h>
@@ -54,16 +66,19 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   binding.key = Apsis::Key::LEFT;
   binding2.key = Apsis::Key::JOY_POV_LEFT;
-  _input->keyBindings()->registerEvent("Move left",  MOVE_LEFT, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move left",  Apsis::Action::PLAYER_1_LEFT, &binding, &binding2);
   binding.key = Apsis::Key::RIGHT;
   binding2.key = Apsis::Key::JOY_POV_RIGHT;
-  _input->keyBindings()->registerEvent("Move right", MOVE_RIGHT, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move right", Apsis::Action::PLAYER_1_RIGHT, &binding, &binding2);
   binding.key = Apsis::Key::UP;
   binding2.key = Apsis::Key::JOY_POV_UP;
-  _input->keyBindings()->registerEvent("Move up",    MOVE_UP, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move up",    Apsis::Action::PLAYER_1_UP, &binding, &binding2);
   binding.key = Apsis::Key::DOWN;
   binding2.key = Apsis::Key::JOY_POV_DOWN;
-  _input->keyBindings()->registerEvent("Move down",  MOVE_DOWN, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move down",  Apsis::Action::PLAYER_1_DOWN, &binding, &binding2);
+  binding.key = Apsis::Key::Z;
+  binding2.key = Apsis::Key::JOY_0;
+  _input->keyBindings()->registerEvent("Jump",  Apsis::Action::PLAYER_1_JUMP, &binding, &binding2);
   binding.key = Apsis::Key::EQUALS;
   binding2.key = Apsis::Key::NONE;
   _input->keyBindings()->registerEvent("Zoom in",  ZOOM_IN, &binding, &binding2);
@@ -75,6 +90,27 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _map = new Apsis::World::Map(32, 30, sheet);
 
   _player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 32, 32);
+
+  // Player cannot collide with map
+  _player1->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
+
+  // Player can move up
+  //_player1->attachMover(new Apsis::Agent::Movers::Up(*_input));
+
+  // Player can move down
+  //_player1->attachMover(new Apsis::Agent::Movers::Down(*_input));
+
+  // Player can move left
+  _player1->attachMover(new Apsis::Agent::Movers::Left(*_input, 128.0f));
+
+  // Player can move right
+  _player1->attachMover(new Apsis::Agent::Movers::Right(*_input, 128.0f));
+
+  // Player can jump
+  _player1->attachMover(new Apsis::Agent::Movers::Jump(*_input, 96.0f, 512.0f, 2048.0f, 4096.0f, 496.0f));
+
+  // Player can fall
+  _player1->attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
 }
 
 void Apsis::Engine::TopDown2d::run() {
@@ -144,23 +180,7 @@ void Apsis::Engine::TopDown2d::_draw() {
                  camera);
 }
 
-void Apsis::Engine::TopDown2d::_update(float elapsed) {
-  if (_input->isEventHeld(MOVE_DOWN)) {
-    _z += 32*16*elapsed;
-  }
-  
-  if (_input->isEventHeld(MOVE_UP)) {
-    _z -= 32*16*elapsed;
-  }
-
-  if (_input->isEventHeld(MOVE_LEFT)) {
-    _x -= 32*16*elapsed;
-  }
-  
-  if (_input->isEventHeld(MOVE_RIGHT)) {
-    _x += 32*16*elapsed;
-  }
-  
+void Apsis::Engine::TopDown2d::_update(float elapsed) {  
   if (_input->isEventHeld(ZOOM_OUT)) {
     _zoom -= 1.0f * elapsed;
     if (_zoom < 1.0f) {
@@ -171,6 +191,9 @@ void Apsis::Engine::TopDown2d::_update(float elapsed) {
   if (_input->isEventHeld(ZOOM_IN)) {
     _zoom += 1.0f * elapsed;
   }
+
+  _x = _player1->position().x;
+  _z = _player1->position().y;
 
   if (_x > ((_map->width() * 32.0f - _video.resolutionX/2.0f/_zoom))) {
     _x = ((_map->width() * 32.0f - _video.resolutionX/2.0f/_zoom));

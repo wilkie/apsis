@@ -113,7 +113,7 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
   return true;
 }
 
-bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
+unsigned int Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
   double deltaX = (line->points[1].x - line->points[0].x);
   double deltaY = (line->points[1].y - line->points[0].y);
 
@@ -182,15 +182,19 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
   double magnitudeY = deltaY;
   double r;
 
+  unsigned int line_index_min = 0;
+  unsigned int line_index_max = 0;
+
   for (int i = 0; i < 4; i++) {
     if (p[i] < 0.0) {
       // Outside to Inside
       r = q[i] / p[i];
       if (r > *tMax) {
-        return false;
-    }
-    else if (r > *tMin) {
+        return 0;
+      }
+      else if (r > *tMin) {
         *tMin = r;
+        line_index_min = i;
         if (i < 2) {
           pMin.x = exactPosition[i];
           pMin.y = line->points[0].y + *tMin * magnitudeY;
@@ -205,10 +209,11 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
       // Inside to Outside
       r = q[i] / p[i];
       if (r < *tMin) {
-        return false;
+        return 0;
       }
       else if (r < *tMax) {
         *tMax = r;
+        line_index_max = i;
         if (i < 2) {
           pMax.x = exactPosition[i];
           pMax.y = line->points[0].y + *tMax * magnitudeY;
@@ -221,13 +226,13 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
     }
     else if (p[i] == 0.0 && q[i] < 0.0) {
       // Reject
-      return false;
+      return 0;
     }
   }
 
   if (*tMin > *tMax) {
     // Outside
-    return false;
+    return 0;
   }
 
   // Line intersects between tMin and tMax
@@ -248,10 +253,10 @@ bool Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
 
   if (*tMin == 0.0 && *tMax == 1.0) {
     // Inside rectangle
-    return true;
+    return line_index_min + 1;
   }
 
-  return true;
+  return line_index_min + 1;
 }
 
 bool Apsis::Geometry::Rectangle::contains(Point* point) {
