@@ -77,11 +77,11 @@ bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
 
       // Do we intersect?
       Apsis::Geometry::Rectangle tileRect;
-      tileRect.x = (x * 32.0) + 16.0f;
-      tileRect.y = (y * 32.0) + 16.0f;
+      tileRect.x = (x * _map->tileWidth()) + (_map->tileWidth() / 2.0f);
+      tileRect.y = (y * _map->tileHeight()) + (_map->tileHeight() / 2.0f);
 
-      tileRect.width  = 32.0;
-      tileRect.height = 32.0;
+      tileRect.width  = _map->tileWidth();
+      tileRect.height = _map->tileHeight();
 
       for (int i = 0; i < 4; i++) {
         double tMin, tMax;
@@ -170,20 +170,20 @@ bool Apsis::Agent::Impeders::MapCollider::_againstWall(Apsis::Geometry::Rectangl
 
       // Do we intersect?
       Apsis::Geometry::Line tileLine;
-      tileLine.points[0].x = (x * 32.0f);
-      tileLine.points[0].y = (y * 32.0f);
-      tileLine.points[1].x = (x * 32.0f);
-      tileLine.points[1].y = (y * 32.0f) + 32.0f;
+      tileLine.points[0].x = (x * _map->tileWidth());
+      tileLine.points[0].y = (y * _map->tileHeight());
+      tileLine.points[1].x = (x * _map->tileWidth());
+      tileLine.points[1].y = (y * _map->tileHeight()) + _map->tileHeight();
 
-      if (!checkLeft) {
-        tileLine.points[0].x += 32.0f;
-        tileLine.points[1].x += 32.0f;
+      if (checkLeft) {
+        tileLine.points[0].x += _map->tileWidth();
+        tileLine.points[1].x += _map->tileWidth();
       }
 
       for (int i = 0; i < 4; i++) {
         if (tileLine.clips(&vectors[i], &p)) {
-          if (p.x != tileLine.points[0].x &&
-              p.x != tileLine.points[1].x) {
+          if (p.y != tileLine.points[0].y &&
+              p.y != tileLine.points[1].y) {
             return true;
           }
         }
@@ -227,10 +227,10 @@ bool Apsis::Agent::Impeders::MapCollider::_canFall(Apsis::Geometry::Rectangle& f
 
       // Do we intersect?
       Apsis::Geometry::Line tileLine;
-      tileLine.points[0].x = (x * 32.0f);
-      tileLine.points[0].y = (y * 32.0f);
-      tileLine.points[1].x = (x * 32.0f) + 32.0f;
-      tileLine.points[1].y = (y * 32.0f);
+      tileLine.points[0].x = (x * _map->tileWidth());
+      tileLine.points[0].y = (y * _map->tileHeight());
+      tileLine.points[1].x = (x * _map->tileWidth()) + _map->tileWidth();
+      tileLine.points[1].y = (y * _map->tileHeight());
 
       for (int i = 0; i < 4; i++) {
         if (tileLine.clips(&vectors[i], &p)) {
@@ -279,10 +279,10 @@ bool Apsis::Agent::Impeders::MapCollider::_canJump(Apsis::Geometry::Rectangle& f
 
       // Do we intersect?
       Apsis::Geometry::Line tileLine;
-      tileLine.points[0].x = (x * 32.0f);
-      tileLine.points[0].y = (y * 32.0f) + 32.0f;
-      tileLine.points[1].x = (x * 32.0f) + 32.0f;
-      tileLine.points[1].y = (y * 32.0f) + 32.0f;
+      tileLine.points[0].x = (x * _map->tileWidth());
+      tileLine.points[0].y = (y * _map->tileHeight()) + _map->tileHeight();
+      tileLine.points[1].x = (x * _map->tileWidth()) + _map->tileWidth();
+      tileLine.points[1].y = (y * _map->tileHeight()) + _map->tileHeight();
 
       for (int i = 0; i < 4; i++) {
         if (tileLine.clips(&vectors[i], &p)) {

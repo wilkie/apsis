@@ -1,12 +1,13 @@
 #include "apsis/agent/movers/gridlock_right.h"
 
-Apsis::Agent::Movers::GridlockRight::GridlockRight(Apsis::InputEngine& inputEngine) {
+Apsis::Agent::Movers::GridlockRight::GridlockRight(Apsis::InputEngine& inputEngine)
+  : Apsis::Agent::Mover("can move right locked along a grid") {
   _inputEngine = &inputEngine;
 }
 
 bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
                                                 std::set<unsigned int>& states,
-                                                Apsis::Geometry::Rectangle& original,
+                                                const Apsis::Geometry::Rectangle& original,
                                                 Apsis::Geometry::Point& updated) {
   updated.x = original.x;
 
@@ -39,8 +40,4 @@ bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
   }
 
   return false;
-}
-
-char* Apsis::Agent::Movers::GridlockRight::rule() {
-  return "can move right locked to a grid";
 }

@@ -73,6 +73,7 @@
     <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp" />
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
     <ClCompile Include="..\..\src\agent\mover.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\and.cpp" />
     <ClCompile Include="..\..\src\agent\movers\down.cpp" />
     <ClCompile Include="..\..\src\agent\movers\fall.cpp" />
     <ClCompile Include="..\..\src\agent\movers\gridlock_down.cpp" />
@@ -81,14 +82,19 @@
     <ClCompile Include="..\..\src\agent\movers\gridlock_up.cpp" />
     <ClCompile Include="..\..\src\agent\movers\jump.cpp" />
     <ClCompile Include="..\..\src\agent\movers\left.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\or.cpp" />
     <ClCompile Include="..\..\src\agent\movers\right.cpp" />
     <ClCompile Include="..\..\src\agent\movers\up.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\wall_jump.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\wall_slide.cpp" />
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine.cpp" />
     <ClCompile Include="..\..\src\engine\top_down_2d.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
     <ClCompile Include="..\..\src\geometry\line.cpp" />
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
+    <ClCompile Include="..\..\src\hud\filler_bar.cpp" />
+    <ClCompile Include="..\..\src\hud\numbers.cpp" />
     <ClCompile Include="..\..\src\input\input_engine.cpp" />
     <ClCompile Include="..\..\src\input\key_binding_repository.cpp" />
     <ClCompile Include="..\..\src\model\animation.cpp" />
@@ -255,6 +261,7 @@
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\viewport.cpp" />
+    <ClCompile Include="..\..\src\world\background.cpp" />
     <ClCompile Include="..\..\src\world\map.cpp" />
     <ClCompile Include="..\..\src\world\actor.cpp" />
     <ClCompile Include="..\..\src\world\terrain.cpp" />
@@ -266,6 +273,7 @@
     <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\mover.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\and.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\down.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\fall.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_down.h" />
@@ -274,8 +282,11 @@
     <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_up.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\jump.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\left.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\or.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\right.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\up.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\wall_jump.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\wall_slide.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
     <ClInclude Include="..\..\include\apsis\engine.h" />
     <ClInclude Include="..\..\include\apsis\engine\top_down_2d.h" />
@@ -284,6 +295,8 @@
     <ClInclude Include="..\..\include\apsis\geometry\point.h" />
     <ClInclude Include="..\..\include\apsis\geometry\point3d.h" />
     <ClInclude Include="..\..\include\apsis\geometry\rectangle.h" />
+    <ClInclude Include="..\..\include\apsis\hud\filler_bar.h" />
+    <ClInclude Include="..\..\include\apsis\hud\numbers.h" />
     <ClInclude Include="..\..\include\apsis\input\event.h" />
     <ClInclude Include="..\..\include\apsis\input\input_engine.h" />
     <ClInclude Include="..\..\include\apsis\input\key.h" />
@@ -310,6 +323,7 @@
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\apsis\viewport.h" />
+    <ClInclude Include="..\..\include\apsis\world\background.h" />
     <ClInclude Include="..\..\include\apsis\world\map.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h" />
     <ClInclude Include="..\..\include\apsis\world\terrain.h" />

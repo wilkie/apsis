@@ -10,13 +10,14 @@ Apsis::Agent::Movers::Jump::Jump(Apsis::InputEngine& inputEngine,
     _startingVelocity(startingVelocity),
     _deacceleration(deacceleration),
     _peakDeacceleration(peakDeacceleration),
-    _minimumVelocity(minimumVelocity) {
+    _minimumVelocity(minimumVelocity),
+    Apsis::Agent::Mover("jump") {
   _inputEngine = &inputEngine;
 }
 
 bool Apsis::Agent::Movers::Jump::update(float elapsed,
                                         std::set<unsigned int>& states,
-                                        Apsis::Geometry::Rectangle& original,
+                                        const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
@@ -28,10 +29,6 @@ bool Apsis::Agent::Movers::Jump::update(float elapsed,
     if (!_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_JUMP)) {
       states.insert(Apsis::State::CAN_JUMP);
     }
-  }
-  else if (states.count(Apsis::State::COLLIDE_DOWN_WITH_MAP) == 0 &&
-           states.count(Apsis::State::JUMPING) == 0) {
-    states.erase(Apsis::State::CAN_JUMP);
   }
   
   if (states.count(Apsis::State::COLLIDE_UP_WITH_MAP) > 0) {
@@ -89,8 +86,4 @@ bool Apsis::Agent::Movers::Jump::update(float elapsed,
   }
 
   return false;
-}
-
-char* Apsis::Agent::Movers::Jump::rule() {
-  return "can jump";
 }

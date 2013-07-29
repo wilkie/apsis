@@ -1,12 +1,13 @@
 #include "apsis/agent/movers/down.h"
 
-Apsis::Agent::Movers::Down::Down(Apsis::InputEngine& inputEngine) {
+Apsis::Agent::Movers::Down::Down(Apsis::InputEngine& inputEngine)
+  : Apsis::Agent::Mover("can move down") {
   _inputEngine = &inputEngine;
 }
 
 bool Apsis::Agent::Movers::Down::update(float elapsed,
                                         std::set<unsigned int>& states,
-                                        Apsis::Geometry::Rectangle& original,
+                                        const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
@@ -16,8 +17,4 @@ bool Apsis::Agent::Movers::Down::update(float elapsed,
   }
 
   return false;
-}
-
-char* Apsis::Agent::Movers::Down::rule() {
-  return "can move down";
 }

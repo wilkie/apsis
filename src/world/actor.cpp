@@ -6,6 +6,8 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
+#include "apsis/agent/movers/or.h"
+
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
@@ -33,8 +35,8 @@ Apsis::World::Actor::Actor(const char* actorFile,
 
   FILE* f = fopen(actorFile, "rt");
 
-  _position.x = x;
-  _position.y = y;
+  _position.x = (float)x;
+  _position.y = (float)y;
 
   char key[129];
   char val[129];
@@ -43,10 +45,10 @@ Apsis::World::Actor::Actor(const char* actorFile,
     fscanf(f, "%128s %128s\n", key, val);
 
     if (strcmp(key, "width") == 0) {
-      _position.width = atoi(val);
+      _position.width = (float)atoi(val);
     }
     else if (strcmp(key, "height") == 0) {
-      _position.height = atoi(val);
+      _position.height = (float)atoi(val);
     }
     else if (strcmp(key, "move_rate") == 0) {
       _moveRate = atoi(val);
@@ -246,6 +248,22 @@ Apsis::Primitives::Sprite* Apsis::World::Actor::sprite() {
 }
 
 void Apsis::World::Actor::attachMover(Apsis::Agent::Mover* agent) {
+  for (unsigned int i = 0; i < _moverAgents.size(); i++) {
+    if (_moverAgents[i]->supercedes(agent->rule())) {
+      Apsis::Agent::Mover* mover = new Apsis::Agent::Movers::Or(_moverAgents[i], agent);
+      _moverAgents.erase(_moverAgents.begin() + i);
+      attachMover(mover);
+      return;
+    }
+
+    if (agent->supercedes(_moverAgents[i]->rule())) {
+      Apsis::Agent::Mover* mover = new Apsis::Agent::Movers::Or(agent, _moverAgents[i]);
+      _moverAgents.erase(_moverAgents.begin() + i);
+      attachMover(mover);
+      return;
+    }
+  }
+
   _moverAgents.push_back(agent);
 }
 
@@ -263,20 +281,6 @@ void Apsis::World::Actor::update(float elapsed) {
   to.x = _position.x;
   to.y = _position.y;
 
-  // update actor information based on the state
-  if (strcmp(_state, "walk_up") == 0) {
-    to.y += _moveRate * elapsed;
-  }
-  else if (strcmp(_state, "walk_down") == 0) {
-    to.y -= _moveRate * elapsed;
-  }
-  else if (strcmp(_state, "walk_left") == 0) {
-    to.x -= _moveRate * elapsed;
-  }
-  else if (strcmp(_state, "walk_right") == 0) {
-    to.x += _moveRate * elapsed;
-  }
-  
   for (unsigned int i = 0; i < _moverAgents.size(); i++) {
     if (_moverAgents[i]->update(elapsed, _currentStates, _position, to)) {
       this->move(to);
@@ -289,8 +293,8 @@ void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
     _impederAgents[i]->update(_currentStates, _position, to);
   }
 
-  _position.x = to.x;
-  _position.y = to.y;
+  _position.x = (float)to.x;
+  _position.y = (float)to.y;
 }
 
 void Apsis::World::Actor::draw(glm::mat4& projection,

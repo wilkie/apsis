@@ -18,9 +18,8 @@ namespace Apsis {
 
         virtual bool update(float elapsed,
                             std::set<unsigned int>& states,
-                            Apsis::Geometry::Rectangle& original,
+                            const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
-        virtual char* rule();
       private:
         float _startingVelocity;
         float _acceleration;

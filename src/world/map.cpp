@@ -11,9 +11,13 @@
 
 Apsis::World::Map::Map(unsigned int width,
                        unsigned int height,
+                       float tileWidth,
+                       float tileHeight,
                        Apsis::Primitives::SpriteSheet* spriteSheet) :
                    _width(width),
-                   _height(height) {
+                   _height(height),
+                   _tileWidth(tileWidth),
+                   _tileHeight(tileHeight) {
   for(unsigned int x = 0; x < _width * _height; x++) {
     Apsis::World::Tile tile = Apsis::World::Tile();
     tile.spriteIndex(rand() % 16);
@@ -59,41 +63,48 @@ Apsis::World::Map::Map(unsigned int width,
 
   for (unsigned int h = 0; h < height; h++) {
     for (unsigned int w = 0; w < width; w++) {
+      if (_tiles[ti].spriteIndex() == 0xffff) {
+        vertices_size -= 4;
+        elements_size -= 6;
+        ti++;
+        continue;
+      }
+
       float coords[4];
       _spriteSheet->textureCoordinates(_tiles[ti].spriteIndex(), coords);
       Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(_tiles[ti].spriteIndex());
       ti++;
 
-      _vertices[i * 5 + 0] = (float)w*32.0f;
+      _vertices[i * 5 + 0] = (float)w*_tileWidth;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f - sprite->height;
+      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight - sprite->height;
 
       _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 5 + 0] = (float)w*32.0f + sprite->width;
+      _vertices[i * 5 + 0] = (float)w*_tileWidth + sprite->width;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f - sprite->height;
+      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight - sprite->height;
 
       _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
       
-      _vertices[i * 5 + 0] = (float)w*32.0f + sprite->width;
+      _vertices[i * 5 + 0] = (float)w*_tileWidth + sprite->width;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f;
+      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight;
 
       _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 5 + 0] = (float)w*32.0f;
+      _vertices[i * 5 + 0] = (float)w*_tileWidth;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*32.0f + 32.0f;
+      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight;
 
       _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
@@ -155,11 +166,201 @@ Apsis::Primitives::SpriteSheet* Apsis::World::Map::spriteSheet() {
 
 void Apsis::World::Map::_generateWalls() {
   for(unsigned int x = 0; x < _width * _height; x++) {
-    if(rand() % 5 == 1) {
-      _tiles[x].spriteIndex(16);
-      _tiles[x].passable(false);
-    }
+    _tiles[x].spriteIndex(0xffff);
+    _tiles[x].passable(true);
   }
+
+  _tiles[2 + _width*8].spriteIndex(81);
+  _tiles[2 + _width*8].passable(false);
+  _tiles[3 + _width*8].spriteIndex(82);
+  _tiles[3 + _width*8].passable(false);
+  _tiles[4 + _width*8].spriteIndex(83);
+  _tiles[4 + _width*8].passable(false);
+
+  _tiles[6 + _width*10].spriteIndex(81);
+  _tiles[6 + _width*10].passable(false);
+  _tiles[7 + _width*10].spriteIndex(82);
+  _tiles[7 + _width*10].passable(false);
+  _tiles[8 + _width*10].spriteIndex(83);
+  _tiles[8 + _width*10].passable(false);
+
+  _tiles[12 + _width*8].spriteIndex(81);
+  _tiles[12 + _width*8].passable(false);
+  _tiles[13 + _width*8].spriteIndex(82);
+  _tiles[13 + _width*8].passable(false);
+  _tiles[14 + _width*8].spriteIndex(83);
+  _tiles[14 + _width*8].passable(false);
+
+  _tiles[18 + _width*5].spriteIndex(81);
+  _tiles[18 + _width*5].passable(false);
+  _tiles[19 + _width*5].spriteIndex(82);
+  _tiles[19 + _width*5].passable(false);
+  _tiles[20 + _width*5].spriteIndex(83);
+  _tiles[20 + _width*5].passable(false);
+
+  _tiles[20 + _width*4].spriteIndex(1);
+  _tiles[20 + _width*4].passable(false);
+  _tiles[19 + _width*4].spriteIndex(0);
+  _tiles[19 + _width*4].passable(false);
+  _tiles[20 + _width*3].spriteIndex(0);
+  _tiles[20 + _width*3].passable(false);
+
+  _tiles[12 + _width*5].spriteIndex(2);
+  _tiles[12 + _width*5].passable(false);
+  _tiles[14 + _width*5].spriteIndex(2);
+  _tiles[14 + _width*5].passable(false);
+
+  _tiles[13 + _width*7].spriteIndex(128);
+
+  _tiles[16 + _width*10].spriteIndex(67);
+  _tiles[16 + _width*10].passable(false);
+  _tiles[17 + _width*10].spriteIndex(82);
+  _tiles[17 + _width*10].passable(false);
+  _tiles[18 + _width*10].spriteIndex(82);
+  _tiles[18 + _width*10].passable(false);
+
+  _tiles[25 + _width*10].spriteIndex(67);
+  _tiles[25 + _width*10].passable(false);
+  _tiles[26 + _width*10].spriteIndex(82);
+  _tiles[26 + _width*10].passable(false);
+  _tiles[27 + _width*10].spriteIndex(82);
+  _tiles[27 + _width*10].passable(false);
+
+  _tiles[18 + _width*9].spriteIndex(172);
+  _tiles[18 + _width*11].passable(false);
+  _tiles[19 + _width*10].spriteIndex(16);
+  _tiles[19 + _width*10].passable(false);
+  _tiles[20 + _width*10].spriteIndex(16);
+  _tiles[20 + _width*10].passable(false);
+  _tiles[21 + _width*10].spriteIndex(16);
+  _tiles[21 + _width*10].passable(false);
+  _tiles[22 + _width*10].spriteIndex(16);
+  _tiles[22 + _width*10].passable(false);
+  
+  _tiles[18 + _width*11].spriteIndex(65);
+  _tiles[18 + _width*11].passable(false);
+  _tiles[18 + _width*12].spriteIndex(65);
+  _tiles[18 + _width*12].passable(false);
+  _tiles[18 + _width*13].spriteIndex(65);
+  _tiles[18 + _width*13].passable(false);
+  _tiles[18 + _width*14].spriteIndex(65);
+  _tiles[18 + _width*14].passable(false);
+  _tiles[18 + _width*15].spriteIndex(65);
+  _tiles[18 + _width*15].passable(false);
+  
+  _tiles[17 + _width*11].spriteIndex(65);
+  _tiles[17 + _width*11].passable(false);
+  _tiles[17 + _width*12].spriteIndex(65);
+  _tiles[17 + _width*12].passable(false);
+  _tiles[17 + _width*13].spriteIndex(65);
+  _tiles[17 + _width*13].passable(false);
+  _tiles[17 + _width*14].spriteIndex(65);
+  _tiles[17 + _width*14].passable(false);
+  _tiles[17 + _width*15].spriteIndex(65);
+  _tiles[17 + _width*15].passable(false);
+
+  _tiles[11 + _width*11].spriteIndex(82);
+  _tiles[11 + _width*11].passable(false);
+  _tiles[10 + _width*11].spriteIndex(67);
+  _tiles[10 + _width*11].passable(false);
+
+  _tiles[16 + _width*12].spriteIndex(173);
+  _tiles[16 + _width*12].passable(false);
+  _tiles[15 + _width*12].spriteIndex(173);
+  _tiles[15 + _width*12].passable(false);
+  _tiles[14 + _width*12].spriteIndex(173);
+  _tiles[14 + _width*12].passable(false);
+  _tiles[13 + _width*12].spriteIndex(173);
+  _tiles[13 + _width*12].passable(false);
+  _tiles[12 + _width*12].spriteIndex(173);
+  _tiles[12 + _width*12].passable(false);
+  _tiles[11 + _width*12].spriteIndex(65);
+  _tiles[11 + _width*12].passable(false);
+
+  _tiles[16 + _width*13].spriteIndex(65);
+  _tiles[16 + _width*13].passable(false);
+  _tiles[15 + _width*13].spriteIndex(65);
+  _tiles[15 + _width*13].passable(false);
+  _tiles[14 + _width*13].spriteIndex(65);
+  _tiles[14 + _width*13].passable(false);
+  _tiles[13 + _width*13].spriteIndex(65);
+  _tiles[13 + _width*13].passable(false);
+  _tiles[12 + _width*13].spriteIndex(65);
+  _tiles[12 + _width*13].passable(false);
+  _tiles[11 + _width*13].spriteIndex(65);
+  _tiles[11 + _width*13].passable(false);
+
+  _tiles[16 + _width*14].spriteIndex(65);
+  _tiles[16 + _width*14].passable(false);
+  _tiles[15 + _width*14].spriteIndex(65);
+  _tiles[15 + _width*14].passable(false);
+  _tiles[14 + _width*14].spriteIndex(65);
+  _tiles[14 + _width*14].passable(false);
+  _tiles[13 + _width*14].spriteIndex(65);
+  _tiles[13 + _width*14].passable(false);
+  _tiles[12 + _width*14].spriteIndex(65);
+  _tiles[12 + _width*14].passable(false);
+  _tiles[11 + _width*14].spriteIndex(65);
+  _tiles[11 + _width*14].passable(false);
+
+  _tiles[19 + _width*12].spriteIndex(95);
+  _tiles[19 + _width*12].passable(false);
+  _tiles[20 + _width*12].spriteIndex(95);
+  _tiles[20 + _width*12].passable(false);
+  _tiles[21 + _width*12].spriteIndex(95);
+  _tiles[21 + _width*12].passable(false);
+  _tiles[22 + _width*12].spriteIndex(95);
+  _tiles[22 + _width*12].passable(false);
+  _tiles[23 + _width*12].spriteIndex(95);
+  _tiles[23 + _width*12].passable(false);
+  _tiles[24 + _width*12].spriteIndex(95);
+  _tiles[24 + _width*12].passable(false);
+  _tiles[25 + _width*12].spriteIndex(95);
+  _tiles[25 + _width*12].passable(false);
+  _tiles[19 + _width*13].spriteIndex(93);
+  _tiles[19 + _width*13].passable(false);
+  _tiles[20 + _width*13].spriteIndex(93);
+  _tiles[20 + _width*13].passable(false);
+  _tiles[21 + _width*13].spriteIndex(93);
+  _tiles[21 + _width*13].passable(false);
+  _tiles[22 + _width*13].spriteIndex(93);
+  _tiles[22 + _width*13].passable(false);
+  _tiles[23 + _width*13].spriteIndex(93);
+  _tiles[23 + _width*13].passable(false);
+  _tiles[24 + _width*13].spriteIndex(93);
+  _tiles[24 + _width*13].passable(false);
+  _tiles[25 + _width*13].spriteIndex(93);
+  _tiles[25 + _width*13].passable(false);
+  _tiles[19 + _width*14].spriteIndex(93);
+  _tiles[19 + _width*14].passable(false);
+  _tiles[20 + _width*14].spriteIndex(93);
+  _tiles[20 + _width*14].passable(false);
+  _tiles[21 + _width*14].spriteIndex(93);
+  _tiles[21 + _width*14].passable(false);
+  _tiles[22 + _width*14].spriteIndex(93);
+  _tiles[22 + _width*14].passable(false);
+  _tiles[23 + _width*14].spriteIndex(93);
+  _tiles[23 + _width*14].passable(false);
+  _tiles[24 + _width*14].spriteIndex(93);
+  _tiles[24 + _width*14].passable(false);
+  _tiles[25 + _width*14].spriteIndex(93);
+  _tiles[25 + _width*14].passable(false);
+  _tiles[19 + _width*15].spriteIndex(93);
+  _tiles[19 + _width*15].passable(false);
+  _tiles[20 + _width*15].spriteIndex(93);
+  _tiles[20 + _width*15].passable(false);
+  _tiles[21 + _width*15].spriteIndex(93);
+  _tiles[21 + _width*15].passable(false);
+  _tiles[22 + _width*15].spriteIndex(93);
+  _tiles[22 + _width*15].passable(false);
+  _tiles[23 + _width*15].spriteIndex(93);
+  _tiles[23 + _width*15].passable(false);
+  _tiles[24 + _width*15].spriteIndex(93);
+  _tiles[24 + _width*15].passable(false);
+  _tiles[25 + _width*15].spriteIndex(93);
+  _tiles[25 + _width*15].passable(false);
+  _tiles[25 + _width*15].spriteIndex(93);
+  _tiles[25 + _width*15].passable(false);
 }
 
 void Apsis::World::Map::draw(glm::mat4& projection,
@@ -172,4 +373,12 @@ void Apsis::World::Map::draw(glm::mat4& projection,
   _vao.bindTexture(0, *_spriteSheet->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.draw();
+}
+
+float Apsis::World::Map::tileWidth() {
+  return _tileWidth;
+}
+
+float Apsis::World::Map::tileHeight() {
+  return _tileHeight;
 }

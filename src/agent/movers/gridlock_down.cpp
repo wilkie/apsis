@@ -1,12 +1,13 @@
 #include "apsis/agent/movers/gridlock_down.h"
 
-Apsis::Agent::Movers::GridlockDown::GridlockDown(Apsis::InputEngine& inputEngine) {
+Apsis::Agent::Movers::GridlockDown::GridlockDown(Apsis::InputEngine& inputEngine)
+  : Apsis::Agent::Mover("can move down locked along a grid") {
   _inputEngine = &inputEngine;
 }
 
 bool Apsis::Agent::Movers::GridlockDown::update(float elapsed,
                                                 std::set<unsigned int>& states,
-                                                Apsis::Geometry::Rectangle& original,
+                                                const Apsis::Geometry::Rectangle& original,
                                                 Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
@@ -39,8 +40,4 @@ bool Apsis::Agent::Movers::GridlockDown::update(float elapsed,
   }
 
   return false;
-}
-
-char* Apsis::Agent::Movers::GridlockDown::rule() {
-  return "can move down locked to a grid";
 }

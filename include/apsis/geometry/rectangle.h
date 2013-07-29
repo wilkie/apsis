@@ -7,11 +7,11 @@
 namespace Apsis {
   namespace Geometry {
     struct Rectangle {
-      double x;
-      double y;
+      float x;
+      float y;
 
-      double width;
-      double height;
+      float width;
+      float height;
 
       bool intersects(Rectangle* rectangle);
       bool intersects(Line* line);
@@ -27,6 +27,8 @@ namespace Apsis {
 
       void points(Point points[4]);
       void lines(Line lines[4]);
+
+      Apsis::Geometry::Point center();
     };
   }
 }

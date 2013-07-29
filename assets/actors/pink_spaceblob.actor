@@ -1,0 +1,18 @@
+width 20
+height 20
+
+move_rate 64
+
+sprites assets/graphics/p3_spritesheet.png
+
+walk_left   p3_walk*
+walk_right  p3_walk*
+
+stand p3_stand
+
+state stand
+state walk_up
+state walk_down
+state walk_left
+state walk_right
+default_state stand

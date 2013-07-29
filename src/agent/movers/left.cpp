@@ -1,13 +1,14 @@
 #include "apsis/agent/movers/left.h"
 
 Apsis::Agent::Movers::Left::Left(Apsis::InputEngine& inputEngine, float speed)
-  : _speed(speed) {
+  : _speed(speed),
+    Apsis::Agent::Mover("can move left") {
   _inputEngine = &inputEngine;
 }
 
 bool Apsis::Agent::Movers::Left::update(float elapsed,
                                         std::set<unsigned int>& states,
-                                        Apsis::Geometry::Rectangle& original,
+                                        const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.x = original.x;
 
@@ -17,8 +18,4 @@ bool Apsis::Agent::Movers::Left::update(float elapsed,
   }
 
   return false;
-}
-
-char* Apsis::Agent::Movers::Left::rule() {
-  return "can move left";
 }

@@ -7,22 +7,35 @@
 #include "apsis/geometry/point.h"
 
 #include <set>
+#include <string>
+#include <vector>
 
 namespace Apsis {
   namespace Agent {
     class Mover {
     public:
-      Mover();
+      Mover(char* rule);
 
       /*
        *  Update intended point and return reason for change.
        */
       virtual bool update(float elapsed,
                           std::set<unsigned int>& states,
-                          Apsis::Geometry::Rectangle& original,
+                          const Apsis::Geometry::Rectangle& original,
                           Apsis::Geometry::Point& updated);
 
-      virtual char* rule();
+      bool supercedes(const char* rule);
+
+      void supercede(const char* rule);
+
+      char* rule();
+    private:
+      std::set<unsigned int> _supercedes;
+      char*                  _rule;
+      unsigned int           _id;
+
+      static unsigned int registerRule(const char* rule);
+      static std::vector<std::string> _ids;
     };
   }
 }

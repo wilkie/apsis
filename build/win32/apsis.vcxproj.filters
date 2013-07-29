@@ -563,6 +563,27 @@
     <ClCompile Include="..\..\src\agent\movers\fall.cpp">
       <Filter>agent\movers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\hud\numbers.cpp">
+      <Filter>hud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hud\filler_bar.cpp">
+      <Filter>hud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\background.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\wall_slide.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\and.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\or.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\wall_jump.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1196,6 +1217,27 @@
     <ClInclude Include="..\..\include\apsis\agent\movers\fall.h">
       <Filter>agent\movers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\hud\numbers.h">
+      <Filter>hud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\hud\filler_bar.h">
+      <Filter>hud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\background.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\wall_slide.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\and.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\or.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\wall_jump.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="agent">
@@ -1272,6 +1314,9 @@
     </Filter>
     <Filter Include="agent\movers">
       <UniqueIdentifier>{020da31e-9f82-40d2-9ef0-d2272695c6fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hud">
+      <UniqueIdentifier>{03085c89-1b87-49ac-8103-9728d09bf922}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

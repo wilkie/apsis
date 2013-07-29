@@ -17,9 +17,8 @@ namespace Apsis {
         GridlockUp(Apsis::InputEngine& inputEngine);
         virtual bool update(float elapsed,
                             std::set<unsigned int>& states,
-                            Apsis::Geometry::Rectangle& original,
+                            const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
-        virtual char* rule();
       private:
         InputEngine* _inputEngine;
       };

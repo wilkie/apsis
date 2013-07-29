@@ -1,5 +1,5 @@
-#ifndef APSIS_AGENT_MOVERS_GRIDLOCK_DOWN_H
-#define APSIS_AGENT_MOVERS_GRIDLOCK_DOWN_H
+#ifndef APSIS_AGENT_MOVERS_OR_H
+#define APSIS_AGENT_MOVERS_OR_H
 
 #include "apsis/agent/mover.h"
 #include "apsis/input/input_engine.h"
@@ -7,20 +7,22 @@
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
-#include <set>
+#include <vector>
 
 namespace Apsis {
   namespace Agent {
     namespace Movers {
-      class GridlockDown : public Apsis::Agent::Mover {
+      class Or : public Apsis::Agent::Mover {
       public:
-        GridlockDown(Apsis::InputEngine& inputEngine);
+        Or(Apsis::Agent::Mover* first,
+           Apsis::Agent::Mover* second);
+
         virtual bool update(float elapsed,
                             std::set<unsigned int>& states,
                             const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
       private:
-        InputEngine* _inputEngine;
+        std::vector<Apsis::Agent::Mover*> _movers;
       };
     }
   }

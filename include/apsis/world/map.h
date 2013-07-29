@@ -1,7 +1,6 @@
 #ifndef APSIS_WORLD_MAP_H
 #define APSIS_WORLD_MAP_H
 
-#include "apsis/renderer.h"
 #include "apsis/world/tile.h"
 #include "apsis/primitives/sprite_sheet.h"
 
@@ -26,6 +25,8 @@ namespace Apsis {
        */
       Map(unsigned int width,
           unsigned int height,
+          float tileWidth,
+          float tileHeight,
           Apsis::Primitives::SpriteSheet* spriteSheet);
 
       /*
@@ -39,12 +40,22 @@ namespace Apsis {
       unsigned int width();
 
       /*
-       *  Returns the height of the map
+       *  Returns the height of the map.
        */
       unsigned int height();
 
       /*
-       *  Returns the Badger::SpriteSheet being used to draw the map.
+       *  Returns the width of a tile.
+       */
+      float tileWidth();
+
+      /*
+       *  Returns the height of a tile.
+       */
+      float tileHeight();
+
+      /*
+       *  Returns the Apsis::Primitives::SpriteSheet being used to draw the map.
        */
       Apsis::Primitives::SpriteSheet* spriteSheet();
 
@@ -64,6 +75,9 @@ namespace Apsis {
 
       // The tiles that compose the map
       std::vector<Tile> _tiles;
+
+      float _tileWidth;
+      float _tileHeight;
 
       /*
         * Randomly assigns tiles from _tiles to be walls. Wall tiles use

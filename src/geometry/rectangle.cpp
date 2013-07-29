@@ -361,3 +361,8 @@ void Apsis::Geometry::Rectangle::lines(Line lines[4]) {
     lines[i].points[1] = points[(i+1)%4];
   }
 }
+
+Apsis::Geometry::Point Apsis::Geometry::Rectangle::center() {
+  Apsis::Geometry::Point p = { this->x, this->y };
+  return p;
+}

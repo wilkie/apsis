@@ -10,6 +10,9 @@
 
 #include "apsis/primitives/sprite_sheet.h"
 #include "apsis/world/actor.h"
+#include "apsis/hud/numbers.h"
+#include "apsis/hud/filler_bar.h"
+#include "apsis/world/background.h"
 
 // This is here instead of the cpp because main() is overriden by
 // preprocessor magicks.
@@ -42,6 +45,10 @@ namespace Apsis {
 
         Apsis::World::Map* _map;
         Apsis::World::Actor* _player1;
+        Apsis::World::Background* _bg;
+
+        Apsis::Hud::Numbers* _numbers;
+        Apsis::Hud::FillerBar* _health;
 
         // Backend... can be swapped out for something else
         Apsis::Backend::Sdl _backend;

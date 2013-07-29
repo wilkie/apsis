@@ -26,7 +26,11 @@
 #include "apsis/agent/movers/right.h"
 #include "apsis/agent/movers/gridlock_right.h"
 #include "apsis/agent/movers/jump.h"
+#include "apsis/agent/movers/wall_jump.h"
 #include "apsis/agent/movers/fall.h"
+#include "apsis/agent/movers/wall_slide.h"
+#include "apsis/agent/movers/and.h"
+#include "apsis/agent/movers/or.h"
 
 #ifndef NO_GL
   #ifdef _WIN32
@@ -57,7 +61,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _x = video.resolutionX/2.0f;
   _z = video.resolutionY/2.0f;
   
-  _zoom = 3.0f;
+  _zoom = 1.0f;
 
   _input = new Apsis::InputEngine();
 
@@ -86,10 +90,21 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   binding2.key = Apsis::Key::NONE;
   _input->keyBindings()->registerEvent("Zoom out",  ZOOM_OUT, &binding, &binding2);
 
-  Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/floortilesbuffer.png");
-  _map = new Apsis::World::Map(32, 30, sheet);
+  Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/tiles_spritesheet.png");
+  _map = new Apsis::World::Map(32, 30, 70.0f, 70.0f, sheet);
 
-  _player1 = new Apsis::World::Actor("assets/actors/herr_von_speck.actor", 32, 32);
+  Apsis::Primitives::SpriteSheet* hud = new Apsis::Primitives::SpriteSheet("assets/graphics/hud_spritesheet.png");
+
+  _health = new Apsis::Hud::FillerBar(hud, 15, 3, 6, 10, 10);
+  _health->value(5);
+  _numbers = new Apsis::Hud::Numbers(hud, 0, 10, _health->position().height + 20);
+  _numbers->value(107243);
+
+  Apsis::Primitives::Texture* texture = new Apsis::Primitives::Texture("assets/backgrounds/sky.png");
+
+  _bg = new Apsis::World::Background(texture);
+
+  _player1 = new Apsis::World::Actor("assets/actors/pink_spaceblob.actor", 300, 300);
 
   // Player cannot collide with map
   _player1->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
@@ -101,16 +116,20 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   //_player1->attachMover(new Apsis::Agent::Movers::Down(*_input));
 
   // Player can move left
-  _player1->attachMover(new Apsis::Agent::Movers::Left(*_input, 128.0f));
+  _player1->attachMover(new Apsis::Agent::Movers::Left(*_input, 256.0f));
 
   // Player can move right
-  _player1->attachMover(new Apsis::Agent::Movers::Right(*_input, 128.0f));
+  _player1->attachMover(new Apsis::Agent::Movers::Right(*_input, 256.0f));
 
   // Player can jump
-  _player1->attachMover(new Apsis::Agent::Movers::Jump(*_input, 96.0f, 512.0f, 2048.0f, 4096.0f, 496.0f));
+  // Player can wall jump
+  _player1->attachMover(new Apsis::Agent::Movers::Jump(*_input, 220.0f, 512.0f, 2048.0f, 4096.0f, 496.0f));
+  _player1->attachMover(new Apsis::Agent::Movers::WallJump(*_input, 220.0f, 512.0f, 1024.0f, 0.0f, 512.0f, 1024.0f));
 
   // Player can fall
+  // Player can wall slide
   _player1->attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
+  _player1->attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));
 }
 
 void Apsis::Engine::TopDown2d::run() {
@@ -172,12 +191,22 @@ void Apsis::Engine::TopDown2d::_draw() {
 
   Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom);
 
+  _bg->draw(projection, camera,
+             glm::mat4(1.0));
+
   _map->draw(projection,
              camera,
              glm::mat4(1.0));
 
-  _player1->draw(projection,
-                 camera);
+  _player1->draw(projection, camera);
+
+  // HUD camera
+  Apsis::Primitives::Camera hud_camera = Primitives::Camera(glm::vec2(half_width, half_height), 1.0);
+
+  _numbers->draw(projection,
+                 hud_camera);
+  _health->draw(projection,
+                hud_camera);
 }
 
 void Apsis::Engine::TopDown2d::_update(float elapsed) {  
@@ -195,16 +224,16 @@ void Apsis::Engine::TopDown2d::_update(float elapsed) {
   _x = _player1->position().x;
   _z = _player1->position().y;
 
-  if (_x > ((_map->width() * 32.0f - _video.resolutionX/2.0f/_zoom))) {
-    _x = ((_map->width() * 32.0f - _video.resolutionX/2.0f/_zoom));
+  if (_x > ((_map->width() * _map->tileWidth() - _video.resolutionX/2.0f/_zoom))) {
+    _x = ((_map->width() * _map->tileWidth() - _video.resolutionX/2.0f/_zoom));
   }
 
   if (_x < (_video.resolutionX/2.0f/_zoom)) {
     _x = (_video.resolutionX/2.0f/_zoom);
   }
 
-  if (_z > ((_map->height() * 32.0f - _video.resolutionY/2.0f/_zoom))) {
-    _z = ((_map->height() * 32.0f - _video.resolutionY/2.0f/_zoom));
+  if (_z > ((_map->height() * _map->tileHeight() - _video.resolutionY/2.0f/_zoom))) {
+    _z = ((_map->height() * _map->tileHeight() - _video.resolutionY/2.0f/_zoom));
   }
 
   if (_z < (_video.resolutionY/2.0f/_zoom)) {

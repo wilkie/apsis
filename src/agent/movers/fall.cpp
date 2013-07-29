@@ -5,14 +5,15 @@ Apsis::Agent::Movers::Fall::Fall(float startingVelocity,
                                  float terminalVelocity)
   : _startingVelocity(startingVelocity),
     _acceleration(acceleration),
-    _terminalVelocity(terminalVelocity) {
+    _terminalVelocity(terminalVelocity),
+    Apsis::Agent::Mover("fall") {
 
   _velocity = _startingVelocity;
 }
 
 bool Apsis::Agent::Movers::Fall::update(float elapsed,
                                         std::set<unsigned int>& states,
-                                        Apsis::Geometry::Rectangle& original,
+                                        const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
@@ -37,8 +38,4 @@ bool Apsis::Agent::Movers::Fall::update(float elapsed,
   }
 
   return false;
-}
-
-char* Apsis::Agent::Movers::Fall::rule() {
-  return "can fall";
 }
