@@ -584,6 +584,15 @@
     <ClCompile Include="..\..\src\agent\movers\wall_jump.cpp">
       <Filter>agent\movers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\support\json\json_reader.cpp">
+      <Filter>support\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\json\json_value.cpp">
+      <Filter>support\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\json\json_writer.cpp">
+      <Filter>support\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1317,6 +1326,9 @@
     </Filter>
     <Filter Include="hud">
       <UniqueIdentifier>{03085c89-1b87-49ac-8103-9728d09bf922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\json">
+      <UniqueIdentifier>{1abe7c4f-a269-42d7-b198-97402e55108f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

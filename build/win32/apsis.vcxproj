@@ -236,6 +236,9 @@
     <ClCompile Include="..\..\src\support\ConvertUTF\ConvertUTF.c" />
     <ClCompile Include="..\..\src\support\glew\glew.c" />
     <ClCompile Include="..\..\src\support\irrXML\irrXML.cpp" />
+    <ClCompile Include="..\..\src\support\json\json_reader.cpp" />
+    <ClCompile Include="..\..\src\support\json\json_value.cpp" />
+    <ClCompile Include="..\..\src\support\json\json_writer.cpp" />
     <ClCompile Include="..\..\src\support\poly2tri\common\shapes.cc" />
     <ClCompile Include="..\..\src\support\poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\..\src\support\poly2tri\sweep\cdt.cc" />
