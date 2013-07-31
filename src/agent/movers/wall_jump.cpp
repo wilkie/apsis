@@ -1,7 +1,5 @@
 #include "apsis/agent/movers/wall_jump.h"
 
-#include <Windows.h>
-
 Apsis::Agent::Movers::WallJump::WallJump(Apsis::InputEngine& inputEngine,
                                          float maximumHeight,
                                          float startingVelocity,
