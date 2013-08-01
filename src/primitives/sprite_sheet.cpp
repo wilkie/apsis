@@ -12,6 +12,9 @@
 #include <math.h>
 #include <SOIL.h>
 
+#include <fstream>
+#include <json/json.h>
+
 Apsis::Primitives::SpriteSheet::~SpriteSheet() {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     delete _sprites[i];
@@ -30,7 +33,7 @@ Apsis::Primitives::SpriteSheet::SpriteSheet(const char* filename) {
 }
 
 char* Apsis::Primitives::SpriteSheet::_determineStatSheetFilename(const char* filename) {
-  char* stat_sheet = new char[strlen(filename)+2];
+  char* stat_sheet = new char[strlen(filename)+3];
   strncpy(stat_sheet, filename, strlen(filename));
 
   for (unsigned int i = strlen(filename); i > 0; i--) {
@@ -39,7 +42,7 @@ char* Apsis::Primitives::SpriteSheet::_determineStatSheetFilename(const char* fi
     }
   }
 
-  strcat(stat_sheet, ".txt");
+  strcat(stat_sheet, ".json");
 
   return stat_sheet;
 }
@@ -47,21 +50,28 @@ char* Apsis::Primitives::SpriteSheet::_determineStatSheetFilename(const char* fi
 void Apsis::Primitives::SpriteSheet::_loadStatSheet(const char* filename) {
   char* stat_sheet = _determineStatSheetFilename(filename);
 
-  FILE* f = fopen(stat_sheet, "rt");
+  Json::Reader reader;
+  Json::Value value;
 
-  unsigned int spritesLoaded = 0;
-  while(!feof(f)) {
+  std::ifstream file(stat_sheet);
+  reader.parse(file, value);
+  file.close();
+
+  // Sprite List
+  // TODO: better handling of invalid values
+  for (Json::Value::iterator it = value.begin(); it != value.end(); it++) {
     Sprite* sprite = new Sprite;
+
+    strcpy(sprite->name, (*it)["name"].asCString());
+    sprite->x        = (float)(*it)["x"].asDouble();
+    sprite->y        = (float)(*it)["y"].asDouble();
+    sprite->width    = (float)(*it)["width"].asDouble();
+    sprite->height   = (float)(*it)["height"].asDouble();
+    sprite->center_x = (float)(*it)["center_x"].asDouble();
+    sprite->center_y = (float)(*it)["center_y"].asDouble();
+
     _sprites.push_back(sprite);
-    fscanf(f, "%64s %d, %d, %d, %d, %d, %d\n", sprite->name,
-                                    &sprite->x,
-                                    &sprite->y,
-                                    &sprite->width,
-                                    &sprite->height,
-                                    &sprite->center_x,
-                                    &sprite->center_y);
   }
-  fclose(f);
 
   delete [] stat_sheet;
 }
