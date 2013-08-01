@@ -508,10 +508,7 @@
     <ClCompile Include="..\..\src\support\clipper\clipper.cpp">
       <Filter>support\clipper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine.cpp" />
-    <ClCompile Include="..\..\src\renderer.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
-    <ClCompile Include="..\..\src\viewport.cpp" />
     <ClCompile Include="..\..\src\engine\top_down_2d.cpp">
       <Filter>engine</Filter>
     </ClCompile>
@@ -1178,9 +1175,6 @@
     <ClInclude Include="..\..\include\apsis\input\event.h">
       <Filter>input</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\engine.h" />
-    <ClInclude Include="..\..\include\apsis\renderer.h" />
-    <ClInclude Include="..\..\include\apsis\viewport.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h">
       <Filter>world</Filter>
     </ClInclude>

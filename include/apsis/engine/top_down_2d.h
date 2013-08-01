@@ -1,8 +1,6 @@
 #ifndef APSIS_ENGINE_TOP_DOWN_2D_H
 #define APSIS_ENGINE_TOP_DOWN_2D_H
 
-#include <apsis/renderer.h>
-#include <apsis/viewport.h>
 #include <apsis/input/input_engine.h>
 #include <apsis/world/map.h>
 #include <apsis/backend/sdl.h>

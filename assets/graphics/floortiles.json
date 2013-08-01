@@ -1,0 +1,182 @@
+[
+  {
+    "name": "stone_floor_1",
+    "x": 0,
+    "y": 0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_2",
+    "x": 32,
+    "y": 0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_3",
+    "x": 64,
+    "y": 0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_4",
+    "x": 96,
+    "y":    0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_hole_1",
+    "x":  128,
+    "y":   0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "desert_1",
+    "x":      160,
+    "y":   0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stump_1"
+    "x":       192,
+    "y":   0,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_lr",
+    "x":       0,
+    "y":      32,
+    "width":  32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_tlr",
+    "x": 32,
+    "y":   32,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_l",
+    "x": 64,
+    "y":   32,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": stone_floor_r
+    "x": 96,
+    "y":   32,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_dt",
+    "x": 128,
+    "y":  32,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_db",
+    "x": 160,
+    "y":  32,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_tl",
+    "x": 0,
+    "y":    64,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_t",
+    "x": 32,
+    "y":   64,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "stone_floor_tr",
+    "x": 64,
+    "y": 64,
+    "width": 32,
+    "height": 32,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "wall_1",
+    "x": 0,
+    "y": 120,
+    "width": 32,
+    "height": 40,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "wall_2",
+    "x":      32,
+    "y":      120,
+    "width":  32,
+    "height": 40,
+    "center_x": 0,
+    "center_y": 0
+  }
+  {
+    "name": "wall_3",
+    "x":        64,
+    "y":  120,
+    "width": 32,
+    "height": 40,
+    "center_x": 0,
+    "center_y": 0
+  },
+  {
+    "name": "wall_4",
+    "x":        96,
+    "y":  120,
+    "width": 32,
+    "height": 40,
+    "center_x": 0,
+    "center_y": 0
+  }
+]

@@ -1,8 +1,6 @@
 #ifndef APSIS_BACKEND_SDL_H
 #define APSIS_BACKEND_SDL_H
 
-#include <apsis/renderer.h>
-#include <apsis/viewport.h>
 #include <apsis/input/input_engine.h>
 #include <apsis/input/event.h>
 #include <apsis/world/map.h>

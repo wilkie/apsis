@@ -88,7 +88,6 @@
     <ClCompile Include="..\..\src\agent\movers\wall_jump.cpp" />
     <ClCompile Include="..\..\src\agent\movers\wall_slide.cpp" />
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
-    <ClCompile Include="..\..\src\engine.cpp" />
     <ClCompile Include="..\..\src\engine\top_down_2d.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
     <ClCompile Include="..\..\src\geometry\line.cpp" />
@@ -112,7 +111,6 @@
     <ClCompile Include="..\..\src\primitives\vertex_array.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_shader.cpp" />
-    <ClCompile Include="..\..\src\renderer.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSConverter.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSLoader.cpp" />
     <ClCompile Include="..\..\src\support\assimp\ACLoader.cpp" />
@@ -263,7 +261,6 @@
     <ClCompile Include="..\..\src\sync\clock.cpp" />
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
-    <ClCompile Include="..\..\src\viewport.cpp" />
     <ClCompile Include="..\..\src\world\background.cpp" />
     <ClCompile Include="..\..\src\world\map.cpp" />
     <ClCompile Include="..\..\src\world\actor.cpp" />
@@ -291,7 +288,6 @@
     <ClInclude Include="..\..\include\apsis\agent\movers\wall_jump.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\wall_slide.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
-    <ClInclude Include="..\..\include\apsis\engine.h" />
     <ClInclude Include="..\..\include\apsis\engine\top_down_2d.h" />
     <ClInclude Include="..\..\include\apsis\geometry\circle.h" />
     <ClInclude Include="..\..\include\apsis\geometry\line.h" />
@@ -320,12 +316,10 @@
     <ClInclude Include="..\..\include\apsis\primitives\vertex_array.h" />
     <ClInclude Include="..\..\include\apsis\primitives\vertex_buffer.h" />
     <ClInclude Include="..\..\include\apsis\primitives\vertex_shader.h" />
-    <ClInclude Include="..\..\include\apsis\renderer.h" />
     <ClInclude Include="..\..\include\apsis\settings\video.h" />
     <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h" />
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h" />
-    <ClInclude Include="..\..\include\apsis\viewport.h" />
     <ClInclude Include="..\..\include\apsis\world\background.h" />
     <ClInclude Include="..\..\include\apsis\world\map.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h" />

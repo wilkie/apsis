@@ -1,18 +1,26 @@
-width 20
-height 20
+{
+  "width": 20,
+  "height": 20,
 
-move_rate 64
+  "move_rate": 64,
 
-sprites assets/graphics/p3_spritesheet.png
+  "sprites": "assets/graphics/p3_spritesheet.png",
 
-walk_left   p3_walk*
-walk_right  p3_walk*
+  "animations": [
+    {
+      "name": "walk_left",
+      "sprites": "p3_walk*"
+    },
+    {
+      "name": "walk_right",
+      "sprites": "p3_walk*"
+    },
+    {
+      "name": "stand",
+      "sprites": "p3_stand"
+    }
+  ],
 
-stand p3_stand
-
-state stand
-state walk_up
-state walk_down
-state walk_left
-state walk_right
-default_state stand
+  "states": ["stand", "walk_up", "walk_down", "walk_left", "walk_right"],
+  "default_state": "stand"
+}
