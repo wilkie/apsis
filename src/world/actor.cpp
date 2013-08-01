@@ -8,6 +8,9 @@
 
 #include "apsis/agent/movers/or.h"
 
+#include <fstream>
+#include <json/json.h>
+
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
@@ -33,56 +36,10 @@ Apsis::World::Actor::Actor(const char* actorFile,
   _frame = NULL;
   _currentTime = 0;
 
-  FILE* f = fopen(actorFile, "rt");
-
   _position.x = (float)x;
   _position.y = (float)y;
 
-  char key[129];
-  char val[129];
-
-  while(!feof(f)) {
-    fscanf(f, "%128s %128s\n", key, val);
-
-    if (strcmp(key, "width") == 0) {
-      _position.width = (float)atoi(val);
-    }
-    else if (strcmp(key, "height") == 0) {
-      _position.height = (float)atoi(val);
-    }
-    else if (strcmp(key, "move_rate") == 0) {
-      _moveRate = atoi(val);
-    }
-    else if (strcmp(key, "sprites") == 0) {
-      _spriteSheet = new Apsis::Primitives::SpriteSheet(val);
-    }
-    else if (strcmp(key, "state") == 0) {
-      _newState(val);
-    }
-    else if (strcmp(key, "default_state") == 0) {
-      state(val);
-    }
-    else {
-      // Animation
-
-      // Create an animation structure
-      Animation* newAnimation = _newAnimation(key);
-
-      // Store all of the sprites
-      int spriteIndex = -1;
-      do {
-        spriteIndex = _spriteSheet->enumerateSprites(val, spriteIndex+1);
-        if (spriteIndex != -1) {
-          AnimationFrame* frame = new AnimationFrame;
-          _spriteSheet->textureCoordinates(spriteIndex, frame->textureCoordinates);
-          frame->sprite = _spriteSheet->sprite(spriteIndex);
-          frame->spriteIndex = spriteIndex;
-          newAnimation->frames.push_back(frame);
-        }
-      } while(spriteIndex != -1);
-    }
-  }
-  fclose(f);
+  _parseJSONFile(actorFile);
 
   _currentAnimation = _animations[0];
   _frame = _currentAnimation->frames[0];
@@ -327,4 +284,39 @@ char* Apsis::World::Actor::rules() {
   }
 
   return ret;
+}
+
+void Apsis::World::Actor::_parseJSONFile(const char* filename) {
+  Json::Reader reader;
+  Json::Value value;
+
+  std::ifstream file(filename);
+  reader.parse(file, value);
+  file.close();
+
+  _position.width  = (float)value["width"].asDouble();
+  _position.height = (float)value["height"].asDouble();
+
+  // TODO: account for null sprites value
+  _spriteSheet = new Apsis::Primitives::SpriteSheet(value["sprites"].asCString());
+
+  // Animation
+  // TODO: better handling of invalid values
+  for (Json::Value::iterator it = value["animations"].begin(); it != value["animations"].end(); it++) {
+    // Create an animation structure
+    Animation* newAnimation = _newAnimation((*it)["name"].asCString());
+
+    // Store all of the sprites
+    int spriteIndex = -1;
+    do {
+      spriteIndex = _spriteSheet->enumerateSprites((*it)["sprites"].asCString(), spriteIndex+1);
+      if (spriteIndex != -1) {
+        AnimationFrame* frame = new AnimationFrame;
+        _spriteSheet->textureCoordinates(spriteIndex, frame->textureCoordinates);
+        frame->sprite = _spriteSheet->sprite(spriteIndex);
+        frame->spriteIndex = spriteIndex;
+        newAnimation->frames.push_back(frame);
+      }
+    } while(spriteIndex != -1);
+  }
 }

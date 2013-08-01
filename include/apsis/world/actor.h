@@ -111,6 +111,8 @@ namespace Apsis {
         char* rules();
 
       private:
+        // Parses the given json via the path given in jsonFile.
+        void _parseJSONFile(const char* jsonFile);
 
         // The set of sprites for the Actor.
         Apsis::Primitives::SpriteSheet* _spriteSheet;
