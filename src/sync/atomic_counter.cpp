@@ -34,8 +34,7 @@ unsigned int Apsis::Sync::AtomicCounter::value() const {
 
 // TODO: Maybe do something with a mutex when architectures don't support things.
 bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
-  // TODO: What is the MSVC specific define?
-#ifdef _WIN32
+#ifdef _MSC_VER // Microsoft C++ Compiler
   __asm {
     // Stack:
 
@@ -43,8 +42,8 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
     // |RA |ebp|ref|cmp|exc|
     //  EBP  +4  +8 +12 +16
 
-    mov ECX, [EBP+16];  // assign ECX to exchange
-    mov EAX, [EBP+12];  // assign accumulator to compare
+    mov ECX, [EBP+16]; // assign ECX to exchange
+    mov EAX, [EBP+12]; // assign accumulator to compare
     mov EDX, [EBP+8];  // get pointer to reference
 
     lock cmpxchg [EDX], ECX;
@@ -56,7 +55,7 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
     // Therefore set EAX to be 0 when the update did not occur, 1 otherwise
     setz AL;
   }
-#else
+#elif defined(__GNUC__) // GNU C Compiler
   asm("mov ECX, [EBP+16];"
       "mov EAX, [EBP+12];"
       "mov EDX, [EBP+8];"
