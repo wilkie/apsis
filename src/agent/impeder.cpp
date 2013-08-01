@@ -11,6 +11,6 @@ bool Apsis::Agent::Impeder::update(std::set<unsigned int>& states,
   return false;
 }
 
-char* Apsis::Agent::Impeder::rule() {
+const char* Apsis::Agent::Impeder::rule() {
   return "Unknown impeder rule";
 }

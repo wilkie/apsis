@@ -62,9 +62,9 @@ namespace Apsis {
       /*
        *  Renders the map.
        */
-      void draw(glm::mat4& projection,
+      void draw(const glm::mat4& projection,
                 Primitives::Camera& camera,
-                glm::mat4& model);
+                const glm::mat4& model);
 
     private:
 

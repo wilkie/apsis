@@ -61,7 +61,7 @@ Apsis::Primitives::VertexShader Apsis::Primitives::VertexShader::fromFile(const 
 
   fclose(f);
 
-  VertexShader& ret = VertexShader(source);
+  VertexShader ret = VertexShader(source);
   delete [] source;
   return ret;
 }

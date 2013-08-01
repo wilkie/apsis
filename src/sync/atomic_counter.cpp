@@ -34,6 +34,8 @@ unsigned int Apsis::Sync::AtomicCounter::value() const {
 
 // TODO: Maybe do something with a mutex when architectures don't support things.
 bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
+  // TODO: What is the MSVC specific define?
+#ifdef _WIN32
   __asm {
     // Stack:
 
@@ -54,4 +56,11 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
     // Therefore set EAX to be 0 when the update did not occur, 1 otherwise
     setz AL;
   }
+#else
+  asm("mov ECX, [EBP+16];"
+      "mov EAX, [EBP+12];"
+      "mov EDX, [EBP+8];"
+      "lock cmpxchg [EDX], ECX;"
+      "setz AL;");
+#endif
 }

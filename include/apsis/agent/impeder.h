@@ -20,7 +20,7 @@ namespace Apsis {
       virtual bool update(std::set<unsigned int>& states,
                           Apsis::Geometry::Rectangle& original,
                           Apsis::Geometry::Point& intended);
-      virtual char* rule();
+      virtual const char* rule();
     };
   }
 }

@@ -1,8 +1,8 @@
 #include "apsis/model/light.h"
 
-Apsis::Model::Light::Light(glm::vec3& position,
-                              glm::vec3& direction,
-                              glm::vec3& color) :
+Apsis::Model::Light::Light(const glm::vec3& position,
+                           const glm::vec3& direction,
+                           const glm::vec3& color) :
   _position(position),
   _direction(direction),
   _color(color) {

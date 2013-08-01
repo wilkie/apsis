@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-Apsis::Agent::Mover::Mover(char* rule) :
+Apsis::Agent::Mover::Mover(const char* rule) :
   _rule(rule) {
 
   // Register this agent by its rule
@@ -26,7 +26,7 @@ bool Apsis::Agent::Mover::supercedes(const char* rule) {
   return _supercedes.count(registerRule(rule)) > 0;
 }
 
-char* Apsis::Agent::Mover::rule() {
+const char* Apsis::Agent::Mover::rule() {
   return _rule;
 }
 

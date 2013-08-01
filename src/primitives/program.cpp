@@ -56,8 +56,8 @@ void Apsis::Primitives::Program::defineInput(const char* name,
     glsize = sizeof(float);
   }
 
-  glVertexAttribPointer(posAttrib, numberOfComponents, gltype, normalized,
-                        stride * glsize, (GLvoid*)(offset * glsize));
+  glVertexAttribPointer(posAttrib, numberOfComponents, (GLenum)gltype, normalized,
+                        (GLsizei)(stride * glsize), (const GLvoid*)(size_t)(offset * glsize));
 }
 
 void Apsis::Primitives::Program::uploadUniform(const char* name,

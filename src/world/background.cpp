@@ -27,7 +27,7 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   2 per texcoord
   this->_vertices = new float[5 * vertices_size];
-  
+
   unsigned int i = 0;
   unsigned int ei = 0;
 
@@ -48,7 +48,7 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   _vertices[i * 5 + 4] = 0.0f;
 
   i++;
-      
+
   _vertices[i * 5 + 0] = (float)_width;
   _vertices[i * 5 + 1] = 0.0f;
   _vertices[i * 5 + 2] = (float)_height;
@@ -126,19 +126,19 @@ Apsis::Primitives::Texture* Apsis::World::Background::texture() {
 /*
   *  Renders the background.
   */
-void Apsis::World::Background::draw(glm::mat4& projection,
-          Primitives::Camera& camera,
-          glm::mat4& model) {
+void Apsis::World::Background::draw(const glm::mat4& projection,
+                                    Primitives::Camera& camera,
+                                    const glm::mat4& model) {
   _vao.uploadUniform("proj", projection);
-  _vao.uploadUniform("view", camera.view());  
+  _vao.uploadUniform("view", camera.view());
   _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("camera", camera.eye());
 
   for (unsigned int w = 0; w < 20; w++) {
     for (unsigned int h = 0; h < 20; h++) {
-      model = glm::translate(glm::mat4(1.0),
-                             glm::vec3(_width * w, 0.0, _height * h));
-      _vao.uploadUniform("model", model);
+      glm::mat4 current_model = glm::translate(glm::mat4(1.0),
+                                               glm::vec3(_width * w, 0.0, _height * h));
+      _vao.uploadUniform("model", current_model);
       _vao.draw();
     }
   }

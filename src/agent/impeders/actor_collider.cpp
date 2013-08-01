@@ -11,6 +11,6 @@ bool Apsis::Agent::Impeders::ActorCollider::update(std::set<unsigned int>& state
   return false;
 }
 
-char* Apsis::Agent::Impeders::ActorCollider::rule() {
+const char* Apsis::Agent::Impeders::ActorCollider::rule() {
   return "can not move through actors";
 }

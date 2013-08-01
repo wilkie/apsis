@@ -45,8 +45,8 @@ namespace Apsis {
       /*
        *  Transfer a matrix to a uniform.
        */
-      void uploadUniform(const char* name, glm::mat4& matrix) const;
-      void uploadUniform(int identifier, glm::mat4& matrix) const;
+      void uploadUniform(const char* name, const glm::mat4& matrix) const;
+      void uploadUniform(int identifier, const glm::mat4& matrix) const;
 
       /*
        *  Transfer an integer to a uniform.
@@ -63,14 +63,14 @@ namespace Apsis {
       /*
        *  Transfer a 3d vector to a uniform.
        */
-      void uploadUniform(const char* name, glm::vec3& value) const;
-      void uploadUniform(int identifier, glm::vec3& value) const;
+      void uploadUniform(const char* name, const glm::vec3& value) const;
+      void uploadUniform(int identifier, const glm::vec3& value) const;
 
       /*
        *  Transfer a 4d vector to a uniform.
        */
-      void uploadUniform(const char* name, glm::vec4& value) const;
-      void uploadUniform(int identifier, glm::vec4& value) const;
+      void uploadUniform(const char* name, const glm::vec4& value) const;
+      void uploadUniform(int identifier, const glm::vec4& value) const;
 
       /*
        *  Bind a texture.

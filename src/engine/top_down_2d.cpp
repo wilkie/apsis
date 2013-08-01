@@ -60,7 +60,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   _x = video.resolutionX/2.0f;
   _z = video.resolutionY/2.0f;
-  
+
   _zoom = 1.0f;
 
   _input = new Apsis::InputEngine();
@@ -185,7 +185,7 @@ void Apsis::Engine::TopDown2d::_draw() {
   else {
     projection = glm::perspective(fov, aspect, nearf, farf);
   }
-  
+
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
 
@@ -209,14 +209,14 @@ void Apsis::Engine::TopDown2d::_draw() {
                 hud_camera);
 }
 
-void Apsis::Engine::TopDown2d::_update(float elapsed) {  
+void Apsis::Engine::TopDown2d::_update(float elapsed) {
   if (_input->isEventHeld(ZOOM_OUT)) {
     _zoom -= 1.0f * elapsed;
     if (_zoom < 1.0f) {
       _zoom = 1.0f;
     }
   }
-  
+
   if (_input->isEventHeld(ZOOM_IN)) {
     _zoom += 1.0f * elapsed;
   }

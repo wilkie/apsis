@@ -1,5 +1,8 @@
 #include "apsis/input/key_binding_repository.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 Apsis::KeyBindingRepository::KeyBindingRepository() {
 }
 

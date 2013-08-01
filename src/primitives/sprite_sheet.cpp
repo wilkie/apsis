@@ -9,6 +9,8 @@
   #include <GL/glu.h>
 #endif
 
+#include <string.h>
+
 #include <math.h>
 #include <SOIL.h>
 

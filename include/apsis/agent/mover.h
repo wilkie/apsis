@@ -14,7 +14,7 @@ namespace Apsis {
   namespace Agent {
     class Mover {
     public:
-      Mover(char* rule);
+      Mover(const char* rule);
 
       /*
        *  Update intended point and return reason for change.
@@ -28,10 +28,10 @@ namespace Apsis {
 
       void supercede(const char* rule);
 
-      char* rule();
+      const char* rule();
     private:
       std::set<unsigned int> _supercedes;
-      char*                  _rule;
+      const char*            _rule;
       unsigned int           _id;
 
       static unsigned int registerRule(const char* rule);

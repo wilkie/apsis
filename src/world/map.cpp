@@ -56,7 +56,7 @@ Apsis::World::Map::Map(unsigned int width,
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   2 per texcoord
   this->_vertices = new float[5 * vertices_size];
-  
+
   unsigned int i = 0;
   unsigned int ei = 0;
   unsigned int ti = 0;
@@ -92,7 +92,7 @@ Apsis::World::Map::Map(unsigned int width,
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 5 + 0] = (float)w*_tileWidth + sprite->width;
       _vertices[i * 5 + 1] = 0.0f;
       _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight;
@@ -236,7 +236,7 @@ void Apsis::World::Map::_generateWalls() {
   _tiles[21 + _width*10].passable(false);
   _tiles[22 + _width*10].spriteIndex(16);
   _tiles[22 + _width*10].passable(false);
-  
+
   _tiles[18 + _width*11].spriteIndex(65);
   _tiles[18 + _width*11].passable(false);
   _tiles[18 + _width*12].spriteIndex(65);
@@ -247,7 +247,7 @@ void Apsis::World::Map::_generateWalls() {
   _tiles[18 + _width*14].passable(false);
   _tiles[18 + _width*15].spriteIndex(65);
   _tiles[18 + _width*15].passable(false);
-  
+
   _tiles[17 + _width*11].spriteIndex(65);
   _tiles[17 + _width*11].passable(false);
   _tiles[17 + _width*12].spriteIndex(65);
@@ -363,13 +363,13 @@ void Apsis::World::Map::_generateWalls() {
   _tiles[25 + _width*15].passable(false);
 }
 
-void Apsis::World::Map::draw(glm::mat4& projection,
+void Apsis::World::Map::draw(const glm::mat4& projection,
                              Primitives::Camera& camera,
-                             glm::mat4& model) {
+                             const glm::mat4& model) {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
-  
+
   _vao.bindTexture(0, *_spriteSheet->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.draw();

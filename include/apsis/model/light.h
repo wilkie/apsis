@@ -10,9 +10,9 @@ namespace Apsis {
       /*
        *  Constructs a new representation of a light.
        */
-      Light(glm::vec3& position,
-            glm::vec3& direction,
-            glm::vec3& color);
+      Light(const glm::vec3& position,
+            const glm::vec3& direction,
+            const glm::vec3& color);
 
       /*
        *  Retrieve the position of the light.

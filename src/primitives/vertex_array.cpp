@@ -111,14 +111,14 @@ int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& pro
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   glm::mat4& mat) const {
+                                                   const glm::mat4& mat) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, mat);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
-                                                   glm::mat4& mat) const {
+                                                   const glm::mat4& mat) const {
   glUniformMatrix4fv(identifier, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
@@ -146,27 +146,27 @@ void Apsis::Primitives::VertexArray::uploadUniform(int   identifier,
   glUniform1f(identifier, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   glm::vec3&  value) const {
+void Apsis::Primitives::VertexArray::uploadUniform(const char*       name,
+                                                   const glm::vec3&  value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int        identifier,
-                                                   glm::vec3& value) const {
+void Apsis::Primitives::VertexArray::uploadUniform(int              identifier,
+                                                   const glm::vec3& value) const {
   glUniform3fv(identifier, 1, glm::value_ptr(value));
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   glm::vec4&  value) const {
+                                                   const glm::vec4&  value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int        identifier,
-                                                   glm::vec4& value) const {
+void Apsis::Primitives::VertexArray::uploadUniform(int              identifier,
+                                                   const glm::vec4& value) const {
   glUniform4fv(identifier, 1, glm::value_ptr(value));
 }
 

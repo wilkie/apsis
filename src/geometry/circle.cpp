@@ -1,5 +1,6 @@
 #include "apsis/geometry/circle.h"
 
+#include <stdlib.h>
 #include <math.h>
 
 bool Apsis::Geometry::Circle::intersects(Rectangle* rectangle) {
@@ -151,7 +152,7 @@ bool Apsis::Geometry::Circle::intersects(Line* line) {
       // We actually clipped something!
       return true;
     }
-	
+
     clipped.points[0].x = x1;
     clipped.points[0].y = y1;
 

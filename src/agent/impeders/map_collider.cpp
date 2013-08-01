@@ -298,6 +298,6 @@ bool Apsis::Agent::Impeders::MapCollider::_canJump(Apsis::Geometry::Rectangle& f
   return true;
 }
 
-char* Apsis::Agent::Impeders::MapCollider::rule() {
+const char* Apsis::Agent::Impeders::MapCollider::rule() {
   return "can not move through map walls";
 }

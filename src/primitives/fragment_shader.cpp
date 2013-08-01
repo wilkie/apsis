@@ -61,7 +61,7 @@ Apsis::Primitives::FragmentShader Apsis::Primitives::FragmentShader::fromFile(co
 
   fclose(f);
 
-  FragmentShader& ret = FragmentShader(source);
+  FragmentShader ret = FragmentShader(source);
   delete [] source;
   return ret;
 }

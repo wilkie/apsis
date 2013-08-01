@@ -5,7 +5,9 @@
 #define WIDTH 1536
 #define HEIGHT 864
 
-#include <Windows.h>
+#ifdef _WIN32
+  #include <Windows.h>
+#endif
 
 int main(int argc, char** argv) {
   // initialize Apsis
@@ -18,10 +20,17 @@ int main(int argc, char** argv) {
     engine->run();
   }
   catch (char* msg) {
+#ifdef _WIN32
     OutputDebugStringA("*** Exception ***\n");
     OutputDebugStringA(msg);
     OutputDebugStringA("\n");
     OutputDebugStringA("*** Exception ***\n");
+#else
+    printf("*** Exception ***\n");
+    printf(msg);
+    printf("\n");
+    printf("*** Exception ***\n");
+#endif
   }
 
   return 0;
