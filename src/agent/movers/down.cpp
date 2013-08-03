@@ -1,7 +1,8 @@
 #include "apsis/agent/movers/down.h"
 
-Apsis::Agent::Movers::Down::Down(Apsis::InputEngine& inputEngine)
-  : Apsis::Agent::Mover("can move down") {
+Apsis::Agent::Movers::Down::Down(Apsis::InputEngine& inputEngine,
+	                             float               speed)
+  : _speed(speed), Apsis::Agent::Mover("can move down") {
   _inputEngine = &inputEngine;
 }
 
@@ -12,7 +13,7 @@ bool Apsis::Agent::Movers::Down::update(float elapsed,
   updated.y = original.y;
 
   if (_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_DOWN)) {
-    updated.y += elapsed * 96.0f;
+    updated.y += elapsed * _speed;
     return true;
   }
 

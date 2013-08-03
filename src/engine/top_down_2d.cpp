@@ -110,10 +110,10 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _player1->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
 
   // Player can move up
-  //_player1->attachMover(new Apsis::Agent::Movers::Up(*_input));
+  _player1->attachMover(new Apsis::Agent::Movers::Up(*_input, 256.0f));
 
   // Player can move down
-  //_player1->attachMover(new Apsis::Agent::Movers::Down(*_input));
+  _player1->attachMover(new Apsis::Agent::Movers::Down(*_input, 256.0f));
 
   // Player can move left
   _player1->attachMover(new Apsis::Agent::Movers::Left(*_input, 256.0f));
@@ -123,12 +123,12 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   // Player can jump
   // Player can wall jump
-  _player1->attachMover(new Apsis::Agent::Movers::Jump(*_input, 220.0f, 512.0f, 2048.0f, 4096.0f, 496.0f));
+  //_player1->attachMover(new Apsis::Agent::Movers::Jump(*_input, 220.0f, 512.0f, 2048.0f, 4096.0f, 496.0f));
   _player1->attachMover(new Apsis::Agent::Movers::WallJump(*_input, 220.0f, 512.0f, 1024.0f, 0.0f, 512.0f, 1024.0f));
 
   // Player can fall
   // Player can wall slide
-  _player1->attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
+  //_player1->attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
   _player1->attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));
 }
 

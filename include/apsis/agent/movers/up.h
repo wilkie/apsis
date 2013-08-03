@@ -12,13 +12,16 @@ namespace Apsis {
     namespace Movers {
       class Up : public Apsis::Agent::Mover {
       public:
-        Up(Apsis::InputEngine& inputEngine);
+        Up(Apsis::InputEngine& inputEngine,
+           float speed);
         virtual bool update(float elapsed,
                             std::set<unsigned int>& states,
                             const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
       private:
         InputEngine* _inputEngine;
+
+        float _speed;
       };
     }
   }
