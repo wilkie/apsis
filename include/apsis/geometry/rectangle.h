@@ -28,7 +28,7 @@ namespace Apsis {
       void points(Point points[4]);
       void lines(Line lines[4]);
 
-      Apsis::Geometry::Point center();
+      Apsis::Geometry::Point center() const;
     };
   }
 }

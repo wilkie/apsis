@@ -362,7 +362,7 @@ void Apsis::Geometry::Rectangle::lines(Line lines[4]) {
   }
 }
 
-Apsis::Geometry::Point Apsis::Geometry::Rectangle::center() {
+Apsis::Geometry::Point Apsis::Geometry::Rectangle::center() const {
   Apsis::Geometry::Point p = { this->x, this->y };
   return p;
 }
