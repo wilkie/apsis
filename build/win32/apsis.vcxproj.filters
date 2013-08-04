@@ -599,6 +599,15 @@
     <ClCompile Include="..\..\src\agent\responders\bouncer.cpp">
       <Filter>agent\responders</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\registry\event.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registry\property.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registry\state.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1259,6 +1268,15 @@
     <ClInclude Include="..\..\include\apsis\agent\responders\bouncer.h">
       <Filter>agent\responders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\event.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\property.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\state.h">
+      <Filter>registry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="agent">
@@ -1344,6 +1362,9 @@
     </Filter>
     <Filter Include="agent\responders">
       <UniqueIdentifier>{dbadd0e7-92cf-46e4-b212-a1f516316e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="registry">
+      <UniqueIdentifier>{e586e9bb-3c2f-49a6-887b-50b0839972ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

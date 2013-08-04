@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\src\primitives\vertex_array.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\vertex_shader.cpp" />
+    <ClCompile Include="..\..\src\registry\event.cpp" />
+    <ClCompile Include="..\..\src\registry\property.cpp" />
+    <ClCompile Include="..\..\src\registry\state.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSConverter.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSLoader.cpp" />
     <ClCompile Include="..\..\src\support\assimp\ACLoader.cpp" />
@@ -322,6 +325,9 @@
     <ClInclude Include="..\..\include\apsis\primitives\vertex_array.h" />
     <ClInclude Include="..\..\include\apsis\primitives\vertex_buffer.h" />
     <ClInclude Include="..\..\include\apsis\primitives\vertex_shader.h" />
+    <ClInclude Include="..\..\include\apsis\registry\event.h" />
+    <ClInclude Include="..\..\include\apsis\registry\property.h" />
+    <ClInclude Include="..\..\include\apsis\registry\state.h" />
     <ClInclude Include="..\..\include\apsis\settings\video.h" />
     <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h" />
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />
