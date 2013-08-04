@@ -593,6 +593,12 @@
     <ClCompile Include="..\..\src\agent\movers\linear.cpp">
       <Filter>agent\movers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\agent\responder.cpp">
+      <Filter>agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\responders\bouncer.cpp">
+      <Filter>agent\responders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1247,6 +1253,12 @@
     <ClInclude Include="..\..\include\apsis\agent\movers\linear.h">
       <Filter>agent\movers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\responder.h">
+      <Filter>agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\responders\bouncer.h">
+      <Filter>agent\responders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="agent">
@@ -1329,6 +1341,9 @@
     </Filter>
     <Filter Include="support\json">
       <UniqueIdentifier>{1abe7c4f-a269-42d7-b198-97402e55108f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="agent\responders">
+      <UniqueIdentifier>{dbadd0e7-92cf-46e4-b212-a1f516316e59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
