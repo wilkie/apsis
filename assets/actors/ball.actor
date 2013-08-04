@@ -1,0 +1,18 @@
+{
+  "width": 150,
+  "height": 150,
+
+  "move_rate": 64,
+
+  "sprites": "assets/graphics/ball.png",
+
+  "animations": [
+    {
+      "name": "still",
+      "sprites": "ball"
+    }
+  ],
+
+  "states": ["stand", "walk_up", "walk_down", "walk_left", "walk_right"],
+  "default_state": "stand"
+}
