@@ -17,6 +17,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "apsis/agent/impeders/map_collider.h"
+#include "apsis/agent/movers/linear.h"
 #include "apsis/agent/movers/down.h"
 #include "apsis/agent/movers/gridlock_down.h"
 #include "apsis/agent/movers/up.h"
@@ -92,7 +93,6 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/tiles_spritesheet.png");
   _map = new Apsis::World::Map(32, 30, 70.0f, 70.0f, sheet);
-
   Apsis::Primitives::SpriteSheet* hud = new Apsis::Primitives::SpriteSheet("assets/graphics/hud_spritesheet.png");
 
   _health = new Apsis::Hud::FillerBar(hud, 15, 3, 6, 10, 10);
@@ -103,6 +103,16 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   Apsis::Primitives::Texture* texture = new Apsis::Primitives::Texture("assets/backgrounds/sky.png");
 
   _bg = new Apsis::World::Background(texture);
+
+  _ball = new Apsis::World::Actor("assets/actors/ball.actor", 300, 300);
+
+  // Bouncers should be a Responder agent (rule that applies when there is a collision!)
+
+  // Ball moves in a line
+  _ball->attachMover(new Apsis::Agent::Movers::Linear(1.57f, 128.0f));
+
+  // Ball hits walls
+  _ball->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
 
   _player1 = new Apsis::World::Actor("assets/actors/pink_spaceblob.actor", 300, 300);
 
@@ -198,6 +208,7 @@ void Apsis::Engine::TopDown2d::_draw() {
              camera,
              glm::mat4(1.0));
 
+  _ball->draw(projection, camera);
   _player1->draw(projection, camera);
 
   // HUD camera
@@ -240,6 +251,7 @@ void Apsis::Engine::TopDown2d::_update(float elapsed) {
     _z = (_video.resolutionY/2.0f/_zoom);
   }
 
+  _ball->update(elapsed);
   _player1->update(elapsed);
 }
 

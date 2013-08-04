@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{559F58DF-1E22-49BF-A853-45169DFFB2D7}</ProjectGuid>
-    <RootNamespace>isotasty</RootNamespace>
+    <RootNamespace>apsis</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,6 +74,7 @@
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
     <ClCompile Include="..\..\src\agent\mover.cpp" />
     <ClCompile Include="..\..\src\agent\movers\and.cpp" />
+    <ClCompile Include="..\..\src\agent\movers\linear.cpp" />
     <ClCompile Include="..\..\src\agent\movers\down.cpp" />
     <ClCompile Include="..\..\src\agent\movers\fall.cpp" />
     <ClCompile Include="..\..\src\agent\movers\gridlock_down.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\mover.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\and.h" />
+    <ClInclude Include="..\..\include\apsis\agent\movers\linear.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\down.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\fall.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_down.h" />

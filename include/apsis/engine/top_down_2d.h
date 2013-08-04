@@ -43,6 +43,7 @@ namespace Apsis {
 
         Apsis::World::Map* _map;
         Apsis::World::Actor* _player1;
+		Apsis::World::Actor* _ball;
         Apsis::World::Background* _bg;
 
         Apsis::Hud::Numbers* _numbers;

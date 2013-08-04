@@ -590,6 +590,9 @@
     <ClCompile Include="..\..\src\support\json\json_writer.cpp">
       <Filter>support\json</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\linear.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1239,6 +1242,9 @@
       <Filter>agent\movers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\agent\movers\wall_jump.h">
+      <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\linear.h">
       <Filter>agent\movers</Filter>
     </ClInclude>
   </ItemGroup>
