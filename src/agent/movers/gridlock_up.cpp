@@ -28,8 +28,8 @@ bool Apsis::Agent::Movers::GridlockUp::update(float elapsed,
   else if (states.count(Apsis::State::MOVING_UP) != 0) {
     updated.y -= elapsed * 96.0f;
 
-    float from_grid_0 = floor(original.y / 32.0f);
-    float from_grid_1 = floor(updated.y  / 32.0f);
+    float from_grid_0 = floor((float)original.y / 32.0f);
+    float from_grid_1 = floor((float)updated.y  / 32.0f);
     
     if (from_grid_1 < from_grid_0) {
       updated.y = from_grid_0 * 32.0f;
