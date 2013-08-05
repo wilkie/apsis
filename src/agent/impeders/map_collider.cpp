@@ -4,10 +4,17 @@
 
 #include "apsis/input/input_engine.h"
 
+#include "apsis/registry/state.h"
+
 #include <math.h>
 
 Apsis::Agent::Impeders::MapCollider::MapCollider(Apsis::World::Map* map)
   : _map(map) {
+
+  _collideWithLeftState   = Apsis::Registry::State::id("collideWithLeft");
+  _collideWithRightState  = Apsis::Registry::State::id("collideWithRight");
+  _collideWithTopState    = Apsis::Registry::State::id("collideWithTop");
+  _collideWithBottomState = Apsis::Registry::State::id("collideWithBottom");
 }
 
 bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
@@ -47,19 +54,19 @@ bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
   }
 
   if (!_canFall(from)) {
-    states.insert(Apsis::State::COLLIDE_DOWN_WITH_MAP);
+    states.insert(_collideWithTopState);
   }
 
   if (!_canJump(from)) {
-    states.insert(Apsis::State::COLLIDE_UP_WITH_MAP);
+    states.insert(_collideWithBottomState);
   }
 
   if (_againstWall(from, true)) {
-    states.insert(Apsis::State::COLLIDE_LEFT_WITH_MAP);
+    states.insert(_collideWithLeftState);
   }
 
   if (_againstWall(from, false)) {
-    states.insert(Apsis::State::COLLIDE_RIGHT_WITH_MAP);
+    states.insert(_collideWithRightState);
   }
 
   // Assume we can move the entire way
@@ -90,7 +97,7 @@ bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
         if (edge > 0) {
           if (edge == 3) {
             if (!(tMin == 0.0 || tMax == 1.0)) {
-              //states.insert(Apsis::State::COLLIDE_DOWN_WITH_MAP);
+              //states.insert(_collideWithTopState);
             }
           }
 

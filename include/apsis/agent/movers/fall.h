@@ -26,6 +26,9 @@ namespace Apsis {
         float _terminalVelocity;
 
         float _velocity;
+
+        unsigned int _collideWithTopState;
+        unsigned int _jumpingState;
       };
     }
   }

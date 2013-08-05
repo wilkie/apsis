@@ -23,21 +23,6 @@ namespace Apsis {
     };
   };
 
-  struct State {
-    enum States {
-      MOVING_LEFT = 0x1000,
-      MOVING_RIGHT,
-      MOVING_UP,
-      MOVING_DOWN,
-      JUMPING,
-      CAN_JUMP,
-      COLLIDE_LEFT_WITH_MAP,
-      COLLIDE_RIGHT_WITH_MAP,
-      COLLIDE_UP_WITH_MAP,
-      COLLIDE_DOWN_WITH_MAP,
-    };
-  };
-
   /*
    *  Handles mapping between keys and events allowing for flexible control
    *    over what keys or buttons are mapped to particular functions.

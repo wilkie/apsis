@@ -34,6 +34,11 @@ namespace Apsis {
         bool _againstWall(Apsis::Geometry::Rectangle& from, bool checkLeft);
 
         Apsis::World::Map* _map;
+
+        unsigned int _collideWithLeftState;
+        unsigned int _collideWithRightState;
+        unsigned int _collideWithTopState;
+        unsigned int _collideWithBottomState;
       };
     }
   }

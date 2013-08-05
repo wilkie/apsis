@@ -44,6 +44,13 @@ namespace Apsis {
 
         bool  _wallJumping;
         bool  _goingRight;
+
+        unsigned int _collideWithLeftState;
+        unsigned int _collideWithRightState;
+        unsigned int _collideWithTopState;
+        unsigned int _collideWithBottomState;
+        unsigned int _jumpingState;
+        unsigned int _canJumpState;
       };
     }
   }

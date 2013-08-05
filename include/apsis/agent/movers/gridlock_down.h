@@ -21,6 +21,11 @@ namespace Apsis {
                             Apsis::Geometry::Point& updated);
       private:
         InputEngine* _inputEngine;
+
+        unsigned int _movingUpState;
+        unsigned int _movingLeftState;
+        unsigned int _movingRightState;
+        unsigned int _movingDownState;
       };
     }
   }

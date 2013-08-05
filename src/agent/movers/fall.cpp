@@ -1,5 +1,7 @@
 #include "apsis/agent/movers/fall.h"
 
+#include "apsis/registry/state.h"
+
 Apsis::Agent::Movers::Fall::Fall(float startingVelocity,
                                  float acceleration,
                                  float terminalVelocity)
@@ -9,6 +11,10 @@ Apsis::Agent::Movers::Fall::Fall(float startingVelocity,
     Apsis::Agent::Mover("fall") {
 
   _velocity = _startingVelocity;
+
+  _collideWithTopState  = Apsis::Registry::State::id("collideWithTop");
+
+  _jumpingState  = Apsis::Registry::State::id("jumping");
 }
 
 bool Apsis::Agent::Movers::Fall::update(float elapsed,
@@ -17,12 +23,12 @@ bool Apsis::Agent::Movers::Fall::update(float elapsed,
                                         Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
-  if (states.count(Apsis::State::COLLIDE_DOWN_WITH_MAP) > 0) {
+  if (states.count(_collideWithTopState) > 0) {
     _velocity = _startingVelocity;
   }
 
-  if ((states.count(Apsis::State::JUMPING) == 0)) {
-    states.erase(Apsis::State::COLLIDE_DOWN_WITH_MAP);
+  if ((states.count(_jumpingState) == 0)) {
+    states.erase(_collideWithTopState);
 
     _velocity += _acceleration * elapsed;
     if (_velocity > _terminalVelocity) {

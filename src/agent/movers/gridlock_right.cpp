@@ -1,8 +1,15 @@
 #include "apsis/agent/movers/gridlock_right.h"
 
+#include "apsis/registry/state.h"
+
 Apsis::Agent::Movers::GridlockRight::GridlockRight(Apsis::InputEngine& inputEngine)
   : Apsis::Agent::Mover("can move right locked along a grid") {
   _inputEngine = &inputEngine;
+
+  _movingLeftState  = Apsis::Registry::State::id("movingLeft");
+  _movingUpState    = Apsis::Registry::State::id("movingUp");
+  _movingRightState = Apsis::Registry::State::id("movingRight");
+  _movingDownState  = Apsis::Registry::State::id("movingDown");
 }
 
 bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
@@ -11,29 +18,29 @@ bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
                                                 Apsis::Geometry::Point& updated) {
   updated.x = original.x;
 
-  if (states.count(Apsis::State::MOVING_LEFT) +
-      states.count(Apsis::State::MOVING_UP)   +
-      states.count(Apsis::State::MOVING_DOWN) > 0) {
+  if (states.count(_movingLeftState) +
+      states.count(_movingUpState)   +
+      states.count(_movingDownState) > 0) {
     return false;
   }
 
   if (_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_RIGHT)) {
-    if (states.count(Apsis::State::MOVING_RIGHT) == 0) {
-      states.insert(Apsis::State::MOVING_RIGHT);
+    if (states.count(_movingRightState) == 0) {
+      states.insert(_movingRightState);
     }
     updated.x += elapsed * 96.0f;
 
     return true;
   }
-  else if (states.count(Apsis::State::MOVING_RIGHT) != 0) {
+  else if (states.count(_movingRightState) != 0) {
     updated.x += elapsed * 96.0f;
 
-    float from_grid_0 = floor(original.x / 32.0f);
-    float from_grid_1 = floor(updated.x  / 32.0f);
+    float from_grid_0 = floor((float)original.x / 32.0f);
+    float from_grid_1 = floor((float)updated.x  / 32.0f);
     
     if (from_grid_1 > from_grid_0) {
       updated.x = from_grid_1 * 32.0f;
-      states.erase(Apsis::State::MOVING_RIGHT);
+      states.erase(_movingRightState);
     }
 
     return true;
