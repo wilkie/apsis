@@ -1,6 +1,7 @@
 #include "apsis/agent/movers/wall_jump.h"
 
 #include "apsis/registry/state.h"
+#include "apsis/registry/action.h"
 
 Apsis::Agent::Movers::WallJump::WallJump(Apsis::InputEngine& inputEngine,
                                          float maximumHeight,
@@ -28,6 +29,8 @@ Apsis::Agent::Movers::WallJump::WallJump(Apsis::InputEngine& inputEngine,
 
   _jumpingState  = Apsis::Registry::State::id("jumping");
   _canJumpState  = Apsis::Registry::State::id("canJump");
+
+  _jumpAction = Apsis::Registry::Action::id("jump");
 }
 
 bool Apsis::Agent::Movers::WallJump::update(float elapsed,
@@ -50,7 +53,7 @@ bool Apsis::Agent::Movers::WallJump::update(float elapsed,
     
     _goingRight = states.count(_collideWithLeftState) > 0;
 
-    if (!_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_JUMP)) {
+    if (!_inputEngine->isEventHeld(_jumpAction)) {
       states.insert(_canJumpState);
     }
   }
@@ -70,7 +73,7 @@ bool Apsis::Agent::Movers::WallJump::update(float elapsed,
              states.count(_jumpingState) == 0) {
       // Do not allow double jumps.
     }
-    else if (_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_JUMP) &&
+    else if (_inputEngine->isEventHeld(_jumpAction) &&
              states.count(_canJumpState) > 0) {
       // While key is held, jump until maximum height.
       states.insert(_jumpingState);

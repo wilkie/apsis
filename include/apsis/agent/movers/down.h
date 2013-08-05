@@ -13,7 +13,7 @@ namespace Apsis {
       class Down : public Apsis::Agent::Mover {
       public:
         Down(Apsis::InputEngine& inputEngine,
-			 float speed);
+             float speed);
         virtual bool update(float elapsed,
                             std::set<unsigned int>& states,
                             const Apsis::Geometry::Rectangle& original,
@@ -21,7 +21,9 @@ namespace Apsis {
       private:
         InputEngine* _inputEngine;
 
-		float _speed;
+        unsigned int _downAction;
+
+        float _speed;
       };
     }
   }

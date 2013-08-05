@@ -51,6 +51,8 @@ namespace Apsis {
         unsigned int _collideWithBottomState;
         unsigned int _jumpingState;
         unsigned int _canJumpState;
+
+        unsigned int _jumpAction;
       };
     }
   }

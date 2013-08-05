@@ -17,7 +17,7 @@ void Apsis::KeyBindingRepository::registerEvent(const char* name,
                                                 Apsis::KeyBinding* primary,
                                                 Apsis::KeyBinding* secondary) {
   if (event < 0) {
-    throw "The event identifier cannot be less than or equal to zero";
+    throw "The event identifier cannot be less than zero";
   }
 
   Binding* binding = new Binding();
@@ -43,7 +43,7 @@ void Apsis::KeyBindingRepository::registerEvent(const char* name,
 }
 
 void Apsis::KeyBindingRepository::rebindPrimary(const char* name,
-                                                   KeyBinding* primary) {
+                                                KeyBinding* primary) {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     if (strncmp(_bindings[i]->name, name, 128) == 0) {
       if (primary == NULL) {
@@ -72,9 +72,7 @@ void Apsis::KeyBindingRepository::rebindSecondary(const char* name,
   }
 }
 
-int Apsis::KeyBindingRepository::yieldEvent(KeyBinding& binding) {
-  int event = 0;
-
+bool Apsis::KeyBindingRepository::yieldEvent(KeyBinding& binding, int& event) {
   for (unsigned int i = 0; i < _bindings.size(); i++) {
     if (_bindings[i]->primary.key     != Apsis::Key::NONE &&
         _bindings[i]->primary.key     == binding.key        &&
@@ -82,7 +80,7 @@ int Apsis::KeyBindingRepository::yieldEvent(KeyBinding& binding) {
         _bindings[i]->primary.control == binding.control    &&
         _bindings[i]->primary.alt     == binding.alt) {
       event = _bindings[i]->value;
-      break;
+      return true;
     }
 
     if (_bindings[i]->secondary.key     != Apsis::Key::NONE &&
@@ -91,13 +89,9 @@ int Apsis::KeyBindingRepository::yieldEvent(KeyBinding& binding) {
         _bindings[i]->secondary.control == binding.control    &&
         _bindings[i]->secondary.alt     == binding.alt) {
       event = _bindings[i]->value;
-      break;
+      return true;
     }
   }
 
-  if (event == 0) {
-    return 0;
-  }
-
-  return event;
+  return false;
 }

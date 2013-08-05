@@ -33,6 +33,8 @@
 #include "apsis/agent/movers/and.h"
 #include "apsis/agent/movers/or.h"
 
+#include "apsis/registry/action.h"
+
 #ifndef NO_GL
   #ifdef _WIN32
   #include <windows.h>
@@ -71,19 +73,19 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   binding.key = Apsis::Key::LEFT;
   binding2.key = Apsis::Key::JOY_POV_LEFT;
-  _input->keyBindings()->registerEvent("Move left",  Apsis::Action::PLAYER_1_LEFT, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move left",  Apsis::Registry::Action::id("left"), &binding, &binding2);
   binding.key = Apsis::Key::RIGHT;
   binding2.key = Apsis::Key::JOY_POV_RIGHT;
-  _input->keyBindings()->registerEvent("Move right", Apsis::Action::PLAYER_1_RIGHT, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move right", Apsis::Registry::Action::id("right"), &binding, &binding2);
   binding.key = Apsis::Key::UP;
   binding2.key = Apsis::Key::JOY_POV_UP;
-  _input->keyBindings()->registerEvent("Move up",    Apsis::Action::PLAYER_1_UP, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move up",    Apsis::Registry::Action::id("up"), &binding, &binding2);
   binding.key = Apsis::Key::DOWN;
   binding2.key = Apsis::Key::JOY_POV_DOWN;
-  _input->keyBindings()->registerEvent("Move down",  Apsis::Action::PLAYER_1_DOWN, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Move down",  Apsis::Registry::Action::id("down"), &binding, &binding2);
   binding.key = Apsis::Key::Z;
   binding2.key = Apsis::Key::JOY_0;
-  _input->keyBindings()->registerEvent("Jump",  Apsis::Action::PLAYER_1_JUMP, &binding, &binding2);
+  _input->keyBindings()->registerEvent("Jump",  Apsis::Registry::Action::id("jump"), &binding, &binding2);
   binding.key = Apsis::Key::EQUALS;
   binding2.key = Apsis::Key::NONE;
   _input->keyBindings()->registerEvent("Zoom in",  ZOOM_IN, &binding, &binding2);
@@ -145,17 +147,18 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 void Apsis::Engine::TopDown2d::run() {
   Apsis::Clock clock;
 
-  int event;
   Apsis::Event core_event;
 
   while(true) {
     if (_backend.poll(core_event)) {
-      event = _input->post(core_event);
-      if (event == Apsis::InputEngine::QUIT_EVENT) {
-        break;
-      }
-      else if (event) {
-        _fireEvent(event);
+      int action;
+      if (_input->post(core_event, action)) {
+        if (action == Apsis::InputEngine::QUIT_EVENT) {
+          break;
+        }
+        else if (action) {
+          _fireEvent(action);
+        }
       }
     }
     _update(clock.elapsedTime());

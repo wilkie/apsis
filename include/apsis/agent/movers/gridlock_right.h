@@ -22,6 +22,8 @@ namespace Apsis {
       private:
         InputEngine* _inputEngine;
 
+        unsigned int _rightAction;
+
         unsigned int _movingUpState;
         unsigned int _movingLeftState;
         unsigned int _movingRightState;

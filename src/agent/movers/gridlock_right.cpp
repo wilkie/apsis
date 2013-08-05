@@ -1,10 +1,13 @@
 #include "apsis/agent/movers/gridlock_right.h"
 
 #include "apsis/registry/state.h"
+#include "apsis/registry/action.h"
 
 Apsis::Agent::Movers::GridlockRight::GridlockRight(Apsis::InputEngine& inputEngine)
   : Apsis::Agent::Mover("can move right locked along a grid") {
   _inputEngine = &inputEngine;
+
+  _rightAction = Apsis::Registry::Action::id("right");
 
   _movingLeftState  = Apsis::Registry::State::id("movingLeft");
   _movingUpState    = Apsis::Registry::State::id("movingUp");
@@ -24,7 +27,7 @@ bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
     return false;
   }
 
-  if (_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_RIGHT)) {
+  if (_inputEngine->isEventHeld(_rightAction)) {
     if (states.count(_movingRightState) == 0) {
       states.insert(_movingRightState);
     }

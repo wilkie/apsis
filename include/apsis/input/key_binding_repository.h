@@ -52,10 +52,10 @@ namespace Apsis {
                            KeyBinding* secondary);
 
       /*
-       *  Returns the event identifier that corresponds to the given key
-       *    binding.
+       *  Determines the event identifier that corresponds to the given key
+       *  binding. Returns true if the binding was resolved.
        */
-      int yieldEvent(KeyBinding& binding);
+      bool yieldEvent(KeyBinding& binding, int& event);
 
     private:
       // Stores all of the bindings

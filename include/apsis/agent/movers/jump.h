@@ -25,6 +25,8 @@ namespace Apsis {
       private:
         InputEngine* _inputEngine;
 
+        unsigned int _jumpAction;
+
         float _maximumHeight;
 
         float _startingVelocity;

@@ -1,6 +1,7 @@
 #include "apsis/agent/movers/gridlock_up.h"
 
 #include "apsis/registry/state.h"
+#include "apsis/registry/action.h"
 
 Apsis::Agent::Movers::GridlockUp::GridlockUp(Apsis::InputEngine& inputEngine)
   : Apsis::Agent::Mover("can move up locked along a grid") {
@@ -10,6 +11,8 @@ Apsis::Agent::Movers::GridlockUp::GridlockUp(Apsis::InputEngine& inputEngine)
   _movingUpState    = Apsis::Registry::State::id("movingUp");
   _movingRightState = Apsis::Registry::State::id("movingRight");
   _movingDownState  = Apsis::Registry::State::id("movingDown");
+
+  _upAction = Apsis::Registry::Action::id("up");
 }
 
 bool Apsis::Agent::Movers::GridlockUp::update(float elapsed,
@@ -24,7 +27,7 @@ bool Apsis::Agent::Movers::GridlockUp::update(float elapsed,
     return false;
   }
 
-  if (_inputEngine->isEventHeld(Apsis::Action::PLAYER_1_UP)) {
+  if (_inputEngine->isEventHeld(_upAction)) {
     if (states.count(_movingUpState) == 0) {
       states.insert(_movingUpState);
     }

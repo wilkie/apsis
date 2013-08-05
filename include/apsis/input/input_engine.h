@@ -13,16 +13,6 @@
 #include <vector>
 
 namespace Apsis {
-  struct Action {
-    enum Actions {
-      PLAYER_1_LEFT = 0x1000,
-      PLAYER_1_RIGHT,
-      PLAYER_1_UP,
-      PLAYER_1_DOWN,
-      PLAYER_1_JUMP
-    };
-  };
-
   /*
    *  Handles mapping between keys and events allowing for flexible control
    *    over what keys or buttons are mapped to particular functions.
@@ -45,10 +35,11 @@ namespace Apsis {
       KeyBindingRepository* keyBindings();
 
       /*
-       *  Posts the input event and returns the bound event identifier
-       *    for any action that has been triggered.
+       *  Posts the input event and determines the bound Action identifier
+       *  for any action that has been triggered. Returns true when an
+       *  Action is triggered.
        */
-      int post(Apsis::Event& event);
+      bool post(Apsis::Event& event, int& action);
 
       /*
        *  Returns true when the given event is pressed.

@@ -21,6 +21,8 @@ namespace Apsis {
       private:
         InputEngine* _inputEngine;
 
+        unsigned int _upAction;
+
         float _speed;
       };
     }
