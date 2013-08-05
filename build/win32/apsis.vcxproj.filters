@@ -608,6 +608,9 @@
     <ClCompile Include="..\..\src\registry\state.cpp">
       <Filter>registry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\registry\action.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1275,6 +1278,9 @@
       <Filter>registry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\state.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\action.h">
       <Filter>registry</Filter>
     </ClInclude>
   </ItemGroup>
