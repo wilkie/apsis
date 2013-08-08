@@ -65,12 +65,12 @@ void Apsis::Primitives::SpriteSheet::_loadStatSheet(const char* filename) {
     Sprite* sprite = new Sprite;
 
     strcpy(sprite->name, (*it)["name"].asCString());
-    sprite->x        = (float)(*it)["x"].asDouble();
-    sprite->y        = (float)(*it)["y"].asDouble();
-    sprite->width    = (float)(*it)["width"].asDouble();
-    sprite->height   = (float)(*it)["height"].asDouble();
-    sprite->center_x = (float)(*it)["center_x"].asDouble();
-    sprite->center_y = (float)(*it)["center_y"].asDouble();
+    sprite->x        = (unsigned int)(*it)["x"].asUInt();
+    sprite->y        = (unsigned int)(*it)["y"].asUInt();
+    sprite->width    = (unsigned int)(*it)["width"].asUInt();
+    sprite->height   = (unsigned int)(*it)["height"].asUInt();
+    sprite->center_x = (unsigned int)(*it)["center_x"].asUInt();
+    sprite->center_y = (unsigned int)(*it)["center_y"].asUInt();
 
     _sprites.push_back(sprite);
   }
