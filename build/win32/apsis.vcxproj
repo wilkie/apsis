@@ -237,6 +237,7 @@
     <ClCompile Include="..\..\src\support\assimp\XFileImporter.cpp" />
     <ClCompile Include="..\..\src\support\assimp\XFileParser.cpp" />
     <ClCompile Include="..\..\src\support\assimp\XGLLoader.cpp" />
+    <ClCompile Include="..\..\src\support\clew\clew.c" />
     <ClCompile Include="..\..\src\support\clipper\clipper.cpp" />
     <ClCompile Include="..\..\src\support\ConvertUTF\ConvertUTF.c" />
     <ClCompile Include="..\..\src\support\glew\glew.c" />

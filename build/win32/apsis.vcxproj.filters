@@ -611,6 +611,9 @@
     <ClCompile Include="..\..\src\registry\action.cpp">
       <Filter>registry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\support\clew\clew.c">
+      <Filter>support\clew</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1371,6 +1374,9 @@
     </Filter>
     <Filter Include="registry">
       <UniqueIdentifier>{e586e9bb-3c2f-49a6-887b-50b0839972ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\clew">
+      <UniqueIdentifier>{ecea4f1b-faf0-4b76-bb0f-a387732dc8e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
