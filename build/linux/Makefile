@@ -22,22 +22,26 @@ OBJS=${OBJS_CPP} ${OBJS_C} ${OBJS_CC}
 
 LIBS_CMD=$(patsubst %,-l%,$(LIBS))
 
+DEADCODE_ELIM_FLAGS=-fdata-sections -ffunction-sections
+
+CFLAGS=-O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
+
 all: bin/apsis
 
 bin/apsis: bin ${OBJS}
-	${LD} -o bin/apsis ${OBJS} ${LIBS_CMD}
+	${LD} -o bin/apsis ${OBJS} ${LIBS_CMD} -Wl,--gc-sections -Wl,-s
 
 objs/%.o: ${FILEPATH}/%.cc objs
 	@mkdir -p $(dir $@)
-	${CC} -o $@ -c $< -I ${INCLUDE} -O3 -masm=intel
+	${CC} -o $@ -c $< -I ${INCLUDE} ${CFLAGS}
 
 objs/%.o: ${FILEPATH}/%.c objs
 	@mkdir -p $(dir $@)
-	${CC} -o $@ -c $< -I ${INCLUDE} -O3 -masm=intel
+	${CC} -o $@ -c $< -I ${INCLUDE} ${CFLAGS}
 
 objs/%.o: ${FILEPATH}/%.cpp objs
 	@mkdir -p $(dir $@)
-	${CPPC} -o $@ -c $< -I ${INCLUDE} -O3 -masm=intel
+	${CPPC} -o $@ -c $< -I ${INCLUDE} ${CFLAGS}
 
 objs:
 	mkdir -p objs
