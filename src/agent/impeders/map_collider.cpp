@@ -17,7 +17,7 @@ Apsis::Agent::Impeders::MapCollider::MapCollider(Apsis::World::Map* map)
   _collideWithBottomState = Apsis::Registry::State::id("collideWithBottom");
 }
 
-bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
+bool Apsis::Agent::Impeders::MapCollider::update(Apsis::World::Object& object,
                                                  Apsis::Geometry::Rectangle& from,
                                                  Apsis::Geometry::Point& to) {
   // For every point px, py in the set of 4 defined by given Rectangle
@@ -54,19 +54,19 @@ bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
   }
 
   if (!_canFall(from)) {
-    states.insert(_collideWithTopState);
+    object.enableState(_collideWithTopState);
   }
 
   if (!_canJump(from)) {
-    states.insert(_collideWithBottomState);
+    object.enableState(_collideWithBottomState);
   }
 
   if (_againstWall(from, true)) {
-    states.insert(_collideWithLeftState);
+    object.enableState(_collideWithLeftState);
   }
 
   if (_againstWall(from, false)) {
-    states.insert(_collideWithRightState);
+    object.enableState(_collideWithRightState);
   }
 
   // Assume we can move the entire way
@@ -97,7 +97,7 @@ bool Apsis::Agent::Impeders::MapCollider::update(std::set<unsigned int>& states,
         if (edge > 0) {
           if (edge == 3) {
             if (!(tMin == 0.0 || tMax == 1.0)) {
-              //states.insert(_collideWithTopState);
+              //object.enableState(_collideWithTopState);
             }
           }
 

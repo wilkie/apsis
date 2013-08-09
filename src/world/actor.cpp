@@ -239,7 +239,7 @@ void Apsis::World::Actor::update(float elapsed) {
   to.y = _position.y;
 
   for (unsigned int i = 0; i < _moverAgents.size(); i++) {
-    if (_moverAgents[i]->update(elapsed, _object._states, _position, to)) {
+    if (_moverAgents[i]->update(elapsed, _object, _position, to)) {
       this->move(to);
     }
   }
@@ -247,7 +247,7 @@ void Apsis::World::Actor::update(float elapsed) {
 
 void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
   for (unsigned int i = 0; i < _impederAgents.size(); i++) {
-    _impederAgents[i]->update(_object._states, _position, to);
+    _impederAgents[i]->update(_object, _position, to);
   }
 
   _position.x = (float)to.x;

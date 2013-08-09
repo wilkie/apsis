@@ -15,7 +15,7 @@ namespace Apsis {
         Up(Apsis::InputEngine& inputEngine,
            float speed);
         virtual bool update(float elapsed,
-                            std::set<unsigned int>& states,
+                            Apsis::World::Object& object,
                             const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
       private:

@@ -24,7 +24,7 @@ namespace Apsis {
         /*
           *  Update intended point and return reason for change.
           */
-        virtual bool update(std::set<unsigned int>& states,
+        virtual bool update(Apsis::World::Object& object,
                             Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& intended);
         virtual const char* rule();

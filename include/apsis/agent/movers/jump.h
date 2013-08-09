@@ -19,7 +19,7 @@ namespace Apsis {
              float peakDeacceleration,
              float minimumVelocity);
         virtual bool update(float elapsed,
-                            std::set<unsigned int>& states,
+                            Apsis::World::Object& object,
                             const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
       private:

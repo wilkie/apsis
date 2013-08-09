@@ -5,7 +5,7 @@
 Apsis::Agent::Impeder::Impeder() {
 }
 
-bool Apsis::Agent::Impeder::update(std::set<unsigned int>& states,
+bool Apsis::Agent::Impeder::update(Apsis::World::Object& object,
                                    Apsis::Geometry::Rectangle& original,
                                    Apsis::Geometry::Point& intended) {
   return false;

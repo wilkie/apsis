@@ -18,7 +18,7 @@ namespace Apsis {
            Apsis::Agent::Mover* second);
 
         virtual bool update(float elapsed,
-                            std::set<unsigned int>& states,
+                            Apsis::World::Object& object,
                             const Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& updated);
       private:

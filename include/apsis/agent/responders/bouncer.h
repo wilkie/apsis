@@ -14,7 +14,7 @@ namespace Apsis {
         Bouncer(float direction,
                 float speed);
 		
-        virtual bool uponEvent(std::set<unsigned int>& states,
+        virtual bool uponEvent(Apsis::World::Object& object,
                                Apsis::Geometry::Rectangle& original,
                                Apsis::Geometry::Point& intended);
       private:

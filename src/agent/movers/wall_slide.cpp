@@ -21,21 +21,21 @@ Apsis::Agent::Movers::WallSlide::WallSlide(float startingVelocity,
 }
 
 bool Apsis::Agent::Movers::WallSlide::update(float elapsed,
-                                             std::set<unsigned int>& states,
+                                             Apsis::World::Object& object,
                                              const Apsis::Geometry::Rectangle& original,
                                              Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
-  if (states.count(_collideWithLeftState) == 0 &&
-      states.count(_collideWithRightState) == 0) {
+  if (!object.isEnabled(_collideWithLeftState) &&
+      !object.isEnabled(_collideWithRightState)) {
     _velocity = _startingVelocity;
   }
 
-  if ((states.count(_jumpingState) == 0) &&
-      ((states.count(_collideWithLeftState) > 0) ||
-       (states.count(_collideWithRightState) > 0))) {
-    states.erase(_collideWithLeftState);
-    states.erase(_collideWithRightState);
+  if ((!object.isEnabled(_jumpingState)) &&
+      ((object.isEnabled(_collideWithLeftState)) ||
+       (object.isEnabled(_collideWithRightState)))) {
+    object.disableState(_collideWithLeftState);
+    object.disableState(_collideWithRightState);
 
     _velocity += _acceleration * elapsed;
     if (_velocity > _terminalVelocity) {

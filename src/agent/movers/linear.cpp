@@ -7,7 +7,7 @@ Apsis::Agent::Movers::Linear::Linear(float direction, float speed)
 }
 
 bool Apsis::Agent::Movers::Linear::update(float elapsed,
-                                          std::set<unsigned int>& states,
+                                          Apsis::World::Object& object,
                                           const Apsis::Geometry::Rectangle& original,
                                           Apsis::Geometry::Point& updated) {
   updated = original.center();

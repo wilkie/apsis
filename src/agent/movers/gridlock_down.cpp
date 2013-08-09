@@ -16,26 +16,26 @@ Apsis::Agent::Movers::GridlockDown::GridlockDown(Apsis::InputEngine& inputEngine
 }
 
 bool Apsis::Agent::Movers::GridlockDown::update(float elapsed,
-                                                std::set<unsigned int>& states,
+                                                Apsis::World::Object& object,
                                                 const Apsis::Geometry::Rectangle& original,
                                                 Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
-  if (states.count(_movingLeftState)  +
-      states.count(_movingRightState) +
-      states.count(_movingUpState) > 0) {
+  if (object.isEnabled(_movingLeftState)  ||
+      object.isEnabled(_movingRightState) ||
+      object.isEnabled(_movingUpState)) {
     return false;
   }
 
   if (_inputEngine->isEventHeld(_downAction)) {
-    if (states.count(_movingDownState) == 0) {
-      states.insert(_movingDownState);
+    if (!object.isEnabled(_movingDownState)) {
+      object.enableState(_movingDownState);
     }
     updated.y += elapsed * 96.0f;
 
     return true;
   }
-  else if (states.count(_movingDownState) != 0) {
+  else if (object.isEnabled(_movingDownState)) {
     updated.y += elapsed * 96.0f;
 
     float from_grid_0 = floor((float)original.y / 32.0f);
@@ -43,7 +43,7 @@ bool Apsis::Agent::Movers::GridlockDown::update(float elapsed,
     
     if (from_grid_1 > from_grid_0) {
       updated.y = from_grid_1 * 32.0f;
-      states.erase(_movingDownState);
+      object.disableState(_movingDownState);
     }
 
     return true;

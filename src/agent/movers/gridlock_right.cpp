@@ -16,26 +16,26 @@ Apsis::Agent::Movers::GridlockRight::GridlockRight(Apsis::InputEngine& inputEngi
 }
 
 bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
-                                                std::set<unsigned int>& states,
+                                                Apsis::World::Object& object,
                                                 const Apsis::Geometry::Rectangle& original,
                                                 Apsis::Geometry::Point& updated) {
   updated.x = original.x;
 
-  if (states.count(_movingLeftState) +
-      states.count(_movingUpState)   +
-      states.count(_movingDownState) > 0) {
+  if (object.isEnabled(_movingLeftState) ||
+      object.isEnabled(_movingUpState)   ||
+      object.isEnabled(_movingDownState)) {
     return false;
   }
 
   if (_inputEngine->isEventHeld(_rightAction)) {
-    if (states.count(_movingRightState) == 0) {
-      states.insert(_movingRightState);
+    if (!object.isEnabled(_movingRightState)) {
+      object.enableState(_movingRightState);
     }
     updated.x += elapsed * 96.0f;
 
     return true;
   }
-  else if (states.count(_movingRightState) != 0) {
+  else if (object.isEnabled(_movingRightState)) {
     updated.x += elapsed * 96.0f;
 
     float from_grid_0 = floor((float)original.x / 32.0f);
@@ -43,7 +43,7 @@ bool Apsis::Agent::Movers::GridlockRight::update(float elapsed,
     
     if (from_grid_1 > from_grid_0) {
       updated.x = from_grid_1 * 32.0f;
-      states.erase(_movingRightState);
+      object.disableState(_movingRightState);
     }
 
     return true;

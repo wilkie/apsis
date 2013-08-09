@@ -6,6 +6,8 @@
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
+#include "apsis/world/object.h"
+
 #include <set>
 
 namespace Apsis {
@@ -17,7 +19,7 @@ namespace Apsis {
       /*
        *  Update intended point and return reason for change.
        */
-      virtual bool uponEvent(std::set<unsigned int>& states,
+      virtual bool uponEvent(Apsis::World::Object& object,
                              Apsis::Geometry::Rectangle& original,
                              Apsis::Geometry::Point& intended);
 

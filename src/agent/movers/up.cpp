@@ -11,7 +11,7 @@ Apsis::Agent::Movers::Up::Up(Apsis::InputEngine& inputEngine,
 }
 
 bool Apsis::Agent::Movers::Up::update(float elapsed,
-                                      std::set<unsigned int>& states,
+                                      Apsis::World::Object& object,
                                       const Apsis::Geometry::Rectangle& original,
                                       Apsis::Geometry::Point& updated) {
   updated.y = original.y;

@@ -29,37 +29,37 @@ Apsis::Agent::Movers::Jump::Jump(Apsis::InputEngine& inputEngine,
 }
 
 bool Apsis::Agent::Movers::Jump::update(float elapsed,
-                                        std::set<unsigned int>& states,
+                                        Apsis::World::Object& object,
                                         const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
-  if (states.count(_collideWithTopState) > 0 &&
-      states.count(_jumpingState) == 0) {
+  if (object.isEnabled(_collideWithTopState) &&
+      !object.isEnabled(_jumpingState)) {
     // If we detect we are landed, allow jump.
     _velocity = _startingVelocity;
     _height = 0.0f;
     if (!_inputEngine->isEventHeld(_jumpAction)) {
-      states.insert(_canJumpState);
+      object.enableState(_canJumpState);
     }
   }
   
-  if (states.count(_collideWithBottomState) > 0) {
+  if (object.isEnabled(_collideWithBottomState)) {
     // Release jump upon hitting a ceiling.
-    states.erase(_jumpingState);
-    states.erase(_canJumpState);
-    states.erase(_collideWithBottomState);
+    object.disableState(_jumpingState);
+    object.disableState(_canJumpState);
+    object.disableState(_collideWithBottomState);
     return false;
   }
-  else if (states.count(_canJumpState) == 0 &&
-           states.count(_jumpingState) == 0) {
+  else if (!object.isEnabled(_canJumpState) &&
+           !object.isEnabled(_jumpingState)) {
     // Do not allow double jumps.
   }
   else if (_inputEngine->isEventHeld(_jumpAction) &&
-           states.count(_canJumpState) > 0) {
+           object.isEnabled(_canJumpState)) {
     // While key is held, jump until maximum height.
-    states.insert(_jumpingState);
-    states.erase(_collideWithTopState);
+    object.enableState(_jumpingState);
+    object.disableState(_collideWithTopState);
 
     float amount = elapsed * _velocity;
 
@@ -67,7 +67,7 @@ bool Apsis::Agent::Movers::Jump::update(float elapsed,
     if (_height > _maximumHeight) {
       // Do not allow a jump after our maximum height has been reached.
       amount = _maximumHeight - _height;
-      states.erase(_canJumpState);
+      object.disableState(_canJumpState);
     }
 
     updated.y -= amount;
@@ -78,9 +78,9 @@ bool Apsis::Agent::Movers::Jump::update(float elapsed,
     }
     return true;
   }
-  else if (states.count(_jumpingState) > 0) {
+  else if (object.isEnabled(_jumpingState)) {
     // Released key, done jumping, deaccelerate.
-    states.erase(_canJumpState);
+    object.disableState(_canJumpState);
 
     if (_velocity > 0) {
       _velocity -= _peakDeacceleration * elapsed;
@@ -88,7 +88,7 @@ bool Apsis::Agent::Movers::Jump::update(float elapsed,
       return true;
     }
     else {
-      states.erase(_jumpingState);
+      object.disableState(_jumpingState);
       _velocity = _startingVelocity;
       _height = 0.0f;
     }

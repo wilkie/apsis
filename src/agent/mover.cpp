@@ -1,6 +1,6 @@
-#include "apsis/agent/mover.h"
+#include <apsis/agent/mover.h>
 
-#include "apsis/geometry/point.h"
+#include <apsis/geometry/point.h>
 
 #include <algorithm>
 
@@ -12,7 +12,7 @@ Apsis::Agent::Mover::Mover(const char* rule) :
 }
 
 bool Apsis::Agent::Mover::update(float elapsed,
-                                 std::set<unsigned int>& states,
+                                 Apsis::World::Object& object,
                                  const Apsis::Geometry::Rectangle& original,
                                  Apsis::Geometry::Point& updated) {
   return false;

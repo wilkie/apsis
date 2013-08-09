@@ -12,7 +12,7 @@ Apsis::Agent::Movers::Right::Right(Apsis::InputEngine& inputEngine,
 }
 
 bool Apsis::Agent::Movers::Right::update(float elapsed,
-                                         std::set<unsigned int>& states,
+                                         Apsis::World::Object& object,
                                          const Apsis::Geometry::Rectangle& original,
                                          Apsis::Geometry::Point& updated) {
   updated.x = original.x;

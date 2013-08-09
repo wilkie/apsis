@@ -18,17 +18,17 @@ Apsis::Agent::Movers::Fall::Fall(float startingVelocity,
 }
 
 bool Apsis::Agent::Movers::Fall::update(float elapsed,
-                                        std::set<unsigned int>& states,
+                                        Apsis::World::Object& object,
                                         const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
-  if (states.count(_collideWithTopState) > 0) {
+  if (object.isEnabled(_collideWithTopState)) {
     _velocity = _startingVelocity;
   }
 
-  if ((states.count(_jumpingState) == 0)) {
-    states.erase(_collideWithTopState);
+  if (!object.isEnabled(_jumpingState)) {
+    object.disableState(_collideWithTopState);
 
     _velocity += _acceleration * elapsed;
     if (_velocity > _terminalVelocity) {

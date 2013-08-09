@@ -21,7 +21,7 @@ namespace Apsis {
       class ActorCollider : public Apsis::Agent::Impeder {
       public:
         ActorCollider(std::vector<Apsis::World::Actor>& list);
-        virtual bool update(std::set<unsigned int>& states,
+        virtual bool update(Apsis::World::Object& object,
                             Apsis::Geometry::Point& original,
                             Apsis::Geometry::Point& intended);
         virtual const char* rule();

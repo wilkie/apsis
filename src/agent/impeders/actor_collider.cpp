@@ -4,7 +4,7 @@ Apsis::Agent::Impeders::ActorCollider::ActorCollider(std::vector<Apsis::World::A
   _actors = &list;
 }
 
-bool Apsis::Agent::Impeders::ActorCollider::update(std::set<unsigned int>& states,
+bool Apsis::Agent::Impeders::ActorCollider::update(Apsis::World::Object& object,
                                                    Apsis::Geometry::Point& original,
                                                    Apsis::Geometry::Point& intended) {
   // Collide with actors

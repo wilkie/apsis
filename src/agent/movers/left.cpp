@@ -11,7 +11,7 @@ Apsis::Agent::Movers::Left::Left(Apsis::InputEngine& inputEngine, float speed)
 }
 
 bool Apsis::Agent::Movers::Left::update(float elapsed,
-                                        std::set<unsigned int>& states,
+                                        Apsis::World::Object& object,
                                         const Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& updated) {
   updated.x = original.x;

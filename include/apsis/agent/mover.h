@@ -1,10 +1,12 @@
 #ifndef APSIS_AGENT_MOVER_H
 #define APSIS_AGENT_MOVER_H
 
-#include "apsis/world/map.h"
+#include <apsis/world/map.h>
 
-#include "apsis/geometry/rectangle.h"
-#include "apsis/geometry/point.h"
+#include <apsis/geometry/rectangle.h>
+#include <apsis/geometry/point.h>
+
+#include <apsis/world/object.h>
 
 #include <set>
 #include <string>
@@ -20,7 +22,7 @@ namespace Apsis {
        *  Update intended point and return reason for change.
        */
       virtual bool update(float elapsed,
-                          std::set<unsigned int>& states,
+                          Apsis::World::Object& object,
                           const Apsis::Geometry::Rectangle& original,
                           Apsis::Geometry::Point& updated);
 

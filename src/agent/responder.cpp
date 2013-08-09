@@ -10,7 +10,7 @@ Apsis::Agent::Responder::Responder(const char* rule) :
 }
 
 
-bool Apsis::Agent::Responder::uponEvent(std::set<unsigned int>& states,
+bool Apsis::Agent::Responder::uponEvent(Apsis::World::Object& object,
                                         Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& intended) {
   return false;

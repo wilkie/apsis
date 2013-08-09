@@ -8,13 +8,13 @@ Apsis::Agent::Movers::Or::Or(Apsis::Agent::Mover* first,
 }
 
 bool Apsis::Agent::Movers::Or::update(float elapsed,
-                                      std::set<unsigned int>& states,
+                                      Apsis::World::Object& object,
                                       const Apsis::Geometry::Rectangle& original,
                                       Apsis::Geometry::Point& updated) {
   bool moved = false;
 
   for (unsigned int i = 0; i < _movers.size(); i++) {
-    if (_movers[i]->update(elapsed, states, original, updated)) {
+    if (_movers[i]->update(elapsed, object, original, updated)) {
       return true;
     }
   }

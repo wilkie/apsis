@@ -34,15 +34,15 @@ Apsis::Agent::Movers::WallJump::WallJump(Apsis::InputEngine& inputEngine,
 }
 
 bool Apsis::Agent::Movers::WallJump::update(float elapsed,
-                                            std::set<unsigned int>& states,
+                                            Apsis::World::Object& object,
                                             const Apsis::Geometry::Rectangle& original,
                                             Apsis::Geometry::Point& updated) {
   updated.y = original.y;
 
-  if ((states.count(_collideWithLeftState) > 0 ||
-       states.count(_collideWithRightState) > 0) &&
-       states.count(_collideWithTopState) == 0 &&
-      states.count(_jumpingState) == 0) {
+  if ((object.isEnabled(_collideWithLeftState) ||
+       object.isEnabled(_collideWithRightState)) &&
+      !object.isEnabled(_collideWithTopState) &&
+      !object.isEnabled(_jumpingState)) {
     // If we detect we are on a wall, but not landed, allow jump.
     _velocity = _startingVelocity;
 
@@ -51,35 +51,35 @@ bool Apsis::Agent::Movers::WallJump::update(float elapsed,
     _height = 0.0f;
     _wallJumping = true;
     
-    _goingRight = states.count(_collideWithLeftState) > 0;
+    _goingRight = object.isEnabled(_collideWithLeftState);
 
     if (!_inputEngine->isEventHeld(_jumpAction)) {
-      states.insert(_canJumpState);
+      object.enableState(_canJumpState);
     }
   }
-  else if (states.count(_jumpingState) == 0) {
+  else if (!object.isEnabled(_jumpingState)) {
     _wallJumping = false;
   }
   
   if (_wallJumping) {
-    if (states.count(_collideWithBottomState) > 0) {
+    if (object.isEnabled(_collideWithBottomState)) {
       // Release jump upon hitting a ceiling.
-      states.erase(_jumpingState);
-      states.erase(_canJumpState);
-      states.erase(_collideWithBottomState);
+      object.disableState(_jumpingState);
+      object.disableState(_canJumpState);
+      object.disableState(_collideWithBottomState);
       return false;
     }
-    else if (states.count(_canJumpState) == 0 &&
-             states.count(_jumpingState) == 0) {
+    else if (!object.isEnabled(_canJumpState) &&
+             !object.isEnabled(_jumpingState)) {
       // Do not allow double jumps.
     }
     else if (_inputEngine->isEventHeld(_jumpAction) &&
-             states.count(_canJumpState) > 0) {
+             object.isEnabled(_canJumpState)) {
       // While key is held, jump until maximum height.
-      states.insert(_jumpingState);
-      states.erase(_collideWithLeftState);
-      states.erase(_collideWithRightState);
-      states.erase(_collideWithTopState);
+      object.enableState(_jumpingState);
+      object.disableState(_collideWithLeftState);
+      object.disableState(_collideWithRightState);
+      object.disableState(_collideWithTopState);
 
       float amount = elapsed * _velocity;
 
@@ -87,8 +87,8 @@ bool Apsis::Agent::Movers::WallJump::update(float elapsed,
       if (_height > _maximumHeight) {
         // Do not allow a jump after our maximum height has been reached.
         amount = _maximumHeight - _height;
-        states.erase(_canJumpState);
-        states.erase(_jumpingState);
+        object.disableState(_canJumpState);
+        object.disableState(_jumpingState);
       }
 
       updated.y -= amount;
@@ -102,8 +102,8 @@ bool Apsis::Agent::Movers::WallJump::update(float elapsed,
       _horizontalVelocity -= _horizontalDeacceleration * elapsed;
       if (_horizontalVelocity <= 0) {
         _horizontalVelocity = 0;
-        states.erase(_canJumpState);
-        states.erase(_jumpingState);
+        object.disableState(_canJumpState);
+        object.disableState(_jumpingState);
       }
       if (_goingRight) {
         updated.x += _horizontalVelocity * elapsed;
@@ -114,9 +114,9 @@ bool Apsis::Agent::Movers::WallJump::update(float elapsed,
 
       return true;
     }
-    else if (states.count(_jumpingState) > 0) {
+    else if (object.isEnabled(_jumpingState)) {
       // Released key, done jumping.
-      states.erase(_canJumpState);
+      object.disableState(_canJumpState);
     }
     else {
       _velocity = _startingVelocity;

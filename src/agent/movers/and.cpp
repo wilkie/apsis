@@ -1,4 +1,4 @@
-#include "apsis/agent/movers/and.h"
+#include <apsis/agent/movers/and.h>
 
 Apsis::Agent::Movers::And::And(Apsis::Agent::Mover* first,
                                Apsis::Agent::Mover* second)
@@ -8,7 +8,7 @@ Apsis::Agent::Movers::And::And(Apsis::Agent::Mover* first,
 }
 
 bool Apsis::Agent::Movers::And::update(float elapsed,
-                                       std::set<unsigned int>& states,
+                                       Apsis::World::Object& object,
                                        const Apsis::Geometry::Rectangle& original,
                                        Apsis::Geometry::Point& updated) {
   bool moved = false;
@@ -16,7 +16,7 @@ bool Apsis::Agent::Movers::And::update(float elapsed,
   Apsis::Geometry::Rectangle positioned = original;
 
   for (unsigned int i = 0; i < _movers.size(); i++) {
-    if (_movers[i]->update(elapsed, states, positioned, updated)) {
+    if (_movers[i]->update(elapsed, object, positioned, updated)) {
       positioned.x = updated.x;
       positioned.y = updated.y;
       moved = true;
