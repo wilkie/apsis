@@ -614,6 +614,12 @@
     <ClCompile Include="..\..\src\support\clew\clew.c">
       <Filter>support\clew</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\world\object.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\value.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1285,6 +1291,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\action.h">
       <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\object.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\value.h">
+      <Filter>world</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

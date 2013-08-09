@@ -19,10 +19,13 @@
 #include <apsis/agent/impeder.h>
 #include <apsis/agent/mover.h>
 #include <apsis/geometry/rectangle.h>
+#include <apsis/world/object.h>
 
-#include "apsis/primitives/camera.h"
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include <apsis/primitives/camera.h>
+#include <apsis/primitives/vertex_array.h>
+#include <apsis/primitives/vertex_buffer.h>
+
+#include <apsis/registry/property.h>
 
 #include <vector>
 #include <set>
@@ -111,6 +114,9 @@ namespace Apsis {
         char* rules();
 
       private:
+        // The Object composition of this Actor.
+        Apsis::World::Object _object;
+
         // Parses the given json via the path given in jsonFile.
         void _parseJSONFile(const char* jsonFile);
 
@@ -125,9 +131,6 @@ namespace Apsis {
 
         // Stores all possible states for the Actor.
         std::vector<char*> _states;
-
-        // States the Actor current has enabled.
-        std::set<unsigned int> _currentStates;
 
         // Stores the current state of the character. State
         // determines how the character updates.

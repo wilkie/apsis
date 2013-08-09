@@ -272,8 +272,10 @@
     <ClCompile Include="..\..\src\world\background.cpp" />
     <ClCompile Include="..\..\src\world\map.cpp" />
     <ClCompile Include="..\..\src\world\actor.cpp" />
+    <ClCompile Include="..\..\src\world\object.cpp" />
     <ClCompile Include="..\..\src\world\terrain.cpp" />
     <ClCompile Include="..\..\src\world\tile.cpp" />
+    <ClCompile Include="..\..\src\world\value.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis.h" />
@@ -338,8 +340,10 @@
     <ClInclude Include="..\..\include\apsis\world\background.h" />
     <ClInclude Include="..\..\include\apsis\world\map.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h" />
+    <ClInclude Include="..\..\include\apsis\world\object.h" />
     <ClInclude Include="..\..\include\apsis\world\terrain.h" />
     <ClInclude Include="..\..\include\apsis\world\tile.h" />
+    <ClInclude Include="..\..\include\apsis\world\value.h" />
     <ClInclude Include="..\..\include\SOIL.h" />
     <ClInclude Include="..\..\src\support\assimp\3DSHelper.h" />
     <ClInclude Include="..\..\src\support\assimp\3DSLoader.h" />
