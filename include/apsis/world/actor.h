@@ -130,9 +130,6 @@ namespace Apsis {
       // The current position of the Actor in the world.
       Apsis::Geometry::Rectangle _position;
 
-      // Stores the current movement rate of the Actor.
-      double _moveRate;
-
       // Stores all possible states for the Actor.
       std::vector<char*> _states;
 
