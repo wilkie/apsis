@@ -149,6 +149,7 @@ void Apsis::World::Actor::draw(glm::mat4& projection,
 }
 
 char* Apsis::World::Actor::rules() {
+  // TODO: build with std::string
   char* ret = new char[1024];
 
   strcpy(ret, "");
