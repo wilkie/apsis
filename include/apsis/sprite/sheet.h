@@ -1,12 +1,12 @@
-#ifndef APSIS_PRIMITIVES_SPRITE_SHEET_H
-#define APSIS_PRIMITIVES_SPRITE_SHEET_H
+#ifndef APSIS_SPRITE_SHEET_H
+#define APSIS_SPRITE_SHEET_H
 
 #include "apsis/primitives/texture.h"
 
 #include <vector>
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Sprite {
     /*
      *  Describes an individual sprite on a Badger::SpriteSheet
      */
@@ -51,7 +51,7 @@ namespace Apsis {
      *  Loads an image comprised of many sprites and handles calculations of
      *    texture coordinates.
      */
-    class SpriteSheet {
+    class Sheet {
       public:
         /*
          *  Constructs a Badger::SpriteSheet by loading the image located in
@@ -59,12 +59,12 @@ namespace Apsis {
          *    exists by looking for a file with the same name with a 'txt'
          *    extension.
          */
-        SpriteSheet(const char* filename);
+        Sheet(const char* filename);
 
         /*
          *  Deconstructor
          */
-        ~SpriteSheet();
+        ~Sheet();
 
         /*
          *  Returns: The Texture for this SpriteSheet.

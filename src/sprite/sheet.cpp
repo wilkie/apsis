@@ -1,4 +1,4 @@
-#include "apsis/primitives/sprite_sheet.h"
+#include "apsis/sprite/sheet.h"
 
 #ifndef NO_GL
   #ifdef _WIN32
@@ -17,13 +17,13 @@
 #include <fstream>
 #include <json/json.h>
 
-Apsis::Primitives::SpriteSheet::~SpriteSheet() {
+Apsis::Sprite::Sheet::~Sheet() {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     delete _sprites[i];
   }
 }
 
-Apsis::Primitives::SpriteSheet::SpriteSheet(const char* filename) {
+Apsis::Sprite::Sheet::Sheet(const char* filename) {
   _texture = new Apsis::Primitives::Texture(filename);
   _width = _texture->width();
   _height = _texture->height();
@@ -34,7 +34,7 @@ Apsis::Primitives::SpriteSheet::SpriteSheet(const char* filename) {
   _loadStatSheet(filename);
 }
 
-char* Apsis::Primitives::SpriteSheet::_determineStatSheetFilename(const char* filename) {
+char* Apsis::Sprite::Sheet::_determineStatSheetFilename(const char* filename) {
   char* stat_sheet = new char[strlen(filename)+3];
   strncpy(stat_sheet, filename, strlen(filename));
 
@@ -49,7 +49,7 @@ char* Apsis::Primitives::SpriteSheet::_determineStatSheetFilename(const char* fi
   return stat_sheet;
 }
 
-void Apsis::Primitives::SpriteSheet::_loadStatSheet(const char* filename) {
+void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
   char* stat_sheet = _determineStatSheetFilename(filename);
 
   Json::Reader reader;
@@ -78,11 +78,11 @@ void Apsis::Primitives::SpriteSheet::_loadStatSheet(const char* filename) {
   delete [] stat_sheet;
 }
 
-Apsis::Primitives::Texture* Apsis::Primitives::SpriteSheet::texture() {
+Apsis::Primitives::Texture* Apsis::Sprite::Sheet::texture() {
   return _texture;
 }
 
-void Apsis::Primitives::SpriteSheet::textureCoordinates(unsigned int index, float coords[4]) {
+void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) {
   Sprite* sprite = _sprites[index];
 
   float tu = ((float)sprite->x + 0.1f)  / (float)_width;
@@ -106,7 +106,7 @@ void Apsis::Primitives::SpriteSheet::textureCoordinates(unsigned int index, floa
   coords[3] = (float)tv2;
 }
 
-bool Apsis::Primitives::SpriteSheet::textureCoordinates(const char* name, float coords[4]) {
+bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4]) {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     if (strncmp(name, _sprites[i]->name, 64) == 0) {
       textureCoordinates(i, coords);
@@ -116,11 +116,11 @@ bool Apsis::Primitives::SpriteSheet::textureCoordinates(const char* name, float 
   return false;
 }
 
-Apsis::Primitives::Sprite* Apsis::Primitives::SpriteSheet::sprite(unsigned int index) {
+Apsis::Sprite::Sprite* Apsis::Sprite::Sheet::sprite(unsigned int index) {
   return _sprites[index];
 }
 
-Apsis::Primitives::Sprite* Apsis::Primitives::SpriteSheet::sprite(const char* name) {
+Apsis::Sprite::Sprite* Apsis::Sprite::Sheet::sprite(const char* name) {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     if (strncmp(name, _sprites[i]->name, 64) == 0) {
       return _sprites[i];
@@ -129,7 +129,7 @@ Apsis::Primitives::Sprite* Apsis::Primitives::SpriteSheet::sprite(const char* na
   return NULL;
 }
 
-int Apsis::Primitives::SpriteSheet::enumerateSprites(const char* wildcard, unsigned int last) {
+int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int last) {
   int star_pos = -1;
 
   // Determine where the '*' is in the wildcard
@@ -166,6 +166,6 @@ int Apsis::Primitives::SpriteSheet::enumerateSprites(const char* wildcard, unsig
   return -1;
 }
 
-unsigned int Apsis::Primitives::SpriteSheet::count() {
+unsigned int Apsis::Sprite::Sheet::count() {
   return _sprites.size();
 }

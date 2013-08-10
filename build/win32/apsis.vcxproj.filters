@@ -61,9 +61,6 @@
     <ClCompile Include="..\..\src\primitives\program.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\primitives\sprite_sheet.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\primitives\texture.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
@@ -620,6 +617,15 @@
     <ClCompile Include="..\..\src\world\value.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\world\scene.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registry\actor.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sprite\sheet.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1144,9 +1150,6 @@
     <ClInclude Include="..\..\include\apsis\primitives\program.h">
       <Filter>primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\sprite_sheet.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\primitives\texture.h">
       <Filter>primitives</Filter>
     </ClInclude>
@@ -1298,6 +1301,15 @@
     <ClInclude Include="..\..\include\apsis\world\value.h">
       <Filter>world</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\scene.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\actor.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sprite\sheet.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="agent">
@@ -1389,6 +1401,9 @@
     </Filter>
     <Filter Include="support\clew">
       <UniqueIdentifier>{ecea4f1b-faf0-4b76-bb0f-a387732dc8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sprite">
+      <UniqueIdentifier>{a360e82b-3fc2-4307-81b5-9cf344340d2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

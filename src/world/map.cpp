@@ -13,7 +13,7 @@ Apsis::World::Map::Map(unsigned int width,
                        unsigned int height,
                        float tileWidth,
                        float tileHeight,
-                       Apsis::Primitives::SpriteSheet* spriteSheet) :
+                       Apsis::Sprite::Sheet* spriteSheet) :
                    _width(width),
                    _height(height),
                    _tileWidth(tileWidth),
@@ -72,7 +72,7 @@ Apsis::World::Map::Map(unsigned int width,
 
       float coords[4];
       _spriteSheet->textureCoordinates(_tiles[ti].spriteIndex(), coords);
-      Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(_tiles[ti].spriteIndex());
+      Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(_tiles[ti].spriteIndex());
       ti++;
 
       _vertices[i * 5 + 0] = (float)w*_tileWidth;
@@ -160,7 +160,7 @@ Apsis::World::Tile* Apsis::World::Map::tile(unsigned int x, unsigned int y) {
   return &_tiles[(y * _width) + x];
 }
 
-Apsis::Primitives::SpriteSheet* Apsis::World::Map::spriteSheet() {
+Apsis::Sprite::Sheet* Apsis::World::Map::spriteSheet() {
   return _spriteSheet;
 }
 

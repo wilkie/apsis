@@ -17,8 +17,8 @@ bool Apsis::Agent::Movers::And::update(float elapsed,
 
   for (unsigned int i = 0; i < _movers.size(); i++) {
     if (_movers[i]->update(elapsed, object, positioned, updated)) {
-      positioned.x = updated.x;
-      positioned.y = updated.y;
+      positioned.x = (float)updated.x;
+      positioned.y = (float)updated.y;
       moved = true;
     }
   }

@@ -13,7 +13,7 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-Apsis::Hud::Numbers::Numbers(Apsis::Primitives::SpriteSheet* spriteSheet,
+Apsis::Hud::Numbers::Numbers(Apsis::Sprite::Sheet* spriteSheet,
                              unsigned int startIndex,
                              float x, float y) 
   : _spriteSheet(spriteSheet),
@@ -38,7 +38,7 @@ Apsis::Hud::Numbers::Numbers(Apsis::Primitives::SpriteSheet* spriteSheet,
   for (unsigned int si = _startIndex; si < (_startIndex + 10) && si < sprite_count; si++) {
     float coords[4];
     _spriteSheet->textureCoordinates(si, coords);
-    Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(si); 
+    Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(si); 
 
     _vertices[i * 5 + 0] = -(float)sprite->center_x;
     _vertices[i * 5 + 1] = 0.0f;
@@ -114,7 +114,7 @@ Apsis::Hud::Numbers::Numbers(Apsis::Primitives::SpriteSheet* spriteSheet,
   value(0);
 }
 
-Apsis::Primitives::SpriteSheet* Apsis::Hud::Numbers::spriteSheet() {
+Apsis::Sprite::Sheet* Apsis::Hud::Numbers::spriteSheet() {
   return _spriteSheet;
 }
 
@@ -140,7 +140,7 @@ void Apsis::Hud::Numbers::draw(glm::mat4& projection,
     unsigned int digit = tmp % 10;
     tmp /= 10;
 
-    Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(_startIndex + digit);
+    Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(_startIndex + digit);
 
     x -= sprite->width;
 
@@ -162,7 +162,7 @@ void Apsis::Hud::Numbers::_calculateSize() {
     unsigned int digit = tmp % 10;
     tmp /= 10;
 
-    Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(_startIndex + digit);
+    Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(_startIndex + digit);
 
     _position.width += sprite->width;
     if (sprite->height > _position.height) {

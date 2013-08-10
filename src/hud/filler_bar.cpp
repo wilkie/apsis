@@ -13,7 +13,7 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-Apsis::Hud::FillerBar::FillerBar(Apsis::Primitives::SpriteSheet* spriteSheet,
+Apsis::Hud::FillerBar::FillerBar(Apsis::Sprite::Sheet* spriteSheet,
                              unsigned int startIndex,
                              unsigned int stages,
                              unsigned int count,
@@ -42,7 +42,7 @@ Apsis::Hud::FillerBar::FillerBar(Apsis::Primitives::SpriteSheet* spriteSheet,
   for (unsigned int si = _startIndex; si < (_startIndex + _stages) && si < sprite_count; si++) {
     float coords[4];
     _spriteSheet->textureCoordinates(si, coords);
-    Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(si); 
+    Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(si); 
 
     _vertices[i * 5 + 0] = -(float)sprite->center_x;
     _vertices[i * 5 + 1] = 0.0f;
@@ -117,13 +117,13 @@ Apsis::Hud::FillerBar::FillerBar(Apsis::Primitives::SpriteSheet* spriteSheet,
 
   value(0);
 
-  Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(_startIndex);
-  _position.width = sprite->width * _count;
-  _position.height = sprite->height;
-  _itemWidth = sprite->width;
+  Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(_startIndex);
+  _position.width = (float)(sprite->width * _count);
+  _position.height = (float)(sprite->height);
+  _itemWidth = (float)sprite->width;
 }
 
-Apsis::Primitives::SpriteSheet* Apsis::Hud::FillerBar::spriteSheet() {
+Apsis::Sprite::Sheet* Apsis::Hud::FillerBar::spriteSheet() {
   return _spriteSheet;
 }
 
@@ -145,7 +145,7 @@ void Apsis::Hud::FillerBar::draw(glm::mat4& projection,
   unsigned int tmp = _value;
 
   // TODO: don't abuse rectangle coordinates... x should represent the center, not the left
-  unsigned int x = _position.x;
+  unsigned int x = (unsigned int)_position.x;
 
   // Draw full
   unsigned int i;
@@ -154,7 +154,7 @@ void Apsis::Hud::FillerBar::draw(glm::mat4& projection,
     model = glm::translate(glm::mat4(1.0),
                            glm::vec3(x, 0.0, _position.y));
     _vao.uploadUniform("model", model);
-    x += _itemWidth;
+    x += (unsigned int)_itemWidth;
 
     _vao.drawRange((_stages - 1) * 6, 6);
   }
@@ -164,7 +164,7 @@ void Apsis::Hud::FillerBar::draw(glm::mat4& projection,
     model = glm::translate(glm::mat4(1.0),
                            glm::vec3(x, 0.0, _position.y));
     _vao.uploadUniform("model", model);
-    x += _itemWidth;
+    x += (unsigned int)_itemWidth;
 
     _vao.drawRange(((i - _value)) * 6, 6);
   }

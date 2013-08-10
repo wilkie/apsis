@@ -15,17 +15,19 @@
 // Agents are given a new position and an old position and some properties and
 // decide where the actor actually moves and fires events.
 
-#include <apsis/primitives/sprite_sheet.h>
-#include <apsis/agent/impeder.h>
-#include <apsis/agent/mover.h>
-#include <apsis/geometry/rectangle.h>
-#include <apsis/world/object.h>
+#include "apsis/sprite/sheet.h"
+#include "apsis/agent/impeder.h"
+#include "apsis/agent/mover.h"
+#include "apsis/geometry/rectangle.h"
+#include "apsis/world/object.h"
 
-#include <apsis/primitives/camera.h>
-#include <apsis/primitives/vertex_array.h>
-#include <apsis/primitives/vertex_buffer.h>
+#include "apsis/primitives/camera.h"
+#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitives/vertex_buffer.h"
 
-#include <apsis/registry/property.h>
+#include "apsis/registry/property.h"
+
+#include "apsis/sync/reference_counter.h"
 
 #include <vector>
 #include <set>
@@ -33,7 +35,7 @@
 namespace Apsis {
   namespace World {
     struct AnimationFrame {
-      Apsis::Primitives::Sprite* sprite;
+      Apsis::Sprite::Sprite* sprite;
       unsigned int spriteIndex;
       float textureCoordinates[4];
     };
@@ -44,128 +46,130 @@ namespace Apsis {
     };
 
     class Actor {
-      public:
-        /*
-         *  Constructs a Apsis::Sprite using the actor files in the
-         *    given filepath. The sprite used is defined by the given
-         *    Apsis::Primitives::SpriteSheet.
-         */
-        Actor(const char* actorFile,
-              unsigned int x,
-              unsigned int y);
-        ~Actor();
+    public:
+      /*
+        *  Constructs a Apsis::Sprite using the actor files in the
+        *    given filepath. The sprite used is defined by the given
+        *    Apsis::Sprite::Sheet.
+        */
+      Actor(const char* actorFile,
+            unsigned int x,
+            unsigned int y);
+      ~Actor();
 
-        /*
-         *  Return: the Apsis::Primitives::SpriteSheet for the Apsis::Sprite.
-         */
-        Apsis::Primitives::SpriteSheet* spriteSheet();
+      /*
+       *  Return: the Apsis::Sprite::Sheet for the Apsis::Sprite.
+       */
+      Apsis::Sprite::Sheet* spriteSheet();
 
-        /*
-         *  Return: the Apsis::Geometry::Rectangle for the Apsis::Sprite.
-         */
-        Apsis::Geometry::Rectangle position();
+      /*
+       *  Return: the Apsis::Geometry::Rectangle for the Apsis::Sprite.
+       */
+      Apsis::Geometry::Rectangle position();
 
-        /*
-         *  Sets the current animation to be played by this Apsis::Sprite.
-         */
-        void animate(const char* animationName);
+      /*
+       *  Sets the current animation to be played by this Apsis::Sprite.
+       */
+      void animate(const char* animationName);
 
-        /*
-         *  Advances the frame to the next sprite.
-         */
-        void nextFrame();
+      /*
+       *  Advances the frame to the next sprite.
+       */
+      void nextFrame();
 
-        /*
-         *  Fills the given array with the texture coordinates of the current
-         *    sprite.
-         */
-        void textureCoordinates(double coords[4]);
+      /*
+       *  Fills the given array with the texture coordinates of the current
+       *    sprite.
+       */
+      void textureCoordinates(double coords[4]);
 
-        /*
-         *  Returns the Apsis::Primitives::Sprite for the current sprite for this
-         *    Apsis::Sprite.
-         */
-        Apsis::Primitives::Sprite* sprite();
+      /*
+       *  Returns the Apsis::Sprite::Sprite for the current sprite for this
+       *    Apsis::Sprite.
+       */
+      Apsis::Sprite::Sprite* sprite();
 
-        /*
-         *  Updates the current time for the Sprite. Affects animations and movements.
-         */
-        void update(float elapsed);
+      /*
+       *  Updates the current time for the Sprite. Affects animations and movements.
+       */
+      void update(float elapsed);
 
-        void move(Apsis::Geometry::Point& to);
+      void move(Apsis::Geometry::Point& to);
 
-        // Set the current state for the Actor.
-        void state(const char* stateName);
+      // Set the current state for the Actor.
+      void state(const char* stateName);
 
-        // Return the current state for the Actor.
-        const char* state();
+      // Return the current state for the Actor.
+      const char* state();
 
-        // Add the given agent that will provide movement to the actor.
-        void attachMover(Apsis::Agent::Mover* agent);
+      // Add the given agent that will provide movement to the actor.
+      void attachMover(Apsis::Agent::Mover* agent);
 
-        // Add the given agent that will alter intended movement.
-        void attachImpeder(Apsis::Agent::Impeder* agent);
+      // Add the given agent that will alter intended movement.
+      void attachImpeder(Apsis::Agent::Impeder* agent);
 
-        // Draws the actor
-        void draw(glm::mat4& projection,
-                  Primitives::Camera& camera);
+      // Draws the actor
+      void draw(glm::mat4& projection,
+                Primitives::Camera& camera);
 
-        // List rules
-        char* rules();
+      // List rules
+      char* rules();
 
-      private:
-        // The Object composition of this Actor.
-        Apsis::World::Object _object;
+    private:
+      Sync::ReferenceCounter _counter;
 
-        // Parses the given json via the path given in jsonFile.
-        void _parseJSONFile(const char* jsonFile);
+      // The Object composition of this Actor.
+      Apsis::World::Object _object;
 
-        // The set of sprites for the Actor.
-        Apsis::Primitives::SpriteSheet* _spriteSheet;
+      // Parses the given json via the path given in jsonFile.
+      void _parseJSONFile(const char* jsonFile);
 
-        // The current position of the Actor in the world.
-        Apsis::Geometry::Rectangle _position;
+      // The set of sprites for the Actor.
+      Apsis::Sprite::Sheet* _spriteSheet;
 
-        // Stores the current movement rate of the Actor.
-        double _moveRate;
+      // The current position of the Actor in the world.
+      Apsis::Geometry::Rectangle _position;
 
-        // Stores all possible states for the Actor.
-        std::vector<char*> _states;
+      // Stores the current movement rate of the Actor.
+      double _moveRate;
 
-        // Stores the current state of the character. State
-        // determines how the character updates.
-        const char* _state;
+      // Stores all possible states for the Actor.
+      std::vector<char*> _states;
 
-        // Stores the details about animations.
-        std::vector<Animation*> _animations;
+      // Stores the current state of the character. State
+      // determines how the character updates.
+      const char* _state;
 
-        // Stores the current animation.
-        Animation* _currentAnimation;
+      // Stores the details about animations.
+      std::vector<Animation*> _animations;
 
-        // Stores the current frame.
-        unsigned int _currentFrame;
-        AnimationFrame* _frame;
+      // Stores the current animation.
+      Animation* _currentAnimation;
 
-        // time since last frame.
-        float _currentTime;
+      // Stores the current frame.
+      unsigned int _currentFrame;
+      AnimationFrame* _frame;
 
-        // Creates a new animation structure.
-        Animation* _newAnimation(const char* name);
+      // time since last frame.
+      float _currentTime;
 
-        // Creates a new state.
-        char* _newState(const char* name);
+      // Creates a new animation structure.
+      Animation* _newAnimation(const char* name);
 
-        // Before Move Agents
-        std::vector<Apsis::Agent::Impeder*> _impederAgents;
-        std::vector<Apsis::Agent::Mover*>   _moverAgents;
+      // Creates a new state.
+      char* _newState(const char* name);
 
-        Primitives::VertexArray _vao;
+      // Before Move Agents
+      std::vector<Apsis::Agent::Impeder*> _impederAgents;
+      std::vector<Apsis::Agent::Mover*>   _moverAgents;
 
-        float* _vertices;
-        Primitives::VertexBuffer _vbo;
+      Primitives::VertexArray _vao;
 
-        unsigned int* _elements;
-        Primitives::VertexBuffer _ebo;
+      float* _vertices;
+      Primitives::VertexBuffer _vbo;
+
+      unsigned int* _elements;
+      Primitives::VertexBuffer _ebo;
     };
   }
 }

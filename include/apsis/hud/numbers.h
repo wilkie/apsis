@@ -1,7 +1,7 @@
 #ifndef APSIS_HUD_NUMBERS_H
 #define APSIS_HUD_NUMBERS_H
 
-#include <apsis/primitives/sprite_sheet.h>
+#include <apsis/sprite/sheet.h>
 #include <apsis/primitives/camera.h>
 #include <apsis/primitives/vertex_array.h>
 #include <apsis/primitives/vertex_buffer.h>
@@ -14,16 +14,16 @@ namespace Apsis {
         /*
          *  Constructs a Apsis::Sprite using the actor files in the
          *    given filepath. The sprite used is defined by the given
-         *    Apsis::Primitives::SpriteSheet.
+         *    Apsis::Sprite::Sheet.
          */
-        Numbers(Apsis::Primitives::SpriteSheet* spriteSheet,
+        Numbers(Apsis::Sprite::Sheet* spriteSheet,
                 unsigned int startIndex,
                 float x, float y);
 
         /*
-         *  Return: the Apsis::Primitives::SpriteSheet for the Apsis::Sprite.
+         *  Return: the Apsis::Sprite::Sheet for the Apsis::Sprite.
          */
-        Apsis::Primitives::SpriteSheet* spriteSheet();
+        Apsis::Sprite::Sheet* spriteSheet();
 
         /*
          *  Return: the Apsis::Geometry::Rectangle for the Apsis::Sprite.
@@ -44,7 +44,7 @@ namespace Apsis {
         unsigned int _startIndex;
 
         // The set of sprites for the Numbers.
-        Apsis::Primitives::SpriteSheet* _spriteSheet;
+        Apsis::Sprite::Sheet* _spriteSheet;
 
         // The current position of the Numbers in the world.
         Apsis::Geometry::Rectangle _position;

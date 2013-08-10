@@ -34,6 +34,7 @@
 #include "apsis/agent/movers/or.h"
 
 #include "apsis/registry/action.h"
+#include "apsis/registry/actor.h"
 
 #ifndef NO_GL
   #ifdef _WIN32
@@ -93,9 +94,9 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   binding2.key = Apsis::Key::NONE;
   _input->keyBindings()->registerEvent("Zoom out",  ZOOM_OUT, &binding, &binding2);
 
-  Apsis::Primitives::SpriteSheet* sheet = new Apsis::Primitives::SpriteSheet("assets/graphics/tiles_spritesheet.png");
+  Apsis::Sprite::Sheet* sheet = new Apsis::Sprite::Sheet("assets/graphics/tiles_spritesheet.png");
   _map = new Apsis::World::Map(32, 30, 70.0f, 70.0f, sheet);
-  Apsis::Primitives::SpriteSheet* hud = new Apsis::Primitives::SpriteSheet("assets/graphics/hud_spritesheet.png");
+  Apsis::Sprite::Sheet* hud = new Apsis::Sprite::Sheet("assets/graphics/hud_spritesheet.png");
 
   _health = new Apsis::Hud::FillerBar(hud, 15, 3, 6, 10, 10);
   _health->value(5);
@@ -105,6 +106,9 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   Apsis::Primitives::Texture* texture = new Apsis::Primitives::Texture("assets/backgrounds/sky.png");
 
   _bg = new Apsis::World::Background(texture);
+
+  unsigned int ball = Apsis::Registry::Actor::id("assets/actors/ball.actor");
+  _scene.addActor(ball);
 
   _ball = new Apsis::World::Actor("assets/actors/ball.actor", 300, 300);
 

@@ -20,11 +20,13 @@
 
 Apsis::World::Actor::~Actor() {
   // Deallocate animations
-  for (unsigned int i = 0; i < _animations.size(); i++) {
-    for (unsigned int j = 0; j < _animations[i]->frames.size(); j++) {
-      delete _animations[i]->frames[j];
+  if (_counter.isAlone()) {
+    for (unsigned int i = 0; i < _animations.size(); i++) {
+      for (unsigned int j = 0; j < _animations[i]->frames.size(); j++) {
+        delete _animations[i]->frames[j];
+      }
+      delete _animations[i];
     }
-    delete _animations[i];
   }
 }
 
@@ -61,7 +63,7 @@ Apsis::World::Actor::Actor(const char* actorFile,
   for (unsigned int si = 0; si < sprite_count; si++) {
     float coords[4];
     _spriteSheet->textureCoordinates(si, coords);
-    Apsis::Primitives::Sprite* sprite = _spriteSheet->sprite(si); 
+    Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(si); 
 
     _vertices[i * 5 + 0] = -(float)sprite->center_x;
     _vertices[i * 5 + 1] = 0.0f;
@@ -161,7 +163,7 @@ const char* Apsis::World::Actor::state() {
   return _state;
 }
 
-Apsis::Primitives::SpriteSheet* Apsis::World::Actor::spriteSheet() {
+Apsis::Sprite::Sheet* Apsis::World::Actor::spriteSheet() {
   return _spriteSheet;
 }
 
@@ -200,7 +202,7 @@ void Apsis::World::Actor::textureCoordinates(double coords[4]) {
   coords[3] = _frame->textureCoordinates[3];
 }
 
-Apsis::Primitives::Sprite* Apsis::World::Actor::sprite() {
+Apsis::Sprite::Sprite* Apsis::World::Actor::sprite() {
   return _frame->sprite;
 }
 
@@ -298,7 +300,7 @@ void Apsis::World::Actor::_parseJSONFile(const char* filename) {
   _position.height = (float)value["height"].asDouble();
 
   // TODO: account for null sprites value
-  _spriteSheet = new Apsis::Primitives::SpriteSheet(value["sprites"].asCString());
+  _spriteSheet = new Apsis::Sprite::Sheet(value["sprites"].asCString());
 
   // Animation
   // TODO: better handling of invalid values

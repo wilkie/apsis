@@ -9,8 +9,27 @@
   #include <Windows.h>
 #endif
 
+#include <clew/clew.h>
+
 int main(int argc, char** argv) {
   // initialize Apsis
+  if (clewInit("OpenCL.dll") != CLEW_SUCCESS) {
+    OutputDebugStringA("error opening opencl\n");
+  }
+  else {  
+    cl_platform_id test[5];
+    cl_uint num;
+    cl_uint ok = 5;
+    if (clGetPlatformIDs(ok, test, &num) == CL_SUCCESS) {
+      char foo[1024];
+      sprintf(foo, "%d %d %d %d %d %d\n", test[0],test[1],test[2],test[3],test[4],num);
+      OutputDebugStringA(foo);
+      char info[1024];
+      size_t size;
+      clGetPlatformInfo(test[0], CL_PLATFORM_NAME, 1023, info, &size);
+      OutputDebugStringA(info);
+    }
+  }
 
   Apsis::Settings::Video settings;
   settings.resolutionX = WIDTH;

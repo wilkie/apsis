@@ -2,11 +2,13 @@
 #define APSIS_WORLD_MAP_H
 
 #include "apsis/world/tile.h"
-#include "apsis/primitives/sprite_sheet.h"
+#include "apsis/sprite/sheet.h"
 
 #include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
+
+#include "apsis/sync/reference_counter.h"
 
 #include <glm/glm.hpp>
 
@@ -21,13 +23,13 @@ namespace Apsis {
     public:
       /*
        *  Constructs a Apsis::World::Map of the given width and height and
-       *    drawn using the given Apsis::Primitives::SpriteSheet.
+       *    drawn using the given Apsis::Sprite::Sheet.
        */
       Map(unsigned int width,
           unsigned int height,
           float tileWidth,
           float tileHeight,
-          Apsis::Primitives::SpriteSheet* spriteSheet);
+          Apsis::Sprite::Sheet* spriteSheet);
 
       /*
        *  Queries the tile at the world coordinates (x,y)
@@ -55,9 +57,9 @@ namespace Apsis {
       float tileHeight();
 
       /*
-       *  Returns the Apsis::Primitives::SpriteSheet being used to draw the map.
+       *  Returns the Apsis::Sprite::Sheet being used to draw the map.
        */
-      Apsis::Primitives::SpriteSheet* spriteSheet();
+      Apsis::Sprite::Sheet* spriteSheet();
 
       /*
        *  Renders the map.
@@ -67,11 +69,12 @@ namespace Apsis {
                 const glm::mat4& model);
 
     private:
+      Sync::ReferenceCounter _counter;
 
       // Internal storage
       unsigned int _width;
       unsigned int _height;
-      Apsis::Primitives::SpriteSheet* _spriteSheet;
+      Apsis::Sprite::Sheet* _spriteSheet;
 
       // The tiles that compose the map
       std::vector<Tile> _tiles;
