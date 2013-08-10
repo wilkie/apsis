@@ -19,9 +19,6 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-Apsis::World::Actor::~Actor() {
-}
-
 Apsis::World::Actor::Actor(const char* actorFile,
                            unsigned int x,
                            unsigned int y) {

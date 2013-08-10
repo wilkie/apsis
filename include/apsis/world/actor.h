@@ -46,7 +46,6 @@ namespace Apsis {
       Actor(const char* actorFile,
             unsigned int x,
             unsigned int y);
-      ~Actor();
 
       /*
        *  Return: the Apsis::Sprite::Sheet for the Apsis::Sprite.
