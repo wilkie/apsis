@@ -45,96 +45,6 @@ Apsis::World::Actor::Actor(const char* actorFile,
 
   _currentAnimation = _animations[0];
   _frame = _currentAnimation->frames[0];
-
-  unsigned int sprite_count = _spriteSheet->count();
-
-  unsigned int vertices_size = 4 * sprite_count;
-  unsigned int elements_size = 6 * sprite_count;
-  _elements = new unsigned int[elements_size];
-
-  // 8 values for each logical vertex: 3 per axis coordinate,
-  //                                   2 per texcoord
-  this->_vertices = new float[5 * vertices_size];
-  
-  unsigned int i = 0;
-  unsigned int ei = 0;
-  unsigned int ti = 0;
-
-  for (unsigned int si = 0; si < sprite_count; si++) {
-    float coords[4];
-    _spriteSheet->textureCoordinates(si, coords);
-    Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(si); 
-
-    _vertices[i * 5 + 0] = -(float)sprite->center_x;
-    _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y;
-
-    _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
-    _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
-
-    i++;
-
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + (float)sprite->width;
-    _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y;
-
-    _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
-    _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
-
-    i++;
-      
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + (float)sprite->width;
-    _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + (float)sprite->height;
-
-    _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
-    _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
-
-    i++;
-      
-    _vertices[i * 5 + 0] = -(float)sprite->center_x;
-    _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + (float)sprite->height;
-
-    _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
-    _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
-
-    i++;
-
-    _elements[ei] = i-4; ei++;
-    _elements[ei] = i-3; ei++;
-    _elements[ei] = i-1; ei++;
-
-    _elements[ei] = i-3; ei++;
-    _elements[ei] = i-2; ei++;
-    _elements[ei] = i-1; ei++;
-  }
-
-  _vbo.transfer(_vertices, 5 * vertices_size);
-  _ebo.transfer(_elements, elements_size);
-
-  _vao.bindElements(_ebo);
-
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
-
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
-
-  _vao.useProgram(program);
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
-
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-
-  _vao.defineUniform("tex", program);
-  _vao.bindTexture(0, *_spriteSheet->texture());
-  _vao.uploadUniform("tex", 0);
 }
 
 Apsis::World::Animation* Apsis::World::Actor::_newAnimation(const char* name) {
@@ -261,13 +171,7 @@ void Apsis::World::Actor::draw(glm::mat4& projection,
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
 
-  _vao.uploadUniform("proj", projection);
-  _vao.uploadUniform("view", camera.view());
-  _vao.uploadUniform("model", model);
-  
-  _vao.bindTexture(0, *_spriteSheet->texture());
-  _vao.uploadUniform("camera", camera.eye());
-  _vao.drawRange(_frame->spriteIndex * 6, 6);
+  _spriteSheet->draw(_frame->spriteIndex, projection, camera, model);
 }
 
 char* Apsis::World::Actor::rules() {

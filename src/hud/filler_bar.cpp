@@ -174,7 +174,7 @@ void Apsis::Hud::FillerBar::draw(glm::mat4& projection,
     model = glm::translate(glm::mat4(1.0),
                            glm::vec3(x, 0.0, _position.y));
     _vao.uploadUniform("model", model);
-    x += _itemWidth;
+    x += (unsigned int)_itemWidth;
 
     _vao.drawRange(0, 6);
   }

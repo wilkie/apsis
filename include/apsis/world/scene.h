@@ -26,7 +26,6 @@ namespace Apsis {
        *  Instantiates an Actor to the scene.
        */
       unsigned int addActor(unsigned int id);
-
     private:
       // Collections of objects within the scene
       std::vector<Apsis::World::Actor> _actors;

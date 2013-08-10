@@ -162,14 +162,6 @@ namespace Apsis {
       // Before Move Agents
       std::vector<Apsis::Agent::Impeder*> _impederAgents;
       std::vector<Apsis::Agent::Mover*>   _moverAgents;
-
-      Primitives::VertexArray _vao;
-
-      float* _vertices;
-      Primitives::VertexBuffer _vbo;
-
-      unsigned int* _elements;
-      Primitives::VertexBuffer _ebo;
     };
   }
 }

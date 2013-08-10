@@ -134,7 +134,7 @@ void Apsis::Hud::Numbers::draw(glm::mat4& projection,
   unsigned int tmp = _value;
 
   // TODO: don't abuse rectangle coordinates... x should represent the center, not the left
-  unsigned int x = _position.x + _position.width;
+  unsigned int x = (unsigned int)(_position.x + _position.width);
 
   while (tmp > 0) {
     unsigned int digit = tmp % 10;
@@ -166,7 +166,7 @@ void Apsis::Hud::Numbers::_calculateSize() {
 
     _position.width += sprite->width;
     if (sprite->height > _position.height) {
-      _position.height = sprite->height;
+      _position.height = (float)sprite->height;
     }
   }
 }
