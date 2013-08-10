@@ -626,6 +626,9 @@
     <ClCompile Include="..\..\src\sprite\sheet.cpp">
       <Filter>sprite</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\sprite\animation.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1308,6 +1311,9 @@
       <Filter>registry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\sprite\sheet.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sprite\animation.h">
       <Filter>sprite</Filter>
     </ClInclude>
   </ItemGroup>

@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\registry\event.cpp" />
     <ClCompile Include="..\..\src\registry\property.cpp" />
     <ClCompile Include="..\..\src\registry\state.cpp" />
+    <ClCompile Include="..\..\src\sprite\animation.cpp" />
     <ClCompile Include="..\..\src\sprite\sheet.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSConverter.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSLoader.cpp" />
@@ -336,6 +337,7 @@
     <ClInclude Include="..\..\include\apsis\registry\property.h" />
     <ClInclude Include="..\..\include\apsis\registry\state.h" />
     <ClInclude Include="..\..\include\apsis\settings\video.h" />
+    <ClInclude Include="..\..\include\apsis\sprite\animation.h" />
     <ClInclude Include="..\..\include\apsis\sprite\sheet.h" />
     <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h" />
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />

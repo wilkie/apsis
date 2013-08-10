@@ -16,6 +16,8 @@
 // decide where the actor actually moves and fires events.
 
 #include "apsis/sprite/sheet.h"
+#include "apsis/sprite/animation.h"
+
 #include "apsis/agent/impeder.h"
 #include "apsis/agent/mover.h"
 #include "apsis/geometry/rectangle.h"
@@ -34,17 +36,6 @@
 
 namespace Apsis {
   namespace World {
-    struct AnimationFrame {
-      Apsis::Sprite::Sprite* sprite;
-      unsigned int spriteIndex;
-      float textureCoordinates[4];
-    };
-
-    struct Animation {
-      char name[129];
-      std::vector<AnimationFrame*> frames;
-    };
-
     class Actor {
     public:
       /*
@@ -78,18 +69,6 @@ namespace Apsis {
       void nextFrame();
 
       /*
-       *  Fills the given array with the texture coordinates of the current
-       *    sprite.
-       */
-      void textureCoordinates(double coords[4]);
-
-      /*
-       *  Returns the Apsis::Sprite::Sprite for the current sprite for this
-       *    Apsis::Sprite.
-       */
-      Apsis::Sprite::Sprite* sprite();
-
-      /*
        *  Updates the current time for the Sprite. Affects animations and movements.
        */
       void update(float elapsed);
@@ -116,8 +95,6 @@ namespace Apsis {
       char* rules();
 
     private:
-      Sync::ReferenceCounter _counter;
-
       // The Object composition of this Actor.
       Apsis::World::Object _object;
 
@@ -138,20 +115,17 @@ namespace Apsis {
       const char* _state;
 
       // Stores the details about animations.
-      std::vector<Animation*> _animations;
+      std::vector<Apsis::Sprite::Animation> _animations;
 
       // Stores the current animation.
-      Animation* _currentAnimation;
+      Sprite::Animation* _currentAnimation;
 
       // Stores the current frame.
       unsigned int _currentFrame;
-      AnimationFrame* _frame;
+      const Sprite::Animation::Frame* _frame;
 
       // time since last frame.
       float _currentTime;
-
-      // Creates a new animation structure.
-      Animation* _newAnimation(const char* name);
 
       // Creates a new state.
       char* _newState(const char* name);

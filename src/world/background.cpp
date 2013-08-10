@@ -142,4 +142,6 @@ void Apsis::World::Background::draw(const glm::mat4& projection,
       _vao.draw();
     }
   }
+
+  int i = 5;
 }

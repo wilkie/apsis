@@ -19,15 +19,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Apsis::World::Actor::~Actor() {
-  // Deallocate animations
-  if (_counter.isAlone()) {
-    for (unsigned int i = 0; i < _animations.size(); i++) {
-      for (unsigned int j = 0; j < _animations[i]->frames.size(); j++) {
-        delete _animations[i]->frames[j];
-      }
-      delete _animations[i];
-    }
-  }
 }
 
 Apsis::World::Actor::Actor(const char* actorFile,
@@ -35,7 +26,6 @@ Apsis::World::Actor::Actor(const char* actorFile,
                            unsigned int y) {
   _currentAnimation = NULL;
   _currentFrame = 0;
-  _frame = NULL;
   _currentTime = 0;
 
   _position.x = (float)x;
@@ -43,15 +33,10 @@ Apsis::World::Actor::Actor(const char* actorFile,
 
   _parseJSONFile(actorFile);
 
-  _currentAnimation = _animations[0];
-  _frame = _currentAnimation->frames[0];
-}
-
-Apsis::World::Animation* Apsis::World::Actor::_newAnimation(const char* name) {
-  Animation* ret = new Animation;
-  strncpy(ret->name, name, 128);
-  _animations.push_back(ret);
-  return ret;
+  if (_animations.size() > 0) {
+    _currentAnimation = &_animations[0];
+    _frame = &_currentAnimation->frame(0);
+  }
 }
 
 char* Apsis::World::Actor::_newState(const char* name) {
@@ -84,10 +69,10 @@ Apsis::Geometry::Rectangle Apsis::World::Actor::position() {
 void Apsis::World::Actor::animate(const char* animationName) {
   // Look-up the animation
   for (unsigned int i = 0; i < _animations.size(); i++) {
-    if (strncmp(_animations[i]->name, animationName, 128) == 0) {
-      _currentAnimation = _animations[i];
+    if (_animations[i].name() == std::string(animationName)) {
+      _currentAnimation = &_animations[i];
       _currentFrame = 0;
-      _frame = _currentAnimation->frames[_currentFrame];
+      _frame = &_currentAnimation->frame(_currentFrame);
       return;
     }
   }
@@ -95,25 +80,14 @@ void Apsis::World::Actor::animate(const char* animationName) {
 
 void Apsis::World::Actor::nextFrame() {
   _currentFrame += 1;
-  if (_currentAnimation->frames.size() == 0) {
+  if (_currentAnimation->count() == 0) {
     _currentFrame = 0;
   }
   else {
-    _currentFrame %= _currentAnimation->frames.size();
+    _currentFrame %= _currentAnimation->count();
   }
-  _frame = _currentAnimation->frames[_currentFrame];
+  _frame = &_currentAnimation->frame(_currentFrame);
   _currentTime = 0;
-}
-
-void Apsis::World::Actor::textureCoordinates(double coords[4]) {
-  coords[0] = _frame->textureCoordinates[0];
-  coords[1] = _frame->textureCoordinates[1];
-  coords[2] = _frame->textureCoordinates[2];
-  coords[3] = _frame->textureCoordinates[3];
-}
-
-Apsis::Sprite::Sprite* Apsis::World::Actor::sprite() {
-  return _frame->sprite;
 }
 
 void Apsis::World::Actor::attachMover(Apsis::Agent::Mover* agent) {
@@ -210,19 +184,17 @@ void Apsis::World::Actor::_parseJSONFile(const char* filename) {
   // TODO: better handling of invalid values
   for (Json::Value::iterator it = value["animations"].begin(); it != value["animations"].end(); it++) {
     // Create an animation structure
-    Animation* newAnimation = _newAnimation((*it)["name"].asCString());
+    Sprite::Animation newAnimation((*it)["name"].asCString());
 
     // Store all of the sprites
     int spriteIndex = -1;
     do {
       spriteIndex = _spriteSheet->enumerateSprites((*it)["sprites"].asCString(), spriteIndex+1);
       if (spriteIndex != -1) {
-        AnimationFrame* frame = new AnimationFrame;
-        _spriteSheet->textureCoordinates(spriteIndex, frame->textureCoordinates);
-        frame->sprite = _spriteSheet->sprite(spriteIndex);
-        frame->spriteIndex = spriteIndex;
-        newAnimation->frames.push_back(frame);
+        newAnimation.addFrame(spriteIndex);
       }
     } while(spriteIndex != -1);
+
+    _animations.push_back(newAnimation);
   }
 }

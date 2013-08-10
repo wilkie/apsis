@@ -23,12 +23,6 @@
 #include <fstream>
 #include <json/json.h>
 
-Apsis::Sprite::Sheet::~Sheet() {
-  for (unsigned int i = 0; i < _sprites.size(); i++) {
-    delete _sprites[i];
-  }
-}
-
 Apsis::Sprite::Sheet::Sheet(const char* filename) {
   _texture = new Apsis::Primitives::Texture(filename);
   _width = _texture->width();
@@ -56,38 +50,38 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
   for (unsigned int si = 0; si < sprite_count; si++) {
     float coords[4];
     this->textureCoordinates(si, coords);
-    Apsis::Sprite::Sprite* sprite = this->sprite(si); 
+    Apsis::Sprite::Sheet::Sprite& sprite = _sprites[si];
 
-    _vertices[i * 5 + 0] = -(float)sprite->center_x;
+    _vertices[i * 5 + 0] = -(float)sprite.center_x;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y;
+    _vertices[i * 5 + 2] = -(float)sprite.center_y;
 
     _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
     i++;
 
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + (float)sprite->width;
+    _vertices[i * 5 + 0] = -(float)sprite.center_x + (float)sprite.width;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y;
+    _vertices[i * 5 + 2] = -(float)sprite.center_y;
 
     _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
     i++;
       
-    _vertices[i * 5 + 0] = -(float)sprite->center_x + (float)sprite->width;
+    _vertices[i * 5 + 0] = -(float)sprite.center_x + (float)sprite.width;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + (float)sprite->height;
+    _vertices[i * 5 + 2] = -(float)sprite.center_y + (float)sprite.height;
 
     _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
     i++;
       
-    _vertices[i * 5 + 0] = -(float)sprite->center_x;
+    _vertices[i * 5 + 0] = -(float)sprite.center_x;
     _vertices[i * 5 + 1] = 0.0f;
-    _vertices[i * 5 + 2] = -(float)sprite->center_y + (float)sprite->height;
+    _vertices[i * 5 + 2] = -(float)sprite.center_y + (float)sprite.height;
 
     _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
     _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
@@ -158,15 +152,15 @@ void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
   // Sprite List
   // TODO: better handling of invalid values
   for (Json::Value::iterator it = value.begin(); it != value.end(); it++) {
-    Sprite* sprite = new Sprite;
+    Sprite sprite;
 
-    strcpy(sprite->name, (*it)["name"].asCString());
-    sprite->x        = (unsigned int)(*it)["x"].asUInt();
-    sprite->y        = (unsigned int)(*it)["y"].asUInt();
-    sprite->width    = (unsigned int)(*it)["width"].asUInt();
-    sprite->height   = (unsigned int)(*it)["height"].asUInt();
-    sprite->center_x = (unsigned int)(*it)["center_x"].asUInt();
-    sprite->center_y = (unsigned int)(*it)["center_y"].asUInt();
+    strcpy(sprite.name, (*it)["name"].asCString());
+    sprite.x        = (unsigned int)(*it)["x"].asUInt();
+    sprite.y        = (unsigned int)(*it)["y"].asUInt();
+    sprite.width    = (unsigned int)(*it)["width"].asUInt();
+    sprite.height   = (unsigned int)(*it)["height"].asUInt();
+    sprite.center_x = (unsigned int)(*it)["center_x"].asUInt();
+    sprite.center_y = (unsigned int)(*it)["center_y"].asUInt();
 
     _sprites.push_back(sprite);
   }
@@ -179,12 +173,12 @@ Apsis::Primitives::Texture* Apsis::Sprite::Sheet::texture() {
 }
 
 void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) {
-  Sprite* sprite = _sprites[index];
+  Sprite& sprite = _sprites[index];
 
-  float tu = ((float)sprite->x + 0.1f)  / (float)_width;
-  float tv = ((float)sprite->y + 0.1f)  / (float)_height;
-  float tu2 = ((float)sprite->x - 0.1f + (float)sprite->width)  / (float)_width;
-  float tv2 = ((float)sprite->y - 0.1f + (float)sprite->height)  / (float)_height;
+  float tu = ((float)sprite.x + 0.1f)  / (float)_width;
+  float tv = ((float)sprite.y + 0.1f)  / (float)_height;
+  float tu2 = ((float)sprite.x - 0.1f + (float)sprite.width)  / (float)_width;
+  float tv2 = ((float)sprite.y - 0.1f + (float)sprite.height)  / (float)_height;
 
   if (tu < 0.0)  { tu = 0.0; }
   if (tv < 0.0)  { tv = 0.0; }
@@ -204,25 +198,12 @@ void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4
 
 bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4]) {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
-    if (strncmp(name, _sprites[i]->name, 64) == 0) {
+    if (strncmp(name, _sprites[i].name, 64) == 0) {
       textureCoordinates(i, coords);
       return true;
     }
   }
   return false;
-}
-
-Apsis::Sprite::Sprite* Apsis::Sprite::Sheet::sprite(unsigned int index) {
-  return _sprites[index];
-}
-
-Apsis::Sprite::Sprite* Apsis::Sprite::Sheet::sprite(const char* name) {
-  for (unsigned int i = 0; i < _sprites.size(); i++) {
-    if (strncmp(name, _sprites[i]->name, 64) == 0) {
-      return _sprites[i];
-    }
-  }
-  return NULL;
 }
 
 int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int last) {
@@ -244,7 +225,7 @@ int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int la
 
     // No star is found... just find by the name
     for (unsigned int i = 0; i < _sprites.size(); i++) {
-      if (strncmp(wildcard, _sprites[i]->name, 64) == 0) {
+      if (strncmp(wildcard, _sprites[i].name, 64) == 0) {
         return i;
       }
     }
@@ -253,7 +234,7 @@ int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int la
 
   // Look for a wildcard match
   for (unsigned int i = last; i < _sprites.size(); i++) {
-    if (strncmp(wildcard, _sprites[i]->name, star_pos) == 0) {
+    if (strncmp(wildcard, _sprites[i].name, star_pos) == 0) {
       // Matches in the front
       return i;
     }
@@ -277,4 +258,12 @@ void Apsis::Sprite::Sheet::draw(unsigned int        index,
   _vao.bindTexture(0, *this->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.drawRange(index * 6, 6);
+}
+
+float Apsis::Sprite::Sheet::width(unsigned int index) {
+  return (float)_sprites[index].width;
+}
+
+float Apsis::Sprite::Sheet::height(unsigned int index) {
+  return (float)_sprites[index].height;
 }

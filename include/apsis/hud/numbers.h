@@ -48,14 +48,6 @@ namespace Apsis {
 
         // The current position of the Numbers in the world.
         Apsis::Geometry::Rectangle _position;
-
-        Primitives::VertexArray _vao;
-
-        float* _vertices;
-        Primitives::VertexBuffer _vbo;
-
-        unsigned int* _elements;
-        Primitives::VertexBuffer _ebo;
     };
   }
 }

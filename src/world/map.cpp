@@ -70,30 +70,35 @@ Apsis::World::Map::Map(unsigned int width,
         continue;
       }
 
+      unsigned int si = _tiles[ti].spriteIndex();
+
       float coords[4];
-      _spriteSheet->textureCoordinates(_tiles[ti].spriteIndex(), coords);
-      Apsis::Sprite::Sprite* sprite = _spriteSheet->sprite(_tiles[ti].spriteIndex());
+      _spriteSheet->textureCoordinates(si, coords);
+
+      float spriteWidth  = _spriteSheet->width(si);
+      float spriteHeight = _spriteSheet->height(si);
+
       ti++;
 
       _vertices[i * 5 + 0] = (float)w*_tileWidth;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight - sprite->height;
+      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight - spriteHeight;
 
       _vertices[i * 5 + 3] = coords[0]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 5 + 0] = (float)w*_tileWidth + sprite->width;
+      _vertices[i * 5 + 0] = (float)w*_tileWidth + spriteWidth;
       _vertices[i * 5 + 1] = 0.0f;
-      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight - sprite->height;
+      _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight - spriteHeight;
 
       _vertices[i * 5 + 3] = coords[2]; //textureCoords[i].x;
       _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
       i++;
 
-      _vertices[i * 5 + 0] = (float)w*_tileWidth + sprite->width;
+      _vertices[i * 5 + 0] = (float)w*_tileWidth + spriteWidth;
       _vertices[i * 5 + 1] = 0.0f;
       _vertices[i * 5 + 2] = (float)h*_tileHeight + _tileHeight;
 

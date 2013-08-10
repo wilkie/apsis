@@ -209,7 +209,7 @@ void Apsis::Engine::TopDown2d::_draw() {
   Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom);
 
   _bg->draw(projection, camera,
-             glm::mat4(1.0));
+            glm::mat4(1.0));
 
   _map->draw(projection,
              camera,
