@@ -9,6 +9,7 @@
 #include "apsis/agent/movers/or.h"
 
 #include <fstream>
+#include <string>
 #include <json/json.h>
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
@@ -148,23 +149,19 @@ void Apsis::World::Actor::draw(glm::mat4& projection,
   _spriteSheet->draw(_frame->spriteIndex, projection, camera, model);
 }
 
-char* Apsis::World::Actor::rules() {
-  // TODO: build with std::string
-  char* ret = new char[1024];
-
-  strcpy(ret, "");
+const char* Apsis::World::Actor::rules() const {
+  std::string ret = std::string("");
 
   for (unsigned int i = 0; i < _moverAgents.size(); i++) {
-    strcat(ret, _moverAgents[i]->rule());
-    strcat(ret, "\n");
+    ret.append(_moverAgents[i]->rule());
   }
 
   for (unsigned int i = 0; i < _impederAgents.size(); i++) {
-    strcat(ret, _impederAgents[i]->rule());
-    strcat(ret, "\n");
+    ret.append(_impederAgents[i]->rule());
+    ret.append("\n");
   }
 
-  return ret;
+  return ret.c_str();
 }
 
 void Apsis::World::Actor::_parseJSONFile(const char* filename) {

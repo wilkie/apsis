@@ -92,7 +92,7 @@ namespace Apsis {
                 Primitives::Camera& camera);
 
       // List rules
-      char* rules();
+      const char* rules() const;
 
     private:
       // The Object composition of this Actor.
