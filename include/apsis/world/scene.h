@@ -4,8 +4,6 @@
 #include "apsis/world/map.h"
 #include "apsis/world/actor.h"
 
-#include "apsis/registry/actor.h"
-
 #include <vector>
 
 namespace Apsis {
@@ -23,9 +21,14 @@ namespace Apsis {
       void addMap(Apsis::World::Map& map);
 
       /*
-       *  Instantiates an Actor to the scene.
+       *  Instantiates an Actor to the scene using a Thing id.
        */
-      unsigned int addActor(unsigned int id);
+      unsigned int addActor(unsigned int id, float x, float y);
+
+      /*
+       *  Instantiates an Actor to the scene by cloning the given Thing.
+       */
+      unsigned int addActor(Sprite::Thing& thing, float x, float y);
     private:
       // Collections of objects within the scene
       std::vector<Apsis::World::Actor> _actors;

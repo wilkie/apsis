@@ -7,6 +7,9 @@
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
+#include "apsis/sync/reference_counter.h"
+
+#include <string>
 #include <vector>
 
 namespace Apsis {
@@ -25,17 +28,19 @@ namespace Apsis {
        */
       Sheet(const char* filename);
 
+      static const Apsis::Sprite::Sheet& load(const char* filename);
+
       /*
        *  Returns: The Texture for this SpriteSheet.
        */
-      Apsis::Primitives::Texture* texture();
+      Apsis::Primitives::Texture* texture() const;
 
       /*
        *  Fills the given coordinate array with the texture coordinates of the
        *    given sprite. The sprite index is assigned by the order in which
        *    sprites are listed in the description file.
        */
-      void textureCoordinates(unsigned int index, float coords[4]);
+      void textureCoordinates(unsigned int index, float coords[4]) const;
 
       /*
        *  Fills the given coordinate array with the texture coordinates of the
@@ -43,22 +48,27 @@ namespace Apsis {
        *    with the one described by the description file.
        *  Returns: true when the sprite is found, false otherwise.
        */
-      bool textureCoordinates(const char* name, float coords[4]);
+      bool textureCoordinates(const char* name, float coords[4]) const;
 
       /*
         *  Returns: the number of sprites contained in the sheet.
         */
-      unsigned int count();
+      unsigned int count() const;
 
       /*
        *  Returns the width of the sprite at the given index.
        */
-      float width(unsigned int index);
+      float width(unsigned int index) const;
 
       /*
        *  Returns the height of the sprite at the given index.
        */
-      float height(unsigned int index);
+      float height(unsigned int index) const;
+
+      /*
+       *  Returns the id of this sprite sheet in the system.
+       */
+      unsigned int id() const;
 
       /*
        *  Returns: -1 when no more sprites match, or the index
@@ -68,7 +78,7 @@ namespace Apsis {
        *    that begins with "down_". Use last = 0 to start, and
        *    then pass the return value + 1 in the next invocation.
        */
-      int enumerateSprites(const char* wildcard, unsigned int last);
+      int enumerateSprites(const char* wildcard, unsigned int last) const;
 
       /*
        *  Draws the given sprite at the given location.
@@ -76,8 +86,15 @@ namespace Apsis {
       void draw(unsigned int        index,
                 glm::mat4&          projection,
                 Primitives::Camera& camera,
-                glm::mat4&          model);
+                glm::mat4&          model) const;
     private:
+      // Registry of sprite sheets.
+      static std::vector<std::string> _ids;
+      static std::vector<Apsis::Sprite::Sheet> _sheets;
+
+      unsigned int _id;
+
+      Sync::ReferenceCounter _counter;
 
       // The texture.
       Apsis::Primitives::Texture* _texture;

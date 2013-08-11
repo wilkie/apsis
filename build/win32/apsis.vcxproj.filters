@@ -620,13 +620,13 @@
     <ClCompile Include="..\..\src\world\scene.cpp">
       <Filter>world</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\registry\actor.cpp">
-      <Filter>registry</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\sprite\sheet.cpp">
       <Filter>sprite</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\sprite\animation.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sprite\thing.cpp">
       <Filter>sprite</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1292,9 +1292,6 @@
     <ClInclude Include="..\..\include\apsis\registry\property.h">
       <Filter>registry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\registry\state.h">
-      <Filter>registry</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\action.h">
       <Filter>registry</Filter>
     </ClInclude>
@@ -1307,14 +1304,17 @@
     <ClInclude Include="..\..\include\apsis\world\scene.h">
       <Filter>world</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\registry\actor.h">
-      <Filter>registry</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\sprite\sheet.h">
       <Filter>sprite</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\sprite\animation.h">
       <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sprite\thing.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\state.h">
+      <Filter>primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

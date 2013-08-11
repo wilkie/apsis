@@ -7,7 +7,7 @@ void Apsis::World::Scene::addMap(Apsis::World::Map& map) {
   _maps.push_back(map);
 }
 
-unsigned int Apsis::World::Scene::addActor(unsigned int id) {
-  _actors.push_back(Apsis::Registry::Actor::clone(id));
+unsigned int Apsis::World::Scene::addActor(unsigned int id, float x, float y) {
+  _actors.push_back(Apsis::World::Actor(Apsis::Sprite::Thing::get(id), 0, 0));
   return _actors.size() - 1;
 }

@@ -34,7 +34,6 @@
 #include "apsis/agent/movers/or.h"
 
 #include "apsis/registry/action.h"
-#include "apsis/registry/actor.h"
 
 #ifndef NO_GL
   #ifdef _WIN32
@@ -96,7 +95,9 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   Apsis::Sprite::Sheet* sheet = new Apsis::Sprite::Sheet("assets/graphics/tiles_spritesheet.png");
   _map = new Apsis::World::Map(32, 30, 70.0f, 70.0f, sheet);
-  Apsis::Sprite::Sheet* hud = new Apsis::Sprite::Sheet("assets/graphics/hud_spritesheet.png");
+  _player1 = new Apsis::World::Actor(Apsis::Sprite::Thing("assets/actors/pink_spaceblob.actor"), 300, 300);
+
+  /*Apsis::Sprite::Sheet* hud = new Apsis::Sprite::Sheet("assets/graphics/hud_spritesheet.png");
 
   _health = new Apsis::Hud::FillerBar(hud, 15, 3, 6, 10, 10);
   _health->value(5);
@@ -107,10 +108,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   _bg = new Apsis::World::Background(texture);
 
-  unsigned int ball = Apsis::Registry::Actor::id("assets/actors/ball.actor");
-  _scene.addActor(ball);
-
-  _ball = new Apsis::World::Actor("assets/actors/ball.actor", 300, 300);
+  _ball = new Apsis::World::Actor(Apsis::Sprite::Thing("assets/actors/ball.actor"), 300, 300);
 
   // Bouncers should be a Responder agent (rule that applies when there is a collision!)
 
@@ -120,7 +118,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   // Ball hits walls
   _ball->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
 
-  _player1 = new Apsis::World::Actor("assets/actors/pink_spaceblob.actor", 300, 300);
+  
 
   // Player cannot collide with map
   _player1->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
@@ -145,7 +143,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   // Player can fall
   // Player can wall slide
   _player1->attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
-  _player1->attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));
+  _player1->attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));*/
 }
 
 void Apsis::Engine::TopDown2d::run() {
@@ -207,24 +205,24 @@ void Apsis::Engine::TopDown2d::_draw() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom);
-
+  /*
   _bg->draw(projection, camera,
             glm::mat4(1.0));
-
+            */
   _map->draw(projection,
              camera,
              glm::mat4(1.0));
-
-  _ball->draw(projection, camera);
-  _player1->draw(projection, camera);
-
+  /*
+  _ball->draw(projection, camera);*/
+  //_player1->draw(projection, camera);
+  /*
   // HUD camera
   Apsis::Primitives::Camera hud_camera = Primitives::Camera(glm::vec2(half_width, half_height), 1.0);
 
   _numbers->draw(projection,
                  hud_camera);
   _health->draw(projection,
-                hud_camera);
+                hud_camera);*/
 }
 
 void Apsis::Engine::TopDown2d::_update(float elapsed) {
@@ -239,8 +237,10 @@ void Apsis::Engine::TopDown2d::_update(float elapsed) {
     _zoom += 1.0f * elapsed;
   }
 
-  _x = _player1->position().x;
-  _z = _player1->position().y;
+  /*_x = _player1->position().x;
+  _z = _player1->position().y;*/
+  _x = 0;
+  _z = 0;
 
   if (_x > ((_map->width() * _map->tileWidth() - _video.resolutionX/2.0f/_zoom))) {
     _x = ((_map->width() * _map->tileWidth() - _video.resolutionX/2.0f/_zoom));
@@ -258,8 +258,8 @@ void Apsis::Engine::TopDown2d::_update(float elapsed) {
     _z = (_video.resolutionY/2.0f/_zoom);
   }
 
-  _ball->update(elapsed);
-  _player1->update(elapsed);
+  //_ball->update(elapsed);
+  //_player1->update(elapsed);
 }
 
 void Apsis::Engine::TopDown2d::_fireEvent(int event) {

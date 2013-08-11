@@ -19,72 +19,42 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-Apsis::World::Actor::Actor(const char* actorFile,
+Apsis::World::Actor::Actor(const Apsis::Sprite::Thing& thing,
                            unsigned int x,
-                           unsigned int y) {
-  _currentAnimation = NULL;
+                           unsigned int y) 
+  : _thing(thing),
+    _sheet(thing.sheet()),
+    _animation(&thing.animationById(0)),
+    _frame(&_animation->frame(0)) {
+
   _currentFrame = 0;
   _currentTime = 0;
 
   _position.x = (float)x;
   _position.y = (float)y;
-
-  _parseJSONFile(actorFile);
-
-  if (_animations.size() > 0) {
-    _currentAnimation = &_animations[0];
-    _frame = &_currentAnimation->frame(0);
-  }
 }
 
-char* Apsis::World::Actor::_newState(const char* name) {
-  char* ret = new char[129];
-  strncpy(ret, name, 128);
-  _states.push_back(ret);
-  return ret;
+const Apsis::Sprite::Sheet& Apsis::World::Actor::sheet() const {
+  return _sheet;
 }
 
-void Apsis::World::Actor::state(const char* stateName) {
-  for (unsigned int i = 0; i < _states.size(); i++) {
-    if (strncmp(_states[i], stateName, 128) == 0) {
-      _state = _states[i];
-    }
-  }
-}
-
-const char* Apsis::World::Actor::state() {
-  return _state;
-}
-
-Apsis::Sprite::Sheet* Apsis::World::Actor::spriteSheet() {
-  return _spriteSheet;
-}
-
-Apsis::Geometry::Rectangle Apsis::World::Actor::position() {
+Apsis::Geometry::Rectangle Apsis::World::Actor::position() const {
   return _position;
 }
 
 void Apsis::World::Actor::animate(const char* animationName) {
-  // Look-up the animation
-  for (unsigned int i = 0; i < _animations.size(); i++) {
-    if (_animations[i].name() == std::string(animationName)) {
-      _currentAnimation = &_animations[i];
-      _currentFrame = 0;
-      _frame = &_currentAnimation->frame(_currentFrame);
-      return;
-    }
-  }
+  _animation = &_thing.animation(animationName);
 }
 
 void Apsis::World::Actor::nextFrame() {
   _currentFrame += 1;
-  if (_currentAnimation->count() == 0) {
+  if (_animation->count() == 0) {
     _currentFrame = 0;
   }
   else {
-    _currentFrame %= _currentAnimation->count();
+    _currentFrame %= _animation->count();
   }
-  _frame = &_currentAnimation->frame(_currentFrame);
+  _frame = &_animation->frame(_currentFrame);
   _currentTime = 0;
 }
 
@@ -139,11 +109,11 @@ void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
 }
 
 void Apsis::World::Actor::draw(glm::mat4& projection,
-                               Primitives::Camera& camera) {
+                               Primitives::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
 
-  _spriteSheet->draw(_frame->spriteIndex, projection, camera, model);
+  _sheet.draw(_frame->spriteIndex, projection, camera, model);
 }
 
 const char* Apsis::World::Actor::rules() const {
@@ -159,37 +129,4 @@ const char* Apsis::World::Actor::rules() const {
   }
 
   return ret.c_str();
-}
-
-void Apsis::World::Actor::_parseJSONFile(const char* filename) {
-  Json::Reader reader;
-  Json::Value value;
-
-  std::ifstream file(filename);
-  reader.parse(file, value);
-  file.close();
-
-  _position.width  = (float)value["width"].asDouble();
-  _position.height = (float)value["height"].asDouble();
-
-  // TODO: account for null sprites value
-  _spriteSheet = new Apsis::Sprite::Sheet(value["sprites"].asCString());
-
-  // Animation
-  // TODO: better handling of invalid values
-  for (Json::Value::iterator it = value["animations"].begin(); it != value["animations"].end(); it++) {
-    // Create an animation structure
-    Sprite::Animation newAnimation((*it)["name"].asCString());
-
-    // Store all of the sprites
-    int spriteIndex = -1;
-    do {
-      spriteIndex = _spriteSheet->enumerateSprites((*it)["sprites"].asCString(), spriteIndex+1);
-      if (spriteIndex != -1) {
-        newAnimation.addFrame(spriteIndex);
-      }
-    } while(spriteIndex != -1);
-
-    _animations.push_back(newAnimation);
-  }
 }

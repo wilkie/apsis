@@ -73,7 +73,7 @@ namespace Apsis {
       void uploadUniform(int identifier, const glm::vec4& value) const;
 
       /*
-       *  Bind a texture.
+       *  Bind a known texture.
        */
       void bindTexture(unsigned int slot, Texture& texture);
 
@@ -82,22 +82,22 @@ namespace Apsis {
       /*
        *  Render as triangles.
        */
-      void draw();
+      void draw() const;
 
       /*
        *  Render the range of the elements array as triangles.
        */
-      void drawRange(unsigned int start, unsigned int count);
+      void drawRange(unsigned int start, unsigned int count) const;
 
       /*
        *  Render as quads.
        */
-      void drawQuads();
+      void drawQuads() const;
 
       /*
        *  Render the range of the elements array as quads.
        */
-      void drawQuadsRange(unsigned int start, unsigned int count);
+      void drawQuadsRange(unsigned int start, unsigned int count) const;
 
       /*
        *  Gives the identifier for this vertex array.
@@ -105,6 +105,8 @@ namespace Apsis {
       unsigned int identifier() const;
 
     private:
+      void _bindTextures() const;
+
       unsigned int _vao;
 
       Sync::ReferenceCounter _counter;

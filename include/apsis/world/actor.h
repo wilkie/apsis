@@ -17,6 +17,7 @@
 
 #include "apsis/sprite/sheet.h"
 #include "apsis/sprite/animation.h"
+#include "apsis/sprite/thing.h"
 
 #include "apsis/agent/impeder.h"
 #include "apsis/agent/mover.h"
@@ -39,23 +40,21 @@ namespace Apsis {
     class Actor {
     public:
       /*
-        *  Constructs a Apsis::Sprite using the actor files in the
-        *    given filepath. The sprite used is defined by the given
-        *    Apsis::Sprite::Sheet.
-        */
-      Actor(const char* actorFile,
+       *  Constructs a World::Actor from a Thing.
+       */
+      Actor(const Apsis::Sprite::Thing& thing,
             unsigned int x,
             unsigned int y);
 
       /*
        *  Return: the Apsis::Sprite::Sheet for the Apsis::Sprite.
        */
-      Apsis::Sprite::Sheet* spriteSheet();
+      const Apsis::Sprite::Sheet& sheet() const;
 
       /*
        *  Return: the Apsis::Geometry::Rectangle for the Apsis::Sprite.
        */
-      Apsis::Geometry::Rectangle position();
+      Apsis::Geometry::Rectangle position() const;
 
       /*
        *  Sets the current animation to be played by this Apsis::Sprite.
@@ -74,12 +73,6 @@ namespace Apsis {
 
       void move(Apsis::Geometry::Point& to);
 
-      // Set the current state for the Actor.
-      void state(const char* stateName);
-
-      // Return the current state for the Actor.
-      const char* state();
-
       // Add the given agent that will provide movement to the actor.
       void attachMover(Apsis::Agent::Mover* agent);
 
@@ -88,36 +81,30 @@ namespace Apsis {
 
       // Draws the actor
       void draw(glm::mat4& projection,
-                Primitives::Camera& camera);
+                Primitives::Camera& camera) const;
 
       // List rules
       const char* rules() const;
 
     private:
+      // The base Thing for this Actor.
+      const Apsis::Sprite::Thing& _thing;
+
+      // The set of sprites for the Actor.
+      const Apsis::Sprite::Sheet& _sheet;
+
       // The Object composition of this Actor.
       Apsis::World::Object _object;
 
-      // Parses the given json via the path given in jsonFile.
-      void _parseJSONFile(const char* jsonFile);
-
-      // The set of sprites for the Actor.
-      Apsis::Sprite::Sheet* _spriteSheet;
-
       // The current position of the Actor in the world.
       Apsis::Geometry::Rectangle _position;
-
-      // Stores all possible states for the Actor.
-      std::vector<char*> _states;
 
       // Stores the current state of the character. State
       // determines how the character updates.
       const char* _state;
 
-      // Stores the details about animations.
-      std::vector<Apsis::Sprite::Animation> _animations;
-
       // Stores the current animation.
-      Sprite::Animation* _currentAnimation;
+      const Sprite::Animation* _animation;
 
       // Stores the current frame.
       unsigned int _currentFrame;
@@ -125,9 +112,6 @@ namespace Apsis {
 
       // time since last frame.
       float _currentTime;
-
-      // Creates a new state.
-      char* _newState(const char* name);
 
       // Before Move Agents
       std::vector<Apsis::Agent::Impeder*> _impederAgents;

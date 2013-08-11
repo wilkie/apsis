@@ -23,7 +23,28 @@
 #include <fstream>
 #include <json/json.h>
 
+#include <algorithm>
+
+std::vector<std::string> Apsis::Sprite::Sheet::_ids;
+std::vector<Apsis::Sprite::Sheet> Apsis::Sprite::Sheet::_sheets;
+
+const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
+  std::string str = std::string(name);
+
+  std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
+  if (it != _ids.end()) {
+    // already exists
+    return _sheets[std::distance(_ids.begin(), it)];
+  }
+
+  _ids.push_back(str);
+  _sheets.push_back(Apsis::Sprite::Sheet(name));
+  return _sheets[_ids.size() - 1];
+}
+
 Apsis::Sprite::Sheet::Sheet(const char* filename) {
+  _id = _sheets.size();
+
   _texture = new Apsis::Primitives::Texture(filename);
   _width = _texture->width();
   _height = _texture->height();
@@ -124,6 +145,10 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
   _vao.uploadUniform("tex", 0);
 }
 
+unsigned int Apsis::Sprite::Sheet::id() const {
+  return _id;
+}
+
 char* Apsis::Sprite::Sheet::_determineStatSheetFilename(const char* filename) {
   char* stat_sheet = new char[strlen(filename)+3];
   strncpy(stat_sheet, filename, strlen(filename));
@@ -168,12 +193,12 @@ void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
   delete [] stat_sheet;
 }
 
-Apsis::Primitives::Texture* Apsis::Sprite::Sheet::texture() {
+Apsis::Primitives::Texture* Apsis::Sprite::Sheet::texture() const {
   return _texture;
 }
 
-void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) {
-  Sprite& sprite = _sprites[index];
+void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) const {
+  const Sprite& sprite = _sprites[index];
 
   float tu = ((float)sprite.x + 0.1f)  / (float)_width;
   float tv = ((float)sprite.y + 0.1f)  / (float)_height;
@@ -196,7 +221,7 @@ void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4
   coords[3] = (float)tv2;
 }
 
-bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4]) {
+bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4]) const {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     if (strncmp(name, _sprites[i].name, 64) == 0) {
       textureCoordinates(i, coords);
@@ -206,7 +231,7 @@ bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4])
   return false;
 }
 
-int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int last) {
+int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int last) const {
   int star_pos = -1;
 
   // Determine where the '*' is in the wildcard
@@ -243,27 +268,26 @@ int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int la
   return -1;
 }
 
-unsigned int Apsis::Sprite::Sheet::count() {
+unsigned int Apsis::Sprite::Sheet::count() const {
   return _sprites.size();
 }
 
 void Apsis::Sprite::Sheet::draw(unsigned int        index,
                                 glm::mat4&          projection,
                                 Primitives::Camera& camera,
-                                glm::mat4&          model) {
+                                glm::mat4&          model) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
   
-  _vao.bindTexture(0, *this->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.drawRange(index * 6, 6);
 }
 
-float Apsis::Sprite::Sheet::width(unsigned int index) {
+float Apsis::Sprite::Sheet::width(unsigned int index) const {
   return (float)_sprites[index].width;
 }
 
-float Apsis::Sprite::Sheet::height(unsigned int index) {
+float Apsis::Sprite::Sheet::height(unsigned int index) const {
   return (float)_sprites[index].height;
 }

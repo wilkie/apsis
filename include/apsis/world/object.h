@@ -8,6 +8,7 @@
 
 #include <set>
 #include <vector>
+#include <unordered_map>
 
 namespace Apsis {
   namespace World {
@@ -19,22 +20,37 @@ namespace Apsis {
       /*
        *  Returns the value stored at the given property.
        */
-      Apsis::World::Value get(const char* key);
+      const Apsis::World::Value& get(const char* key) const;
 
       /*
        *  Returns the value stored at the given property.
        */
-      Apsis::World::Value get(unsigned int key);
+      const Apsis::World::Value& get(unsigned int key) const;
 
       /*
        *  Sets the given property to the given value.
        */
-      void set(unsigned int key, Apsis::World::Value& value);
+      void set(unsigned int key, double value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void set(unsigned int key, long value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void set(const char* key, double value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void set(const char* key, long value);
 
       /*
        *  Returns whether or not the object has the given state.
        */
-      bool isEnabled(unsigned int state);
+      bool isEnabled(unsigned int state) const;
 
       /*
        *  Applies the given state to this object.
@@ -51,14 +67,12 @@ namespace Apsis {
        *  state
        */
       bool toggleState(unsigned int state);
-
-      // State collection.
-      std::set<unsigned int>       _states;
     private:
       // Property collection.
-      std::vector<Apsis::World::Value> _properties;
-      // Whether or not a value has been set
-      std::vector<bool> _hasValue;
+      std::unordered_map<unsigned int, Apsis::World::Value> _properties;
+
+      // State collection.
+      std::set<unsigned int> _states;
     };
   }
 }

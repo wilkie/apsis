@@ -53,7 +53,7 @@ void Apsis::Primitives::VertexArray::useProgram(Program& program) {
   _programs.push_back(program);
 }
 
-void Apsis::Primitives::VertexArray::draw() {
+void Apsis::Primitives::VertexArray::draw() const {
   glBindVertexArray(this->_vao);
 
   unsigned int count = 0;
@@ -61,21 +61,25 @@ void Apsis::Primitives::VertexArray::draw() {
     count = _elementBuffer[0].count();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
   }
+
+  _bindTextures();
 
   glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
 }
 
-void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) {
+void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) const {
   glBindVertexArray(this->_vao);
 
   if (_elementBuffer.size() > 0) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
   }
 
+  _bindTextures();
+
   glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
 }
 
-void Apsis::Primitives::VertexArray::drawQuads() {
+void Apsis::Primitives::VertexArray::drawQuads() const {
   glBindVertexArray(this->_vao);
 
   unsigned int count = 0;
@@ -84,15 +88,19 @@ void Apsis::Primitives::VertexArray::drawQuads() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
   }
 
+  _bindTextures();
+
   glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, 0);
 }
 
-void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) {
+void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
   glBindVertexArray(this->_vao);
 
   if (_elementBuffer.size() > 0) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
   }
+
+  _bindTextures();
 
   glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
 }
@@ -188,4 +196,16 @@ void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot, Texture& tex
 
 unsigned int Apsis::Primitives::VertexArray::identifier() const {
   return this->_vao;
+}
+
+void Apsis::Primitives::VertexArray::_bindTextures() const {
+  std::map<unsigned int, Texture>::const_iterator it;
+
+  for (it = _textures.begin(); it != _textures.end(); ++it) {
+    unsigned int slot = it->first;
+    const Texture& texture = it->second;
+
+    glActiveTexture(GL_TEXTURE0  + slot);
+    glBindTexture(GL_TEXTURE_2D, texture.identifier());
+  }
 }

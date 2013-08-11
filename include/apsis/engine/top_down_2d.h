@@ -7,6 +7,8 @@
 #include <apsis/settings/video.h>
 
 #include "apsis/sprite/sheet.h"
+#include "apsis/sprite/animation.h"
+#include "apsis/sprite/thing.h"
 #include "apsis/world/actor.h"
 #include "apsis/hud/numbers.h"
 #include "apsis/hud/filler_bar.h"

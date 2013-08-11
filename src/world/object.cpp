@@ -1,28 +1,35 @@
 #include <apsis/world/object.h>
 
-Apsis::World::Value Apsis::World::Object::get(const char* key) {
+const Apsis::World::Value& Apsis::World::Object::get(const char* key) const {
   return this->get(Apsis::Registry::Property::id(key));
 }
 
-Apsis::World::Value Apsis::World::Object::get(unsigned int key) {
-  if ((this->_properties.size()-1 > key) || 
-      (this->_hasValue[key] == false)) {
+const Apsis::World::Value& Apsis::World::Object::get(unsigned int key) const {
+  if (this->_properties.count(key) == 0) {
     throw "Key not found";
   }
 
-  return this->_properties[key];
+  const Apsis::World::Value& value = this->_properties.at(key);
+  return value;
 }
 
-void Apsis::World::Object::set(unsigned int key, Apsis::World::Value& value) {
-  while (this->_hasValue.size()-1 > key) {
-    this->_hasValue.push_back(false);
-  }
-
-  this->_hasValue[key] = true;
-  this->_properties[key] = value;
+void Apsis::World::Object::set(const char* key, double value) {
+  this->set(Apsis::Registry::Property::id(key), value);
 }
 
-bool Apsis::World::Object::isEnabled(unsigned int state) {
+void Apsis::World::Object::set(unsigned int key, double value) {
+  this->_properties[key] = World::Value(value);
+}
+
+void Apsis::World::Object::set(const char* key, long value) {
+  this->set(Apsis::Registry::Property::id(key), value);
+}
+
+void Apsis::World::Object::set(unsigned int key, long value) {
+  this->_properties[key] = World::Value(value);
+}
+
+bool Apsis::World::Object::isEnabled(unsigned int state) const {
   return this->_states.count(state) > 0;
 }
 
