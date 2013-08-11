@@ -4,7 +4,7 @@
 #include <fstream>
 
 std::vector<std::string> Apsis::Sprite::Thing::_ids;
-std::vector<Apsis::Sprite::Thing> Apsis::Sprite::Thing::_things;
+std::vector<Apsis::Sprite::Thing*> Apsis::Sprite::Thing::_things;
 
 Apsis::Sprite::Thing::Thing(const char* path)
   : _jsonLoaded(false),
@@ -21,7 +21,7 @@ unsigned int Apsis::Sprite::Thing::id() const {
 }
 
 const Apsis::Sprite::Thing& Apsis::Sprite::Thing::get(unsigned int id) {
-  return _things[id];
+  return *_things[id];
 }
 
 const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
@@ -30,12 +30,12 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
   std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
   if (it != _ids.end()) {
     // already exists
-    return _things[std::distance(_ids.begin(), it)];
+    return *_things[std::distance(_ids.begin(), it)];
   }
   
   _ids.push_back(str);
-  _things.push_back(Apsis::Sprite::Thing(path));
-  return _things[_ids.size() - 1];
+  _things.push_back(new Apsis::Sprite::Thing(path));
+  return *_things[_ids.size() - 1];
 }
 
 const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::sheet() const {
@@ -69,8 +69,8 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::_loadSpriteSheet() {
 void Apsis::Sprite::Thing::_parseJSONFile() {
   _openJSONFile();
 
-  _object.set(Apsis::Registry::Property::id("width"),  _value["width"].asDouble());
-  _object.set(Apsis::Registry::Property::id("height"), _value["height"].asDouble());
+  _object.set("width",  _value["width"].asDouble());
+  _object.set("height", _value["height"].asDouble());
 
   // Animation
   // TODO: better handling of invalid values
@@ -99,7 +99,7 @@ const Apsis::Sprite::Animation& Apsis::Sprite::Thing::animation(const char* name
     }
   }
 
-  return 0;
+  return _animations[0];
 }
 
 unsigned int Apsis::Sprite::Thing::animationId(const char* name) const {
@@ -114,7 +114,7 @@ unsigned int Apsis::Sprite::Thing::animationId(const char* name) const {
 }
 
 const Apsis::Sprite::Animation& Apsis::Sprite::Thing::animationById(unsigned int id) const {
-  return _animations[id];
+  return _animations.at(id);
 }
 
 unsigned int Apsis::Sprite::Thing::animationCount() const {

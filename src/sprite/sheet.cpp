@@ -26,7 +26,7 @@
 #include <algorithm>
 
 std::vector<std::string> Apsis::Sprite::Sheet::_ids;
-std::vector<Apsis::Sprite::Sheet> Apsis::Sprite::Sheet::_sheets;
+std::vector<Apsis::Sprite::Sheet*> Apsis::Sprite::Sheet::_sheets;
 
 const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
   std::string str = std::string(name);
@@ -34,12 +34,12 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
   std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
   if (it != _ids.end()) {
     // already exists
-    return _sheets[std::distance(_ids.begin(), it)];
+    return *_sheets[std::distance(_ids.begin(), it)];
   }
 
   _ids.push_back(str);
-  _sheets.push_back(Apsis::Sprite::Sheet(name));
-  return _sheets[_ids.size() - 1];
+  _sheets.push_back(new Apsis::Sprite::Sheet(name));
+  return *_sheets[_ids.size() - 1];
 }
 
 Apsis::Sprite::Sheet::Sheet(const char* filename) {

@@ -12,6 +12,8 @@
 #include <string>
 #include <json/json.h>
 
+#include <Windows.h>
+
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
@@ -23,15 +25,22 @@ Apsis::World::Actor::Actor(const Apsis::Sprite::Thing& thing,
                            unsigned int x,
                            unsigned int y) 
   : _thing(thing),
-    _sheet(thing.sheet()),
-    _animation(&thing.animationById(0)),
-    _frame(&_animation->frame(0)) {
+    _sheet(thing.sheet()) {
+
+  // Copy over object properties
+  _object = thing.object();
+
+  const Apsis::Sprite::Animation& animation = _thing.animationById(0);
+  _animation = &animation;
+  _frame     = &_animation->frame(0);
 
   _currentFrame = 0;
   _currentTime = 0;
 
   _position.x = (float)x;
   _position.y = (float)y;
+  _position.width  = _object.get("width").asDouble();
+  _position.height = _object.get("height").asDouble();
 }
 
 const Apsis::Sprite::Sheet& Apsis::World::Actor::sheet() const {

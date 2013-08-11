@@ -70,7 +70,7 @@ namespace Apsis {
     private:
       // Keeps track of Things system-wide.
       static std::vector<std::string> _ids;
-      static std::vector<Apsis::Sprite::Thing> _things;
+      static std::vector<Apsis::Sprite::Thing*> _things;
 
       // The path to the thing description.
       std::string _path;

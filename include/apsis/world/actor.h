@@ -93,6 +93,13 @@ namespace Apsis {
       // The set of sprites for the Actor.
       const Apsis::Sprite::Sheet& _sheet;
 
+      // Stores the current animation.
+      const Sprite::Animation* _animation;
+
+      // Stores the current frame.
+      unsigned int _currentFrame;
+      const Sprite::Animation::Frame* _frame;
+
       // The Object composition of this Actor.
       Apsis::World::Object _object;
 
@@ -102,13 +109,6 @@ namespace Apsis {
       // Stores the current state of the character. State
       // determines how the character updates.
       const char* _state;
-
-      // Stores the current animation.
-      const Sprite::Animation* _animation;
-
-      // Stores the current frame.
-      unsigned int _currentFrame;
-      const Sprite::Animation::Frame* _frame;
 
       // time since last frame.
       float _currentTime;

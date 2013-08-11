@@ -375,7 +375,6 @@ void Apsis::World::Map::draw(const glm::mat4& projection,
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
 
-  _vao.bindTexture(0, *_spriteSheet->texture());
   _vao.uploadUniform("camera", camera.eye());
   _vao.draw();
 }

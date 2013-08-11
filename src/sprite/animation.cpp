@@ -7,6 +7,7 @@ Apsis::Sprite::Animation::Animation(const char* name) {
 void Apsis::Sprite::Animation::addFrame(unsigned int spriteIndex) {
   Frame frame;
   frame.spriteIndex = spriteIndex;
+  frame.foo = 12345;
 
   _frames.push_back(frame);
 }
@@ -20,5 +21,5 @@ unsigned int Apsis::Sprite::Animation::count() const {
 }
 
 const Apsis::Sprite::Animation::Frame& Apsis::Sprite::Animation::frame(unsigned int index) const {
-  return _frames[index];
+  return _frames.at(index);
 }

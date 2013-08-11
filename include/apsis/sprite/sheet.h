@@ -90,7 +90,7 @@ namespace Apsis {
     private:
       // Registry of sprite sheets.
       static std::vector<std::string> _ids;
-      static std::vector<Apsis::Sprite::Sheet> _sheets;
+      static std::vector<Apsis::Sprite::Sheet*> _sheets;
 
       unsigned int _id;
 

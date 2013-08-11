@@ -10,6 +10,7 @@ namespace Apsis {
     public:
       struct Frame {
         unsigned int spriteIndex;
+        unsigned int foo;
       };
 
       Animation(const char* name);
