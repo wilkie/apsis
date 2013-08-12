@@ -37,6 +37,11 @@ void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, uns
   _count = count;
 }
 
+void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count, unsigned int at) {
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)(at * sizeof(GLint)), count, elements);
+}
+
 unsigned int Apsis::Primitives::VertexBuffer::count() const {
   return _count;
 }

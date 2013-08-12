@@ -80,7 +80,7 @@ namespace Apsis {
       void attachImpeder(Apsis::Agent::Impeder* agent);
 
       // Draws the actor
-      void draw(glm::mat4& projection,
+      void draw(const glm::mat4& projection,
                 Primitives::Camera& camera) const;
 
       // List rules

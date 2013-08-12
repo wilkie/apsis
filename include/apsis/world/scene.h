@@ -4,6 +4,8 @@
 #include "apsis/world/map.h"
 #include "apsis/world/actor.h"
 
+#include "apsis/primitives/camera.h"
+
 #include <vector>
 
 namespace Apsis {
@@ -29,6 +31,13 @@ namespace Apsis {
        *  Instantiates an Actor to the scene by cloning the given Thing.
        */
       unsigned int addActor(Sprite::Thing& thing, float x, float y);
+
+      /*
+       *  Draws the scene.
+       */
+      void draw(const glm::mat4& projection,
+                Primitives::Camera& camera,
+                const glm::mat4& model) const;
     private:
       // Collections of objects within the scene
       std::vector<Apsis::World::Actor> _actors;

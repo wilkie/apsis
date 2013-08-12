@@ -12,6 +12,8 @@
 
 #include <glm/glm.hpp>
 
+#include <json/json.h>
+
 #include <vector>
 
 namespace Apsis {
@@ -22,6 +24,11 @@ namespace Apsis {
     class Map {
     public:
       /*
+       *  Constructs a Map from the given JSON description of the map.
+       */
+      Map(const char* json);
+
+      /*
        *  Constructs a Apsis::World::Map of the given width and height and
        *    drawn using the given Apsis::Sprite::Sheet.
        */
@@ -29,7 +36,7 @@ namespace Apsis {
           unsigned int height,
           float tileWidth,
           float tileHeight,
-          Apsis::Sprite::Sheet* spriteSheet);
+          const Apsis::Sprite::Sheet& spriteSheet);
 
       /*
        *  Queries the tile at the world coordinates (x,y)
@@ -59,22 +66,42 @@ namespace Apsis {
       /*
        *  Returns the Apsis::Sprite::Sheet being used to draw the map.
        */
-      Apsis::Sprite::Sheet* spriteSheet();
+      const Apsis::Sprite::Sheet& spriteSheet();
 
       /*
        *  Renders the map.
        */
       void draw(const glm::mat4& projection,
                 Primitives::Camera& camera,
-                const glm::mat4& model);
+                const glm::mat4& model) const;
 
     private:
       Sync::ReferenceCounter _counter;
 
+      // JSON parsing
+
+      // The path to the map description.
+      std::string _path;
+
+      // Whether or not the JSON has been loaded
+      bool _jsonLoaded;
+
+      // JSON value;
+      Json::Value _value;
+
+      // Parses the given json via the path given in jsonFile.
+      void _openJSONFile();
+
+      // Load sprite sheet from JSON
+      const Apsis::Sprite::Sheet& _loadSpriteSheet();
+
+      // Parse JSON
+      void _parseJSONFile();
+
       // Internal storage
       unsigned int _width;
       unsigned int _height;
-      Apsis::Sprite::Sheet* _spriteSheet;
+      const Apsis::Sprite::Sheet& _sheet;
 
       // The tiles that compose the map
       std::vector<Tile> _tiles;
@@ -82,11 +109,7 @@ namespace Apsis {
       float _tileWidth;
       float _tileHeight;
 
-      /*
-        * Randomly assigns tiles from _tiles to be walls. Wall tiles use
-        * sprites in range 16-19 and are impassable.
-        */
-      void _generateWalls();
+      void _generateVAO();
 
       Primitives::VertexArray _vao;
 

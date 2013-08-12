@@ -39,8 +39,8 @@ Apsis::World::Actor::Actor(const Apsis::Sprite::Thing& thing,
 
   _position.x = (float)x;
   _position.y = (float)y;
-  _position.width  = _object.get("width").asDouble();
-  _position.height = _object.get("height").asDouble();
+  _position.width  = (float)_object.get("width").asDouble();
+  _position.height = (float)_object.get("height").asDouble();
 }
 
 const Apsis::Sprite::Sheet& Apsis::World::Actor::sheet() const {
@@ -117,7 +117,7 @@ void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
   _position.y = (float)to.y;
 }
 
-void Apsis::World::Actor::draw(glm::mat4& projection,
+void Apsis::World::Actor::draw(const glm::mat4& projection,
                                Primitives::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));

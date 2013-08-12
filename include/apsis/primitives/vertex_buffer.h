@@ -20,6 +20,11 @@ namespace Apsis {
       void transfer(const unsigned int* elements, unsigned int count);
 
       /*
+       *  Updates the given data to the buffer.
+       */
+      void transfer(const unsigned int* elements, unsigned int count, unsigned int at);
+
+      /*
        *  Returns the number of elements in the buffer.
        */
       unsigned int count() const;

@@ -3,33 +3,48 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <algorithm>
+#include <fstream>
+
 #include "apsis/primitives/fragment_shader.h"
 #include "apsis/primitives/vertex_shader.h"
 
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
+Apsis::World::Map::Map(const char* json)
+  : _jsonLoaded(false),
+    _path(json),
+    _sheet(_loadSpriteSheet()) {
+
+  _parseJSONFile();
+  _generateVAO();
+}
+
 Apsis::World::Map::Map(unsigned int width,
                        unsigned int height,
                        float tileWidth,
                        float tileHeight,
-                       Apsis::Sprite::Sheet* spriteSheet) :
+                       const Apsis::Sprite::Sheet& spriteSheet) :
                    _width(width),
                    _height(height),
+                   _sheet(spriteSheet),
                    _tileWidth(tileWidth),
                    _tileHeight(tileHeight) {
+
+  // Blank out tiles
   for(unsigned int x = 0; x < _width * _height; x++) {
     Apsis::World::Tile tile = Apsis::World::Tile();
-    tile.spriteIndex(rand() % 16);
+    tile.spriteIndex(0xffffffff);
     tile.passable(true);
 
     _tiles.push_back(tile);
   }
 
-  _generateWalls();
+  _generateVAO();
+}
 
-  _spriteSheet = spriteSheet;
-
+void Apsis::World::Map::_generateVAO() {
   // width = 3, height = 2 creates map like this:
   //
   //   +---+---+---+
@@ -49,8 +64,8 @@ Apsis::World::Map::Map(unsigned int width,
   //   +---+   +---+   +---+  (2wh-w-h quads between tiles)
 
   // Create buffer array:
-  unsigned int vertices_size = 4 * width * height;
-  unsigned int elements_size = 6 * width * height;
+  unsigned int vertices_size = 4 * _width * _height;
+  unsigned int elements_size = 6 * _width * _height;
   _elements = new unsigned int[elements_size];
 
   // 8 values for each logical vertex: 3 per axis coordinate,
@@ -61,9 +76,9 @@ Apsis::World::Map::Map(unsigned int width,
   unsigned int ei = 0;
   unsigned int ti = 0;
 
-  for (unsigned int h = 0; h < height; h++) {
-    for (unsigned int w = 0; w < width; w++) {
-      if (_tiles[ti].spriteIndex() == 0xffff) {
+  for (unsigned int h = 0; h < _height; h++) {
+    for (unsigned int w = 0; w < _width; w++) {
+      if (_tiles[ti].spriteIndex() == 0xffffffff) {
         vertices_size -= 4;
         elements_size -= 6;
         ti++;
@@ -73,10 +88,10 @@ Apsis::World::Map::Map(unsigned int width,
       unsigned int si = _tiles[ti].spriteIndex();
 
       float coords[4];
-      _spriteSheet->textureCoordinates(si, coords);
+      _sheet.textureCoordinates(si, coords);
 
-      float spriteWidth  = _spriteSheet->width(si);
-      float spriteHeight = _spriteSheet->height(si);
+      float spriteWidth  = _sheet.width(si);
+      float spriteHeight = _sheet.height(si);
 
       ti++;
 
@@ -149,7 +164,7 @@ Apsis::World::Map::Map(unsigned int width,
   _vao.defineUniform("proj",  program);
 
   _vao.defineUniform("tex", program);
-  _vao.bindTexture(0, *_spriteSheet->texture());
+  _vao.bindTexture(0, *_sheet.texture());
   _vao.uploadUniform("tex", 0);
 }
 
@@ -165,212 +180,13 @@ Apsis::World::Tile* Apsis::World::Map::tile(unsigned int x, unsigned int y) {
   return &_tiles[(y * _width) + x];
 }
 
-Apsis::Sprite::Sheet* Apsis::World::Map::spriteSheet() {
-  return _spriteSheet;
-}
-
-void Apsis::World::Map::_generateWalls() {
-  for(unsigned int x = 0; x < _width * _height; x++) {
-    _tiles[x].spriteIndex(0xffff);
-    _tiles[x].passable(true);
-  }
-
-  _tiles[2 + _width*8].spriteIndex(81);
-  _tiles[2 + _width*8].passable(false);
-  _tiles[3 + _width*8].spriteIndex(82);
-  _tiles[3 + _width*8].passable(false);
-  _tiles[4 + _width*8].spriteIndex(83);
-  _tiles[4 + _width*8].passable(false);
-
-  _tiles[6 + _width*10].spriteIndex(81);
-  _tiles[6 + _width*10].passable(false);
-  _tiles[7 + _width*10].spriteIndex(82);
-  _tiles[7 + _width*10].passable(false);
-  _tiles[8 + _width*10].spriteIndex(83);
-  _tiles[8 + _width*10].passable(false);
-
-  _tiles[12 + _width*8].spriteIndex(81);
-  _tiles[12 + _width*8].passable(false);
-  _tiles[13 + _width*8].spriteIndex(82);
-  _tiles[13 + _width*8].passable(false);
-  _tiles[14 + _width*8].spriteIndex(83);
-  _tiles[14 + _width*8].passable(false);
-
-  _tiles[18 + _width*5].spriteIndex(81);
-  _tiles[18 + _width*5].passable(false);
-  _tiles[19 + _width*5].spriteIndex(82);
-  _tiles[19 + _width*5].passable(false);
-  _tiles[20 + _width*5].spriteIndex(83);
-  _tiles[20 + _width*5].passable(false);
-
-  _tiles[20 + _width*4].spriteIndex(1);
-  _tiles[20 + _width*4].passable(false);
-  _tiles[19 + _width*4].spriteIndex(0);
-  _tiles[19 + _width*4].passable(false);
-  _tiles[20 + _width*3].spriteIndex(0);
-  _tiles[20 + _width*3].passable(false);
-
-  _tiles[12 + _width*5].spriteIndex(2);
-  _tiles[12 + _width*5].passable(false);
-  _tiles[14 + _width*5].spriteIndex(2);
-  _tiles[14 + _width*5].passable(false);
-
-  _tiles[13 + _width*7].spriteIndex(128);
-
-  _tiles[16 + _width*10].spriteIndex(67);
-  _tiles[16 + _width*10].passable(false);
-  _tiles[17 + _width*10].spriteIndex(82);
-  _tiles[17 + _width*10].passable(false);
-  _tiles[18 + _width*10].spriteIndex(82);
-  _tiles[18 + _width*10].passable(false);
-
-  _tiles[25 + _width*10].spriteIndex(67);
-  _tiles[25 + _width*10].passable(false);
-  _tiles[26 + _width*10].spriteIndex(82);
-  _tiles[26 + _width*10].passable(false);
-  _tiles[27 + _width*10].spriteIndex(82);
-  _tiles[27 + _width*10].passable(false);
-
-  _tiles[18 + _width*9].spriteIndex(172);
-  _tiles[18 + _width*11].passable(false);
-  _tiles[19 + _width*10].spriteIndex(16);
-  _tiles[19 + _width*10].passable(false);
-  _tiles[20 + _width*10].spriteIndex(16);
-  _tiles[20 + _width*10].passable(false);
-  _tiles[21 + _width*10].spriteIndex(16);
-  _tiles[21 + _width*10].passable(false);
-  _tiles[22 + _width*10].spriteIndex(16);
-  _tiles[22 + _width*10].passable(false);
-
-  _tiles[18 + _width*11].spriteIndex(65);
-  _tiles[18 + _width*11].passable(false);
-  _tiles[18 + _width*12].spriteIndex(65);
-  _tiles[18 + _width*12].passable(false);
-  _tiles[18 + _width*13].spriteIndex(65);
-  _tiles[18 + _width*13].passable(false);
-  _tiles[18 + _width*14].spriteIndex(65);
-  _tiles[18 + _width*14].passable(false);
-  _tiles[18 + _width*15].spriteIndex(65);
-  _tiles[18 + _width*15].passable(false);
-
-  _tiles[17 + _width*11].spriteIndex(65);
-  _tiles[17 + _width*11].passable(false);
-  _tiles[17 + _width*12].spriteIndex(65);
-  _tiles[17 + _width*12].passable(false);
-  _tiles[17 + _width*13].spriteIndex(65);
-  _tiles[17 + _width*13].passable(false);
-  _tiles[17 + _width*14].spriteIndex(65);
-  _tiles[17 + _width*14].passable(false);
-  _tiles[17 + _width*15].spriteIndex(65);
-  _tiles[17 + _width*15].passable(false);
-
-  _tiles[11 + _width*11].spriteIndex(82);
-  _tiles[11 + _width*11].passable(false);
-  _tiles[10 + _width*11].spriteIndex(67);
-  _tiles[10 + _width*11].passable(false);
-
-  _tiles[16 + _width*12].spriteIndex(173);
-  _tiles[16 + _width*12].passable(false);
-  _tiles[15 + _width*12].spriteIndex(173);
-  _tiles[15 + _width*12].passable(false);
-  _tiles[14 + _width*12].spriteIndex(173);
-  _tiles[14 + _width*12].passable(false);
-  _tiles[13 + _width*12].spriteIndex(173);
-  _tiles[13 + _width*12].passable(false);
-  _tiles[12 + _width*12].spriteIndex(173);
-  _tiles[12 + _width*12].passable(false);
-  _tiles[11 + _width*12].spriteIndex(65);
-  _tiles[11 + _width*12].passable(false);
-
-  _tiles[16 + _width*13].spriteIndex(65);
-  _tiles[16 + _width*13].passable(false);
-  _tiles[15 + _width*13].spriteIndex(65);
-  _tiles[15 + _width*13].passable(false);
-  _tiles[14 + _width*13].spriteIndex(65);
-  _tiles[14 + _width*13].passable(false);
-  _tiles[13 + _width*13].spriteIndex(65);
-  _tiles[13 + _width*13].passable(false);
-  _tiles[12 + _width*13].spriteIndex(65);
-  _tiles[12 + _width*13].passable(false);
-  _tiles[11 + _width*13].spriteIndex(65);
-  _tiles[11 + _width*13].passable(false);
-
-  _tiles[16 + _width*14].spriteIndex(65);
-  _tiles[16 + _width*14].passable(false);
-  _tiles[15 + _width*14].spriteIndex(65);
-  _tiles[15 + _width*14].passable(false);
-  _tiles[14 + _width*14].spriteIndex(65);
-  _tiles[14 + _width*14].passable(false);
-  _tiles[13 + _width*14].spriteIndex(65);
-  _tiles[13 + _width*14].passable(false);
-  _tiles[12 + _width*14].spriteIndex(65);
-  _tiles[12 + _width*14].passable(false);
-  _tiles[11 + _width*14].spriteIndex(65);
-  _tiles[11 + _width*14].passable(false);
-
-  _tiles[19 + _width*12].spriteIndex(95);
-  _tiles[19 + _width*12].passable(false);
-  _tiles[20 + _width*12].spriteIndex(95);
-  _tiles[20 + _width*12].passable(false);
-  _tiles[21 + _width*12].spriteIndex(95);
-  _tiles[21 + _width*12].passable(false);
-  _tiles[22 + _width*12].spriteIndex(95);
-  _tiles[22 + _width*12].passable(false);
-  _tiles[23 + _width*12].spriteIndex(95);
-  _tiles[23 + _width*12].passable(false);
-  _tiles[24 + _width*12].spriteIndex(95);
-  _tiles[24 + _width*12].passable(false);
-  _tiles[25 + _width*12].spriteIndex(95);
-  _tiles[25 + _width*12].passable(false);
-  _tiles[19 + _width*13].spriteIndex(93);
-  _tiles[19 + _width*13].passable(false);
-  _tiles[20 + _width*13].spriteIndex(93);
-  _tiles[20 + _width*13].passable(false);
-  _tiles[21 + _width*13].spriteIndex(93);
-  _tiles[21 + _width*13].passable(false);
-  _tiles[22 + _width*13].spriteIndex(93);
-  _tiles[22 + _width*13].passable(false);
-  _tiles[23 + _width*13].spriteIndex(93);
-  _tiles[23 + _width*13].passable(false);
-  _tiles[24 + _width*13].spriteIndex(93);
-  _tiles[24 + _width*13].passable(false);
-  _tiles[25 + _width*13].spriteIndex(93);
-  _tiles[25 + _width*13].passable(false);
-  _tiles[19 + _width*14].spriteIndex(93);
-  _tiles[19 + _width*14].passable(false);
-  _tiles[20 + _width*14].spriteIndex(93);
-  _tiles[20 + _width*14].passable(false);
-  _tiles[21 + _width*14].spriteIndex(93);
-  _tiles[21 + _width*14].passable(false);
-  _tiles[22 + _width*14].spriteIndex(93);
-  _tiles[22 + _width*14].passable(false);
-  _tiles[23 + _width*14].spriteIndex(93);
-  _tiles[23 + _width*14].passable(false);
-  _tiles[24 + _width*14].spriteIndex(93);
-  _tiles[24 + _width*14].passable(false);
-  _tiles[25 + _width*14].spriteIndex(93);
-  _tiles[25 + _width*14].passable(false);
-  _tiles[19 + _width*15].spriteIndex(93);
-  _tiles[19 + _width*15].passable(false);
-  _tiles[20 + _width*15].spriteIndex(93);
-  _tiles[20 + _width*15].passable(false);
-  _tiles[21 + _width*15].spriteIndex(93);
-  _tiles[21 + _width*15].passable(false);
-  _tiles[22 + _width*15].spriteIndex(93);
-  _tiles[22 + _width*15].passable(false);
-  _tiles[23 + _width*15].spriteIndex(93);
-  _tiles[23 + _width*15].passable(false);
-  _tiles[24 + _width*15].spriteIndex(93);
-  _tiles[24 + _width*15].passable(false);
-  _tiles[25 + _width*15].spriteIndex(93);
-  _tiles[25 + _width*15].passable(false);
-  _tiles[25 + _width*15].spriteIndex(93);
-  _tiles[25 + _width*15].passable(false);
+const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
+  return _sheet;
 }
 
 void Apsis::World::Map::draw(const glm::mat4& projection,
                              Primitives::Camera& camera,
-                             const glm::mat4& model) {
+                             const glm::mat4& model) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
@@ -385,4 +201,44 @@ float Apsis::World::Map::tileWidth() {
 
 float Apsis::World::Map::tileHeight() {
   return _tileHeight;
+}
+
+void Apsis::World::Map::_openJSONFile() {
+  if (_jsonLoaded) {
+    return;
+  }
+
+  Json::Reader reader;
+
+  std::ifstream file(_path);
+  reader.parse(file, _value);
+  file.close();
+
+  _jsonLoaded = true;
+}
+
+const Apsis::Sprite::Sheet& Apsis::World::Map::_loadSpriteSheet() {
+  _openJSONFile();
+
+  return Apsis::Sprite::Sheet::load(_value["sprites"].asCString());
+}
+
+void Apsis::World::Map::_parseJSONFile() {
+  _openJSONFile();
+
+  _width  = _value["width"].asUInt();
+  _height = _value["height"].asUInt();
+
+  _tileWidth = (float)_value["tile_width"].asUInt();
+  _tileHeight = (float)_value["tile_height"].asUInt();
+
+  for (Json::Value::iterator it_y = _value["tiles"].begin(); it_y != _value["tiles"].end(); ++it_y) {
+    for (Json::Value::iterator it_x = (*it_y).begin(); it_x != (*it_y).end(); ++it_x) {
+      Apsis::World::Tile tile = Apsis::World::Tile();
+      tile.spriteIndex((unsigned int)(*it_x).asInt());
+      tile.passable(true);
+
+      _tiles.push_back(tile);
+    }
+  }
 }
