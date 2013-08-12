@@ -229,7 +229,7 @@ void Apsis::World::Map::_parseJSONFile() {
   _width  = _value["width"].asUInt();
   _height = _value["height"].asUInt();
 
-  _tileWidth = (float)_value["tile_width"].asUInt();
+  _tileWidth  = (float)_value["tile_width"].asUInt();
   _tileHeight = (float)_value["tile_height"].asUInt();
 
   for (Json::Value::iterator it_y = _value["tiles"].begin(); it_y != _value["tiles"].end(); ++it_y) {

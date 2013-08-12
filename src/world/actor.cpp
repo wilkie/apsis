@@ -12,8 +12,6 @@
 #include <string>
 #include <json/json.h>
 
-#include <Windows.h>
-
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
