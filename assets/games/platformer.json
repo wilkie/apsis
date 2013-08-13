@@ -1,0 +1,17 @@
+{
+  "type": "game",
+
+  "paths": {
+    "scenes": "assets/scenes",
+    "things": "assets/actors",
+    "maps":   "assets/maps",
+    "bindings": "assets/bindings",
+    "graphics": "assets/graphics",
+    "backgrounds": "assets/backgrounds",
+    "rules": "assets/rules"
+  },
+
+  "scenes": [
+    "level"
+  ]
+}
