@@ -235,8 +235,15 @@ void Apsis::World::Map::_parseJSONFile() {
   for (Json::Value::iterator it_y = _value["tiles"].begin(); it_y != _value["tiles"].end(); ++it_y) {
     for (Json::Value::iterator it_x = (*it_y).begin(); it_x != (*it_y).end(); ++it_x) {
       Apsis::World::Tile tile = Apsis::World::Tile();
-      tile.spriteIndex((unsigned int)(*it_x).asInt());
-      tile.passable(true);
+      int tileIndex = (*it_x).asInt();
+      if (tileIndex >= 0) {
+        tile.spriteIndex(_value["tile_descriptions"][tileIndex]["index"].asUInt());
+        tile.passable(_value["tile_descriptions"][tileIndex]["passable"].asBool());
+      }
+      else {
+        tile.spriteIndex(0xffffffff);
+        tile.passable(true);
+      }
 
       _tiles.push_back(tile);
     }
