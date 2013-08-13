@@ -1,0 +1,12 @@
+{
+  "type": "rule",
+  "name": "jump",
+
+  "bindings": [
+    "jump"
+  ],
+
+  "movers": [
+    "jump"
+  ]
+}

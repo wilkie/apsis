@@ -1,0 +1,5 @@
+{
+  "type": "binding",
+
+  "bindings": [ { "action": "jump", "keys": [ "z", "joy_0" ] } ]
+}

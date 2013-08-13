@@ -1,0 +1,41 @@
+{
+  "type": "binding",
+
+  "bindings": [
+    {
+      "action": "right",
+      "keys": [
+        "right",
+        "joy_pov_right"
+      ]
+    },
+    {
+      "action": "left",
+      "keys": [
+        "left",
+        "joy_pov_left"
+      ]
+    },
+    {
+      "action": "up",
+      "keys": [
+        "up",
+        "joy_pov_up"
+      ]
+    },
+    {
+      "action": "down",
+      "keys": [
+        "down",
+        "joy_pov_down"
+      ]
+    },
+    {
+      "action": "jump",
+      "keys": [
+        "z",
+        "joy_0"
+      ]
+    }
+  ]
+}

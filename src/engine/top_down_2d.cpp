@@ -93,7 +93,6 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   binding2.key = Apsis::Key::NONE;
   _input->keyBindings()->registerEvent("Zoom out",  ZOOM_OUT, &binding, &binding2);
 
-  //_map = new Apsis::World::Map(32, 30, 70.0f, 70.0f, Apsis::Sprite::Sheet::load("assets/graphics/tiles_spritesheet.png"));
   _map = new Apsis::World::Map("assets/maps/sample.json");
   _player1 = new Apsis::World::Actor(Apsis::Sprite::Thing::load("assets/actors/pink_spaceblob.actor"), 300, 300);
 

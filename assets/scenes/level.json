@@ -1,0 +1,30 @@
+{
+  "type": "scene",
+
+  "map": "sample",
+
+  "things": [
+    "pink_spaceblob": {
+      "name": "Pink Spaceblob",
+      "rules": [ "jump", "left", "right", "up", "down", "fall" ]
+    },
+    "ball": {
+      "name": "Ball",
+      "rules": [ "fall" ]
+    }
+  ],
+
+  "actors": [
+    {
+      "thing": 0,
+      "x": 300,
+      "y": 300
+    }
+  ],
+
+  "layers": [
+    {
+      "background": "sky.png"
+    }
+  ]
+}
