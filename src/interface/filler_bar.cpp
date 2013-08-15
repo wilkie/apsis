@@ -1,4 +1,4 @@
-#include <apsis/hud/filler_bar.h>
+#include <apsis/interface/filler_bar.h>
 
 #include "apsis/primitives/fragment_shader.h"
 #include "apsis/primitives/vertex_shader.h"
