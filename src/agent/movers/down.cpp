@@ -3,7 +3,7 @@
 #include "apsis/registry/action.h"
 
 Apsis::Agent::Movers::Down::Down(Apsis::InputEngine& inputEngine,
-	                             float               speed)
+                                 float               speed)
   : _speed(speed), Apsis::Agent::Mover("can move down") {
   _inputEngine = &inputEngine;
 
