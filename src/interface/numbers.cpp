@@ -1,4 +1,4 @@
-#include <apsis/hud/numbers.h>
+#include <apsis/interface/numbers.h>
 
 #include "apsis/primitives/fragment_shader.h"
 #include "apsis/primitives/vertex_shader.h"

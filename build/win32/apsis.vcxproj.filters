@@ -557,12 +557,6 @@
     <ClCompile Include="..\..\src\agent\movers\fall.cpp">
       <Filter>agent\movers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\hud\numbers.cpp">
-      <Filter>hud</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\hud\filler_bar.cpp">
-      <Filter>hud</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\world\background.cpp">
       <Filter>world</Filter>
     </ClCompile>
@@ -628,6 +622,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\sprite\thing.cpp">
       <Filter>sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\interface\filler_bar.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\interface\numbers.cpp">
+      <Filter>interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1256,12 +1256,6 @@
     <ClInclude Include="..\..\include\apsis\agent\movers\fall.h">
       <Filter>agent\movers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\hud\numbers.h">
-      <Filter>hud</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\hud\filler_bar.h">
-      <Filter>hud</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\background.h">
       <Filter>world</Filter>
     </ClInclude>
@@ -1315,6 +1309,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\state.h">
       <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\filler_bar.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\numbers.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1393,9 +1393,6 @@
     <Filter Include="agent\movers">
       <UniqueIdentifier>{020da31e-9f82-40d2-9ef0-d2272695c6fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="hud">
-      <UniqueIdentifier>{03085c89-1b87-49ac-8103-9728d09bf922}</UniqueIdentifier>
-    </Filter>
     <Filter Include="support\json">
       <UniqueIdentifier>{1abe7c4f-a269-42d7-b198-97402e55108f}</UniqueIdentifier>
     </Filter>
@@ -1410,6 +1407,9 @@
     </Filter>
     <Filter Include="sprite">
       <UniqueIdentifier>{a360e82b-3fc2-4307-81b5-9cf344340d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{03085c89-1b87-49ac-8103-9728d09bf922}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

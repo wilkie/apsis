@@ -10,8 +10,8 @@
 #include "apsis/sprite/animation.h"
 #include "apsis/sprite/thing.h"
 #include "apsis/world/actor.h"
-#include "apsis/hud/numbers.h"
-#include "apsis/hud/filler_bar.h"
+#include "apsis/interface/numbers.h"
+#include "apsis/interface/filler_bar.h"
 #include "apsis/world/background.h"
 #include "apsis/world/scene.h"
 
