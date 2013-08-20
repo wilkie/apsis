@@ -32,6 +32,7 @@
 #include "apsis/agent/movers/wall_slide.h"
 #include "apsis/agent/movers/and.h"
 #include "apsis/agent/movers/or.h"
+#include "apsis/agent/movers/wiggler.h"
 
 #include "apsis/registry/action.h"
 
@@ -94,7 +95,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _input->keyBindings()->registerEvent("Zoom out",  ZOOM_OUT, &binding, &binding2);
 
   _map = new Apsis::World::Map("assets/maps/sample.json");
-  _player1 = new Apsis::World::Actor(Apsis::Sprite::Thing::load("assets/actors/pink_spaceblob.actor"), 300, 300);
+  _player1 = new Apsis::World::Actor(Apsis::Sprite::Thing::load("assets/actors/pink_spaceblob.json"), 300, 300);
 
   Apsis::Sprite::Sheet* hud = new Apsis::Sprite::Sheet("assets/graphics/hud_spritesheet.png");
 
@@ -107,12 +108,12 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   _bg = new Apsis::World::Background(texture);
 
-  _ball = new Apsis::World::Actor(Apsis::Sprite::Thing::load("assets/actors/ball.actor"), 300, 300);
+  _ball = new Apsis::World::Actor(Apsis::Sprite::Thing::load("assets/actors/coin.json"), 300, 300);
 
   // Bouncers should be a Responder agent (rule that applies when there is a collision!)
 
-  // Ball moves in a line
-  _ball->attachMover(new Apsis::Agent::Movers::Linear(1.57f, 128.0f));
+  // Coins wiggle
+  _ball->attachMover(new Apsis::Agent::Movers::Wiggler(15.0f, 0.5f, 0.2f));
 
   // Ball hits walls
   _ball->attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
@@ -203,6 +204,7 @@ void Apsis::Engine::TopDown2d::_draw() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(_x+0.5), (float)(int)(_z+0.5)), _zoom);
+
   
   _bg->draw(projection, camera,
             glm::mat4(1.0));

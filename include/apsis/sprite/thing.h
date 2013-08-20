@@ -4,6 +4,9 @@
 #include "apsis/sprite/sheet.h"
 #include "apsis/sprite/animation.h"
 
+#include "apsis/agent/mover.h"
+#include "apsis/agent/impeder.h"
+
 #include "apsis/world/object.h"
 
 #include "apsis/sync/reference_counter.h"
@@ -81,6 +84,8 @@ namespace Apsis {
       // Whether or not the JSON has been loaded
       bool _jsonLoaded;
 
+      const Apsis::Sprite::Thing* _inherited;
+
       // Load sprite sheet from JSON
       const Apsis::Sprite::Sheet& _loadSpriteSheet();
 
@@ -104,6 +109,10 @@ namespace Apsis {
 
       // For garbage collection
       Sync::ReferenceCounter _counter;
+
+      // Before Move Agents
+      std::vector<Apsis::Agent::Impeder*> _impederAgents;
+      std::vector<Apsis::Agent::Mover*>   _moverAgents;
     };
   }
 }

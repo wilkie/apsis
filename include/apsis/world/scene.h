@@ -30,7 +30,17 @@ namespace Apsis {
       /*
        *  Instantiates an Actor to the scene by cloning the given Thing.
        */
-      unsigned int addActor(Sprite::Thing& thing, float x, float y);
+      unsigned int addActor(const Sprite::Thing& thing, float x, float y);
+
+      /*
+       *  Returns the Actor given by the id.
+       */
+      Apsis::World::Actor& actor(unsigned int id);
+
+      /*
+       *  Updates objects in the scene.
+       */
+      void update(float elapsed);
 
       /*
        *  Draws the scene.

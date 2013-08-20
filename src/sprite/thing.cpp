@@ -32,16 +32,16 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
     // already exists
     return *_things[std::distance(_ids.begin(), it)];
   }
-  
-  _ids.push_back(str);
+
   _things.push_back(new Apsis::Sprite::Thing(path));
+  _ids.push_back(str);
   return *_things[_ids.size() - 1];
 }
 
 const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::sheet() const {
   return _sheet;
 }
-
+  
 const Apsis::World::Object& Apsis::Sprite::Thing::object() const {
   return _object;
 }
@@ -58,36 +58,63 @@ void Apsis::Sprite::Thing::_openJSONFile() {
   file.close();
 
   _jsonLoaded = true;
+
+  if (_value.isMember("inherit")) {
+    const Apsis::Sprite::Thing& inherited = Apsis::Sprite::Thing::load(_value["inherit"].asCString());
+    _object = inherited._object;
+    _animations = inherited._animations;
+    _moverAgents = inherited._moverAgents;
+    _impederAgents = inherited._impederAgents;
+
+    _inherited = &inherited;
+  }
 }
 
 const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::_loadSpriteSheet() {
   _openJSONFile();
 
+  if (_value.isMember("inherit")) {
+    return _inherited->sheet();
+  }
   return Apsis::Sprite::Sheet::load(_value["sprites"].asCString());
 }
 
 void Apsis::Sprite::Thing::_parseJSONFile() {
   _openJSONFile();
 
-  _object.set("width",  _value["width"].asDouble());
-  _object.set("height", _value["height"].asDouble());
+  if (_value.isMember("width")) {
+    _object.set("width",  _value["width"].asDouble());
+  }
+
+  if (_value.isMember("height")) {
+    _object.set("height", _value["height"].asDouble());
+  }
 
   // Animation
-  // TODO: better handling of invalid values
-  for (Json::Value::iterator it = _value["animations"].begin(); it != _value["animations"].end(); it++) {
-    // Create an animation structure
-    Sprite::Animation newAnimation((*it)["name"].asCString());
+  if (_value.isMember("animations")) {
+    // TODO: better handling of invalid values
+    for (Json::Value::iterator it = _value["animations"].begin(); it != _value["animations"].end(); it++) {
+      // Create an animation structure
+      Sprite::Animation newAnimation((*it)["name"].asCString());
 
-    // Store all of the sprites
-    int spriteIndex = -1;
-    do {
-      spriteIndex = _sheet.enumerateSprites((*it)["sprites"].asCString(), spriteIndex+1);
-      if (spriteIndex != -1) {
-        newAnimation.addFrame(spriteIndex);
-      }
-    } while(spriteIndex != -1);
+      // Store all of the sprites
+      int spriteIndex = -1;
+      do {
+        spriteIndex = _sheet.enumerateSprites((*it)["sprites"].asCString(), spriteIndex+1);
+        if (spriteIndex != -1) {
+          newAnimation.addFrame(spriteIndex);
+        }
+      } while(spriteIndex != -1);
 
-    _animations.push_back(newAnimation);
+      _animations.push_back(newAnimation);
+    }
+  }
+
+  // Rules
+  if (_value.isMember("rules")) {
+    // TODO: better handling of invalid values
+    for (Json::Value::iterator it = _value["rules"].begin(); it != _value["rules"].end(); it++) {
+    }
   }
 }
 

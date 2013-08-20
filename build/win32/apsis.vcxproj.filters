@@ -629,6 +629,9 @@
     <ClCompile Include="..\..\src\interface\numbers.cpp">
       <Filter>interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\agent\movers\wiggler.cpp">
+      <Filter>agent\movers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1315,6 +1318,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\numbers.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\movers\wiggler.h">
+      <Filter>agent\movers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
