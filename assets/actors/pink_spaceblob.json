@@ -1,0 +1,9 @@
+{
+  "type": "thing",
+
+  "inherit": "assets/things/pink_spaceblob.json",
+
+  "rules": [
+    "up", "down", "left", "right"
+  ]
+}

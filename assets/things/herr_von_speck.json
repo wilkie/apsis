@@ -1,0 +1,23 @@
+width 15
+height 7
+
+move_rate 64
+
+sprites assets/graphics/herr_von_speck.png
+
+walk_up     up_*
+walk_down   down_*
+walk_left   left_*
+walk_right  right_*
+
+stand_up    up_0
+stand_down  down_0
+stand_left  left_0
+stand_right right_0
+
+state stand
+state walk_up
+state walk_down
+state walk_left
+state walk_right
+default_state stand

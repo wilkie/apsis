@@ -1,0 +1,8 @@
+{
+  "type": "thing",
+
+  "inherit": "assets/things/coin.json",
+
+  "rules": [
+  ]
+}

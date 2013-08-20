@@ -1,0 +1,20 @@
+{
+  "type": "thing",
+
+  "width": 150,
+  "height": 150,
+
+  "move_rate": 64,
+
+  "sprites": "assets/graphics/hud_spritesheet.png",
+
+  "animations": [
+    {
+      "name": "still",
+      "sprites": "hud_coins"
+    }
+  ],
+
+  "states": ["stand", "walk_up", "walk_down", "walk_left", "walk_right"],
+  "default_state": "stand"
+}
