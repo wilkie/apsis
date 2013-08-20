@@ -5,14 +5,15 @@ CC=gcc
 LD=${CC}
 CPPC=${CC}
 
-SOURCES_TMP=$(shell find ${FILEPATH} -name *.cpp)
-SOURCES=$(patsubst $(FILEPATH)/%,%,${SOURCES_TMP})
+SOURCES_CPP_TMP=$(shell find ${FILEPATH} -name *.cpp)
+SOURCES_CPP=$(patsubst $(FILEPATH)/%,%,${SOURCES_CPP_TMP})
 SOURCES_C_TMP=$(shell find ${FILEPATH} -name *.c)
 SOURCES_C=$(patsubst $(FILEPATH)/%,%,${SOURCES_C_TMP})
 SOURCES_CC_TMP=$(shell find ${FILEPATH} -name *.cc)
 SOURCES_CC=$(patsubst $(FILEPATH)/%,%,${SOURCES_CC_TMP})
+SOURCES=${SOURCES_CPP_TMP} ${SOURCES_C_TMP} ${SOURCES_CC_TMP}
 
-OBJS_TMP=$(patsubst %.cpp,%.o,$(SOURCES))
+OBJS_TMP=$(patsubst %.cpp,%.o,$(SOURCES_CPP))
 OBJS_CPP=$(patsubst %,objs/%,${OBJS_TMP})
 OBJS_C_TMP=$(patsubst %.c,%.o,$(SOURCES_C))
 OBJS_C=$(patsubst %,objs/%,${OBJS_C_TMP})
@@ -24,7 +25,7 @@ LIBS_CMD=$(patsubst %,-l%,$(LIBS))
 
 DEADCODE_ELIM_FLAGS=-fdata-sections -ffunction-sections
 
-CFLAGS=-O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
+CFLAGS=-std=c++11 -O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
 
 all: bin/apsis
 
@@ -49,8 +50,14 @@ objs:
 bin:
 	mkdir -p bin
 
+ctags:
+	ctags ${SOURCES}
+
+docs: ctags
+
 clean:
 	rm -rf objs
+	rm -rf tags
 
 realclean: veryclean
 
