@@ -14,4 +14,8 @@
   "scenes": [
     "level"
   ]
+
+  "engine": {
+    "min-fps": 30
+  }
 }

@@ -6,6 +6,7 @@
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
+#include "apsis/world/scene.h"
 #include "apsis/agent/impeder.h"
 
 #include <set>
@@ -17,7 +18,7 @@ namespace Apsis {
 
   namespace Agent {
     namespace Impeders {
-      class MapCollider : public Apsis::Agent::Impeder {
+      class MapCollider {
       public:
         MapCollider(Apsis::World::Map* map);
 
@@ -28,6 +29,14 @@ namespace Apsis {
                             Apsis::Geometry::Rectangle& original,
                             Apsis::Geometry::Point& intended);
         virtual const char* rule();
+
+        static bool collide(const Apsis::World::Scene& scene,
+                            const unsigned int objectId,
+                            const Apsis::World::Object& object,
+                            const Apsis::Geometry::Rectangle& original,
+                            const Apsis::Geometry::Point& intended,
+                            unsigned int collidedWith,
+                            Apsis::Geometry::Point& clipped);
       private:
         bool _canFall(Apsis::Geometry::Rectangle& from);
         bool _canJump(Apsis::Geometry::Rectangle& from);

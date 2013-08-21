@@ -69,7 +69,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\agent\impeder.cpp" />
     <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp" />
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
     <ClCompile Include="..\..\src\agent\mover.cpp" />

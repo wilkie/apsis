@@ -6,6 +6,7 @@
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
+#include "apsis/world/scene.h"
 #include "apsis/agent/impeder.h"
 
 #include <vector>
@@ -18,15 +19,15 @@ namespace Apsis {
 
   namespace Agent {
     namespace Impeders {
-      class ActorCollider : public Apsis::Agent::Impeder {
+      class ActorCollider {
       public:
-        ActorCollider(std::vector<Apsis::World::Actor>& list);
-        virtual bool update(Apsis::World::Object& object,
-                            Apsis::Geometry::Point& original,
-                            Apsis::Geometry::Point& intended);
-        virtual const char* rule();
-      private:
-        std::vector<Apsis::World::Actor>* _actors;
+        static bool collide(const Apsis::World::Scene& scene,
+                            const unsigned int objectId,
+                            const Apsis::World::Object& object,
+                            const Apsis::Geometry::Rectangle& original,
+                            const Apsis::Geometry::Point& intended,
+                            unsigned int collidedWith,
+                            Apsis::Geometry::Point& clipped);
       };
     }
   }

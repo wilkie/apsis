@@ -18,7 +18,7 @@ Apsis::World::Tile::Tile(float cornerHeight[4]) :
   }
 }
 
-float Apsis::World::Tile::minHeight() {
+float Apsis::World::Tile::minHeight() const {
   float ret = _cornerHeight[0];
   for (unsigned int i = 1; i < 4; i++) {
     if (_cornerHeight[i] < ret) {
@@ -38,7 +38,7 @@ float Apsis::World::Tile::minHeight(unsigned int index) {
   return end;
 }
 
-float Apsis::World::Tile::maxHeight() {
+float Apsis::World::Tile::maxHeight() const {
   float ret = _cornerHeight[0];
   for (unsigned int i = 1; i < 4; i++) {
     if (_cornerHeight[i] > ret) {
@@ -58,7 +58,7 @@ float Apsis::World::Tile::maxHeight(unsigned int index) {
   return end;
 }
 
-float Apsis::World::Tile::hover() {
+float Apsis::World::Tile::hover() const {
   return _hover;
 }
 
@@ -67,7 +67,7 @@ float Apsis::World::Tile::hover(float value) {
   return _hover;
 }
 
-float Apsis::World::Tile::cornerHeight(unsigned int index) {
+float Apsis::World::Tile::cornerHeight(unsigned int index) const {
   if (index < 4) {
     return _cornerHeight[index];
   }
@@ -82,7 +82,7 @@ float Apsis::World::Tile::cornerHeight(unsigned int index, float value) {
   return 0.0f;
 }
 
-float Apsis::World::Tile::firstControl(unsigned int index) {
+float Apsis::World::Tile::firstControl(unsigned int index) const {
   if (index < 4) {
     return _firstControl[index];
   }
@@ -103,7 +103,7 @@ float Apsis::World::Tile::firstControl(unsigned int index, float value) {
   return 0.0f;
 }
 
-float Apsis::World::Tile::secondControl(unsigned int index) {
+float Apsis::World::Tile::secondControl(unsigned int index) const {
   if (index < 4) {
     return _secondControl[index];
   }
@@ -124,7 +124,7 @@ float Apsis::World::Tile::secondControl(unsigned int index, float value) {
   return 0.0f;
 }
 
-bool Apsis::World::Tile::passable() {
+bool Apsis::World::Tile::passable() const {
   return _passable;
 }
 
@@ -133,7 +133,7 @@ bool Apsis::World::Tile::passable(bool value) {
   return _passable;
 }
 
-unsigned int Apsis::World::Tile::spriteIndex() {
+unsigned int Apsis::World::Tile::spriteIndex() const {
   return _spriteIndex;
 }
 

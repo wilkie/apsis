@@ -168,16 +168,20 @@ void Apsis::World::Map::_generateVAO() {
   _vao.uploadUniform("tex", 0);
 }
 
-unsigned int Apsis::World::Map::width() {
+unsigned int Apsis::World::Map::width() const {
   return _width;
 }
 
-unsigned int Apsis::World::Map::height() {
+unsigned int Apsis::World::Map::height() const {
   return _height;
 }
 
-Apsis::World::Tile* Apsis::World::Map::tile(unsigned int x, unsigned int y) {
-  return &_tiles[(y * _width) + x];
+Apsis::World::Tile& Apsis::World::Map::tile(unsigned int x, unsigned int y) {
+  return _tiles[(y * _width) + x];
+}
+
+const Apsis::World::Tile& Apsis::World::Map::tile(unsigned int x, unsigned int y) const {
+  return _tiles[(y * _width) + x];
 }
 
 const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
@@ -195,11 +199,11 @@ void Apsis::World::Map::draw(const glm::mat4& projection,
   _vao.draw();
 }
 
-float Apsis::World::Map::tileWidth() {
+float Apsis::World::Map::tileWidth() const {
   return _tileWidth;
 }
 
-float Apsis::World::Map::tileHeight() {
+float Apsis::World::Map::tileHeight() const {
   return _tileHeight;
 }
 

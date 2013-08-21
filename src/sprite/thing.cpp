@@ -68,8 +68,8 @@ void Apsis::Sprite::Thing::_openJSONFile() {
     if (inherited._moverAgents.size() > 0) {
       _moverAgents = inherited._moverAgents;
     }
-    if (inherited._impederAgents.size() > 0) {
-      _impederAgents = inherited._impederAgents;
+    if (inherited._collideFunctions.size() > 0) {
+      _collideFunctions = inherited._collideFunctions;
     }
 
     _inherited = &inherited;

@@ -36,6 +36,16 @@ namespace Apsis {
        *  Returns the Actor given by the id.
        */
       Apsis::World::Actor& actor(unsigned int id);
+      const Apsis::World::Actor& actor(unsigned int id) const;
+
+      unsigned int actorCount() const;
+      unsigned int mapCount() const;
+
+      /*
+       *  Returns the map given by the id.
+       */
+      Apsis::World::Map& map(unsigned int id);
+      const Apsis::World::Map& map(unsigned int id) const;
 
       /*
        *  Updates objects in the scene.

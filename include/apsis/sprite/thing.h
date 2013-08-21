@@ -111,7 +111,7 @@ namespace Apsis {
       Sync::ReferenceCounter _counter;
 
       // Before Move Agents
-      std::vector<Apsis::Agent::Impeder*> _impederAgents;
+      std::vector<Apsis::Agent::CollideFunction> _collideFunctions;
       std::vector<Apsis::Agent::Mover*>   _moverAgents;
     };
   }

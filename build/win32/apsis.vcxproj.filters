@@ -518,9 +518,6 @@
     <ClCompile Include="..\..\src\agent\mover.cpp">
       <Filter>agent</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\agent\impeder.cpp">
-      <Filter>agent</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp">
       <Filter>agent\impeders</Filter>
     </ClCompile>

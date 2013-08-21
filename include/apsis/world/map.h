@@ -41,27 +41,28 @@ namespace Apsis {
       /*
        *  Queries the tile at the world coordinates (x,y)
        */
-      Tile* tile(unsigned int x, unsigned int y);
+      Tile& tile(unsigned int x, unsigned int y);
+      const Tile& tile(unsigned int x, unsigned int y) const;
 
       /*
        *  Returns the width of the map.
        */
-      unsigned int width();
+      unsigned int width() const;
 
       /*
        *  Returns the height of the map.
        */
-      unsigned int height();
+      unsigned int height() const;
 
       /*
        *  Returns the width of a tile.
        */
-      float tileWidth();
+      float tileWidth() const;
 
       /*
        *  Returns the height of a tile.
        */
-      float tileHeight();
+      float tileHeight() const;
 
       /*
        *  Returns the Apsis::Sprite::Sheet being used to draw the map.

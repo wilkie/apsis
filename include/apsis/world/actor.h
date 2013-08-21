@@ -69,15 +69,15 @@ namespace Apsis {
       /*
        *  Updates the current time for the Sprite. Affects animations and movements.
        */
-      void update(float elapsed);
+      void update(Apsis::World::Scene& scene, float elapsed);
 
-      void move(Apsis::Geometry::Point& to);
+      void move(Apsis::World::Scene& scene, Apsis::Geometry::Point& to);
 
       // Add the given agent that will provide movement to the actor.
       void attachMover(Apsis::Agent::Mover* agent);
 
       // Add the given agent that will alter intended movement.
-      void attachImpeder(Apsis::Agent::Impeder* agent);
+      void attachImpeder(Apsis::Agent::CollideFunction agent);
 
       // Draws the actor
       void draw(const glm::mat4& projection,
@@ -114,7 +114,7 @@ namespace Apsis {
       float _currentTime;
 
       // Before Move Agents
-      std::vector<Apsis::Agent::Impeder*> _impederAgents;
+      std::vector<Apsis::Agent::CollideFunction> _collideFunctions;
       std::vector<Apsis::Agent::Mover*>   _moverAgents;
     };
   }

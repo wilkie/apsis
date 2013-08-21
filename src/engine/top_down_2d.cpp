@@ -17,6 +17,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "apsis/agent/impeders/map_collider.h"
+#include "apsis/agent/impeders/actor_collider.h"
+
 #include "apsis/agent/movers/linear.h"
 #include "apsis/agent/movers/down.h"
 #include "apsis/agent/movers/gridlock_down.h"
@@ -105,7 +107,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   Apsis::Primitives::Texture* texture = new Apsis::Primitives::Texture("assets/backgrounds/sky.png");
 
-  _ball = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/coin.json"), 300, 300);
+  _ball = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/coin.json"), 600, 300);
   _player = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/pink_spaceblob.json"), 300, 300);
   _scene.addMap(*_map);
 
@@ -115,16 +117,17 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _scene.actor(_ball).attachMover(new Apsis::Agent::Movers::Wiggler(15.0f, 0.5f, 0.2f));
 
   // Ball hits walls
-  _scene.actor(_ball).attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
+  //_scene.actor(_ball).attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
 
   // Player cannot collide with map
-  _scene.actor(_player).attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
+  _scene.actor(_player).attachImpeder(&Apsis::Agent::Impeders::MapCollider::collide);
+  _scene.actor(_player).attachImpeder(&Apsis::Agent::Impeders::ActorCollider::collide);
 
   // Player can move up
-  //_player1->attachMover(new Apsis::Agent::Movers::Up(*_input, 256.0f));
+  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Up(*_input, 256.0f));
 
   // Player can move down
-  //_player1->attachMover(new Apsis::Agent::Movers::Down(*_input, 256.0f));
+  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Down(*_input, 256.0f));
 
   // Player can move left
   _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Left(*_input, 256.0f));
@@ -139,8 +142,8 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   // Player can fall
   // Player can wall slide
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));
+  //_scene.actor(_player).attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
+  //_scene.actor(_player).attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));
   //*/
 }
 

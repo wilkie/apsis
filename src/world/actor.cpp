@@ -85,11 +85,11 @@ void Apsis::World::Actor::attachMover(Apsis::Agent::Mover* agent) {
   _moverAgents.push_back(agent);
 }
 
-void Apsis::World::Actor::attachImpeder(Apsis::Agent::Impeder* agent) {
-  _impederAgents.push_back(agent);
+void Apsis::World::Actor::attachImpeder(Apsis::Agent::CollideFunction agent) {
+  _collideFunctions.push_back(agent);
 }
 
-void Apsis::World::Actor::update(float elapsed) {
+void Apsis::World::Actor::update(Apsis::World::Scene& scene, float elapsed) {
   _currentTime += elapsed;
   if (_currentTime > 0.08f) {
     nextFrame();
@@ -101,14 +101,19 @@ void Apsis::World::Actor::update(float elapsed) {
 
   for (unsigned int i = 0; i < _moverAgents.size(); i++) {
     if (_moverAgents[i]->update(elapsed, _object, _position, to)) {
-      this->move(to);
+      this->move(scene, to);
     }
   }
 }
 
-void Apsis::World::Actor::move(Apsis::Geometry::Point& to) {
-  for (unsigned int i = 0; i < _impederAgents.size(); i++) {
-    _impederAgents[i]->update(_object, _position, to);
+void Apsis::World::Actor::move(Apsis::World::Scene& scene, Apsis::Geometry::Point& to) {
+  unsigned int collidedWith = 0;
+  Apsis::Geometry::Point clipped;
+  
+  for (unsigned int i = 0; i < _collideFunctions.size(); i++) {
+    if (_collideFunctions[i](scene, 0, _object, _position, to, collidedWith, clipped)) {
+      to = clipped;
+    }
   }
 
   _position.x = (float)to.x;
@@ -128,11 +133,6 @@ const char* Apsis::World::Actor::rules() const {
 
   for (unsigned int i = 0; i < _moverAgents.size(); i++) {
     ret.append(_moverAgents[i]->rule());
-  }
-
-  for (unsigned int i = 0; i < _impederAgents.size(); i++) {
-    ret.append(_impederAgents[i]->rule());
-    ret.append("\n");
   }
 
   return ret.c_str();
