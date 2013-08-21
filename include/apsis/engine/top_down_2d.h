@@ -45,8 +45,8 @@ namespace Apsis {
         Apsis::InputEngine* _input;
 
         Apsis::World::Map* _map;
-        Apsis::World::Actor* _player1;
-        Apsis::World::Actor* _ball;
+        unsigned int _player;
+        unsigned int _ball;
         Apsis::World::Scene _scene;
         Apsis::World::Background* _bg;
 

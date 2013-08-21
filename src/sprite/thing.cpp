@@ -62,9 +62,15 @@ void Apsis::Sprite::Thing::_openJSONFile() {
   if (_value.isMember("inherit")) {
     const Apsis::Sprite::Thing& inherited = Apsis::Sprite::Thing::load(_value["inherit"].asCString());
     _object = inherited._object;
-    _animations = inherited._animations;
-    _moverAgents = inherited._moverAgents;
-    _impederAgents = inherited._impederAgents;
+    if (inherited._animations.size() > 0) {
+      _animations = inherited._animations;
+    }
+    if (inherited._moverAgents.size() > 0) {
+      _moverAgents = inherited._moverAgents;
+    }
+    if (inherited._impederAgents.size() > 0) {
+      _impederAgents = inherited._impederAgents;
+    }
 
     _inherited = &inherited;
   }
