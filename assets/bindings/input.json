@@ -29,13 +29,6 @@
         "down",
         "joy_pov_down"
       ]
-    },
-    {
-      "action": "jump",
-      "keys": [
-        "z",
-        "joy_0"
-      ]
     }
   ]
 }

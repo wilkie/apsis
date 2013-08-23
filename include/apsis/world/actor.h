@@ -21,14 +21,18 @@
 
 #include "apsis/agent/impeder.h"
 #include "apsis/agent/mover.h"
+
 #include "apsis/geometry/rectangle.h"
+
 #include "apsis/world/object.h"
+#include "apsis/world/rule_set.h"
 
 #include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
 #include "apsis/registry/property.h"
+#include "apsis/registry/rule.h"
 
 #include "apsis/sync/reference_counter.h"
 
@@ -71,13 +75,14 @@ namespace Apsis {
        */
       void update(Apsis::World::Scene& scene, float elapsed);
 
+      /*
+       *  Reacts to an input action.
+       */
+      void act(Apsis::World::Scene& scene, unsigned int action_id, bool held);
+
       void move(Apsis::World::Scene& scene, Apsis::Geometry::Point& to);
 
-      // Add the given agent that will provide movement to the actor.
-      void attachMover(Apsis::Agent::Mover* agent);
-
-      // Add the given agent that will alter intended movement.
-      void attachImpeder(Apsis::Agent::CollideFunction agent);
+      void attachRule(const Apsis::Registry::Rule& rule);
 
       // Draws the actor
       void draw(const glm::mat4& projection,
@@ -87,6 +92,12 @@ namespace Apsis {
       const char* rules() const;
 
     private:
+
+      struct UpdaterRule {
+        Apsis::Agent::UpdateFunction func;
+        unsigned int skipNext;
+      };
+
       // The base Thing for this Actor.
       const Apsis::Sprite::Thing& _thing;
 
@@ -113,9 +124,8 @@ namespace Apsis {
       // time since last frame.
       float _currentTime;
 
-      // Before Move Agents
-      std::vector<Apsis::Agent::CollideFunction> _collideFunctions;
-      std::vector<Apsis::Agent::Mover*>   _moverAgents;
+      // Rules
+      RuleSet _ruleSet;
     };
   }
 }

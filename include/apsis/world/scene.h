@@ -53,6 +53,11 @@ namespace Apsis {
       void update(float elapsed);
 
       /*
+       *  Reacts to an input action.
+       */
+      void act(unsigned int action_id, bool held);
+
+      /*
        *  Draws the scene.
        */
       void draw(const glm::mat4& projection,

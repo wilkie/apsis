@@ -1,7 +1,7 @@
 #ifndef APSIS_ENGINE_TOP_DOWN_2D_H
 #define APSIS_ENGINE_TOP_DOWN_2D_H
 
-#include <apsis/input/input_engine.h>
+#include <apsis/engine/input.h>
 #include <apsis/world/map.h>
 #include <apsis/backend/sdl.h>
 #include <apsis/settings/video.h>
@@ -42,7 +42,7 @@ namespace Apsis {
 
         // Internal storage
         Apsis::Settings::Video _video;
-        Apsis::InputEngine* _input;
+        Apsis::Engine::Input* _input;
 
         Apsis::World::Map* _map;
         unsigned int _player;

@@ -19,23 +19,6 @@
 #include "apsis/agent/impeders/map_collider.h"
 #include "apsis/agent/impeders/actor_collider.h"
 
-#include "apsis/agent/movers/linear.h"
-#include "apsis/agent/movers/down.h"
-#include "apsis/agent/movers/gridlock_down.h"
-#include "apsis/agent/movers/up.h"
-#include "apsis/agent/movers/gridlock_up.h"
-#include "apsis/agent/movers/left.h"
-#include "apsis/agent/movers/gridlock_left.h"
-#include "apsis/agent/movers/right.h"
-#include "apsis/agent/movers/gridlock_right.h"
-#include "apsis/agent/movers/jump.h"
-#include "apsis/agent/movers/wall_jump.h"
-#include "apsis/agent/movers/fall.h"
-#include "apsis/agent/movers/wall_slide.h"
-#include "apsis/agent/movers/and.h"
-#include "apsis/agent/movers/or.h"
-#include "apsis/agent/movers/wiggler.h"
-
 #include "apsis/registry/action.h"
 
 #ifndef NO_GL
@@ -69,32 +52,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   _zoom = 1.0f;
 
-  _input = new Apsis::InputEngine();
-
-  KeyBinding binding  = {Apsis::Key::NONE};
-  KeyBinding binding2 = {Apsis::Key::NONE};
-
-  binding.key = Apsis::Key::LEFT;
-  binding2.key = Apsis::Key::JOY_POV_LEFT;
-  _input->keyBindings()->registerEvent("Move left",  Apsis::Registry::Action::id("left"), &binding, &binding2);
-  binding.key = Apsis::Key::RIGHT;
-  binding2.key = Apsis::Key::JOY_POV_RIGHT;
-  _input->keyBindings()->registerEvent("Move right", Apsis::Registry::Action::id("right"), &binding, &binding2);
-  binding.key = Apsis::Key::UP;
-  binding2.key = Apsis::Key::JOY_POV_UP;
-  _input->keyBindings()->registerEvent("Move up",    Apsis::Registry::Action::id("up"), &binding, &binding2);
-  binding.key = Apsis::Key::DOWN;
-  binding2.key = Apsis::Key::JOY_POV_DOWN;
-  _input->keyBindings()->registerEvent("Move down",  Apsis::Registry::Action::id("down"), &binding, &binding2);
-  binding.key = Apsis::Key::Z;
-  binding2.key = Apsis::Key::JOY_0;
-  _input->keyBindings()->registerEvent("Jump",  Apsis::Registry::Action::id("jump"), &binding, &binding2);
-  binding.key = Apsis::Key::EQUALS;
-  binding2.key = Apsis::Key::NONE;
-  _input->keyBindings()->registerEvent("Zoom in",  ZOOM_IN, &binding, &binding2);
-  binding.key = Apsis::Key::MINUS;
-  binding2.key = Apsis::Key::NONE;
-  _input->keyBindings()->registerEvent("Zoom out",  ZOOM_OUT, &binding, &binding2);
+  _input = new Apsis::Engine::Input();
 
   _map = new Apsis::World::Map("assets/maps/sample.json");
 
@@ -111,60 +69,36 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _player = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/pink_spaceblob.json"), 300, 300);
   _scene.addMap(*_map);
 
-  // Bouncers should be a Responder agent (rule that applies when there is a collision!)
-
-  // Coins wiggle
-  _scene.actor(_ball).attachMover(new Apsis::Agent::Movers::Wiggler(15.0f, 0.5f, 0.2f));
-
-  // Ball hits walls
-  //_scene.actor(_ball).attachImpeder(new Apsis::Agent::Impeders::MapCollider(_map));
-
-  // Player cannot collide with map
-  _scene.actor(_player).attachImpeder(&Apsis::Agent::Impeders::MapCollider::collide);
-  _scene.actor(_player).attachImpeder(&Apsis::Agent::Impeders::ActorCollider::collide);
-
-  // Player can move up
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Up(*_input, 256.0f));
-
-  // Player can move down
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Down(*_input, 256.0f));
-
-  // Player can move left
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Left(*_input, 256.0f));
-
-  // Player can move right
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Right(*_input, 256.0f));
-
-  // Player can jump
-  // Player can wall jump
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::Jump(*_input, 220.0f, 512.0f, 2048.0f, 4096.0f, 496.0f));
-  _scene.actor(_player).attachMover(new Apsis::Agent::Movers::WallJump(*_input, 220.0f, 512.0f, 1024.0f, 0.0f, 512.0f, 1024.0f));
-
-  // Player can fall
-  // Player can wall slide
-  //_scene.actor(_player).attachMover(new Apsis::Agent::Movers::Fall(0.0f, 1024.0f, 512.0f));
-  //_scene.actor(_player).attachMover(new Apsis::Agent::Movers::WallSlide(0.0, 1024.0f, 128.0f));
+  Apsis::Registry::Action::load("assets/bindings/input.json");
   //*/
 }
 
 void Apsis::Engine::TopDown2d::run() {
   Apsis::Clock clock;
 
-  Apsis::Event core_event;
+  Apsis::Engine::Event core_event;
 
+  unsigned int action_id = 0;
   while(true) {
     if (_backend.poll(core_event)) {
-      int action;
-      if (_input->post(core_event, action)) {
-        if (action == Apsis::InputEngine::QUIT_EVENT) {
-          break;
+      if (core_event.type() == Apsis::Engine::Event::Type::Press) {
+        if (_input->press(core_event.binding(), action_id)) {
+          _scene.act(action_id, true);
         }
-        else if (action) {
-          _fireEvent(action);
+      }
+      else if (core_event.type() == Apsis::Engine::Event::Type::Release) {
+        if (_input->release(core_event.binding(), action_id)) {
+          _scene.act(action_id, false);
+        }
+      }
+      else if (core_event.type() == Apsis::Engine::Event::Type::SystemEvent) {
+        if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
+          break;
         }
       }
     }
-    _update(clock.elapsedTime());
+    _scene.update(clock.elapsedTime());
+
     _draw();
     _backend.swap();
   }
@@ -219,41 +153,6 @@ void Apsis::Engine::TopDown2d::_draw() {
 }
 
 void Apsis::Engine::TopDown2d::_update(float elapsed) {
-  /*
-  if (_input->isEventHeld(ZOOM_OUT)) {
-    _zoom -= 1.0f * elapsed;
-    if (_zoom < 1.0f) {
-      _zoom = 1.0f;
-    }
-  }
-
-  if (_input->isEventHeld(ZOOM_IN)) {
-    _zoom += 1.0f * elapsed;
-  }
-
-  _x = _player1->position().x;
-  _z = _player1->position().y;
-
-  if (_x > ((_map->width() * _map->tileWidth() - _video.resolutionX/2.0f/_zoom))) {
-    _x = ((_map->width() * _map->tileWidth() - _video.resolutionX/2.0f/_zoom));
-  }
-
-  if (_x < (_video.resolutionX/2.0f/_zoom)) {
-    _x = (_video.resolutionX/2.0f/_zoom);
-  }
-
-  if (_z > ((_map->height() * _map->tileHeight() - _video.resolutionY/2.0f/_zoom))) {
-    _z = ((_map->height() * _map->tileHeight() - _video.resolutionY/2.0f/_zoom));
-  }
-
-  if (_z < (_video.resolutionY/2.0f/_zoom)) {
-    _z = (_video.resolutionY/2.0f/_zoom);
-  }
-
-  _ball->update(elapsed);
-  _player1->update(elapsed);
-  */
-  _scene.update(elapsed);
 }
 
 void Apsis::Engine::TopDown2d::_fireEvent(int event) {

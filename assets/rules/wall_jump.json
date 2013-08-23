@@ -1,0 +1,8 @@
+{
+  "type": "rule",
+  "name": "wall_jump",
+
+  "bindings": ["jump"],
+
+  "supercedes": ["jump"]
+}

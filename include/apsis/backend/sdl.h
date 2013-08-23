@@ -1,8 +1,9 @@
 #ifndef APSIS_BACKEND_SDL_H
 #define APSIS_BACKEND_SDL_H
 
-#include <apsis/input/input_engine.h>
-#include <apsis/input/event.h>
+#include <apsis/engine/input.h>
+#include <apsis/engine/event.h>
+
 #include <apsis/world/map.h>
 #include <apsis/settings/video.h>
 
@@ -34,7 +35,7 @@ namespace Apsis {
          *  Poll for events. Give a preallocated Event structure. Returns true
          *    when an event is posted.
          */
-        bool poll(Apsis::Event& event);
+        bool poll(Apsis::Engine::Event& event);
 
         /*
          *  Swap buffers.

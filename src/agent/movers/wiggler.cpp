@@ -2,34 +2,52 @@
 
 #include "apsis/registry/state.h"
 
-Apsis::Agent::Movers::Wiggler::Wiggler(float amount,
-                                       float time,
-                                       float stall)
-  : _amount(amount),
-    _time(time),
-    _stall(stall),
-    Apsis::Agent::Mover("wiggle") {
-
-  _direction = 0.0f;
-
-  _travelled = 0.0f;
-}
-
 bool Apsis::Agent::Movers::Wiggler::update(float elapsed,
-                                           Apsis::World::Object& object,
-                                           const Apsis::Geometry::Rectangle& original,
-                                           Apsis::Geometry::Point& updated) {
+                                           const Apsis::World::Scene& scene,
+                                           const unsigned int objectId,
+                                           Apsis::World::Object& object) {
+  static unsigned int wiggle_amount_id    = Apsis::Registry::Property::id("wiggle_amount");
+  static unsigned int wiggle_time_id      = Apsis::Registry::Property::id("wiggle_time");
+  static unsigned int wiggle_travelled_id = Apsis::Registry::Property::id("wiggle_travelled");
+  static unsigned int wiggle_direction_id = Apsis::Registry::Property::id("wiggle_direction");
 
-  float travel = elapsed * (_amount / _time);
-  _travelled += travel;
+  static unsigned int x_id = Apsis::Registry::Property::id("x");
+  static unsigned int y_id = Apsis::Registry::Property::id("y");
 
-  if (_travelled > _amount) {
-    travel = _amount - (_travelled - elapsed);
-    _travelled = 0;
-    _direction = _direction - 3.1415296;
+  if (!object.has(wiggle_amount_id)) {
+    object.set(wiggle_amount_id,    (double)20.0);
+    object.set(wiggle_time_id,      (double)0.5);
+    object.set(wiggle_travelled_id, (double)0.0);
+    object.set(wiggle_direction_id, (double)0.0);
   }
 
-  updated.x = original.x + sin(_direction) * travel;
-  updated.y = original.y + cos(_direction) * travel;
+  float amount = (float)object.get(wiggle_amount_id).asDouble();
+  float time   = (float)object.get(wiggle_time_id).asDouble();
+
+  float travel = elapsed * (amount / time);
+
+  float travelled = (float)object.get(wiggle_travelled_id).asDouble();
+  travelled += travel;
+
+  float direction = (float)object.get(wiggle_direction_id).asDouble();
+
+  if (travelled > amount) {
+    travel = amount - (travelled - elapsed);
+    travelled = 0;
+    direction -= 3.1415296f;
+    object.set(wiggle_direction_id, (double)direction);
+  }
+
+  float x = (float)object.get(x_id).asDouble();
+  float y = (float)object.get(y_id).asDouble();
+
+  x += sin(direction) * travel;
+  y += cos(direction) * travel;
+
+  object.set(x_id, (double)x);
+  object.set(y_id, (double)y);
+
+  object.set(wiggle_travelled_id, travelled);
+
   return true;
 }

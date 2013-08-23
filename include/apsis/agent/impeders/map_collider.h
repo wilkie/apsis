@@ -20,16 +20,6 @@ namespace Apsis {
     namespace Impeders {
       class MapCollider {
       public:
-        MapCollider(Apsis::World::Map* map);
-
-        /*
-          *  Update intended point and return reason for change.
-          */
-        virtual bool update(Apsis::World::Object& object,
-                            Apsis::Geometry::Rectangle& original,
-                            Apsis::Geometry::Point& intended);
-        virtual const char* rule();
-
         static bool collide(const Apsis::World::Scene& scene,
                             const unsigned int objectId,
                             const Apsis::World::Object& object,
@@ -37,17 +27,6 @@ namespace Apsis {
                             const Apsis::Geometry::Point& intended,
                             unsigned int collidedWith,
                             Apsis::Geometry::Point& clipped);
-      private:
-        bool _canFall(Apsis::Geometry::Rectangle& from);
-        bool _canJump(Apsis::Geometry::Rectangle& from);
-        bool _againstWall(Apsis::Geometry::Rectangle& from, bool checkLeft);
-
-        Apsis::World::Map* _map;
-
-        unsigned int _collideWithLeftState;
-        unsigned int _collideWithRightState;
-        unsigned int _collideWithTopState;
-        unsigned int _collideWithBottomState;
       };
     }
   }

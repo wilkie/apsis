@@ -9,7 +9,6 @@ Apsis::Agent::Responder::Responder(const char* rule) :
   _id = registerRule(rule);
 }
 
-
 bool Apsis::Agent::Responder::uponEvent(Apsis::World::Object& object,
                                         Apsis::Geometry::Rectangle& original,
                                         Apsis::Geometry::Point& intended) {

@@ -8,6 +8,7 @@
 #include "apsis/agent/impeder.h"
 
 #include "apsis/world/object.h"
+#include "apsis/world/rule_set.h"
 
 #include "apsis/sync/reference_counter.h"
 
@@ -70,6 +71,11 @@ namespace Apsis {
        */
       const World::Object& object() const;
 
+      /*
+       *  Returns the set of rules attached to this Thing.
+       */
+      const Apsis::World::RuleSet& rules() const;
+
     private:
       // Keeps track of Things system-wide.
       static std::vector<std::string> _ids;
@@ -112,7 +118,9 @@ namespace Apsis {
 
       // Before Move Agents
       std::vector<Apsis::Agent::CollideFunction> _collideFunctions;
-      std::vector<Apsis::Agent::Mover*>   _moverAgents;
+
+      // RuleSet
+      Apsis::World::RuleSet _rules;
     };
   }
 }

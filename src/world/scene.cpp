@@ -21,6 +21,15 @@ void Apsis::World::Scene::update(float elapsed) {
   }
 }
 
+void Apsis::World::Scene::act(unsigned int action_id, bool held) {
+  for(std::vector<Apsis::World::Actor>::iterator it = _actors.begin();
+      it != _actors.end();
+      ++it) {
+
+    (*it).act(*this, action_id, held);
+  }
+}
+
 unsigned int Apsis::World::Scene::mapCount() const {
   return _maps.size();
 }

@@ -6,8 +6,6 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
-#include "apsis/agent/movers/or.h"
-
 #include <fstream>
 #include <string>
 #include <json/json.h>
@@ -34,6 +32,11 @@ Apsis::World::Actor::Actor(const Apsis::Sprite::Thing& thing,
 
   _currentFrame = 0;
   _currentTime = 0;
+
+  const Apsis::World::RuleSet& rules = thing.rules();
+  for (unsigned int i = 0; i < rules.count(); i++) {
+    _ruleSet.addRule(rules.rule(i));
+  }
 
   _position.x = (float)x;
   _position.y = (float)y;
@@ -65,28 +68,12 @@ void Apsis::World::Actor::nextFrame() {
   _currentTime = 0;
 }
 
-void Apsis::World::Actor::attachMover(Apsis::Agent::Mover* agent) {
-  for (unsigned int i = 0; i < _moverAgents.size(); i++) {
-    if (_moverAgents[i]->supercedes(agent->rule())) {
-      Apsis::Agent::Mover* mover = new Apsis::Agent::Movers::Or(_moverAgents[i], agent);
-      _moverAgents.erase(_moverAgents.begin() + i);
-      attachMover(mover);
-      return;
-    }
-
-    if (agent->supercedes(_moverAgents[i]->rule())) {
-      Apsis::Agent::Mover* mover = new Apsis::Agent::Movers::Or(agent, _moverAgents[i]);
-      _moverAgents.erase(_moverAgents.begin() + i);
-      attachMover(mover);
-      return;
-    }
-  }
-
-  _moverAgents.push_back(agent);
+void Apsis::World::Actor::attachRule(const Apsis::Registry::Rule& rule) {
+  _ruleSet.addRule(rule);
 }
 
-void Apsis::World::Actor::attachImpeder(Apsis::Agent::CollideFunction agent) {
-  _collideFunctions.push_back(agent);
+void Apsis::World::Actor::act(Apsis::World::Scene& scene, unsigned int action_id, bool held) {
+  _ruleSet.act(action_id, held, _object, scene);
 }
 
 void Apsis::World::Actor::update(Apsis::World::Scene& scene, float elapsed) {
@@ -99,22 +86,31 @@ void Apsis::World::Actor::update(Apsis::World::Scene& scene, float elapsed) {
   to.x = _position.x;
   to.y = _position.y;
 
-  for (unsigned int i = 0; i < _moverAgents.size(); i++) {
-    if (_moverAgents[i]->update(elapsed, _object, _position, to)) {
-      this->move(scene, to);
-    }
+  _object.set("x", _position.x);
+  _object.set("y", _position.y);
+
+  _ruleSet.update(elapsed, _object, scene);
+
+  to.x = (float)_object.get("x").asDouble();
+  to.y = (float)_object.get("y").asDouble();
+
+  _position.x = (float)to.x;
+  _position.y = (float)to.y;
+  
+  unsigned int collidedWith;
+  Apsis::Geometry::Point clipped;
+
+  // TODO: move collision until after all objects have moved.
+  if (_ruleSet.collide(scene, _object, _position, to, collidedWith, clipped)) {
+    // Collided. Figure out how to react.
   }
 }
 
 void Apsis::World::Actor::move(Apsis::World::Scene& scene, Apsis::Geometry::Point& to) {
   unsigned int collidedWith = 0;
-  Apsis::Geometry::Point clipped;
-  
-  for (unsigned int i = 0; i < _collideFunctions.size(); i++) {
-    if (_collideFunctions[i](scene, 0, _object, _position, to, collidedWith, clipped)) {
-      to = clipped;
-    }
-  }
+  //Apsis::Geometry::Point clipped;
+
+  // Check collision?
 
   _position.x = (float)to.x;
   _position.y = (float)to.y;
@@ -130,10 +126,6 @@ void Apsis::World::Actor::draw(const glm::mat4& projection,
 
 const char* Apsis::World::Actor::rules() const {
   std::string ret = std::string("");
-
-  for (unsigned int i = 0; i < _moverAgents.size(); i++) {
-    ret.append(_moverAgents[i]->rule());
-  }
 
   return ret.c_str();
 }

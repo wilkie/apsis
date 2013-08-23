@@ -4,5 +4,13 @@
   "inherit": "assets/things/coin.json",
 
   "rules": [
+    {
+      "name": "wiggler",
+      "properties": {
+        "stall":  3.0,
+        "time":   2.0,
+        "amount": 20.0
+      }
+    }
   ]
 }

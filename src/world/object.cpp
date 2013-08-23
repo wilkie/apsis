@@ -13,6 +13,14 @@ const Apsis::World::Value& Apsis::World::Object::get(unsigned int key) const {
   return value;
 }
 
+bool Apsis::World::Object::has(const char* key) const {
+  return this->has(Apsis::Registry::Property::id(key));
+}
+
+bool Apsis::World::Object::has(unsigned int key) const {
+  return this->_properties.count(key) != 0;
+}
+
 void Apsis::World::Object::set(const char* key, double value) {
   this->set(Apsis::Registry::Property::id(key), value);
 }
@@ -26,6 +34,14 @@ void Apsis::World::Object::set(const char* key, long value) {
 }
 
 void Apsis::World::Object::set(unsigned int key, long value) {
+  this->_properties[key] = World::Value(value);
+}
+
+void Apsis::World::Object::set(const char* key, const char* value) {
+  this->set(Apsis::Registry::Property::id(key), value);
+}
+
+void Apsis::World::Object::set(unsigned int key, const char* value) {
   this->_properties[key] = World::Value(value);
 }
 

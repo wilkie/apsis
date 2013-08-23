@@ -28,6 +28,16 @@ namespace Apsis {
       const Apsis::World::Value& get(unsigned int key) const;
 
       /*
+       *  Returns true when the value at the given property is stored.
+       */
+      bool has(const char* key) const;
+
+      /*
+       *  Returns true when the value at the given property is stored.
+       */
+      bool has(unsigned int key) const;
+
+      /*
        *  Sets the given property to the given value.
        */
       void set(unsigned int key, double value);
@@ -40,12 +50,22 @@ namespace Apsis {
       /*
        *  Sets the given property to the given value.
        */
+      void set(unsigned int key, const char* string);
+
+      /*
+       *  Sets the given property to the given value.
+       */
       void set(const char* key, double value);
 
       /*
        *  Sets the given property to the given value.
        */
       void set(const char* key, long value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void set(const char* key, const char* value);
 
       /*
        *  Returns whether or not the object has the given state.

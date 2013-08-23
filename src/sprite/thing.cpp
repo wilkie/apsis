@@ -65,11 +65,13 @@ void Apsis::Sprite::Thing::_openJSONFile() {
     if (inherited._animations.size() > 0) {
       _animations = inherited._animations;
     }
-    if (inherited._moverAgents.size() > 0) {
-      _moverAgents = inherited._moverAgents;
-    }
     if (inherited._collideFunctions.size() > 0) {
       _collideFunctions = inherited._collideFunctions;
+    }
+
+    const Apsis::World::RuleSet& rules = inherited.rules();
+    for (unsigned int i = 0; i < rules.count(); i++) {
+      _rules.addRule(rules.rule(i));
     }
 
     _inherited = &inherited;
@@ -119,7 +121,42 @@ void Apsis::Sprite::Thing::_parseJSONFile() {
   // Rules
   if (_value.isMember("rules")) {
     // TODO: better handling of invalid values
-    for (Json::Value::iterator it = _value["rules"].begin(); it != _value["rules"].end(); it++) {
+    for (Json::Value::iterator it = _value["rules"].begin();
+         it != _value["rules"].end();
+         ++it) {
+      std::string rule_path;
+      if ((*it).isObject()) {
+        rule_path = (*it)["name"].asCString();
+      }
+      else if ((*it).isString()) {
+        rule_path = (*it).asCString();
+      }
+
+      rule_path = "assets/rules/" + rule_path + ".json";
+
+      _rules.addRule(Registry::Rule::load(rule_path.c_str()));
+    }
+  }
+
+  // Properties
+  if (_value.isMember("properties") && _value["properties"].isObject()) {
+    // TODO: better handling of invalid values
+    Json::Value::Members members = _value["properties"].getMemberNames();
+    for (Json::Value::Members::iterator it = members.begin();
+         it != members.end();
+         ++it) {
+      const char* name = (*it).c_str();
+      unsigned int property_id = Apsis::Registry::Property::id(name);
+
+      if (_value["properties"][name].isDouble()) {
+        _object.set(property_id, _value["properties"][name].asDouble());
+      }
+      else if (_value["properties"][name].isString()) {
+        _object.set(property_id, _value["properties"][name].asCString());
+      }
+      else if (_value["properties"][name].isIntegral()) {
+        _object.set(property_id, (long)_value["properties"][name].asInt());
+      }
     }
   }
 }
@@ -152,4 +189,8 @@ const Apsis::Sprite::Animation& Apsis::Sprite::Thing::animationById(unsigned int
 
 unsigned int Apsis::Sprite::Thing::animationCount() const {
   return _animations.size();
+}
+
+const Apsis::World::RuleSet& Apsis::Sprite::Thing::rules() const {
+  return _rules;
 }

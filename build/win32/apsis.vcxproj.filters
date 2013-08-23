@@ -10,12 +10,6 @@
     <ClCompile Include="..\..\src\geometry\rectangle.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\input\input_engine.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\input\key_binding_repository.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\model\animation.cpp">
       <Filter>model</Filter>
     </ClCompile>
@@ -515,59 +509,14 @@
     <ClCompile Include="..\..\src\world\actor.cpp">
       <Filter>world</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\agent\mover.cpp">
-      <Filter>agent</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp">
       <Filter>agent\impeders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp">
       <Filter>agent\impeders</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\up.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\down.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\left.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\right.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\gridlock_down.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\gridlock_left.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\gridlock_right.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\gridlock_up.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\jump.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\fall.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\world\background.cpp">
       <Filter>world</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\wall_slide.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\and.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\or.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\wall_jump.cpp">
-      <Filter>agent\movers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\support\json\json_reader.cpp">
       <Filter>support\json</Filter>
@@ -577,9 +526,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\support\json\json_writer.cpp">
       <Filter>support\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\linear.cpp">
-      <Filter>agent\movers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\agent\responder.cpp">
       <Filter>agent</Filter>
@@ -628,6 +574,30 @@
     </ClCompile>
     <ClCompile Include="..\..\src\agent\movers\wiggler.cpp">
       <Filter>agent\movers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registry\rule.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\rule_set.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\input.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\system.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\input\binding.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\event.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\rules\right.cpp">
+      <Filter>agent\rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\rules\left.cpp">
+      <Filter>agent\rules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1183,16 +1153,7 @@
     <ClInclude Include="..\..\include\apsis\model\thing.h">
       <Filter>model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\input\input_engine.h">
-      <Filter>input</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\input\key.h">
-      <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\input\key_binding.h">
-      <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\input\key_binding_repository.h">
       <Filter>input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\SOIL.h">
@@ -1207,9 +1168,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\backend\sdl.h">
       <Filter>backend</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\input\event.h">
-      <Filter>input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\actor.h">
       <Filter>world</Filter>
@@ -1226,53 +1184,8 @@
     <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h">
       <Filter>agent\impeders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\up.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\down.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\left.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\right.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_down.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_left.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_right.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\gridlock_up.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\jump.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\fall.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\background.h">
       <Filter>world</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\wall_slide.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\and.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\or.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\wall_jump.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\linear.h">
-      <Filter>agent\movers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\agent\responder.h">
       <Filter>agent</Filter>
@@ -1307,9 +1220,6 @@
     <ClInclude Include="..\..\include\apsis\sprite\thing.h">
       <Filter>sprite</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\registry\state.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\filler_bar.h">
       <Filter>interface</Filter>
     </ClInclude>
@@ -1318,6 +1228,36 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\agent\movers\wiggler.h">
       <Filter>agent\movers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\rule.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\state.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\rule_set.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\input.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\system.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\input\binding.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\event.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\act_function.h">
+      <Filter>agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\rules\right.h">
+      <Filter>agent\rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\rules\left.h">
+      <Filter>agent\rules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1413,6 +1353,9 @@
     </Filter>
     <Filter Include="interface">
       <UniqueIdentifier>{03085c89-1b87-49ac-8103-9728d09bf922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="agent\rules">
+      <UniqueIdentifier>{d57e9a53-fe27-4c88-8970-199de9b0eaa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

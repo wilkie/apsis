@@ -6,8 +6,6 @@
 namespace Apsis {
   namespace Key {
     enum Code {
-      NONE,
-
       F1,
       F2,
       F3,

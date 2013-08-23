@@ -28,7 +28,7 @@ namespace Apsis {
       void supercede(const char* rule);
 
       const char* rule();
-	private:
+    private:
       std::set<unsigned int> _supercedes;
       const char*            _rule;
       unsigned int           _id;
