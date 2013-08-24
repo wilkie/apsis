@@ -9,6 +9,8 @@
 #include "apsis/agent/movers/wiggler.h"
 #include "apsis/agent/rules/right.h"
 #include "apsis/agent/rules/left.h"
+#include "apsis/agent/rules/up.h"
+#include "apsis/agent/rules/down.h"
 
 std::vector<std::string> Apsis::Registry::Rule::_ids;
 std::vector<Apsis::Registry::Rule*> Apsis::Registry::Rule::_all_rules;
@@ -24,6 +26,8 @@ static UpdaterPair pairs_updaters[] = {
   UpdaterPair("wiggler",   &Apsis::Agent::Movers::Wiggler::update),
   UpdaterPair("right",     &Apsis::Agent::Rules::Right::update),
   UpdaterPair("left",      &Apsis::Agent::Rules::Left::update),
+  UpdaterPair("up",      &Apsis::Agent::Rules::Up::update),
+  UpdaterPair("down",      &Apsis::Agent::Rules::Down::update),
 };
 
 static const unsigned int updaters_count = sizeof(pairs_updaters) / sizeof(UpdaterPair);
@@ -42,11 +46,15 @@ std::map<std::string, Apsis::Agent::CollideFunction> Apsis::Registry::Rule::_int
 static ActFunctionPair pairs_acts[] = {
   ActFunctionPair("right", &Apsis::Agent::Rules::Right::act),
   ActFunctionPair("left",  &Apsis::Agent::Rules::Left::act),
+  ActFunctionPair("up",  &Apsis::Agent::Rules::Up::act),
+  ActFunctionPair("down",  &Apsis::Agent::Rules::Down::act),
 };
 
 static ActStringPair pairs_act_actions[] = {
   ActStringPair("right", Apsis::Agent::Rules::Right::action),
   ActStringPair("left",  Apsis::Agent::Rules::Left::action),
+  ActStringPair("up",  Apsis::Agent::Rules::Up::action),
+  ActStringPair("down",  Apsis::Agent::Rules::Down::action),
 };
 
 static const unsigned int acts_count = sizeof(pairs_acts) / sizeof(ActFunctionPair);

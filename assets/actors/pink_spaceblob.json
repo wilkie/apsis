@@ -4,11 +4,13 @@
   "inherit": "assets/things/pink_spaceblob.json",
 
   "rules": [
-    "right", "left"
+    "right", "left", "up", "down"
   ],
 
   "properties": {
     "left_speed":  200.0,
-    "right_speed": 200.0
+    "right_speed": 200.0,
+    "up_speed":    200.0,
+    "down_speed":  200.0
   }
 }

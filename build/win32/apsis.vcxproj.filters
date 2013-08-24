@@ -599,6 +599,12 @@
     <ClCompile Include="..\..\src\agent\rules\left.cpp">
       <Filter>agent\rules</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\agent\rules\up.cpp">
+      <Filter>agent\rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\agent\rules\down.cpp">
+      <Filter>agent\rules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1257,6 +1263,12 @@
       <Filter>agent\rules</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\agent\rules\left.h">
+      <Filter>agent\rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\rules\down.h">
+      <Filter>agent\rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\rules\up.h">
       <Filter>agent\rules</Filter>
     </ClInclude>
   </ItemGroup>

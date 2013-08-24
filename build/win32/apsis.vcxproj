@@ -74,8 +74,10 @@
     <ClCompile Include="..\..\src\agent\movers\wiggler.cpp" />
     <ClCompile Include="..\..\src\agent\responder.cpp" />
     <ClCompile Include="..\..\src\agent\responders\bouncer.cpp" />
+    <ClCompile Include="..\..\src\agent\rules\down.cpp" />
     <ClCompile Include="..\..\src\agent\rules\left.cpp" />
     <ClCompile Include="..\..\src\agent\rules\right.cpp" />
+    <ClCompile Include="..\..\src\agent\rules\up.cpp" />
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine\event.cpp" />
     <ClCompile Include="..\..\src\engine\system.cpp" />
@@ -280,8 +282,10 @@
     <ClInclude Include="..\..\include\apsis\agent\movers\wiggler.h" />
     <ClInclude Include="..\..\include\apsis\agent\responder.h" />
     <ClInclude Include="..\..\include\apsis\agent\responders\bouncer.h" />
+    <ClInclude Include="..\..\include\apsis\agent\rules\down.h" />
     <ClInclude Include="..\..\include\apsis\agent\rules\left.h" />
     <ClInclude Include="..\..\include\apsis\agent\rules\right.h" />
+    <ClInclude Include="..\..\include\apsis\agent\rules\up.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
     <ClInclude Include="..\..\include\apsis\engine\event.h" />
     <ClInclude Include="..\..\include\apsis\engine\system.h" />
