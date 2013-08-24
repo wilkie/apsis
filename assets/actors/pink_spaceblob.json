@@ -4,7 +4,7 @@
   "inherit": "assets/things/pink_spaceblob.json",
 
   "rules": [
-    "right", "left", "up", "down"
+    "right", "left", "up", "down", "map_collider"
   ],
 
   "properties": {
