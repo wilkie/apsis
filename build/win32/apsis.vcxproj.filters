@@ -605,6 +605,12 @@
     <ClCompile Include="..\..\src\agent\rules\down.cpp">
       <Filter>agent\rules</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\agent\impeders\slide_map_collider.cpp">
+      <Filter>agent\impeders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\collision_object.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1270,6 +1276,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\agent\rules\up.h">
       <Filter>agent\rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\agent\impeders\slide_map_collider.h">
+      <Filter>agent\impeders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\collision_object.h">
+      <Filter>world</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

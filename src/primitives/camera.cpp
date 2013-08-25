@@ -22,10 +22,10 @@ Apsis::Primitives::Camera::Camera(const glm::vec2& position,
                      glm::vec3(zoom, zoom, zoom));
 }
 
-glm::mat4& Apsis::Primitives::Camera::view() {
+const glm::mat4& Apsis::Primitives::Camera::view() const {
   return _view;
 }
 
-glm::vec3& Apsis::Primitives::Camera::eye() {
+const glm::vec3& Apsis::Primitives::Camera::eye() const {
   return _position;
 }

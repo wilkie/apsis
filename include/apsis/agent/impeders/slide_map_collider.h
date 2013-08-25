@@ -1,5 +1,5 @@
-#ifndef APSIS_AGENT_IMPEDERS_MAP_COLLIDER_H
-#define APSIS_AGENT_IMPEDERS_MAP_COLLIDER_H
+#ifndef APSIS_AGENT_IMPEDERS_SLIDE_MAP_COLLIDER_H
+#define APSIS_AGENT_IMPEDERS_SLIDE_MAP_COLLIDER_H
 
 #include "apsis/world/map.h"
 
@@ -20,7 +20,7 @@ namespace Apsis {
 
   namespace Agent {
     namespace Impeders {
-      class MapCollider {
+      class SlideMapCollider {
       public:
         static bool collide(const Apsis::World::Scene& scene,
                             const unsigned int objectId,

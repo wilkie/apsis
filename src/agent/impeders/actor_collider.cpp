@@ -5,7 +5,7 @@ bool Apsis::Agent::Impeders::ActorCollider::collide(const Apsis::World::Scene& s
                                                     const Apsis::World::Object& object,
                                                     const Apsis::Geometry::Rectangle& original,
                                                     const Apsis::Geometry::Point& intended,
-                                                    unsigned int collidedWith,
+                                                    Apsis::World::CollisionObject& collidedWith,
                                                     Apsis::Geometry::Point& clipped) {
   // For every point px, py in the set of 4 defined by given Rectangle
 

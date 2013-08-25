@@ -168,12 +168,12 @@ unsigned int Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* 
   // Gliding past the edge
   if (p[0] == 0 && p[1] == 0) {
     if (line->points[0].x == left || line->points[0].x == right) {
-      return false;
+      return 0;
     }
   }
   else if (p[2] == 0 && p[3] == 0) {
     if (line->points[0].y == top || line->points[0].y == bottom) {
-      return false;
+      return 0;
     }
   }
 
@@ -253,6 +253,15 @@ unsigned int Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* 
 
   if (*tMin == 0.0 && *tMax == 1.0) {
     // Inside rectangle
+    for (unsigned int i = 0; i < 4; i++) {
+      if (q[i] < 0.00005) {
+        line_index_min = i;
+      }
+    }
+
+    if (line_index_min != 2) {
+      line_index_min = 2;
+    }
     return line_index_min + 1;
   }
 
@@ -335,7 +344,7 @@ bool Apsis::Geometry::Rectangle::on(Line* line) {
   return false;
 }
 
-void Apsis::Geometry::Rectangle::points(Point points[4]) {
+void Apsis::Geometry::Rectangle::points(Point points[4]) const {
   double halfWidth  = width / 2.0;
   double halfHeight = height / 2.0;
 
@@ -352,7 +361,7 @@ void Apsis::Geometry::Rectangle::points(Point points[4]) {
   points[3].y = y + halfHeight;
 }
 
-void Apsis::Geometry::Rectangle::lines(Line lines[4]) {
+void Apsis::Geometry::Rectangle::lines(Line lines[4]) const {
   Point points[4];
   this->points(points);
 
@@ -365,4 +374,44 @@ void Apsis::Geometry::Rectangle::lines(Line lines[4]) {
 Apsis::Geometry::Point Apsis::Geometry::Rectangle::center() const {
   Apsis::Geometry::Point p = { this->x, this->y };
   return p;
+}
+
+Apsis::Geometry::Line Apsis::Geometry::Rectangle::edge(unsigned int index) const {
+  if (index > 3) {
+    throw "Rectangle::edge : Index should be between 0 and 3.";
+  }
+
+  Apsis::Geometry::Line ret;
+  ret.points[0] = this->center();
+  ret.points[1] = this->center();
+
+  float half_width  = this->width  / 2.0f;
+  float half_height = this->height / 2.0f;
+
+  if (index == 0) { // Left
+    ret.points[0].x -= half_width;
+    ret.points[1].x -= half_width;
+    ret.points[0].y -= half_height;
+    ret.points[1].y += half_height;
+  }
+  else if (index == 1) { // Right
+    ret.points[0].x += half_width;
+    ret.points[1].x += half_width;
+    ret.points[0].y -= half_height;
+    ret.points[1].y += half_height;
+  }
+  else if (index == 2) { // Top
+    ret.points[0].x -= half_width;
+    ret.points[1].x += half_width;
+    ret.points[0].y -= half_height;
+    ret.points[1].y -= half_height;
+  }
+  else if (index == 3) { // Bottom
+    ret.points[0].x -= half_width;
+    ret.points[1].x += half_width;
+    ret.points[0].y += half_height;
+    ret.points[1].y += half_height;
+  }
+
+  return ret;
 }

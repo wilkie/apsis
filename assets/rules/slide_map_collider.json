@@ -1,0 +1,6 @@
+{
+  "type": "rule",
+  "name": "slide_map_collider",
+
+  "internal": true
+}

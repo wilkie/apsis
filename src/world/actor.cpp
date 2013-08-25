@@ -1,5 +1,7 @@
 #include "apsis/world/actor.h"
 
+#include "apsis/world/collision_object.h"
+
 #include "apsis/primitives/fragment_shader.h"
 #include "apsis/primitives/vertex_shader.h"
 
@@ -82,42 +84,39 @@ void Apsis::World::Actor::update(Apsis::World::Scene& scene, float elapsed) {
     nextFrame();
   }
 
-  Apsis::Geometry::Point to;
-  to.x = _position.x;
-  to.y = _position.y;
-
   _object.set("x", _position.x);
   _object.set("y", _position.y);
 
   _ruleSet.update(elapsed, _object, scene);
+}
+
+void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
+  Apsis::Geometry::Line  line;
+  Apsis::Geometry::Point point;
+  Apsis::World::CollisionObject collidedWith(*this, line, point, 0.0f);
+
+  Apsis::Geometry::Point to;
+  Apsis::Geometry::Point clipped;
 
   to.x = (float)_object.get("x").asDouble();
   to.y = (float)_object.get("y").asDouble();
 
-  _position.x = (float)to.x;
-  _position.y = (float)to.y;
-  
-  unsigned int collidedWith;
-  Apsis::Geometry::Point clipped;
-
-  // TODO: move collision until after all objects have moved.
-  if (_ruleSet.collide(scene, _object, _position, to, collidedWith, clipped)) {
-    // Collided. Figure out how to react.
+  if (to.x == _position.x && to.y == _position.y) {
+    return;
   }
-}
 
-void Apsis::World::Actor::move(Apsis::World::Scene& scene, Apsis::Geometry::Point& to) {
-  unsigned int collidedWith = 0;
-  //Apsis::Geometry::Point clipped;
+  clipped = to;
 
-  // Check collision?
+  if (_ruleSet.collide(scene, _object, _position, to, collidedWith, clipped)) {
+    to = clipped;
+  }
 
   _position.x = (float)to.x;
   _position.y = (float)to.y;
 }
 
 void Apsis::World::Actor::draw(const glm::mat4& projection,
-                               Primitives::Camera& camera) const {
+                               const Primitives::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
 

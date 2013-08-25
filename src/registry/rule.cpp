@@ -3,6 +3,7 @@
 #include <fstream>
 #include <algorithm>
 
+#include "apsis/agent/impeders/slide_map_collider.h"
 #include "apsis/agent/impeders/map_collider.h"
 #include "apsis/agent/impeders/actor_collider.h"
 
@@ -35,6 +36,7 @@ static const unsigned int updaters_count = sizeof(pairs_updaters) / sizeof(Updat
 std::map<std::string, Apsis::Agent::UpdateFunction> Apsis::Registry::Rule::_internal_updates(pairs_updaters, pairs_updaters + updaters_count);
 
 static ColliderPair pairs_colliders[] = {
+  ColliderPair("slide_map_collider",   &Apsis::Agent::Impeders::SlideMapCollider::collide),
   ColliderPair("map_collider",   &Apsis::Agent::Impeders::MapCollider::collide),
   ColliderPair("actor_collider", &Apsis::Agent::Impeders::ActorCollider::collide),
 };

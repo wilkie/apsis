@@ -80,13 +80,26 @@ namespace Apsis {
        */
       void act(Apsis::World::Scene& scene, unsigned int action_id, bool held);
 
-      void move(Apsis::World::Scene& scene, Apsis::Geometry::Point& to);
+      /*
+       *  Responds to collisions.
+       */
+      void collide(Apsis::World::Scene& scene);
 
+      /*
+       *  Commits changes to object.
+       */
+      void commit();
+
+      /*
+       *  Adds the given rule to the actor's rule set.
+       */
       void attachRule(const Apsis::Registry::Rule& rule);
 
-      // Draws the actor
+      /*
+       *  Draws the actor.
+       */
       void draw(const glm::mat4& projection,
-                Primitives::Camera& camera) const;
+                const Primitives::Camera& camera) const;
 
       // List rules
       const char* rules() const;

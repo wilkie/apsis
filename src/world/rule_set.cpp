@@ -112,7 +112,7 @@ bool Apsis::World::RuleSet::collide(const Apsis::World::Scene& scene,
                                     const Apsis::World::Object& object,
                                     const Apsis::Geometry::Rectangle& original,
                                     const Apsis::Geometry::Point& intended,
-                                    unsigned int& collidedWith,
+                                    Apsis::World::CollisionObject& collidedWith,
                                     Apsis::Geometry::Point& clipped) const {
   bool collided = false;
   clipped = intended;
@@ -123,11 +123,9 @@ bool Apsis::World::RuleSet::collide(const Apsis::World::Scene& scene,
     const Apsis::Registry::Rule& rule = *node.rule;
 
     for (unsigned int rule_id = 0; rule_id < rule.collideFunctionCount(); rule_id++) {
-      unsigned int collidedWithTmp = collidedWith;
       Apsis::Geometry::Point clippedTmp = clipped;
 
-      if (rule.collideFunction(i)(scene, 0, object, original, clipped, collidedWithTmp, clippedTmp)) {
-        collidedWith = collidedWithTmp;
+      if (rule.collideFunction(rule_id)(scene, 0, object, original, clipped, collidedWith, clippedTmp)) {
         clipped = clippedTmp;
         collided = true;
       }

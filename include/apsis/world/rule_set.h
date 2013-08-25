@@ -3,6 +3,8 @@
 
 #include "apsis/registry/rule.h"
 
+#include "apsis/world/collision_object.h"
+
 #include <vector>
 
 namespace Apsis {
@@ -41,7 +43,7 @@ namespace Apsis {
                    const Apsis::World::Object& object,
                    const Apsis::Geometry::Rectangle& original,
                    const Apsis::Geometry::Point& intended,
-                   unsigned int& collidedWith,
+                   Apsis::World::CollisionObject& collidedWith,
                    Apsis::Geometry::Point& clipped) const;
 
       /*

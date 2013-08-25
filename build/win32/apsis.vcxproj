@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp" />
     <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
+    <ClCompile Include="..\..\src\agent\impeders\slide_map_collider.cpp" />
     <ClCompile Include="..\..\src\agent\movers\wiggler.cpp" />
     <ClCompile Include="..\..\src\agent\responder.cpp" />
     <ClCompile Include="..\..\src\agent\responders\bouncer.cpp" />
@@ -263,6 +264,7 @@
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\world\background.cpp" />
+    <ClCompile Include="..\..\src\world\collision_object.cpp" />
     <ClCompile Include="..\..\src\world\map.cpp" />
     <ClCompile Include="..\..\src\world\actor.cpp" />
     <ClCompile Include="..\..\src\world\object.cpp" />
@@ -278,6 +280,7 @@
     <ClInclude Include="..\..\include\apsis\agent\impeder.h" />
     <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h" />
+    <ClInclude Include="..\..\include\apsis\agent\impeders\slide_map_collider.h" />
     <ClInclude Include="..\..\include\apsis\agent\mover.h" />
     <ClInclude Include="..\..\include\apsis\agent\movers\wiggler.h" />
     <ClInclude Include="..\..\include\apsis\agent\responder.h" />
@@ -327,6 +330,7 @@
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\apsis\world\background.h" />
+    <ClInclude Include="..\..\include\apsis\world\collision_object.h" />
     <ClInclude Include="..\..\include\apsis\world\map.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h" />
     <ClInclude Include="..\..\include\apsis\world\object.h" />

@@ -13,7 +13,7 @@ bool Apsis::Agent::Impeders::MapCollider::collide(const Apsis::World::Scene& sce
                                                   const Apsis::World::Object& object,
                                                   const Apsis::Geometry::Rectangle& original,
                                                   const Apsis::Geometry::Point& intended,
-                                                  unsigned int collidedWith,
+                                                  Apsis::World::CollisionObject& collidedWith,
                                                   Apsis::Geometry::Point& clipped) {
   // For every point px, py in the set of 4 defined by given Rectangle
 
@@ -23,23 +23,17 @@ bool Apsis::Agent::Impeders::MapCollider::collide(const Apsis::World::Scene& sce
   double halfWidth  = ceil(original.width  / 2.0);
   double halfHeight = ceil(original.height / 2.0);
 
-  points[0].x = original.x - halfWidth;
-  points[0].y = original.y - halfHeight;
+  original.points(points);
+
   toPoints[0].x = intended.x - halfWidth;
   toPoints[0].y = intended.y - halfHeight;
 
-  points[1].x = original.x + halfWidth;
-  points[1].y = original.y - halfHeight;
   toPoints[1].x = intended.x + halfWidth;
   toPoints[1].y = intended.y - halfHeight;
 
-  points[2].x = original.x + halfWidth;
-  points[2].y = original.y + halfHeight;
   toPoints[2].x = intended.x + halfWidth;
   toPoints[2].y = intended.y + halfHeight;
 
-  points[3].x = original.x - halfWidth;
-  points[3].y = original.y + halfHeight;
   toPoints[3].x = intended.x - halfWidth;
   toPoints[3].y = intended.y + halfHeight;
 
@@ -76,18 +70,14 @@ bool Apsis::Agent::Impeders::MapCollider::collide(const Apsis::World::Scene& sce
         Apsis::Geometry::Line l = vectors[i];
         unsigned int edge = tileRect.clip(&l, &tMin, &tMax);
         if (edge > 0) {
-          if (edge == 3) {
-            if (!(tMin == 0.0 || tMax == 1.0)) {
-              //object.enableState(_collideWithTopState);
-            }
-          }
-
-          if (tMin == 0.0 && tMax == 0.0) { continue; }
+          if (tMax < 0.00005) { continue; }
           if (tMin < t) {
             // New t value is the amount we will walk down the vector
             t = tMin;
 
-            calculatedPoint = l.points[0];
+            const Apsis::Geometry::Point& point = l.points[0];
+
+            calculatedPoint = point;
             if (i == 0) {
               calculatedPoint.x += halfWidth;
               calculatedPoint.y += halfHeight;
@@ -104,6 +94,55 @@ bool Apsis::Agent::Impeders::MapCollider::collide(const Apsis::World::Scene& sce
               calculatedPoint.x += halfWidth;
               calculatedPoint.y -= halfHeight;
             }
+
+            if (tMin < 0.00005 && tMax > 0.99995) {
+              // Inside the rectangle... Usually this means it hit a corner
+              // TODO: figure out which edge should be considered as blocking
+              //       1. determine the corner
+              //       2. determine if one edge is obscured by another tile
+              //          2a. if so, the other edge is the blocking edge
+              //          2b. otherwise, that edge is the blocking edge
+              //       (it will be biased toward the compared edge)
+
+              edge = 0;
+
+              if (point.x - 0.00005 < tileRect.x - (tileRect.width / 2.0f) &&
+                  point.x + 0.00005 > tileRect.x - (tileRect.width / 2.0f)) {
+                // Check Left Edge for a tile that obscures it
+                // If it is not obscured, mark it as the edge
+                if (x != 0) {
+                  const Apsis::World::Tile& check = scene.map(0).tile(x-1, y);
+                  if (check.passable()) {
+                    edge = 1;
+                  }
+                }
+              }
+              else {
+                // Check Right Edge for a tile that obscures it
+                // If it is not obscured, mark it as the edge
+                if (x != scene.map(0).width()-1) {
+                  const Apsis::World::Tile& check = scene.map(0).tile(x+1, y);
+                  if (check.passable()) {
+                    edge = 2;
+                  }
+                }
+              }
+
+              if (edge == 0) {
+                if (point.y - 0.00005 < tileRect.y - (tileRect.width / 2.0f) &&
+                    point.y + 0.00005 > tileRect.y - (tileRect.width / 2.0f)) {
+                  edge = 3;
+                }
+                else {
+                  edge = 4;
+                }
+              }
+            }
+            else if (tMax < 0.00005) {
+              tMax = tMax;
+            }
+
+            collidedWith.tile(tile, 0.0f, tileRect.edge(edge - 1), l.points[0]);
           }
         }
       }

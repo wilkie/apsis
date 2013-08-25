@@ -272,10 +272,10 @@ unsigned int Apsis::Sprite::Sheet::count() const {
   return _sprites.size();
 }
 
-void Apsis::Sprite::Sheet::draw(unsigned int        index,
-                                const glm::mat4&    projection,
-                                Primitives::Camera& camera,
-                                const glm::mat4&    model) const {
+void Apsis::Sprite::Sheet::draw(unsigned int              index,
+                                const glm::mat4&          projection,
+                                const Primitives::Camera& camera,
+                                const glm::mat4&          model) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);

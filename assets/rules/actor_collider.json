@@ -1,0 +1,6 @@
+{
+  "type": "rule",
+  "name": "actor_collider",
+
+  "internal": true
+}

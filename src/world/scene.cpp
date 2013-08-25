@@ -19,6 +19,13 @@ void Apsis::World::Scene::update(float elapsed) {
 
     (*it).update(*this, elapsed);
   }
+
+  for(std::vector<Apsis::World::Actor>::iterator it = _actors.begin();
+      it != _actors.end();
+      ++it) {
+
+    (*it).collide(*this);
+  }
 }
 
 void Apsis::World::Scene::act(unsigned int action_id, bool held) {

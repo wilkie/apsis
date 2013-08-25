@@ -27,12 +27,12 @@ namespace Apsis {
       /*
        *  Return a reference to the view matrix.
        */
-      glm::mat4& view();
+      const glm::mat4& view() const;
 
       /*
        *  Return the position of the eye.
        */
-      glm::vec3& eye();
+      const glm::vec3& eye() const;
 
     private:
       glm::vec3 _position;

@@ -1,0 +1,6 @@
+{
+  "type": "rule",
+  "name": "map_collider",
+
+  "internal": true
+}
