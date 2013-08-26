@@ -53,6 +53,12 @@ namespace Apsis {
        */
       const Apsis::World::Map& loadMap(const char* name);
 
+      /*
+       *  Loads or returns the existing Rule object with the given
+       *  name or path.
+       */
+      const Apsis::Registry::Rule& loadRule(const char* name);
+
     private:
       // Constructors
       Object(const char* path);

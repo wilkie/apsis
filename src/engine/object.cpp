@@ -108,9 +108,18 @@ const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) {
   return Apsis::World::Map::load(found.c_str());
 }
 
+const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) {
+  std::string found = _findFile(_map_path, std::string(name));
+  if (found == "") {
+    throw "Rule description not found or loaded.";
+  }
+  return Apsis::Registry::Rule::load(found.c_str());
+}
+
 std::string Apsis::Engine::Object::_findFile(std::string& searchPath, std::string& name) {
   // TODO: We could actually cache the result of the file search
   //       with a map on searchPath and name.
+  //       Then we could have an object cache that uses the unique id.
 
   // Add .json extension
   std::string search = name.append(".json");
