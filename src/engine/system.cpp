@@ -5,7 +5,7 @@
 Apsis::Engine::System::System(const char* path)
   : _path(path),                           // Set path
     _jsonLoaded(false),                    // JSON
-    _input(*(new Apsis::Engine::Input())), // Initialize Input Engine
+    _input(_parseOrCreateInput()),         // Initialize Input Engine
     _objects(_parseOrCreateObject()) {     // Initialize Object Engine
 }
 
@@ -48,6 +48,8 @@ void Apsis::Engine::System::_parseJSONFile() {
 }
 
 Apsis::Engine::Object& Apsis::Engine::System::_parseOrCreateObject() {
+  _openJSONFile();
+
   if (_value.isMember("paths")) {
     if (_value["paths"].isObject()) {
       // Embedded
@@ -61,4 +63,11 @@ Apsis::Engine::Object& Apsis::Engine::System::_parseOrCreateObject() {
 
   // Default
   return Apsis::Engine::Object::default();
+}
+
+Apsis::Engine::Input& Apsis::Engine::System::_parseOrCreateInput() {
+  _openJSONFile();
+
+  // Default
+  return Apsis::Engine::Input::default();
 }

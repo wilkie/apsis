@@ -51,6 +51,10 @@ namespace Apsis {
       // Pulls Object engine parameters from JSON or creates from default.
       Apsis::Engine::Object& _parseOrCreateObject();
 
+      // Pulls Input engine and binding parameters from JSON or creates from
+      // default.
+      Apsis::Engine::Input&  _parseOrCreateInput();
+
       // Path to the JSON description.
       std::string _path;
 

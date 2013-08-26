@@ -30,16 +30,6 @@
   #include <GL/glu.h>
 #endif
 
-enum Event {
-  INVALID,
-  MOVE_LEFT,
-  MOVE_RIGHT,
-  MOVE_UP,
-  MOVE_DOWN,
-  ZOOM_OUT,
-  ZOOM_IN
-};
-
  /*
   *  Construct an Engine initialized with the given display configuration
   */
@@ -52,7 +42,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   _zoom = 1.0f;
 
-  _input = new Apsis::Engine::Input();
+  _input = &Apsis::Engine::Input::default();
 
   _map = new Apsis::World::Map("assets/maps/sample.json");
 
@@ -70,7 +60,6 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   _scene.addMap(*_map);
 
   Apsis::Registry::Action::load("assets/bindings/input.json");
-  //*/
 }
 
 void Apsis::Engine::TopDown2d::run() {

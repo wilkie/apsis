@@ -1,5 +1,15 @@
 #include "apsis/engine/input.h"
 
+#include <fstream>
+
+std::vector<Apsis::Engine::Input*> Apsis::Engine::Input::_input_engines;
+
+Apsis::Engine::Input& Apsis::Engine::Input::default() {
+  Apsis::Engine::Input* ie = new Apsis::Engine::Input();
+  _input_engines.push_back(ie);
+  return *ie;
+}
+
 Apsis::Engine::Input::Input() {
 #ifndef NO_SDL
   // Enable the joystick
@@ -8,9 +18,6 @@ Apsis::Engine::Input::Input() {
   SDL_JoystickEventState(SDL_ENABLE);
   joystick = SDL_JoystickOpen(0);
 #endif
-}
-
-Apsis::Engine::Input::~Input() {
 }
 
 bool Apsis::Engine::Input::press(const Apsis::Input::Binding& binding,
