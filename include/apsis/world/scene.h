@@ -33,18 +33,25 @@ namespace Apsis {
       unsigned int addActor(const Sprite::Thing& thing, float x, float y);
 
       /*
-       *  Returns the Actor given by the id.
+       *  Returns the Actor given by its index in the scene.
        */
-      Apsis::World::Actor& actor(unsigned int id);
-      const Apsis::World::Actor& actor(unsigned int id) const;
+      Apsis::World::Actor& actor(unsigned int index);
+      const Apsis::World::Actor& actor(unsigned int index) const;
 
+      /*
+       *  Returns the number of actors currently in the scene.
+       */
       unsigned int actorCount() const;
+
+      /*
+       *  Returns the number of maps currently in the scene.
+       */
       unsigned int mapCount() const;
 
       /*
-       *  Returns the map given by the id.
+       *  Returns the map given by its index in the scene.
        */
-      const Apsis::World::Map& map(unsigned int id) const;
+      const Apsis::World::Map& map(unsigned int index) const;
 
       /*
        *  Updates objects in the scene.
