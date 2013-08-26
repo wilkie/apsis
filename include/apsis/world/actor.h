@@ -86,11 +86,6 @@ namespace Apsis {
       void collide(Apsis::World::Scene& scene);
 
       /*
-       *  Commits changes to object.
-       */
-      void commit();
-
-      /*
        *  Adds the given rule to the actor's rule set.
        */
       void attachRule(const Apsis::Registry::Rule& rule);
