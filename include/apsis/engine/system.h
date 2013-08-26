@@ -4,6 +4,10 @@
 #include "apsis/engine/input.h"
 #include "apsis/engine/object.h"
 
+#include <json/json.h>
+
+#include <string>
+
 namespace Apsis {
   namespace Engine {
     /*
@@ -15,7 +19,7 @@ namespace Apsis {
        *  Constructs a new system. This is the main engine that coordinates
        *  the rest of the engines (input, audio, etc).
        */
-      System();
+      System(const char* path);
       ~System();
 
       /*
@@ -38,6 +42,24 @@ namespace Apsis {
       void loadScene(unsigned int id);
 
     private:
+      // Parses the given json via the path given in jsonFile.
+      void _openJSONFile();
+
+      // Parse JSON
+      void _parseJSONFile();
+
+      // Pulls Object engine parameters from JSON or creates from default.
+      Apsis::Engine::Object& _parseOrCreateObject();
+
+      // Path to the JSON description.
+      std::string _path;
+
+      // Whether or not the JSON has been loaded
+      bool _jsonLoaded;
+
+      // JSON object
+      Json::Value _value;
+
       Apsis::Engine::Input&  _input;
       Apsis::Engine::Object& _objects;
     };
