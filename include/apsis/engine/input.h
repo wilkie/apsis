@@ -17,8 +17,8 @@
 namespace Apsis {
   namespace Engine {
     /*
-     *  Handles mapping between keys and events allowing for flexible control
-     *    over what keys or buttons are mapped to particular functions.
+     *  Handles which keys are pressed and can be polled to determine when
+     *  an Action is still held.
      */
     class Input {
       public:

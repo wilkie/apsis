@@ -611,6 +611,9 @@
     <ClCompile Include="..\..\src\world\collision_object.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\object.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1282,6 +1285,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\collision_object.h">
       <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\object.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
