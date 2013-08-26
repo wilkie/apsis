@@ -1,6 +1,12 @@
 #ifndef APSIS_ENGINE_OBJECT_H
 #define APSIS_ENGINE_OBJECT_H
 
+#include "apsis/registry/action.h"
+#include "apsis/registry/rule.h"
+#include "apsis/sprite/thing.h"
+#include "apsis/registry/property.h"
+#include "apsis/registry/state.h"
+
 #include <json/json.h>
 
 namespace Apsis {
@@ -12,7 +18,7 @@ namespace Apsis {
      *  The object engine manages paths and loaded objects within the system
      *  and coordinates on your behalf with the object and name registry.
      *  Load and query all system objects through this interface.
-     */ 
+     */
     class Object {
     public:
       /*
@@ -32,6 +38,12 @@ namespace Apsis {
        */
       static Apsis::Engine::Object& default();
 
+      /*
+       *  Loads or returns the existing Thing object with the given
+       *  name or path.
+       */
+      Apsis::Sprite::Thing& loadThing(const char* name);
+
     private:
       // Constructors
       Object(const char* path);
@@ -44,6 +56,10 @@ namespace Apsis {
       // Default loader
       void _loadDefaults();
 
+      // File finder
+      std::string _findFile(std::string& searchPath, std::string& name);
+      bool _fileExists(std::string& path);
+
       std::string _scene_path;
       std::string _thing_path;
       std::string _map_path;
@@ -53,7 +69,6 @@ namespace Apsis {
       std::string _rule_path;
 
       // Keeps track of Object engines system-wide.
-      static std::vector<std::string> _ids;
       static std::vector<Apsis::Engine::Object*> _object_engines;
     };
   }

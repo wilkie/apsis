@@ -1,6 +1,7 @@
 #include "apsis/engine/object.h"
 
 #include <fstream>
+#include <sys/stat.h>
 
 std::vector<Apsis::Engine::Object*> Apsis::Engine::Object::_object_engines;
 
@@ -89,4 +90,47 @@ void Apsis::Engine::Object::_loadDefaults() {
   _graphics_path = "";
   _background_path = "";
   _rule_path = "";
+}
+
+Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) {
+  std::string found = _findFile(_thing_path, std::string(name));
+  if (found == "") {
+    throw "Thing description not found or loaded.";
+  }
+  Apsis::Sprite::Thing::load(found.c_str());
+}
+
+std::string Apsis::Engine::Object::_findFile(std::string& searchPath, std::string& name) {
+  // TODO: We could actually cache the result of the file search
+  //       with a map on searchPath and name.
+
+  // Add .json extension
+  std::string search = name.append(".json");
+
+  // Find json description file
+  // Look in thing path first (if exists)
+  if (_thing_path.size() != 0) {
+    std::string path = _thing_path.append(search);
+
+    if (_fileExists(path)) {
+      return path;
+    }
+  }
+
+  // If path search fails, search from project root.
+  if (_fileExists(search)) {
+    return search;
+  }
+
+  // Failure, return empty string. React elsewhere.
+  return "";
+}
+
+bool Apsis::Engine::Object::_fileExists(std::string& path) {
+  struct stat info;
+  int ret = -1;
+
+  // If stat() is successful, the file exists and is readable.
+  ret = stat(path.c_str(), &info);
+  return ret == 0;
 }
