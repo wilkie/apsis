@@ -12,6 +12,18 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
+#include <algorithm>
+#include <fstream>
+
+std::vector<std::string> Apsis::World::Map::_ids;
+std::vector<Apsis::World::Map*> Apsis::World::Map::_maps;
+
+Apsis::World::Map& Apsis::World::Map::load(const char* json) {
+  Apsis::World::Map* map = new Apsis::World::Map(json);
+  _maps.push_back(map);
+  return *map;
+}
+
 Apsis::World::Map::Map(const char* json)
   : _jsonLoaded(false),
     _path(json),
@@ -19,6 +31,10 @@ Apsis::World::Map::Map(const char* json)
 
   _parseJSONFile();
   _generateVAO();
+}
+
+unsigned int Apsis::World::Map::id() const {
+  return _id;
 }
 
 Apsis::World::Map::Map(unsigned int width,

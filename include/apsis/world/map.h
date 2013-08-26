@@ -26,17 +26,7 @@ namespace Apsis {
       /*
        *  Constructs a Map from the given JSON description of the map.
        */
-      Map(const char* json);
-
-      /*
-       *  Constructs a Apsis::World::Map of the given width and height and
-       *    drawn using the given Apsis::Sprite::Sheet.
-       */
-      Map(unsigned int width,
-          unsigned int height,
-          float tileWidth,
-          float tileHeight,
-          const Apsis::Sprite::Sheet& spriteSheet);
+      static Apsis::World::Map& load(const char* json);
 
       /*
        *  Queries the tile at the world coordinates (x,y)
@@ -76,8 +66,28 @@ namespace Apsis {
                 Primitives::Camera& camera,
                 const glm::mat4& model) const;
 
+      /*
+       *  Returns the unique id for this map.
+       */
+      unsigned int id() const;
+
     private:
-      Sync::ReferenceCounter _counter;
+      // Keeps track of Maps system-wide.
+      static std::vector<std::string> _ids;
+      static std::vector<Apsis::World::Map*> _maps;
+
+      // Constructor
+      Map(const char* json);
+
+      /*
+       *  Constructs a Apsis::World::Map of the given width and height and
+       *    drawn using the given Apsis::Sprite::Sheet.
+       */
+      Map(unsigned int width,
+          unsigned int height,
+          float tileWidth,
+          float tileHeight,
+          const Apsis::Sprite::Sheet& spriteSheet);
 
       // JSON parsing
 
@@ -119,6 +129,9 @@ namespace Apsis {
 
       unsigned int* _elements;
       Primitives::VertexBuffer _ebo;
+
+      // Map unique id
+      unsigned int _id;
     };
   }
 }
