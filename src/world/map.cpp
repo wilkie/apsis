@@ -18,7 +18,7 @@
 std::vector<std::string> Apsis::World::Map::_ids;
 std::vector<Apsis::World::Map*> Apsis::World::Map::_maps;
 
-Apsis::World::Map& Apsis::World::Map::load(const char* json) {
+const Apsis::World::Map& Apsis::World::Map::load(const char* json) {
   Apsis::World::Map* map = new Apsis::World::Map(json);
   _maps.push_back(map);
   return *map;

@@ -25,6 +25,11 @@ namespace Apsis {
       // TODO: isInherited() function? (should exist for other objects)
 
       /*
+       *  Loads a Rule from the rule info represented by the given file.
+       */
+      static const Apsis::Registry::Rule& load(const char* path);
+
+      /*
        *  Returns the unique id for this rule.
        */
       unsigned int id() const;
@@ -44,11 +49,6 @@ namespace Apsis {
        *  Registers or returns the existing id for the given property.
        */
       static unsigned int id(const char* name);
-
-      /*
-       *  Loads a Rule from the rule info represented by the given file.
-       */
-      static const Apsis::Registry::Rule& load(const char* path);
 
       /*
        *  Returns true when the given rule, specified by name, is superceded

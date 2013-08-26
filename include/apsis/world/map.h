@@ -29,7 +29,7 @@ namespace Apsis {
       /*
        *  Constructs a Map from the given JSON description of the map.
        */
-      static Apsis::World::Map& load(const char* json);
+      static const Apsis::World::Map& load(const char* json);
 
       /*
        *  Queries the tile at the world coordinates (x,y)

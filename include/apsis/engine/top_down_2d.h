@@ -44,7 +44,7 @@ namespace Apsis {
         Apsis::Settings::Video _video;
         Apsis::Engine::Input* _input;
 
-        Apsis::World::Map* _map;
+        const Apsis::World::Map* _map;
         unsigned int _player;
         unsigned int _ball;
         Apsis::World::Scene _scene;

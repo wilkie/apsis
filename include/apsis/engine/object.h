@@ -60,6 +60,7 @@ namespace Apsis {
       std::string _findFile(std::string& searchPath, std::string& name);
       bool _fileExists(std::string& path);
 
+      // Path storage
       std::string _scene_path;
       std::string _thing_path;
       std::string _map_path;

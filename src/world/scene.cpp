@@ -3,8 +3,8 @@
 Apsis::World::Scene::Scene() {
 }
 
-void Apsis::World::Scene::addMap(Apsis::World::Map& map) {
-  _maps.push_back(map);
+void Apsis::World::Scene::addMap(const Apsis::World::Map& map) {
+  _maps.push_back(&map);
 }
 
 unsigned int Apsis::World::Scene::addActor(unsigned int id, float x, float y) {
@@ -53,10 +53,10 @@ unsigned int Apsis::World::Scene::addActor(const Apsis::Sprite::Thing& thing, fl
 void Apsis::World::Scene::draw(const glm::mat4& projection,
                                Primitives::Camera& camera,
                                const glm::mat4& model) const {
-  for(std::vector<Apsis::World::Map>::const_iterator it = _maps.begin();
+  for(std::vector<const Apsis::World::Map*>::const_iterator it = _maps.begin();
       it != _maps.end();
       ++it) {
-    (*it).draw(projection, camera, model);
+    (*it)->draw(projection, camera, model);
   }
 
   for(std::vector<Apsis::World::Actor>::const_iterator it = _actors.begin();
@@ -66,12 +66,8 @@ void Apsis::World::Scene::draw(const glm::mat4& projection,
   }
 }
 
-Apsis::World::Map& Apsis::World::Scene::map(unsigned int id) {
-  return _maps[id];
-}
-
 const Apsis::World::Map& Apsis::World::Scene::map(unsigned int id) const {
-  return _maps[id];
+  return *_maps[id];
 }
 
 Apsis::World::Actor& Apsis::World::Scene::actor(unsigned int id) {

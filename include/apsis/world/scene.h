@@ -20,7 +20,7 @@ namespace Apsis {
       /*
        *  Adds a Map to the scene.
        */
-      void addMap(Apsis::World::Map& map);
+      void addMap(const Apsis::World::Map& map);
 
       /*
        *  Instantiates an Actor to the scene using a Thing id.
@@ -44,7 +44,6 @@ namespace Apsis {
       /*
        *  Returns the map given by the id.
        */
-      Apsis::World::Map& map(unsigned int id);
       const Apsis::World::Map& map(unsigned int id) const;
 
       /*
@@ -66,7 +65,7 @@ namespace Apsis {
     private:
       // Collections of objects within the scene
       std::vector<Apsis::World::Actor> _actors;
-      std::vector<Apsis::World::Map>   _maps;
+      std::vector<const Apsis::World::Map*>   _maps;
     };
   }
 }
