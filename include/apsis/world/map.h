@@ -23,6 +23,9 @@ namespace Apsis {
      */
     class Map {
     public:
+      // TODO: Describe map json.
+      // TODO: Allow programmable maps?
+
       /*
        *  Constructs a Map from the given JSON description of the map.
        */

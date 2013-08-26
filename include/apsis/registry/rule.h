@@ -22,11 +22,7 @@ namespace Apsis {
      */
     class Rule {
     public:
-
-      /*
-       *  Construct a new rule from the given JSON description.
-       */
-      Rule(const char* path);
+      // TODO: isInherited() function? (should exist for other objects)
 
       /*
        *  Returns the unique id for this rule.
@@ -109,22 +105,29 @@ namespace Apsis {
       unsigned int actionId(unsigned int id) const;
 
     private:
+      // Global list of rules
       static std::vector<std::string>            _ids;
       static std::vector<Apsis::Registry::Rule*> _all_rules;
 
+      // Internal rules
       static std::map<std::string, Apsis::Agent::UpdateFunction>  _internal_updates;
       static std::map<std::string, Apsis::Agent::CollideFunction> _internal_collides;
       static std::map<std::string, std::string>                   _internal_act_actions;
       static std::map<std::string, Apsis::Agent::ActFunction>     _internal_acts;
 
+      // Constructors
+      Rule(const char* path);
+
+      // Whether the json value exists
       bool _jsonLoaded;
 
+      // Opens the JSON description file
       void _openJSONFile();
 
-      // Parse JSON
+      // Parse JSON from an open description file
       void _parseJSONFile();
 
-      // JSON value;
+      // JSON value. This exists when _jsonLoaded is true.
       Json::Value _value;
 
       // The name of the rule.
@@ -146,6 +149,7 @@ namespace Apsis {
       std::vector<Apsis::Agent::ActFunction>     _acts;
       std::vector<unsigned int>                  _action_ids;
 
+      // The inherited rule, if there is one. Is NULL when it does not exist.
       const Apsis::Registry::Rule* _inherited;
     };
   }
