@@ -176,7 +176,7 @@ void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
 
   // Sprite List
   // TODO: better handling of invalid values
-  for (Json::Value::iterator it = value.begin(); it != value.end(); it++) {
+  for (Json::Value::iterator it = value["frames"].begin(); it != value["frames"].end(); it++) {
     Sprite sprite;
 
     strcpy(sprite.name, (*it)["name"].asCString());
