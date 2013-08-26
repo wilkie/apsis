@@ -92,12 +92,20 @@ void Apsis::Engine::Object::_loadDefaults() {
   _rule_path = "";
 }
 
-Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) {
+const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) {
   std::string found = _findFile(_thing_path, std::string(name));
   if (found == "") {
     throw "Thing description not found or loaded.";
   }
-  Apsis::Sprite::Thing::load(found.c_str());
+  return Apsis::Sprite::Thing::load(found.c_str());
+}
+
+const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) {
+  std::string found = _findFile(_map_path, std::string(name));
+  if (found == "") {
+    throw "Map description not found or loaded.";
+  }
+  return Apsis::World::Map::load(found.c_str());
 }
 
 std::string Apsis::Engine::Object::_findFile(std::string& searchPath, std::string& name) {

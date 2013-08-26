@@ -3,9 +3,12 @@
 
 #include "apsis/registry/action.h"
 #include "apsis/registry/rule.h"
-#include "apsis/sprite/thing.h"
 #include "apsis/registry/property.h"
 #include "apsis/registry/state.h"
+
+#include "apsis/sprite/thing.h"
+
+#include "apsis/world/map.h"
 
 #include <json/json.h>
 
@@ -42,7 +45,13 @@ namespace Apsis {
        *  Loads or returns the existing Thing object with the given
        *  name or path.
        */
-      Apsis::Sprite::Thing& loadThing(const char* name);
+      const Apsis::Sprite::Thing& loadThing(const char* name);
+
+      /*
+       *  Loads or returns the existing Map object with the given
+       *  name or path.
+       */
+      const Apsis::World::Map& loadMap(const char* name);
 
     private:
       // Constructors
