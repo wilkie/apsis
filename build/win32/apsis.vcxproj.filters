@@ -509,12 +509,6 @@
     <ClCompile Include="..\..\src\world\actor.cpp">
       <Filter>world</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp">
-      <Filter>agent\impeders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp">
-      <Filter>agent\impeders</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\world\background.cpp">
       <Filter>world</Filter>
     </ClCompile>
@@ -526,12 +520,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\support\json\json_writer.cpp">
       <Filter>support\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\responder.cpp">
-      <Filter>agent</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\responders\bouncer.cpp">
-      <Filter>agent\responders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\registry\event.cpp">
       <Filter>registry</Filter>
@@ -572,9 +560,6 @@
     <ClCompile Include="..\..\src\interface\numbers.cpp">
       <Filter>interface</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\agent\movers\wiggler.cpp">
-      <Filter>agent\movers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\registry\rule.cpp">
       <Filter>registry</Filter>
     </ClCompile>
@@ -593,26 +578,35 @@
     <ClCompile Include="..\..\src\engine\event.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\agent\rules\right.cpp">
-      <Filter>agent\rules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\rules\left.cpp">
-      <Filter>agent\rules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\rules\up.cpp">
-      <Filter>agent\rules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\rules\down.cpp">
-      <Filter>agent\rules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\agent\impeders\slide_map_collider.cpp">
-      <Filter>agent\impeders</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\world\collision_object.cpp">
       <Filter>world</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\object.cpp">
       <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\down.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\left.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\right.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\up.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\actor_collider.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\map_collider.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\slide_map_collider.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\wiggler.cpp">
+      <Filter>rules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1187,26 +1181,8 @@
     <ClInclude Include="..\..\include\apsis\world\actor.h">
       <Filter>world</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\mover.h">
-      <Filter>agent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\impeder.h">
-      <Filter>agent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h">
-      <Filter>agent\impeders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h">
-      <Filter>agent\impeders</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\background.h">
       <Filter>world</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\responder.h">
-      <Filter>agent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\responders\bouncer.h">
-      <Filter>agent\responders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\event.h">
       <Filter>registry</Filter>
@@ -1241,9 +1217,6 @@
     <ClInclude Include="..\..\include\apsis\interface\numbers.h">
       <Filter>interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\movers\wiggler.h">
-      <Filter>agent\movers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\rule.h">
       <Filter>registry</Filter>
     </ClInclude>
@@ -1265,35 +1238,47 @@
     <ClInclude Include="..\..\include\apsis\engine\event.h">
       <Filter>engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\act_function.h">
-      <Filter>agent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\rules\right.h">
-      <Filter>agent\rules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\rules\left.h">
-      <Filter>agent\rules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\rules\down.h">
-      <Filter>agent\rules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\rules\up.h">
-      <Filter>agent\rules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\agent\impeders\slide_map_collider.h">
-      <Filter>agent\impeders</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\collision_object.h">
       <Filter>world</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\engine\object.h">
       <Filter>engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\down.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\left.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\right.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\up.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\wiggler.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\act_function.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\actor_collider.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\map_collider.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\slide_map_collider.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\update_function.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\collide_function.h">
+      <Filter>rules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="agent">
-      <UniqueIdentifier>{b5fbbac0-429a-40b3-a651-a28b0f3b7217}</UniqueIdentifier>
-    </Filter>
     <Filter Include="geometry">
       <UniqueIdentifier>{5d2e1c77-00cf-47c7-b88a-a76668cf5be3}</UniqueIdentifier>
     </Filter>
@@ -1360,17 +1345,8 @@
     <Filter Include="backend">
       <UniqueIdentifier>{2316a014-58dc-4064-8f8d-abf00d62dd48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="agent\impeders">
-      <UniqueIdentifier>{52e615f2-7a7e-4ca3-8c9e-3ba0c22dfc83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="agent\movers">
-      <UniqueIdentifier>{020da31e-9f82-40d2-9ef0-d2272695c6fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="support\json">
       <UniqueIdentifier>{1abe7c4f-a269-42d7-b198-97402e55108f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="agent\responders">
-      <UniqueIdentifier>{dbadd0e7-92cf-46e4-b212-a1f516316e59}</UniqueIdentifier>
     </Filter>
     <Filter Include="registry">
       <UniqueIdentifier>{e586e9bb-3c2f-49a6-887b-50b0839972ec}</UniqueIdentifier>
@@ -1384,8 +1360,8 @@
     <Filter Include="interface">
       <UniqueIdentifier>{03085c89-1b87-49ac-8103-9728d09bf922}</UniqueIdentifier>
     </Filter>
-    <Filter Include="agent\rules">
-      <UniqueIdentifier>{d57e9a53-fe27-4c88-8970-199de9b0eaa3}</UniqueIdentifier>
+    <Filter Include="rules">
+      <UniqueIdentifier>{b5fbbac0-429a-40b3-a651-a28b0f3b7217}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

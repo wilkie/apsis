@@ -1,12 +1,12 @@
-#include "apsis/agent/impeders/actor_collider.h"
+#include "apsis/rules/actor_collider.h"
 
-bool Apsis::Agent::Impeders::ActorCollider::collide(const Apsis::World::Scene& scene,
-                                                    const unsigned int objectId,
-                                                    const Apsis::World::Object& object,
-                                                    const Apsis::Geometry::Rectangle& original,
-                                                    const Apsis::Geometry::Point& intended,
-                                                    Apsis::World::CollisionObject& collidedWith,
-                                                    Apsis::Geometry::Point& clipped) {
+bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
+                                          const unsigned int objectId,
+                                          const Apsis::World::Object& object,
+                                          const Apsis::Geometry::Rectangle& original,
+                                          const Apsis::Geometry::Point& intended,
+                                          Apsis::World::CollisionObject& collidedWith,
+                                          Apsis::Geometry::Point& clipped) {
   // For every point px, py in the set of 4 defined by given Rectangle
 
   Apsis::Geometry::Point points[4];

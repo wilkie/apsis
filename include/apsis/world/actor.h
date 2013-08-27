@@ -19,8 +19,8 @@
 #include "apsis/sprite/animation.h"
 #include "apsis/sprite/thing.h"
 
-#include "apsis/agent/impeder.h"
-#include "apsis/agent/mover.h"
+#include "apsis/rules/collide_function.h"
+#include "apsis/rules/update_function.h"
 
 #include "apsis/geometry/rectangle.h"
 
@@ -102,7 +102,7 @@ namespace Apsis {
     private:
 
       struct UpdaterRule {
-        Apsis::Agent::UpdateFunction func;
+        Apsis::Rules::UpdateFunction func;
         unsigned int skipNext;
       };
 

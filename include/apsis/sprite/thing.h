@@ -4,8 +4,8 @@
 #include "apsis/sprite/sheet.h"
 #include "apsis/sprite/animation.h"
 
-#include "apsis/agent/mover.h"
-#include "apsis/agent/impeder.h"
+#include "apsis/rules/update_function.h"
+#include "apsis/rules/collide_function.h"
 
 #include "apsis/world/object.h"
 #include "apsis/world/rule_set.h"
@@ -117,7 +117,7 @@ namespace Apsis {
       Sync::ReferenceCounter _counter;
 
       // Before Move Agents
-      std::vector<Apsis::Agent::CollideFunction> _collideFunctions;
+      std::vector<Apsis::Rules::CollideFunction> _collideFunctions;
 
       // RuleSet
       Apsis::World::RuleSet _rules;

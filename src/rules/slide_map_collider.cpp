@@ -1,6 +1,6 @@
-#include "apsis/agent/impeders/slide_map_collider.h"
+#include "apsis/rules/slide_map_collider.h"
 
-#include "apsis/agent/impeders/map_collider.h"
+#include "apsis/rules/map_collider.h"
 
 #include "apsis/geometry/point.h"
 
@@ -8,18 +8,18 @@
 
 #include "apsis/registry/state.h"
 
-#include "apsis/agent/impeders/map_collider.h"
+#include "apsis/rules/map_collider.h"
 
 #include <math.h>
 
-bool Apsis::Agent::Impeders::SlideMapCollider::collide(const Apsis::World::Scene& scene,
+bool Apsis::Rules::SlideMapCollider::collide(const Apsis::World::Scene& scene,
                                                   const unsigned int objectId,
                                                   const Apsis::World::Object& object,
                                                   const Apsis::Geometry::Rectangle& original,
                                                   const Apsis::Geometry::Point& intended,
                                                   Apsis::World::CollisionObject& collidedWith,
                                                   Apsis::Geometry::Point& clipped) {
-  if (Apsis::Agent::Impeders::MapCollider::collide(scene,
+  if (Apsis::Rules::MapCollider::collide(scene,
                                                    objectId,
                                                    object,
                                                    original,
@@ -50,7 +50,7 @@ bool Apsis::Agent::Impeders::SlideMapCollider::collide(const Apsis::World::Scene
       float winner_distance = 0.0f;
 
       // Try collision again!
-      if (!Apsis::Agent::Impeders::MapCollider::collide(scene,
+      if (!Apsis::Rules::MapCollider::collide(scene,
                                                         objectId,
                                                         object,
                                                         new_original,
@@ -70,7 +70,7 @@ bool Apsis::Agent::Impeders::SlideMapCollider::collide(const Apsis::World::Scene
       new_intended.x = clipped.x;
 
       // Try collision again!
-      if (!Apsis::Agent::Impeders::MapCollider::collide(scene,
+      if (!Apsis::Rules::MapCollider::collide(scene,
                                                         objectId,
                                                         object,
                                                         new_original,

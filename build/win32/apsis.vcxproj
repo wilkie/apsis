@@ -70,16 +70,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\agent\impeders\actor_collider.cpp" />
-    <ClCompile Include="..\..\src\agent\impeders\map_collider.cpp" />
-    <ClCompile Include="..\..\src\agent\impeders\slide_map_collider.cpp" />
-    <ClCompile Include="..\..\src\agent\movers\wiggler.cpp" />
-    <ClCompile Include="..\..\src\agent\responder.cpp" />
-    <ClCompile Include="..\..\src\agent\responders\bouncer.cpp" />
-    <ClCompile Include="..\..\src\agent\rules\down.cpp" />
-    <ClCompile Include="..\..\src\agent\rules\left.cpp" />
-    <ClCompile Include="..\..\src\agent\rules\right.cpp" />
-    <ClCompile Include="..\..\src\agent\rules\up.cpp" />
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine\event.cpp" />
     <ClCompile Include="..\..\src\engine\object.cpp" />
@@ -111,6 +101,14 @@
     <ClCompile Include="..\..\src\registry\property.cpp" />
     <ClCompile Include="..\..\src\registry\rule.cpp" />
     <ClCompile Include="..\..\src\registry\state.cpp" />
+    <ClCompile Include="..\..\src\rules\actor_collider.cpp" />
+    <ClCompile Include="..\..\src\rules\down.cpp" />
+    <ClCompile Include="..\..\src\rules\left.cpp" />
+    <ClCompile Include="..\..\src\rules\map_collider.cpp" />
+    <ClCompile Include="..\..\src\rules\right.cpp" />
+    <ClCompile Include="..\..\src\rules\slide_map_collider.cpp" />
+    <ClCompile Include="..\..\src\rules\up.cpp" />
+    <ClCompile Include="..\..\src\rules\wiggler.cpp" />
     <ClCompile Include="..\..\src\sprite\animation.cpp" />
     <ClCompile Include="..\..\src\sprite\sheet.cpp" />
     <ClCompile Include="..\..\src\sprite\thing.cpp" />
@@ -278,19 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis.h" />
-    <ClInclude Include="..\..\include\apsis\agent\act_function.h" />
-    <ClInclude Include="..\..\include\apsis\agent\impeder.h" />
-    <ClInclude Include="..\..\include\apsis\agent\impeders\actor_collider.h" />
-    <ClInclude Include="..\..\include\apsis\agent\impeders\map_collider.h" />
-    <ClInclude Include="..\..\include\apsis\agent\impeders\slide_map_collider.h" />
-    <ClInclude Include="..\..\include\apsis\agent\mover.h" />
-    <ClInclude Include="..\..\include\apsis\agent\movers\wiggler.h" />
-    <ClInclude Include="..\..\include\apsis\agent\responder.h" />
-    <ClInclude Include="..\..\include\apsis\agent\responders\bouncer.h" />
-    <ClInclude Include="..\..\include\apsis\agent\rules\down.h" />
-    <ClInclude Include="..\..\include\apsis\agent\rules\left.h" />
-    <ClInclude Include="..\..\include\apsis\agent\rules\right.h" />
-    <ClInclude Include="..\..\include\apsis\agent\rules\up.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
     <ClInclude Include="..\..\include\apsis\engine\event.h" />
     <ClInclude Include="..\..\include\apsis\engine\object.h" />
@@ -325,6 +310,17 @@
     <ClInclude Include="..\..\include\apsis\registry\property.h" />
     <ClInclude Include="..\..\include\apsis\registry\rule.h" />
     <ClInclude Include="..\..\include\apsis\registry\state.h" />
+    <ClInclude Include="..\..\include\apsis\rules\actor_collider.h" />
+    <ClInclude Include="..\..\include\apsis\rules\act_function.h" />
+    <ClInclude Include="..\..\include\apsis\rules\collide_function.h" />
+    <ClInclude Include="..\..\include\apsis\rules\down.h" />
+    <ClInclude Include="..\..\include\apsis\rules\left.h" />
+    <ClInclude Include="..\..\include\apsis\rules\map_collider.h" />
+    <ClInclude Include="..\..\include\apsis\rules\right.h" />
+    <ClInclude Include="..\..\include\apsis\rules\slide_map_collider.h" />
+    <ClInclude Include="..\..\include\apsis\rules\up.h" />
+    <ClInclude Include="..\..\include\apsis\rules\update_function.h" />
+    <ClInclude Include="..\..\include\apsis\rules\wiggler.h" />
     <ClInclude Include="..\..\include\apsis\settings\video.h" />
     <ClInclude Include="..\..\include\apsis\sprite\animation.h" />
     <ClInclude Include="..\..\include\apsis\sprite\sheet.h" />

@@ -3,65 +3,69 @@
 #include <fstream>
 #include <algorithm>
 
-#include "apsis/agent/impeders/slide_map_collider.h"
-#include "apsis/agent/impeders/map_collider.h"
-#include "apsis/agent/impeders/actor_collider.h"
+#include "apsis/rules/act_function.h"
+#include "apsis/rules/update_function.h"
+#include "apsis/rules/collide_function.h"
 
-#include "apsis/agent/movers/wiggler.h"
-#include "apsis/agent/rules/right.h"
-#include "apsis/agent/rules/left.h"
-#include "apsis/agent/rules/up.h"
-#include "apsis/agent/rules/down.h"
+#include "apsis/rules/slide_map_collider.h"
+#include "apsis/rules/map_collider.h"
+#include "apsis/rules/actor_collider.h"
+
+#include "apsis/rules/wiggler.h"
+#include "apsis/rules/right.h"
+#include "apsis/rules/left.h"
+#include "apsis/rules/up.h"
+#include "apsis/rules/down.h"
 
 std::vector<std::string> Apsis::Registry::Rule::_ids;
 std::vector<Apsis::Registry::Rule*> Apsis::Registry::Rule::_all_rules;
 
 // Establish all of the known rules
 
-typedef std::map<std::string, Apsis::Agent::UpdateFunction>::value_type UpdaterPair;
-typedef std::map<std::string, Apsis::Agent::CollideFunction>::value_type ColliderPair;
-typedef std::map<std::string, Apsis::Agent::ActFunction>::value_type ActFunctionPair;
+typedef std::map<std::string, Apsis::Rules::UpdateFunction>::value_type UpdaterPair;
+typedef std::map<std::string, Apsis::Rules::CollideFunction>::value_type ColliderPair;
+typedef std::map<std::string, Apsis::Rules::ActFunction>::value_type ActFunctionPair;
 typedef std::map<std::string, std::string>::value_type ActStringPair;
 
 static UpdaterPair pairs_updaters[] = {
-  UpdaterPair("wiggler",   &Apsis::Agent::Movers::Wiggler::update),
-  UpdaterPair("right",     &Apsis::Agent::Rules::Right::update),
-  UpdaterPair("left",      &Apsis::Agent::Rules::Left::update),
-  UpdaterPair("up",      &Apsis::Agent::Rules::Up::update),
-  UpdaterPair("down",      &Apsis::Agent::Rules::Down::update),
+  UpdaterPair("wiggler",   &Apsis::Rules::Wiggler::update),
+  UpdaterPair("right",     &Apsis::Rules::Right::update),
+  UpdaterPair("left",      &Apsis::Rules::Left::update),
+  UpdaterPair("up",        &Apsis::Rules::Up::update),
+  UpdaterPair("down",      &Apsis::Rules::Down::update),
 };
 
 static const unsigned int updaters_count = sizeof(pairs_updaters) / sizeof(UpdaterPair);
 
-std::map<std::string, Apsis::Agent::UpdateFunction> Apsis::Registry::Rule::_internal_updates(pairs_updaters, pairs_updaters + updaters_count);
+std::map<std::string, Apsis::Rules::UpdateFunction> Apsis::Registry::Rule::_internal_updates(pairs_updaters, pairs_updaters + updaters_count);
 
 static ColliderPair pairs_colliders[] = {
-  ColliderPair("slide_map_collider",   &Apsis::Agent::Impeders::SlideMapCollider::collide),
-  ColliderPair("map_collider",   &Apsis::Agent::Impeders::MapCollider::collide),
-  ColliderPair("actor_collider", &Apsis::Agent::Impeders::ActorCollider::collide),
+  ColliderPair("slide_map_collider",   &Apsis::Rules::SlideMapCollider::collide),
+  ColliderPair("map_collider",   &Apsis::Rules::MapCollider::collide),
+  ColliderPair("actor_collider", &Apsis::Rules::ActorCollider::collide),
 };
 
 static const unsigned int colliders_count = sizeof(pairs_colliders) / sizeof(ColliderPair);
 
-std::map<std::string, Apsis::Agent::CollideFunction> Apsis::Registry::Rule::_internal_collides(pairs_colliders, pairs_colliders + colliders_count);
+std::map<std::string, Apsis::Rules::CollideFunction> Apsis::Registry::Rule::_internal_collides(pairs_colliders, pairs_colliders + colliders_count);
 
 static ActFunctionPair pairs_acts[] = {
-  ActFunctionPair("right", &Apsis::Agent::Rules::Right::act),
-  ActFunctionPair("left",  &Apsis::Agent::Rules::Left::act),
-  ActFunctionPair("up",  &Apsis::Agent::Rules::Up::act),
-  ActFunctionPair("down",  &Apsis::Agent::Rules::Down::act),
+  ActFunctionPair("right", &Apsis::Rules::Right::act),
+  ActFunctionPair("left",  &Apsis::Rules::Left::act),
+  ActFunctionPair("up",  &Apsis::Rules::Up::act),
+  ActFunctionPair("down",  &Apsis::Rules::Down::act),
 };
 
 static ActStringPair pairs_act_actions[] = {
-  ActStringPair("right", Apsis::Agent::Rules::Right::action),
-  ActStringPair("left",  Apsis::Agent::Rules::Left::action),
-  ActStringPair("up",  Apsis::Agent::Rules::Up::action),
-  ActStringPair("down",  Apsis::Agent::Rules::Down::action),
+  ActStringPair("right", Apsis::Rules::Right::action),
+  ActStringPair("left",  Apsis::Rules::Left::action),
+  ActStringPair("up",  Apsis::Rules::Up::action),
+  ActStringPair("down",  Apsis::Rules::Down::action),
 };
 
 static const unsigned int acts_count = sizeof(pairs_acts) / sizeof(ActFunctionPair);
 
-std::map<std::string, Apsis::Agent::ActFunction> Apsis::Registry::Rule::_internal_acts(pairs_acts, pairs_acts + acts_count);
+std::map<std::string, Apsis::Rules::ActFunction> Apsis::Registry::Rule::_internal_acts(pairs_acts, pairs_acts + acts_count);
 
 std::map<std::string, std::string> Apsis::Registry::Rule::_internal_act_actions(pairs_act_actions, pairs_act_actions + acts_count);
 
@@ -107,7 +111,7 @@ unsigned int Apsis::Registry::Rule::collideFunctionCount() const {
   return _collides.size();
 }
 
-Apsis::Agent::CollideFunction Apsis::Registry::Rule::collideFunction(unsigned int id) const {
+Apsis::Rules::CollideFunction Apsis::Registry::Rule::collideFunction(unsigned int id) const {
   return _collides[id];
 }
 
@@ -115,7 +119,7 @@ unsigned int Apsis::Registry::Rule::updateFunctionCount() const {
   return _updates.size();
 }
 
-Apsis::Agent::UpdateFunction Apsis::Registry::Rule::updateFunction(unsigned int id) const {
+Apsis::Rules::UpdateFunction Apsis::Registry::Rule::updateFunction(unsigned int id) const {
   return _updates[id];
 }
 
@@ -123,7 +127,7 @@ unsigned int Apsis::Registry::Rule::actFunctionCount() const {
   return _acts.size();
 }
 
-Apsis::Agent::ActFunction Apsis::Registry::Rule::actFunction(unsigned int id) const {
+Apsis::Rules::ActFunction Apsis::Registry::Rule::actFunction(unsigned int id) const {
   return _acts[id];
 }
 

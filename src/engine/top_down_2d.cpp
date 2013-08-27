@@ -16,8 +16,8 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-#include "apsis/agent/impeders/map_collider.h"
-#include "apsis/agent/impeders/actor_collider.h"
+#include "apsis/rules/map_collider.h"
+#include "apsis/rules/actor_collider.h"
 
 #include "apsis/registry/action.h"
 

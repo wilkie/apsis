@@ -1,9 +1,9 @@
 #ifndef APSIS_REGISTRY_RULE_H
 #define APSIS_REGISTRY_RULE_H
 
-#include "apsis/agent/impeder.h"
-#include "apsis/agent/mover.h"
-#include "apsis/agent/act_function.h"
+#include "apsis/rules/collide_function.h"
+#include "apsis/rules/update_function.h"
+#include "apsis/rules/act_function.h"
 
 #include <vector>
 #include <string>
@@ -74,7 +74,7 @@ namespace Apsis {
       /*
        *  Returns the collide function at the given index.
        */
-      Apsis::Agent::CollideFunction collideFunction(unsigned int id) const;
+      Apsis::Rules::CollideFunction collideFunction(unsigned int id) const;
 
       /*
        *  Returns the number of update functions.
@@ -84,7 +84,7 @@ namespace Apsis {
       /*
        *  Returns the update function at the given index.
        */
-      Apsis::Agent::UpdateFunction updateFunction(unsigned int id) const;
+      Apsis::Rules::UpdateFunction updateFunction(unsigned int id) const;
 
       /*
        *  Returns a name of rules that this rule replaces when
@@ -100,7 +100,7 @@ namespace Apsis {
 
       unsigned int actFunctionCount() const;
 
-      Apsis::Agent::ActFunction actFunction(unsigned int id) const;
+      Apsis::Rules::ActFunction actFunction(unsigned int id) const;
 
       unsigned int actionId(unsigned int id) const;
 
@@ -110,10 +110,10 @@ namespace Apsis {
       static std::vector<Apsis::Registry::Rule*> _all_rules;
 
       // Internal rules
-      static std::map<std::string, Apsis::Agent::UpdateFunction>  _internal_updates;
-      static std::map<std::string, Apsis::Agent::CollideFunction> _internal_collides;
+      static std::map<std::string, Apsis::Rules::UpdateFunction>  _internal_updates;
+      static std::map<std::string, Apsis::Rules::CollideFunction> _internal_collides;
       static std::map<std::string, std::string>                   _internal_act_actions;
-      static std::map<std::string, Apsis::Agent::ActFunction>     _internal_acts;
+      static std::map<std::string, Apsis::Rules::ActFunction>     _internal_acts;
 
       // Constructors
       Rule(const char* path);
@@ -144,9 +144,9 @@ namespace Apsis {
 
       // All of the collider and updater functions that make up this rule.
       // (Does not include ones included in subrules)
-      std::vector<Apsis::Agent::CollideFunction> _collides;
-      std::vector<Apsis::Agent::UpdateFunction>  _updates;
-      std::vector<Apsis::Agent::ActFunction>     _acts;
+      std::vector<Apsis::Rules::CollideFunction> _collides;
+      std::vector<Apsis::Rules::UpdateFunction>  _updates;
+      std::vector<Apsis::Rules::ActFunction>     _acts;
       std::vector<unsigned int>                  _action_ids;
 
       // The inherited rule, if there is one. Is NULL when it does not exist.

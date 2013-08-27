@@ -1,11 +1,11 @@
-#include "apsis/agent/rules/up.h"
+#include "apsis/rules/up.h"
 
 #include "apsis/registry/action.h"
 
-bool Apsis::Agent::Rules::Up::update(float elapsed,
-                                        const Apsis::World::Scene& scene,
-                                        const unsigned int objectId,
-                                        Apsis::World::Object& object) {
+bool Apsis::Rules::Up::update(float elapsed,
+                              const Apsis::World::Scene& scene,
+                              const unsigned int objectId,
+                              Apsis::World::Object& object) {
 
   static unsigned int y_id     = Apsis::Registry::Property::id("y");
   static unsigned int speed_id = Apsis::Registry::Property::id("up_speed");
@@ -25,13 +25,13 @@ bool Apsis::Agent::Rules::Up::update(float elapsed,
   return false;
 }
 
-std::string Apsis::Agent::Rules::Up::action = "up";
+const char* Apsis::Rules::Up::action = "up";
 
-bool Apsis::Agent::Rules::Up::act(unsigned int action_id,
-                                     bool held,
-                                     const Apsis::World::Scene& scene,
-                                     const unsigned int objectId,
-                                     Apsis::World::Object& object) {
+bool Apsis::Rules::Up::act(unsigned int action_id,
+                           bool held,
+                           const Apsis::World::Scene& scene,
+                           const unsigned int objectId,
+                           Apsis::World::Object& object) {
   static unsigned int up_action_id = Apsis::Registry::Action::id("up").id();
   static unsigned int up_id = Apsis::Registry::State::id("moving_up");
 

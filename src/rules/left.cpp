@@ -1,11 +1,11 @@
-#include "apsis/agent/rules/left.h"
+#include "apsis/rules/left.h"
 
 #include "apsis/registry/action.h"
 
-bool Apsis::Agent::Rules::Left::update(float elapsed,
-                                       const Apsis::World::Scene& scene,
-                                       const unsigned int objectId,
-                                       Apsis::World::Object& object) {
+bool Apsis::Rules::Left::update(float elapsed,
+                                const Apsis::World::Scene& scene,
+                                const unsigned int objectId,
+                                Apsis::World::Object& object) {
 
   static unsigned int x_id     = Apsis::Registry::Property::id("x");
   static unsigned int speed_id = Apsis::Registry::Property::id("left_speed");
@@ -25,13 +25,13 @@ bool Apsis::Agent::Rules::Left::update(float elapsed,
   return false;
 }
 
-std::string Apsis::Agent::Rules::Left::action = "left";
+const char* Apsis::Rules::Left::action = "left";
 
-bool Apsis::Agent::Rules::Left::act(unsigned int action_id,
-                                    bool held,
-                                    const Apsis::World::Scene& scene,
-                                    const unsigned int objectId,
-                                    Apsis::World::Object& object) {
+bool Apsis::Rules::Left::act(unsigned int action_id,
+                             bool held,
+                             const Apsis::World::Scene& scene,
+                             const unsigned int objectId,
+                             Apsis::World::Object& object) {
   static unsigned int left_action_id = Apsis::Registry::Action::id("left").id();
   static unsigned int left_id = Apsis::Registry::State::id("moving_left");
 

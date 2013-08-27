@@ -1,11 +1,11 @@
-#include "apsis/agent/movers/wiggler.h"
+#include "apsis/rules/wiggler.h"
 
 #include "apsis/registry/state.h"
 
-bool Apsis::Agent::Movers::Wiggler::update(float elapsed,
-                                           const Apsis::World::Scene& scene,
-                                           const unsigned int objectId,
-                                           Apsis::World::Object& object) {
+bool Apsis::Rules::Wiggler::update(float elapsed,
+                                   const Apsis::World::Scene& scene,
+                                   const unsigned int objectId,
+                                   Apsis::World::Object& object) {
   static unsigned int wiggle_amount_id    = Apsis::Registry::Property::id("wiggle_amount");
   static unsigned int wiggle_time_id      = Apsis::Registry::Property::id("wiggle_time");
   static unsigned int wiggle_travelled_id = Apsis::Registry::Property::id("wiggle_travelled");
