@@ -49,21 +49,47 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
   Apsis::Geometry::Point calculatedPoint;
 
   // determine if there is an intersection with the map
-  // TODO: optimizations
-  for (unsigned int x = 0; x < scene.map(0).width(); x++) {
-    for (unsigned int y = 0; y < scene.map(0).height(); y++) {
-      const Apsis::World::Tile& tile = scene.map(0).tile(x, y);
+  // TODO: Multiple maps
+  const Apsis::World::Map& map = scene.map(0);
+
+  unsigned int min_x, min_y, max_x, max_y;
+  min_x = 0;
+  max_x = map.width();
+
+  min_y = 0;
+  max_y = map.height();
+
+  if ((points[0].x / map.tileWidth() - 1) > min_x) {
+    min_x = points[0].x / map.tileWidth() - 1;
+  }
+
+  if ((points[2].x / map.tileWidth() + 2) < max_x) {
+    max_x = points[2].x / map.tileWidth() + 2;
+  }
+
+  if ((points[0].y / map.tileHeight() - 1) > min_y) {
+    min_y = points[0].y / map.tileHeight() - 1;
+  }
+
+  if ((points[2].y / map.tileHeight() + 2) < max_y) {
+    max_y = points[2].y / map.tileHeight() + 2;
+  }
+
+  for (unsigned int x = min_x; x < max_x; x++) {
+    for (unsigned int y = min_y; y < max_y; y++) {
+      const Apsis::World::Tile& tile = map.tile(x, y);
       if (tile.passable()) {
         continue;
       }
 
       // Do we intersect?
       Apsis::Geometry::Rectangle tileRect;
-      tileRect.x = (x * scene.map(0).tileWidth()) + (scene.map(0).tileWidth() / 2.0f);
-      tileRect.y = (y * scene.map(0).tileHeight()) + (scene.map(0).tileHeight() / 2.0f);
 
-      tileRect.width  = scene.map(0).tileWidth();
-      tileRect.height = scene.map(0).tileHeight();
+      tileRect.width  = map.tileWidth();
+      tileRect.height = map.tileHeight();
+
+      tileRect.x = (x * map.tileWidth()) + (map.tileWidth() / 2.0f);
+      tileRect.y = (y * map.tileHeight()) + (map.tileHeight() / 2.0f);
 
       for (int i = 0; i < 4; i++) {
         double tMin, tMax;

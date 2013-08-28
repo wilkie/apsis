@@ -348,15 +348,19 @@ void Apsis::Geometry::Rectangle::points(Point points[4]) const {
   double halfWidth  = width / 2.0;
   double halfHeight = height / 2.0;
 
+  // Top-left
   points[0].x = x - halfWidth;
   points[0].y = y - halfHeight;
 
+  // Top-right
   points[1].x = x + halfWidth;
   points[1].y = y - halfHeight;
 
+  // Bottom-right
   points[2].x = x + halfWidth;
   points[2].y = y + halfHeight;
 
+  // Bottom-left
   points[3].x = x - halfWidth;
   points[3].y = y + halfHeight;
 }
