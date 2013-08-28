@@ -109,11 +109,19 @@ const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) {
 }
 
 const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) {
-  std::string found = _findFile(_map_path, std::string(name));
+  std::string found = _findFile(_rule_path, std::string(name));
   if (found == "") {
     throw "Rule description not found or loaded.";
   }
   return Apsis::Registry::Rule::load(found.c_str());
+}
+
+Apsis::World::Scene& Apsis::Engine::Object::loadScene(const char* name) {
+  std::string found = _findFile(_scene_path, std::string(name));
+  if (found == "") {
+    throw "Scene description not found or loaded.";
+  }
+  return Apsis::World::Scene::load(found.c_str());
 }
 
 std::string Apsis::Engine::Object::_findFile(std::string& searchPath, std::string& name) {

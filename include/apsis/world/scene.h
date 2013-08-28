@@ -16,6 +16,12 @@ namespace Apsis {
        *  Creates a new Scene.
        */
       Scene();
+      Scene(const char* path);
+
+      /*
+       *  Loads a Scene from a JSON description.
+       */
+      static Apsis::World::Scene& load(const char* path);
 
       /*
        *  Adds a Map to the scene.
@@ -70,9 +76,13 @@ namespace Apsis {
                 Primitives::Camera& camera,
                 const glm::mat4& model) const;
     private:
+      // Keeps track of Scenes system-wide.
+      static std::vector<std::string> _ids;
+      static std::vector<Apsis::World::Scene*> _scenes;
+
       // Collections of objects within the scene
-      std::vector<Apsis::World::Actor> _actors;
-      std::vector<const Apsis::World::Map*>   _maps;
+      std::vector<Apsis::World::Actor>      _actors;
+      std::vector<const Apsis::World::Map*> _maps;
     };
   }
 }

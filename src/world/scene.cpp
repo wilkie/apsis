@@ -1,6 +1,15 @@
 #include "apsis/world/scene.h"
 
+#include <algorithm>
+
+std::vector<std::string> Apsis::World::Scene::_ids;
+std::vector<Apsis::World::Scene*> Apsis::World::Scene::_scenes;
+
 Apsis::World::Scene::Scene() {
+}
+
+Apsis::World::Scene::Scene(const char* path) {
+  // TODO: load from JSON and Object Engine
 }
 
 void Apsis::World::Scene::addMap(const Apsis::World::Map& map) {
@@ -76,4 +85,18 @@ Apsis::World::Actor& Apsis::World::Scene::actor(unsigned int id) {
 
 const Apsis::World::Actor& Apsis::World::Scene::actor(unsigned int id) const {
   return _actors[id];
+}
+
+Apsis::World::Scene& Apsis::World::Scene::load(const char* path) {
+  std::string str = std::string(path);
+
+  std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
+  if (it != _ids.end()) {
+    // already exists
+    return *_scenes[std::distance(_ids.begin(), it)];
+  }
+
+  _scenes.push_back(new Apsis::World::Scene(path));
+  _ids.push_back(str);
+  return *_scenes[_ids.size() - 1];
 }

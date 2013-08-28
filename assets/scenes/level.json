@@ -6,19 +6,34 @@
   "things": [
     "pink_spaceblob": {
       "name": "Pink Spaceblob",
-      "rules": [ "jump", "left", "right", "up", "down", "fall" ]
+      "rules": [ "left", "right", "up", "down" ]
     },
-    "ball": {
-      "name": "Ball",
-      "rules": [ "fall" ]
+    "coin": {
+      "name": "Coin",
+      "rules": [ "wiggle" ]
     }
   ],
 
   "actors": [
     {
-      "thing": 0,
+      "thing": "pink_spaceblob",
       "x": 300,
       "y": 300
+    },
+    {
+      "thing": "coin",
+      "x": 600,
+      "y", 300
+    },
+    {
+      "thing": "coin",
+      "x": 670,
+      "y", 300
+    },
+    {
+      "thing": "coin",
+      "x": 740,
+      "y", 300
     }
   ],
 

@@ -8,6 +8,7 @@
 
 #include "apsis/sprite/thing.h"
 
+#include "apsis/world/scene.h"
 #include "apsis/world/map.h"
 
 #include <json/json.h>
@@ -58,6 +59,13 @@ namespace Apsis {
        *  name or path.
        */
       const Apsis::Registry::Rule& loadRule(const char* name);
+
+      /*
+       *  Loads or returns the existing Scene object with the given
+       *  name or path.
+       */
+      // TODO: Make this return const and have Scene instantiate for System?
+      Apsis::World::Scene& loadScene(const char* name);
 
     private:
       // Constructors
