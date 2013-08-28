@@ -16,6 +16,7 @@
 #include "apsis/rules/left.h"
 #include "apsis/rules/up.h"
 #include "apsis/rules/down.h"
+#include "apsis/rules/fall.h"
 
 std::vector<std::string> Apsis::Registry::Rule::_ids;
 std::vector<Apsis::Registry::Rule*> Apsis::Registry::Rule::_all_rules;
@@ -33,6 +34,7 @@ static UpdaterPair pairs_updaters[] = {
   UpdaterPair("left",      &Apsis::Rules::Left::update),
   UpdaterPair("up",        &Apsis::Rules::Up::update),
   UpdaterPair("down",      &Apsis::Rules::Down::update),
+  UpdaterPair("fall",      &Apsis::Rules::Fall::update),
 };
 
 static const unsigned int updaters_count = sizeof(pairs_updaters) / sizeof(UpdaterPair);

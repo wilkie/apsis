@@ -103,6 +103,7 @@
     <ClCompile Include="..\..\src\registry\state.cpp" />
     <ClCompile Include="..\..\src\rules\actor_collider.cpp" />
     <ClCompile Include="..\..\src\rules\down.cpp" />
+    <ClCompile Include="..\..\src\rules\fall.cpp" />
     <ClCompile Include="..\..\src\rules\left.cpp" />
     <ClCompile Include="..\..\src\rules\map_collider.cpp" />
     <ClCompile Include="..\..\src\rules\right.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="..\..\include\apsis\rules\act_function.h" />
     <ClInclude Include="..\..\include\apsis\rules\collide_function.h" />
     <ClInclude Include="..\..\include\apsis\rules\down.h" />
+    <ClInclude Include="..\..\include\apsis\rules\fall.h" />
     <ClInclude Include="..\..\include\apsis\rules\left.h" />
     <ClInclude Include="..\..\include\apsis\rules\map_collider.h" />
     <ClInclude Include="..\..\include\apsis\rules\right.h" />

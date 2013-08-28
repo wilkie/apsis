@@ -608,6 +608,9 @@
     <ClCompile Include="..\..\src\rules\wiggler.cpp">
       <Filter>rules</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\rules\fall.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1275,6 +1278,9 @@
       <Filter>rules</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\rules\collide_function.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\fall.h">
       <Filter>rules</Filter>
     </ClInclude>
   </ItemGroup>
