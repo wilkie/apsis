@@ -1,6 +1,8 @@
 #ifndef APSIS_ENGINE_SYSTEM_H
 #define APSIS_ENGINE_SYSTEM_H
 
+#include "apsis/backend/sdl.h"
+
 #include "apsis/engine/input.h"
 #include "apsis/engine/object.h"
 
@@ -37,6 +39,11 @@ namespace Apsis {
       const Apsis::Engine::Object& objectEngine() const;
 
       /*
+       *  Transfers control over to this system until there is a quit event.
+       */
+      void run();
+
+      /*
        *  Loads the Scene by the given unique id.
        */
       void loadScene(unsigned int id);
@@ -64,8 +71,20 @@ namespace Apsis {
       // JSON object
       Json::Value _value;
 
+      // Video Settings
+      Apsis::Settings::Video _videoSettings;
+
+      // Input Engine
       Apsis::Engine::Input&  _input;
+
+      // Object Engine
       Apsis::Engine::Object& _objects;
+
+      // Backend
+      Apsis::Backend::Sdl& _backend;
+
+      // Current Scene
+      Apsis::World::Scene* _scene;
     };
   }
 }

@@ -278,7 +278,7 @@ static bool _translateSDLKey(Apsis::Input::Binding& binding, const SDL_Event& ev
 Apsis::Backend::Sdl::Sdl() {
 }
 
-bool Apsis::Backend::Sdl::initialize(Apsis::Settings::Video& video) {
+bool Apsis::Backend::Sdl::initialize(const Apsis::Settings::Video& video) {
   _video = video;
   return _initialize();
 }

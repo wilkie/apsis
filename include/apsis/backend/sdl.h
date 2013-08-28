@@ -29,7 +29,7 @@ namespace Apsis {
          *  Initialize the backend with the given video settings. Returns true
          *    upon success.
          */
-        bool initialize(Apsis::Settings::Video& video);
+        bool initialize(const Apsis::Settings::Video& video);
 
         /*
          *  Poll for events. Give a preallocated Event structure. Returns true

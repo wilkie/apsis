@@ -56,6 +56,8 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
   Apsis::Primitives::Texture* texture = new Apsis::Primitives::Texture("assets/backgrounds/sky.png");
 
   _ball = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/coin.json"), 600, 300);
+  _ball = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/coin.json"), 660, 300);
+  _ball = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/coin.json"), 720, 300);
   _player = _scene.addActor(Apsis::Sprite::Thing::load("assets/actors/pink_spaceblob.json"), 300, 300);
   _scene.addMap(*_map);
 

@@ -50,6 +50,9 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
 
   // determine if there is an intersection with the map
   // TODO: Multiple maps
+  // TODO: Why do I need to add 2 here? ugh.
+  // TODO: Map data is already on the gpu, so we could do all collisions
+  //       on the gpu too?
   const Apsis::World::Map& map = scene.map(0);
 
   unsigned int min_x, min_y, max_x, max_y;
