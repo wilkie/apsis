@@ -100,6 +100,7 @@
     <ClCompile Include="..\..\src\registry\event.cpp" />
     <ClCompile Include="..\..\src\registry\property.cpp" />
     <ClCompile Include="..\..\src\registry\rule.cpp" />
+    <ClCompile Include="..\..\src\registry\scene.cpp" />
     <ClCompile Include="..\..\src\registry\state.cpp" />
     <ClCompile Include="..\..\src\rules\actor_collider.cpp" />
     <ClCompile Include="..\..\src\rules\down.cpp" />
@@ -310,6 +311,7 @@
     <ClInclude Include="..\..\include\apsis\registry\event.h" />
     <ClInclude Include="..\..\include\apsis\registry\property.h" />
     <ClInclude Include="..\..\include\apsis\registry\rule.h" />
+    <ClInclude Include="..\..\include\apsis\registry\scene.h" />
     <ClInclude Include="..\..\include\apsis\registry\state.h" />
     <ClInclude Include="..\..\include\apsis\rules\actor_collider.h" />
     <ClInclude Include="..\..\include\apsis\rules\act_function.h" />

@@ -1,5 +1,5 @@
 {
-  "type": "game",
+  "type": "system",
 
   "paths": {
     "scenes": "assets/scenes",

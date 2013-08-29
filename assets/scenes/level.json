@@ -3,17 +3,6 @@
 
   "map": "sample",
 
-  "things": [
-    "pink_spaceblob": {
-      "name": "Pink Spaceblob",
-      "rules": [ "left", "right", "up", "down" ]
-    },
-    "coin": {
-      "name": "Coin",
-      "rules": [ "wiggle" ]
-    }
-  ],
-
   "actors": [
     {
       "thing": "pink_spaceblob",

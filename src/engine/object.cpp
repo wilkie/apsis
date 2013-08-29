@@ -92,7 +92,7 @@ void Apsis::Engine::Object::_loadDefaults() {
   _rule_path = "";
 }
 
-const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) {
+const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) const {
   std::string found = _findFile(_thing_path, std::string(name));
   if (found == "") {
     throw "Thing description not found or loaded.";
@@ -100,15 +100,15 @@ const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) {
   return Apsis::Sprite::Thing::load(found.c_str());
 }
 
-const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) {
+const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) const {
   std::string found = _findFile(_map_path, std::string(name));
   if (found == "") {
     throw "Map description not found or loaded.";
   }
-  return Apsis::World::Map::load(found.c_str());
+  return Apsis::World::Map::load(found.c_str(), *this);
 }
 
-const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) {
+const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) const {
   std::string found = _findFile(_rule_path, std::string(name));
   if (found == "") {
     throw "Rule description not found or loaded.";
@@ -116,26 +116,28 @@ const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) {
   return Apsis::Registry::Rule::load(found.c_str());
 }
 
-Apsis::World::Scene& Apsis::Engine::Object::loadScene(const char* name) {
+const Apsis::Registry::Scene& Apsis::Engine::Object::loadScene(const char* name) const {
   std::string found = _findFile(_scene_path, std::string(name));
   if (found == "") {
     throw "Scene description not found or loaded.";
   }
-  return Apsis::World::Scene::load(found.c_str());
+  return Apsis::Registry::Scene::load(found.c_str(), *this);
 }
 
-std::string Apsis::Engine::Object::_findFile(std::string& searchPath, std::string& name) {
+std::string Apsis::Engine::Object::_findFile(const std::string& searchPath, const std::string& name) const {
   // TODO: We could actually cache the result of the file search
   //       with a map on searchPath and name.
   //       Then we could have an object cache that uses the unique id.
 
   // Add .json extension
-  std::string search = name.append(".json");
+  std::string search = name;
+  search = search.append(".json");
 
   // Find json description file
   // Look in thing path first (if exists)
   if (_thing_path.size() != 0) {
-    std::string path = _thing_path.append(search);
+    std::string path = _thing_path;
+    path = path.append(search);
 
     if (_fileExists(path)) {
       return path;
@@ -151,7 +153,7 @@ std::string Apsis::Engine::Object::_findFile(std::string& searchPath, std::strin
   return "";
 }
 
-bool Apsis::Engine::Object::_fileExists(std::string& path) {
+bool Apsis::Engine::Object::_fileExists(std::string& path) const {
   struct stat info;
   int ret = -1;
 

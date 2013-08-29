@@ -35,7 +35,6 @@ namespace Apsis {
        *  Returns the object engine for this system. This engine keeps track
        *  of all of the loaded objects within the system.
        */
-      Apsis::Engine::Object& objectEngine();
       const Apsis::Engine::Object& objectEngine() const;
 
       /*
@@ -56,7 +55,7 @@ namespace Apsis {
       void _parseJSONFile();
 
       // Pulls Object engine parameters from JSON or creates from default.
-      Apsis::Engine::Object& _parseOrCreateObject();
+      const Apsis::Engine::Object& _parseOrCreateObject();
 
       // Pulls Input engine and binding parameters from JSON or creates from
       // default.
@@ -78,7 +77,7 @@ namespace Apsis {
       Apsis::Engine::Input&  _input;
 
       // Object Engine
-      Apsis::Engine::Object& _objects;
+      const Apsis::Engine::Object& _objects;
 
       // Backend
       Apsis::Backend::Sdl& _backend;

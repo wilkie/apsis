@@ -101,7 +101,9 @@ void Apsis::Sprite::Thing::_parseJSONFile() {
   // Animation
   if (_value.isMember("animations")) {
     // TODO: better handling of invalid values
-    for (Json::Value::iterator it = _value["animations"].begin(); it != _value["animations"].end(); it++) {
+    for (Json::Value::iterator it = _value["animations"].begin();
+         it != _value["animations"].end();
+         ++it) {
       // Create an animation structure
       Sprite::Animation newAnimation((*it)["name"].asCString());
 

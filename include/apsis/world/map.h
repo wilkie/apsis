@@ -1,6 +1,8 @@
 #ifndef APSIS_WORLD_MAP_H
 #define APSIS_WORLD_MAP_H
 
+#include "apsis/engine/object.h"
+
 #include "apsis/world/tile.h"
 #include "apsis/sprite/sheet.h"
 
@@ -29,7 +31,8 @@ namespace Apsis {
       /*
        *  Constructs a Map from the given JSON description of the map.
        */
-      static const Apsis::World::Map& load(const char* json);
+      static const Apsis::World::Map& load(const char* json,
+                                           const Apsis::Engine::Object& loader);
 
       /*
        *  Queries the tile at the world coordinates (x,y)

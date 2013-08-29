@@ -611,6 +611,9 @@
     <ClCompile Include="..\..\src\rules\fall.cpp">
       <Filter>rules</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\registry\scene.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1282,6 +1285,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\rules\fall.h">
       <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\scene.h">
+      <Filter>registry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,19 +1,35 @@
 #ifndef APSIS_ENGINE_OBJECT_H
 #define APSIS_ENGINE_OBJECT_H
 
-#include "apsis/registry/action.h"
-#include "apsis/registry/rule.h"
-#include "apsis/registry/property.h"
-#include "apsis/registry/state.h"
-
-#include "apsis/sprite/thing.h"
-
-#include "apsis/world/scene.h"
-#include "apsis/world/map.h"
-
 #include <json/json.h>
 
 namespace Apsis {
+  /* PROBLEM: Object engine loads objects... sometimes objects want to load other
+   * objects. Therefore, there is a necessary dependency cycle.
+   *
+   * To get around this, we empty declare those classes, and then have to
+   * include them at the end of this header file (because it is expected
+   * that since we have methods that return them, that this class is
+   * available and included.)
+   *
+   * It is annoying, but only done in this file.
+   */
+  namespace Registry {
+    class Scene;
+    class Action;
+    class Rule;
+    class Property;
+    class State;
+  }
+
+  namespace World {
+    class Map;
+  }
+
+  namespace Sprite {
+    class Thing;
+  }
+
   namespace Engine {
     // TODO: Document defaults when they are known
     // TODO: Document the specification for the "paths" description JSON.
@@ -46,26 +62,25 @@ namespace Apsis {
        *  Loads or returns the existing Thing object with the given
        *  name or path.
        */
-      const Apsis::Sprite::Thing& loadThing(const char* name);
+      const Apsis::Sprite::Thing& loadThing(const char* name) const;
 
       /*
        *  Loads or returns the existing Map object with the given
        *  name or path.
        */
-      const Apsis::World::Map& loadMap(const char* name);
+      const Apsis::World::Map& loadMap(const char* name) const;
 
       /*
        *  Loads or returns the existing Rule object with the given
        *  name or path.
        */
-      const Apsis::Registry::Rule& loadRule(const char* name);
+      const Apsis::Registry::Rule& loadRule(const char* name) const;
 
       /*
        *  Loads or returns the existing Scene object with the given
        *  name or path.
        */
-      // TODO: Make this return const and have Scene instantiate for System?
-      Apsis::World::Scene& loadScene(const char* name);
+      const Apsis::Registry::Scene& loadScene(const char* name) const;
 
     private:
       // Constructors
@@ -80,8 +95,8 @@ namespace Apsis {
       void _loadDefaults();
 
       // File finder
-      std::string _findFile(std::string& searchPath, std::string& name);
-      bool _fileExists(std::string& path);
+      std::string _findFile(const std::string& searchPath, const std::string& name) const;
+      bool _fileExists(std::string& path) const;
 
       // Path storage
       std::string _scene_path;
@@ -97,5 +112,16 @@ namespace Apsis {
     };
   }
 }
+
+// We have to include these afterward
+#include "apsis/registry/scene.h"
+#include "apsis/registry/action.h"
+#include "apsis/registry/rule.h"
+#include "apsis/registry/property.h"
+#include "apsis/registry/state.h"
+
+#include "apsis/sprite/thing.h"
+
+#include "apsis/world/map.h"
 
 #endif

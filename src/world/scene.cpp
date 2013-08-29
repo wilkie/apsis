@@ -12,6 +12,16 @@ Apsis::World::Scene::Scene(const char* path) {
   // TODO: load from JSON and Object Engine
 }
 
+Apsis::World::Scene::Scene(const Apsis::Registry::Scene& scene) {
+  for (unsigned int i = 0; i < scene.actorCount(); i++) {
+    addActor(scene.actor(i), scene.actorX(i), scene.actorY(i));
+  }
+
+  for (unsigned int i = 0; i < scene.mapCount(); i++) {
+    addMap(scene.map(i));
+  }
+}
+
 void Apsis::World::Scene::addMap(const Apsis::World::Map& map) {
   _maps.push_back(&map);
 }
@@ -87,7 +97,7 @@ const Apsis::World::Actor& Apsis::World::Scene::actor(unsigned int id) const {
   return _actors[id];
 }
 
-Apsis::World::Scene& Apsis::World::Scene::load(const char* path) {
+const Apsis::World::Scene& Apsis::World::Scene::load(const char* path) {
   std::string str = std::string(path);
 
   std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);

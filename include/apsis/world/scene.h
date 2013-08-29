@@ -6,6 +6,8 @@
 
 #include "apsis/primitives/camera.h"
 
+#include "apsis/registry/scene.h"
+
 #include <vector>
 
 namespace Apsis {
@@ -17,11 +19,17 @@ namespace Apsis {
        */
       Scene();
       Scene(const char* path);
+      Scene(const Apsis::Registry::Scene& scene);
 
       /*
        *  Loads a Scene from a JSON description.
        */
-      static Apsis::World::Scene& load(const char* path);
+      static const Apsis::World::Scene& load(const char* path);
+
+      /*
+       *  Loads a Scene from an existing Scene object.
+       */
+      static const Apsis::World::Scene& instantiate(const Apsis::Registry::Scene& scene);
 
       /*
        *  Adds a Map to the scene.

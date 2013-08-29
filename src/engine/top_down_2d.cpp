@@ -44,7 +44,7 @@ Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
 
   _input = &Apsis::Engine::Input::default();
 
-  _map = &Apsis::World::Map::load("assets/maps/sample.json");
+  _map = &Apsis::World::Map::load("assets/maps/sample.json", Engine::Object::default());
 
   Apsis::Sprite::Sheet* hud = new Apsis::Sprite::Sheet("assets/graphics/hud_spritesheet.png");
 

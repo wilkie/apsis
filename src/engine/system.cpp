@@ -7,7 +7,7 @@ Apsis::Engine::System::System(const char* path)
     _jsonLoaded(false),                    // JSON
     _input(_parseOrCreateInput()),         // Initialize Input Engine
     _objects(_parseOrCreateObject()),
-    _backend(Apsis::Backend::Sdl()) {     // Initialize Object Engine
+    _backend(*(new Apsis::Backend::Sdl())) {     // Initialize Object Engine
 
   _backend.initialize(_videoSettings);
 }
@@ -21,10 +21,6 @@ Apsis::Engine::Input& Apsis::Engine::System::inputEngine() {
 }
 
 const Apsis::Engine::Object& Apsis::Engine::System::objectEngine() const {
-  return _objects;
-}
-
-Apsis::Engine::Object& Apsis::Engine::System::objectEngine() {
   return _objects;
 }
 
@@ -48,10 +44,33 @@ void Apsis::Engine::System::_openJSONFile() {
 
 void Apsis::Engine::System::_parseJSONFile() {
   _openJSONFile();
+
+  // Load Scenes
+  if (_value.isMember("scenes")) {
+    if (!_value.isArray()) {
+      throw "System description file's 'scenes' member is not an array of strings.";
+    }
+
+    for (Json::Value::iterator it = _value["scenes"].begin();
+         it != _value["scenes"].end();
+         ++it) {
+      if ((*it).isString()) {
+        _objects.loadScene((*it).asCString());
+      }
+      else {
+        throw "A member of the system description file's 'scenes' is not a string.";
+      }
+    }
+  }
 }
 
-Apsis::Engine::Object& Apsis::Engine::System::_parseOrCreateObject() {
+const Apsis::Engine::Object& Apsis::Engine::System::_parseOrCreateObject() {
   _openJSONFile();
+
+  if (!(_value.isMember("type") &&
+        _value["type"].compare(Json::Value("system")) == 0)) {
+    throw "System description file given does not of type 'system'.";
+  }
 
   if (_value.isMember("paths")) {
     if (_value["paths"].isObject()) {

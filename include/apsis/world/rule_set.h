@@ -1,6 +1,8 @@
 #ifndef APSIS_WORLD_RULE_SET_H
 #define APSIS_WORLD_RULE_SET_H
 
+#include "apsis/geometry/rectangle.h"
+
 #include "apsis/registry/rule.h"
 
 #include "apsis/world/collision_object.h"

@@ -1,8 +1,6 @@
 #ifndef APSIS_RULES_COLLIDE_FUNCTION_H
 #define APSIS_RULES_COLLIDE_FUNCTION_H
 
-#include "apsis/world/map.h"
-
 #include "apsis/geometry/rectangle.h"
 #include "apsis/geometry/point.h"
 
