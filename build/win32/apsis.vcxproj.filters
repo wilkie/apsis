@@ -500,9 +500,6 @@
       <Filter>support\clipper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\test.cpp" />
-    <ClCompile Include="..\..\src\engine\top_down_2d.cpp">
-      <Filter>engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\backend\sdl.cpp">
       <Filter>backend</Filter>
     </ClCompile>
@@ -1175,9 +1172,6 @@
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis.h" />
-    <ClInclude Include="..\..\include\apsis\engine\top_down_2d.h">
-      <Filter>engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\apsis\settings\video.h">
       <Filter>settings</Filter>
     </ClInclude>

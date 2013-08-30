@@ -125,6 +125,24 @@ void Apsis::Engine::System::_parseJSONFile() {
       }
     }
   }
+
+  // Load key bindings
+  if (_value.isMember("bindings")) {
+    if (!_value["bindings"].isArray()) {
+      throw "System description file's 'bindings' member is not an array of strings.";
+    }
+
+    for (Json::Value::iterator it = _value["bindings"].begin();
+         it != _value["bindings"].end();
+         ++it) {
+      if ((*it).isString()) {
+        _objects.loadBindings((*it).asCString());
+      }
+      else {
+        throw "A member of the system description file's 'scenes' is not a string.";
+      }
+    }
+  }
 }
 
 void Apsis::Engine::System::run() {

@@ -153,6 +153,14 @@ const Apsis::Registry::Scene& Apsis::Engine::Object::loadScene(const char* name)
   return Apsis::Registry::Scene::load(found.c_str(), *this);
 }
 
+void Apsis::Engine::Object::loadBindings(const char* name) const {
+  std::string found = _findFile(_binding_path, std::string(name));
+  if (found == "") {
+    throw "Bindings file not found or loaded.";
+  }
+  return Apsis::Registry::Action::load(found.c_str());
+}
+
 std::string Apsis::Engine::Object::_findFile(const std::string& searchPath, const std::string& name) const {
   // TODO: We could actually cache the result of the file search
   //       with a map on searchPath and name.

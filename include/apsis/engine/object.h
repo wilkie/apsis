@@ -82,6 +82,11 @@ namespace Apsis {
        */
       const Apsis::Registry::Scene& loadScene(const char* name) const;
 
+      /*
+       *  Loads bindings.
+       */
+      void loadBindings(const char* name) const;
+
     private:
       // Constructors
       Object(const char* path);

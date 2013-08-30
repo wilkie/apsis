@@ -13,7 +13,11 @@
 
   "scenes": [
     "level"
-  ]
+  ],
+
+  "bindings": [
+    "input"
+  ],
 
   "engine": {
     "min-fps": 30
