@@ -4,6 +4,7 @@
 #include "apsis/rules/collide_function.h"
 #include "apsis/rules/update_function.h"
 #include "apsis/rules/act_function.h"
+#include "apsis/rules/response_function.h"
 
 #include <vector>
 #include <string>
@@ -103,6 +104,10 @@ namespace Apsis {
       Apsis::Rules::ActFunction actFunction(unsigned int id) const;
 
       unsigned int actionId(unsigned int id) const;
+        
+      unsigned int responseFunctionCount() const;
+
+      Apsis::Rules::ResponseFunction responseFunction(unsigned int id) const;
 
     private:
       // Global list of rules
@@ -110,10 +115,11 @@ namespace Apsis {
       static std::vector<Apsis::Registry::Rule*> _all_rules;
 
       // Internal rules
-      static std::map<std::string, Apsis::Rules::UpdateFunction>  _internal_updates;
-      static std::map<std::string, Apsis::Rules::CollideFunction> _internal_collides;
-      static std::map<std::string, std::string>                   _internal_act_actions;
-      static std::map<std::string, Apsis::Rules::ActFunction>     _internal_acts;
+      static std::map<std::string, Apsis::Rules::UpdateFunction>   _internal_updates;
+      static std::map<std::string, Apsis::Rules::CollideFunction>  _internal_collides;
+      static std::map<std::string, Apsis::Rules::ResponseFunction> _internal_responses;
+      static std::map<std::string, std::string>                    _internal_act_actions;
+      static std::map<std::string, Apsis::Rules::ActFunction>      _internal_acts;
 
       // Constructors
       Rule(const char* path);
@@ -142,12 +148,13 @@ namespace Apsis {
       // The names of rules this rule supercedes
       std::vector<std::string> _supercedes;
 
-      // All of the collider and updater functions that make up this rule.
+      // All of the collider and updater etc functions that make up this rule.
       // (Does not include ones included in subrules)
-      std::vector<Apsis::Rules::CollideFunction> _collides;
-      std::vector<Apsis::Rules::UpdateFunction>  _updates;
-      std::vector<Apsis::Rules::ActFunction>     _acts;
-      std::vector<unsigned int>                  _action_ids;
+      std::vector<Apsis::Rules::CollideFunction>  _collides;
+      std::vector<Apsis::Rules::UpdateFunction>   _updates;
+      std::vector<Apsis::Rules::ResponseFunction> _responses;
+      std::vector<Apsis::Rules::ActFunction>      _acts;
+      std::vector<unsigned int>                   _action_ids;
 
       // The inherited rule, if there is one. Is NULL when it does not exist.
       const Apsis::Registry::Rule* _inherited;
