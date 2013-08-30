@@ -33,8 +33,8 @@
  /*
   *  Construct an Engine initialized with the given display configuration
   */
-Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) {
-  _backend.initialize(video);
+Apsis::Engine::TopDown2d::TopDown2d(Apsis::Settings::Video& video) :
+  _backend(video) {
   _video = video;
 
   _x = video.resolutionX/2.0f;

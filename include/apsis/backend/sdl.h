@@ -21,15 +21,11 @@ namespace Apsis {
     class Sdl {
       public:
         /*
-         *  Construct an SDL backend.
+         *  Construct an SDL backend. Initialize the backend with the given
+         *  video settings. Throws an exception if the backend cannot
+         *  initialize.
          */
-        Sdl();
-
-        /*
-         *  Initialize the backend with the given video settings. Returns true
-         *    upon success.
-         */
-        bool initialize(const Apsis::Settings::Video& video);
+        Sdl(const Apsis::Settings::Video& video);
 
         /*
          *  Poll for events. Give a preallocated Event structure. Returns true

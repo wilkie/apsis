@@ -77,8 +77,7 @@ Apsis::Registry::Scene::Scene(const char* path,
       // x and y are 0
       map_info.x = 0;
       map_info.y = 0;
-      map_info.map = &Apsis::World::Map::load(value["map"].asCString(),
-                                              loader);
+      map_info.map = &loader.loadMap(value["map"].asCString());
     }
     else if (value["map"].isMember("map") &&
              value["map"].isMember("x") &&
@@ -86,8 +85,7 @@ Apsis::Registry::Scene::Scene(const char* path,
       // x and y are given
       map_info.x = (float)(value["map"]["x"].asDouble());
       map_info.y = (float)(value["map"]["y"].asDouble());
-      map_info.map = &Apsis::World::Map::load(value["map"]["map"].asCString(),
-                                              loader);
+      map_info.map = &loader.loadMap(value["map"]["map"].asCString());
     }
 
     _maps.push_back(map_info);

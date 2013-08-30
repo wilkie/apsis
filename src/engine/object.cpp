@@ -53,32 +53,61 @@ Apsis::Engine::Object::Object(Json::Value& value) {
 }
 
 void Apsis::Engine::Object::_loadFromJSON(Json::Value& value) {
+  // TODO: Cleanup
   if (value.isMember("scenes")) {
     _scene_path = value["scenes"].asCString();
+    if (_scene_path.size() > 0 &&
+        _scene_path[_scene_path.size() - 1] != '/') {
+      _scene_path.append("/");
+    }
   }
 
   if (value.isMember("things")) {
     _thing_path = value["things"].asCString();
+    if (_thing_path.size() > 0 &&
+        _thing_path[_thing_path.size() - 1] != '/') {
+      _thing_path.append("/");
+    }
   }
 
   if (value.isMember("maps")) {
     _map_path = value["maps"].asCString();
+    if (_map_path.size() > 0 &&
+        _map_path[_map_path.size() - 1] != '/') {
+      _map_path.append("/");
+    }
   }
 
   if (value.isMember("bindings")) {
     _binding_path = value["bindings"].asCString();
+    if (_binding_path.size() > 0 &&
+        _binding_path[_binding_path.size() - 1] != '/') {
+      _binding_path.append("/");
+    }
   }
 
   if (value.isMember("graphics")) {
     _graphics_path = value["graphics"].asCString();
+    if (_graphics_path.size() > 0 &&
+        _graphics_path[_graphics_path.size() - 1] != '/') {
+      _graphics_path.append("/");
+    }
   }
 
   if (value.isMember("backgrounds")) {
     _background_path = value["backgrounds"].asCString();
+    if (_background_path.size() > 0 &&
+        _background_path[_background_path.size() - 1] != '/') {
+      _background_path.append("/");
+    }
   }
 
   if (value.isMember("rule")) {
     _rule_path = value["rule"].asCString();
+    if (_rule_path.size() > 0 &&
+        _rule_path[_rule_path.size() - 1] != '/') {
+      _rule_path.append("/");
+    }
   }
 }
 
@@ -135,8 +164,8 @@ std::string Apsis::Engine::Object::_findFile(const std::string& searchPath, cons
 
   // Find json description file
   // Look in thing path first (if exists)
-  if (_thing_path.size() != 0) {
-    std::string path = _thing_path;
+  if (searchPath.size() != 0) {
+    std::string path = searchPath;
     path = path.append(search);
 
     if (_fileExists(path)) {

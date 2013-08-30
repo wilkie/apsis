@@ -1,6 +1,6 @@
 #include "apsis.h"
 #include "apsis/world/actor.h"
-#include "apsis/engine/top_down_2d.h"
+#include "apsis/engine/system.h"
 
 #define WIDTH 1536
 #define HEIGHT 864
@@ -35,8 +35,11 @@ int main(int argc, char** argv) {
   settings.resolutionX = WIDTH;
   settings.resolutionY = HEIGHT;
   try {
-    Apsis::Engine::TopDown2d* engine = new Apsis::Engine::TopDown2d(settings);
-    engine->run();
+    //Apsis::Engine::TopDown2d* engine = new Apsis::Engine::TopDown2d(settings);
+    //engine->run();
+
+    Apsis::Engine::System system("assets/games/platformer.json", settings);
+    system.run();
   }
   catch (char* msg) {
 #ifdef _WIN32

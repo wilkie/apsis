@@ -6,9 +6,21 @@
 #include "apsis/engine/input.h"
 #include "apsis/engine/object.h"
 
+#include "apsis/settings/video.h"
+
+#include "apsis/world/scene.h"
+
 #include <json/json.h>
 
 #include <string>
+
+// TODO: ALRIGHT. GET A SCENE LOADED AND PLAYABLE!!!
+
+// TODO: THEN. GET ACTORS REACTING TO EVENTS!!!
+
+// TODO: INTERFACES!!!
+
+// TODO: BACKEND NEGOTIATION!!!
 
 namespace Apsis {
   namespace Engine {
@@ -21,8 +33,8 @@ namespace Apsis {
        *  Constructs a new system. This is the main engine that coordinates
        *  the rest of the engines (input, audio, etc).
        */
-      System(const char* path);
-      ~System();
+      System(const char* path,
+             const Apsis::Settings::Video& videoSettings);
 
       /*
        *  Returns the input engine for this system. This engine keeps
@@ -48,6 +60,12 @@ namespace Apsis {
       void loadScene(unsigned int id);
 
     private:
+      // Video Settings
+      Apsis::Settings::Video _videoSettings;
+
+      // Backend
+      Apsis::Backend::Sdl& _backend;
+
       // Parses the given json via the path given in jsonFile.
       void _openJSONFile();
 
@@ -70,17 +88,11 @@ namespace Apsis {
       // JSON object
       Json::Value _value;
 
-      // Video Settings
-      Apsis::Settings::Video _videoSettings;
-
       // Input Engine
       Apsis::Engine::Input&  _input;
 
       // Object Engine
       const Apsis::Engine::Object& _objects;
-
-      // Backend
-      Apsis::Backend::Sdl& _backend;
 
       // Current Scene
       Apsis::World::Scene* _scene;
