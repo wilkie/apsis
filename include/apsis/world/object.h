@@ -8,6 +8,7 @@
 
 #include <set>
 #include <vector>
+#include <deque>
 #include <unordered_map>
 
 namespace Apsis {
@@ -93,6 +94,9 @@ namespace Apsis {
 
       // State collection.
       std::set<unsigned int> _states;
+
+      // Event Queue
+      std::deque<unsigned int> _events;
     };
   }
 }
