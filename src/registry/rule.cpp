@@ -25,6 +25,7 @@ std::vector<Apsis::Registry::Rule*> Apsis::Registry::Rule::_all_rules;
 
 typedef std::map<std::string, Apsis::Rules::UpdateFunction>::value_type UpdaterPair;
 typedef std::map<std::string, Apsis::Rules::CollideFunction>::value_type ColliderPair;
+typedef std::map<std::string, Apsis::Rules::ResponseFunction>::value_type ResponsePair;
 typedef std::map<std::string, Apsis::Rules::ActFunction>::value_type ActFunctionPair;
 typedef std::map<std::string, std::string>::value_type ActStringPair;
 
@@ -50,6 +51,8 @@ static ColliderPair pairs_colliders[] = {
 static const unsigned int colliders_count = sizeof(pairs_colliders) / sizeof(ColliderPair);
 
 std::map<std::string, Apsis::Rules::CollideFunction> Apsis::Registry::Rule::_internal_collides(pairs_colliders, pairs_colliders + colliders_count);
+
+std::map<std::string, Apsis::Rules::ResponseFunction> Apsis::Registry::Rule::_internal_responses;
 
 static ActFunctionPair pairs_acts[] = {
   ActFunctionPair("right", &Apsis::Rules::Right::act),
