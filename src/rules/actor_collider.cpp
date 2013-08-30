@@ -12,8 +12,8 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
   Apsis::Geometry::Point points[4];
   Apsis::Geometry::Point toPoints[4];
 
-  double halfWidth  = ceil(original.width  / 2.0);
-  double halfHeight = ceil(original.height / 2.0);
+  float halfWidth  = ceil(original.width  / 2.0f);
+  float halfHeight = ceil(original.height / 2.0f);
 
   points[0].x = original.x - halfWidth;
   points[0].y = original.y - halfHeight;
@@ -42,7 +42,7 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
   }
 
   // Assume we can move the entire way
-  double t = 1.0;
+  float t = 1.0;
 
   Apsis::Geometry::Point calculatedPoint;
 
@@ -55,7 +55,7 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
     Apsis::Geometry::Rectangle rect = actor.position();
 
     for (int i = 0; i < 4; i++) {
-      double tMin, tMax;
+      float tMin, tMax;
       Apsis::Geometry::Line l = vectors[i];
       unsigned int edge = rect.clip(&l, &tMin, &tMax);
       if (edge > 0) {

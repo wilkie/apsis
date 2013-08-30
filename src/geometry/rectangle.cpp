@@ -113,9 +113,9 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
   return true;
 }
 
-unsigned int Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* tMax) {
-  double deltaX = (line->points[1].x - line->points[0].x);
-  double deltaY = (line->points[1].y - line->points[0].y);
+unsigned int Apsis::Geometry::Rectangle::clip(Line* line, float* tMin, float* tMax) {
+  float deltaX = (line->points[1].x - line->points[0].x);
+  float deltaY = (line->points[1].y - line->points[0].y);
 
   // Liang-Barsky Algorithm to find the intersection point
  
@@ -132,17 +132,17 @@ unsigned int Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* 
   *tMax = 1.0;
   Point  pMax;
 
-  double p[4];
-  double q[4];
-  double exactPosition[4];
+  float p[4];
+  float q[4];
+  float exactPosition[4];
 
-  double halfWidth  = width / 2.0;
-  double halfHeight = height / 2.0;
+  float halfWidth  = width  / 2.0f;
+  float halfHeight = height / 2.0f;
 
-  double left   = x - halfWidth;
-  double right  = x + halfWidth;
-  double top    = y - halfWidth;
-  double bottom = y + halfWidth;
+  float left   = x - halfWidth;
+  float right  = x + halfWidth;
+  float top    = y - halfWidth;
+  float bottom = y + halfWidth;
 
   // Left
   p[0] = -deltaX;
@@ -178,9 +178,9 @@ unsigned int Apsis::Geometry::Rectangle::clip(Line* line, double* tMin, double* 
   }
 
   // Unix Vector Magnitudes
-  double magnitudeX = deltaX;
-  double magnitudeY = deltaY;
-  double r;
+  float magnitudeX = deltaX;
+  float magnitudeY = deltaY;
+  float r;
 
   unsigned int line_index_min = 0;
   unsigned int line_index_max = 0;
@@ -345,8 +345,8 @@ bool Apsis::Geometry::Rectangle::on(Line* line) {
 }
 
 void Apsis::Geometry::Rectangle::points(Point points[4]) const {
-  double halfWidth  = width / 2.0;
-  double halfHeight = height / 2.0;
+  float halfWidth  = width  / 2.0f;
+  float halfHeight = height / 2.0f;
 
   // Top-left
   points[0].x = x - halfWidth;

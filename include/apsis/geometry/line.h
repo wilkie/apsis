@@ -9,9 +9,9 @@ namespace Apsis {
       Point points[2];
 
       void unit(Line* line);
-      void unit(Line* line, double magnitude);
+      void unit(Line* line, float magnitude);
 
-      double magnitude();
+      float magnitude();
 
       bool intersects(Line* line);
       bool clips(Line* line, Point* point);

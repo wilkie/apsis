@@ -20,8 +20,8 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
   Apsis::Geometry::Point points[4];
   Apsis::Geometry::Point toPoints[4];
 
-  double halfWidth  = ceil(original.width  / 2.0);
-  double halfHeight = ceil(original.height / 2.0);
+  float halfWidth  = ceil(original.width  / 2.0f);
+  float halfHeight = ceil(original.height / 2.0f);
 
   original.points(points);
 
@@ -44,7 +44,7 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
   }
 
   // Assume we can move the entire way
-  double t = 1.0;
+  float t = 1.0;
 
   Apsis::Geometry::Point calculatedPoint;
 
@@ -62,20 +62,30 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
   min_y = 0;
   max_y = map.height();
 
-  if ((points[0].x / map.tileWidth() - 1) > min_x) {
-    min_x = points[0].x / map.tileWidth() - 1;
+  unsigned int tmp;
+
+  tmp = (unsigned int)(points[0].x / (unsigned int)map.tileWidth()) - 1;
+
+  if (tmp > min_x) {
+    min_x = tmp;
   }
 
-  if ((points[2].x / map.tileWidth() + 2) < max_x) {
-    max_x = points[2].x / map.tileWidth() + 2;
+  tmp = (unsigned int)(points[2].x / (unsigned int)map.tileWidth()) + 2;
+
+  if (tmp < max_x) {
+    max_x = tmp;
   }
 
-  if ((points[0].y / map.tileHeight() - 1) > min_y) {
-    min_y = points[0].y / map.tileHeight() - 1;
+  tmp = (unsigned int)(points[0].y / (unsigned int)map.tileHeight()) - 1;
+
+  if (tmp > min_y) {
+    min_y = tmp;
   }
 
-  if ((points[2].y / map.tileHeight() + 2) < max_y) {
-    max_y = points[2].y / map.tileHeight() + 2;
+  tmp = (unsigned int)(points[2].y / (unsigned int)map.tileHeight()) + 2;
+
+  if (tmp < max_y) {
+    max_y = tmp;
   }
 
   for (unsigned int x = min_x; x < max_x; x++) {
@@ -95,7 +105,7 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
       tileRect.y = (y * map.tileHeight()) + (map.tileHeight() / 2.0f);
 
       for (int i = 0; i < 4; i++) {
-        double tMin, tMax;
+        float tMin, tMax;
         Apsis::Geometry::Line l = vectors[i];
         unsigned int edge = tileRect.clip(&l, &tMin, &tMax);
         if (edge > 0) {

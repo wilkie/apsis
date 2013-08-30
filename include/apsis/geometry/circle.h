@@ -10,7 +10,7 @@ namespace Apsis {
     struct Circle {
       public:
         Point  position;
-        double radius;
+        float radius;
 
         bool intersects(Circle* circle);
 

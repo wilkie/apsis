@@ -202,20 +202,20 @@ bool Apsis::Geometry::Circle::clip(Line* line) {
   line->points[1].x -= position.x;
   line->points[1].y -= position.y;
 
-  double dx, dy;
+  float dx, dy;
   dx = line->points[1].x - line->points[0].x;
   dy = line->points[1].y - line->points[0].y;
 
-  double magnitude = line->magnitude();
+  float magnitude = line->magnitude();
 
-  double determinant;
+  float determinant;
   determinant  = line->points[0].x * line->points[1].y;
   determinant -= line->points[1].x * line->points[0].y;
 
-  double discriminant;
+  float discriminant;
   discriminant = radius*radius * magnitude*magnitude - determinant*determinant;
 
-  double sign_of_dy = 1.0;
+  float sign_of_dy = 1.0;
   if (dy < 0.0) {
     sign_of_dy = -1.0;
   }
@@ -229,14 +229,14 @@ bool Apsis::Geometry::Circle::clip(Line* line) {
   }
   else if (discriminant > 0) {
     // Secant, 2 intersection points
-    double x1 = determinant * dy - sign_of_dy * dx * sqrt(discriminant);
+    float x1 = determinant * dy - sign_of_dy * dx * sqrt(discriminant);
     x1 /= magnitude*magnitude;
-    double y1 = -determinant * dx - abs(dy) * sqrt(discriminant);
+    float y1 = -determinant * dx - abs(dy) * sqrt(discriminant);
     y1 /= magnitude*magnitude;
 
-    double x2 = determinant * dy + sign_of_dy * dx * sqrt(discriminant);
+    float x2 = determinant * dy + sign_of_dy * dx * sqrt(discriminant);
     x2 /= magnitude*magnitude;
-    double y2 = -determinant * dx + abs(dy) * sqrt(discriminant);
+    float y2 = -determinant * dx + abs(dy) * sqrt(discriminant);
     y2 /= magnitude*magnitude;
 
     Line clipped;
@@ -244,12 +244,12 @@ bool Apsis::Geometry::Circle::clip(Line* line) {
     clipped.points[0].y = y1;
     clipped.points[1] = line->points[1];
 
-    double clippedMagnitude = clipped.magnitude();
+    float clippedMagnitude = clipped.magnitude();
 
     clipped.points[0].x = x2;
     clipped.points[0].y = y2;
 
-    double clippedMagnitude2 = clipped.magnitude();
+    float clippedMagnitude2 = clipped.magnitude();
 
     if (clippedMagnitude2 < clippedMagnitude) {
       // Second point is on line
