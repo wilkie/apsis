@@ -123,8 +123,6 @@ void Apsis::World::Actor::draw(const glm::mat4& projection,
   _sheet.draw(_frame->spriteIndex, projection, camera, model);
 }
 
-const char* Apsis::World::Actor::rules() const {
-  std::string ret = std::string("");
-
-  return ret.c_str();
+const char* Apsis::World::Actor::name() const {
+  return _thing.name();
 }

@@ -90,6 +90,27 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::_loadSpriteSheet() {
 void Apsis::Sprite::Thing::_parseJSONFile() {
   _openJSONFile();
 
+  if (_value.isMember("name")) {
+    _name = _value["name"].asCString();
+  }
+  else {
+    // Get name from path
+    size_t start = _path.find_last_of('/');
+    if (start == std::string::npos) {
+      start = 0;
+    }
+    else {
+      start ++;
+    }
+    size_t end   = _path.find_last_of('.');
+    if (end == std::string::npos) {
+      _name = _path.substr(start);
+    }
+    else {
+      _name = _path.substr(start, end-start);
+    }
+  }
+
   if (_value.isMember("width")) {
     _object.set("width",  _value["width"].asDouble());
   }
@@ -195,4 +216,8 @@ unsigned int Apsis::Sprite::Thing::animationCount() const {
 
 const Apsis::World::RuleSet& Apsis::Sprite::Thing::rules() const {
   return _rules;
+}
+
+const char* Apsis::Sprite::Thing::name() const {
+  return _name.c_str();
 }

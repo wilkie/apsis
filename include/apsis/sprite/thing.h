@@ -76,6 +76,11 @@ namespace Apsis {
        */
       const Apsis::World::RuleSet& rules() const;
 
+      /*
+       *  Returns the name of this thing.
+       */
+      const char* name() const;
+
     private:
       // Keeps track of Things system-wide.
       static std::vector<std::string> _ids;
@@ -91,6 +96,9 @@ namespace Apsis {
       bool _jsonLoaded;
 
       const Apsis::Sprite::Thing* _inherited;
+
+      // Name
+      std::string _name;
 
       // Load sprite sheet from JSON
       const Apsis::Sprite::Sheet& _loadSpriteSheet();

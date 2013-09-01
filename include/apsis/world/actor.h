@@ -96,11 +96,12 @@ namespace Apsis {
       void draw(const glm::mat4& projection,
                 const Primitives::Camera& camera) const;
 
-      // List rules
-      const char* rules() const;
+      /*
+       *  Returns the name of this Actor.
+       */
+      const char* name() const;
 
     private:
-
       struct UpdaterRule {
         Apsis::Rules::UpdateFunction func;
         unsigned int skipNext;
