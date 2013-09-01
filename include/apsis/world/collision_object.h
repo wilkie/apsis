@@ -2,6 +2,7 @@
 #define APSIS_WORLD_COLLISION_OBJECT_H
 
 #include "apsis/geometry/line.h"
+#include "apsis/geometry/point.h"
 
 namespace Apsis {
   namespace World {
@@ -105,6 +106,12 @@ namespace Apsis {
                float direction,
                const Apsis::Geometry::Line& edge,
                const Apsis::Geometry::Point& point);
+
+      /*
+       *  Returns the collided_with_* event that corresponds to this
+       *  object.
+       */
+      unsigned int collideEvent() const;
 
     private:
       // Direction that the object is moving.

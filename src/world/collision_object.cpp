@@ -1,5 +1,11 @@
 #include "apsis/world/collision_object.h"
 
+#include "apsis/registry/event.h"
+
+#include "apsis/world/actor.h"
+#include "apsis/world/tile.h"
+#include "apsis/world/map.h"
+
 Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Actor& actor,
                                                const Apsis::Geometry::Line& edge,
                                                const Apsis::Geometry::Point& point,
@@ -104,4 +110,22 @@ const Apsis::Geometry::Point& Apsis::World::CollisionObject::point() const {
 
 const Apsis::Geometry::Line& Apsis::World::CollisionObject::edge() const {
   return _edge;
+}
+
+unsigned int Apsis::World::CollisionObject::collideEvent() const {
+  std::string str = "collided_with_";
+
+  switch (_type) {
+  case Type::Tile:
+    str = str.append("tile");
+    break;
+  case Type::Actor:
+    str = str.append(_payload.actor->name());
+    break;
+  case Type::Map:
+    str = str.append("map");
+    break;
+  }
+
+  return Apsis::Registry::Event::id(str.c_str());
 }
