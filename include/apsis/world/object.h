@@ -121,6 +121,11 @@ namespace Apsis {
        *  Dequeues the next event that the Object must respond to.
        */
       unsigned int dequeueEvent();
+
+      /*
+       *  Returns whether or not the Object has pending events.
+       */
+      bool hasEvents() const;
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;

@@ -107,3 +107,7 @@ unsigned int Apsis::World::Object::dequeueEvent() {
   unsigned int ret = _events.front();
   _events.pop_front();
 }
+
+bool Apsis::World::Object::hasEvents() const {
+  return _events.size() > 0;
+}
