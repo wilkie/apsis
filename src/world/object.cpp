@@ -94,11 +94,11 @@ void Apsis::World::Object::ignore(const char* event) {
   ignore(Apsis::Registry::Event::id(event));
 }
 
-bool Apsis::World::Object::respondsTo(unsigned int event_id) {
+bool Apsis::World::Object::respondsTo(unsigned int event_id) const {
   return _responds_to.count(event_id) == 1;
 }
 
-bool Apsis::World::Object::respondsTo(const char* event) {
+bool Apsis::World::Object::respondsTo(const char* event) const {
   return respondsTo(Apsis::Registry::Event::id(event));
 }
 

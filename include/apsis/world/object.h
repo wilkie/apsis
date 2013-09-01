@@ -114,8 +114,8 @@ namespace Apsis {
        *  Returns whether or not this Object responds to the given event by
        *  either its event id or the string name of the event.
        */
-      bool respondsTo(unsigned int event_id);
-      bool respondsTo(const char* event);
+      bool respondsTo(unsigned int event_id) const;
+      bool respondsTo(const char* event) const;
 
       /*
        *  Dequeues the next event that the Object must respond to.
