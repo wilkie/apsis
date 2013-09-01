@@ -115,6 +115,12 @@ namespace Apsis {
        *  either its event id or the string name of the event.
        */
       bool respondsTo(unsigned int event_id);
+      bool respondsTo(const char* event);
+
+      /*
+       *  Dequeues the next event that the Object must respond to.
+       */
+      unsigned int dequeueEvent();
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;

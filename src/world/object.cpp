@@ -101,3 +101,9 @@ bool Apsis::World::Object::respondsTo(unsigned int event_id) {
 bool Apsis::World::Object::respondsTo(const char* event) {
   return respondsTo(Apsis::Registry::Event::id(event));
 }
+
+unsigned int Apsis::World::Object::dequeueEvent() {
+  // TODO: Typical std::deque race condition
+  unsigned int ret = _events.front();
+  _events.pop_front();
+}
