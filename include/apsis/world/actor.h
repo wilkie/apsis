@@ -102,11 +102,6 @@ namespace Apsis {
       const char* name() const;
 
     private:
-      struct UpdaterRule {
-        Apsis::Rules::UpdateFunction func;
-        unsigned int skipNext;
-      };
-
       // The base Thing for this Actor.
       const Apsis::Sprite::Thing& _thing;
 
@@ -125,10 +120,6 @@ namespace Apsis {
 
       // The current position of the Actor in the world.
       Apsis::Geometry::Rectangle _position;
-
-      // Stores the current state of the character. State
-      // determines how the character updates.
-      const char* _state;
 
       // time since last frame.
       float _currentTime;
