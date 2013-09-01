@@ -338,7 +338,7 @@ bool Apsis::Geometry::Rectangle::corner(Point* point) {
 
 bool Apsis::Geometry::Rectangle::on(Line* line) {
   if (line->points[0].x == line->points[1].x || line->points[0].y == line->points[1].y) {
-  return this->on(&line->points[0]) && this->on(&line->points[1]);
+    return this->on(&line->points[0]) && this->on(&line->points[1]);
   }
 
   return false;

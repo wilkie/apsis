@@ -7,8 +7,8 @@ bool Apsis::Geometry::Circle::intersects(Rectangle* rectangle) {
   bool intersects = false;
   Line l;
 
-  double halfWidth  = rectangle->width / 2.0;
-  double halfHeight = rectangle->height / 2.0;
+  float halfWidth  = rectangle->width  / 2.0f;
+  float halfHeight = rectangle->height / 2.0f;
 
   Point points[4];
   points[0].x = rectangle->x - halfWidth;
@@ -43,8 +43,8 @@ unsigned int Apsis::Geometry::Circle::clip(Rectangle* rectangle, Point intersect
   unsigned int numberPoints = 0;
   Line l;
 
-  double halfWidth  = rectangle->width / 2.0;
-  double halfHeight = rectangle->height / 2.0;
+  float halfWidth  = rectangle->width  / 2.0f;
+  float halfHeight = rectangle->height / 2.0f;
 
   Point points[4];
   points[0].x = rectangle->x - halfWidth;
@@ -80,49 +80,49 @@ unsigned int Apsis::Geometry::Circle::clip(Rectangle* rectangle, Point intersect
 }
 
 bool Apsis::Geometry::Circle::intersects(Line* line) {
-  double x1, y1, x2, y2;
+  float x1, y1, x2, y2;
   x1 = line->points[0].x - position.x;
   x2 = line->points[1].x - position.x;
   y1 = line->points[0].y - position.y;
   y2 = line->points[1].y - position.y;
 
-  double dx, dy;
+  float dx, dy;
   dx = x2 - x1;
   dy = y2 - y1;
 
-  double magnitude = line->magnitude();
+  float magnitude = line->magnitude();
 
-  double determinant;
+  float determinant;
   determinant = x1 * y2 - x2 * y1;
 
-  double discriminant;
+  float discriminant;
   discriminant = radius*radius * magnitude*magnitude - determinant*determinant;
 
-  double sign_of_dy = 1.0;
+  float sign_of_dy = 1.0;
   if (dy < 0.0) {
     sign_of_dy = -1.0;
   }
 
   if (discriminant == 0) {
     // Tangent, 1 intersection point
-    double x = determinant * dy - sign_of_dy * dx * sqrt(discriminant);
+    float x = determinant * dy - sign_of_dy * dx * sqrt(discriminant);
     x /= magnitude*magnitude;
-    double y = -determinant * dx - fabs(dy) * sqrt(discriminant);
+    float y = -determinant * dx - fabs(dy) * sqrt(discriminant);
     y /= magnitude*magnitude;
 
     Line clipped;
     clipped.points[0].x = x;
     clipped.points[0].y = y;
-	clipped.points[1].x = x2;
-	clipped.points[1].y = y2;
+    clipped.points[1].x = x2;
+    clipped.points[1].y = y2;
 
-    double clippedMagnitude = clipped.magnitude();
+    float clippedMagnitude = clipped.magnitude();
 
     clipped.points[1] = clipped.points[0];
     clipped.points[0].x = x1;
     clipped.points[0].y = y1;
 
-    double clippedMagnitude2 = clipped.magnitude();
+    float clippedMagnitude2 = clipped.magnitude();
 
     if (clippedMagnitude2 > clippedMagnitude) {
       clippedMagnitude = clippedMagnitude2;
@@ -135,18 +135,18 @@ bool Apsis::Geometry::Circle::intersects(Line* line) {
   }
   else if (discriminant > 0) {
     // Secant, 2 intersection points
-    double x = determinant * dy - sign_of_dy * dx * sqrt(discriminant);
+    float x = determinant * dy - sign_of_dy * dx * sqrt(discriminant);
     x /= magnitude*magnitude;
-    double y = -determinant * dx - abs(dy) * sqrt(discriminant);
+    float y = -determinant * dx - abs(dy) * sqrt(discriminant);
     y /= magnitude*magnitude;
 
     Line clipped;
     clipped.points[0].x = x;
     clipped.points[0].y = y;
-	clipped.points[1].x = x2;
-	clipped.points[1].y = y2;
+    clipped.points[1].x = x2;
+    clipped.points[1].y = y2;
 
-    double clippedMagnitude = clipped.magnitude();
+    float clippedMagnitude = clipped.magnitude();
 
     if (clippedMagnitude < magnitude) {
       // We actually clipped something!
