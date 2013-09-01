@@ -112,3 +112,80 @@ unsigned int Apsis::World::Object::dequeueEvent() {
 bool Apsis::World::Object::hasEvents() const {
   return _events.size() > 0;
 }
+
+
+const Apsis::World::Value& Apsis::World::Object::getForEvent(unsigned int event_id,
+                                                             const char* key) const {
+  return this->getForEvent(event_id, Apsis::Registry::Property::id(key));
+}
+
+const Apsis::World::Value& Apsis::World::Object::getForEvent(unsigned int event_id,
+                                                             unsigned int key) const {
+  if (this->_event_properties.count(event_id) == 0) {
+    throw "Event not available";
+  }
+
+  if (this->_event_properties.at(event_id).count(key) == 0) {
+    throw "Key not found";
+  }
+
+  const Apsis::World::Value& value = this->_event_properties.at(event_id).at(key);
+  return value;
+}
+
+bool Apsis::World::Object::hasForEvent(unsigned int event_id,
+                                       const char* key) const {
+  return this->hasForEvent(event_id,
+                           Apsis::Registry::Property::id(key));
+}
+
+bool Apsis::World::Object::hasForEvent(unsigned int event_id,
+                                       unsigned int key) const {
+  return this->_properties.count(key) != 0;
+}
+
+void Apsis::World::Object::setForEvent(unsigned int event_id,
+                                       const char* key,
+                                       double value) {
+  this->setForEvent(event_id,
+                    Apsis::Registry::Property::id(key),
+                    value);
+}
+
+void Apsis::World::Object::setForEvent(unsigned int event_id,
+                                       unsigned int key,
+                                       double value) {
+  this->_event_properties[event_id][key] = World::Value(value);
+}
+
+void Apsis::World::Object::setForEvent(unsigned int event_id,
+                                       const char* key,
+                                       long value) {
+  this->setForEvent(event_id,
+                    Apsis::Registry::Property::id(key),
+                    value);
+}
+
+void Apsis::World::Object::setForEvent(unsigned int event_id,
+                                       unsigned int key,
+                                       long value) {
+  this->_event_properties[event_id][key] = World::Value(value);
+}
+
+void Apsis::World::Object::setForEvent(unsigned int event_id,
+                                       const char* key,
+                                       const char* value) {
+  this->setForEvent(event_id,
+                    Apsis::Registry::Property::id(key),
+                    value);
+}
+
+void Apsis::World::Object::setForEvent(unsigned int event_id,
+                                       unsigned int key,
+                                       const char* value) {
+  this->_event_properties[event_id][key] = World::Value(value);
+}
+
+bool Apsis::World::Object::isMe(const Apsis::World::Object& reference) const {
+  return &reference == this;
+}

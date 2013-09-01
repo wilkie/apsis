@@ -106,6 +106,11 @@ namespace Apsis {
        */
       void respond(Apsis::World::Scene& scene);
 
+      /*
+       *  Returns an immutable reference to the Actor's World::Object.
+       */
+      const Apsis::World::Object& object() const;
+
     private:
       // The base Thing for this Actor.
       const Apsis::Sprite::Thing& _thing;

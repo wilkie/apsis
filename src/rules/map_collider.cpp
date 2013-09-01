@@ -50,7 +50,6 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
 
   // determine if there is an intersection with the map
   // TODO: Multiple maps
-  // TODO: Why do I need to add 2 here? ugh.
   // TODO: Map data is already on the gpu, so we could do all collisions
   //       on the gpu too?
   const Apsis::World::Map& map = scene.map(0);
@@ -70,7 +69,7 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
     min_x = tmp;
   }
 
-  tmp = (unsigned int)(points[2].x / (unsigned int)map.tileWidth()) + 2;
+  tmp = (unsigned int)(points[2].x / (unsigned int)map.tileWidth()) + 1;
 
   if (tmp < max_x) {
     max_x = tmp;
@@ -82,14 +81,14 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
     min_y = tmp;
   }
 
-  tmp = (unsigned int)(points[2].y / (unsigned int)map.tileHeight()) + 2;
+  tmp = (unsigned int)(points[2].y / (unsigned int)map.tileHeight()) + 1;
 
   if (tmp < max_y) {
     max_y = tmp;
   }
 
-  for (unsigned int x = min_x; x < max_x; x++) {
-    for (unsigned int y = min_y; y < max_y; y++) {
+  for (unsigned int x = min_x; x <= max_x; x++) {
+    for (unsigned int y = min_y; y <= max_y; y++) {
       const Apsis::World::Tile& tile = map.tile(x, y);
       if (tile.passable()) {
         continue;

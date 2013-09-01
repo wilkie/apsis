@@ -611,6 +611,12 @@
     <ClCompile Include="..\..\src\registry\scene.cpp">
       <Filter>registry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\rules\update_health.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rules\add_value.cpp">
+      <Filter>rules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1284,6 +1290,12 @@
       <Filter>registry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\rules\response_function.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\update_health.h">
+      <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\rules\add_value.h">
       <Filter>rules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace Apsis {
   namespace Rules {
     // Respond to events
     // TODO: document this
-    typedef bool (*ResponseFunction)(unsigned int event_id,
+    typedef void (*ResponseFunction)(unsigned int event_id,
                                      const Apsis::World::Scene&,
                                      const unsigned int objectId,
                                      Apsis::World::Object& object);

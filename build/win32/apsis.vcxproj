@@ -105,6 +105,8 @@
     <ClCompile Include="..\..\src\registry\scene.cpp" />
     <ClCompile Include="..\..\src\registry\state.cpp" />
     <ClCompile Include="..\..\src\rules\actor_collider.cpp" />
+    <ClCompile Include="..\..\src\rules\add_value.cpp" />
+    <ClCompile Include="..\..\src\rules\update_health.cpp" />
     <ClCompile Include="..\..\src\rules\down.cpp" />
     <ClCompile Include="..\..\src\rules\fall.cpp" />
     <ClCompile Include="..\..\src\rules\left.cpp" />
@@ -316,7 +318,9 @@
     <ClInclude Include="..\..\include\apsis\registry\state.h" />
     <ClInclude Include="..\..\include\apsis\rules\actor_collider.h" />
     <ClInclude Include="..\..\include\apsis\rules\act_function.h" />
+    <ClInclude Include="..\..\include\apsis\rules\add_value.h" />
     <ClInclude Include="..\..\include\apsis\rules\collide_function.h" />
+    <ClInclude Include="..\..\include\apsis\rules\update_health.h" />
     <ClInclude Include="..\..\include\apsis\rules\down.h" />
     <ClInclude Include="..\..\include\apsis\rules\fall.h" />
     <ClInclude Include="..\..\include\apsis\rules\left.h" />

@@ -11,6 +11,9 @@
 #include "apsis/rules/map_collider.h"
 #include "apsis/rules/actor_collider.h"
 
+#include "apsis/rules/update_health.h"
+#include "apsis/rules/add_value.h"
+
 #include "apsis/rules/wiggler.h"
 #include "apsis/rules/right.h"
 #include "apsis/rules/left.h"
@@ -30,12 +33,12 @@ typedef std::map<std::string, Apsis::Rules::ActFunction>::value_type ActFunction
 typedef std::map<std::string, std::string>::value_type ActStringPair;
 
 static UpdaterPair pairs_updaters[] = {
-  UpdaterPair("wiggler",   &Apsis::Rules::Wiggler::update),
-  UpdaterPair("right",     &Apsis::Rules::Right::update),
-  UpdaterPair("left",      &Apsis::Rules::Left::update),
-  UpdaterPair("up",        &Apsis::Rules::Up::update),
-  UpdaterPair("down",      &Apsis::Rules::Down::update),
-  UpdaterPair("fall",      &Apsis::Rules::Fall::update),
+  UpdaterPair("wiggler", &Apsis::Rules::Wiggler::update),
+  UpdaterPair("right",   &Apsis::Rules::Right::update),
+  UpdaterPair("left",    &Apsis::Rules::Left::update),
+  UpdaterPair("up",      &Apsis::Rules::Up::update),
+  UpdaterPair("down",    &Apsis::Rules::Down::update),
+  UpdaterPair("fall",    &Apsis::Rules::Fall::update),
 };
 
 static const unsigned int updaters_count = sizeof(pairs_updaters) / sizeof(UpdaterPair);
@@ -43,28 +46,35 @@ static const unsigned int updaters_count = sizeof(pairs_updaters) / sizeof(Updat
 std::map<std::string, Apsis::Rules::UpdateFunction> Apsis::Registry::Rule::_internal_updates(pairs_updaters, pairs_updaters + updaters_count);
 
 static ColliderPair pairs_colliders[] = {
-  ColliderPair("slide_map_collider",   &Apsis::Rules::SlideMapCollider::collide),
-  ColliderPair("map_collider",   &Apsis::Rules::MapCollider::collide),
-  ColliderPair("actor_collider", &Apsis::Rules::ActorCollider::collide),
+  ColliderPair("slide_map_collider", &Apsis::Rules::SlideMapCollider::collide),
+  ColliderPair("map_collider",       &Apsis::Rules::MapCollider::collide),
+  ColliderPair("actor_collider",     &Apsis::Rules::ActorCollider::collide),
 };
 
 static const unsigned int colliders_count = sizeof(pairs_colliders) / sizeof(ColliderPair);
 
 std::map<std::string, Apsis::Rules::CollideFunction> Apsis::Registry::Rule::_internal_collides(pairs_colliders, pairs_colliders + colliders_count);
 
-std::map<std::string, Apsis::Rules::ResponseFunction> Apsis::Registry::Rule::_internal_responses;
+static ResponsePair pairs_responses[] = {
+  ResponsePair("update_health", &Apsis::Rules::UpdateHealth::respond),
+  ResponsePair("add_value",     &Apsis::Rules::UpdateHealth::respond),
+};
+
+static const unsigned int responses_count = sizeof(pairs_responses) / sizeof(ResponsePair);
+
+std::map<std::string, Apsis::Rules::ResponseFunction> Apsis::Registry::Rule::_internal_responses(pairs_responses, pairs_responses + responses_count);
 
 static ActFunctionPair pairs_acts[] = {
   ActFunctionPair("right", &Apsis::Rules::Right::act),
   ActFunctionPair("left",  &Apsis::Rules::Left::act),
-  ActFunctionPair("up",  &Apsis::Rules::Up::act),
+  ActFunctionPair("up",    &Apsis::Rules::Up::act),
   ActFunctionPair("down",  &Apsis::Rules::Down::act),
 };
 
 static ActStringPair pairs_act_actions[] = {
   ActStringPair("right", Apsis::Rules::Right::action),
   ActStringPair("left",  Apsis::Rules::Left::action),
-  ActStringPair("up",  Apsis::Rules::Up::action),
+  ActStringPair("up",    Apsis::Rules::Up::action),
   ActStringPair("down",  Apsis::Rules::Down::action),
 };
 
@@ -230,6 +240,9 @@ void Apsis::Registry::Rule::_parseJSONFile() {
       if (_internal_acts.count(_name) > 0) {
         _acts.push_back(_internal_acts[_name]);
         _action_ids.push_back(Apsis::Registry::Action::id(_internal_act_actions[_name].c_str()).id());
+      }
+      if (_internal_responses.count(_name) > 0) {
+        _responses.push_back(_internal_responses[_name]);
       }
     }
   }

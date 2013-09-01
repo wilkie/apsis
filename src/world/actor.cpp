@@ -140,3 +140,7 @@ void Apsis::World::Actor::draw(const glm::mat4& projection,
 const char* Apsis::World::Actor::name() const {
   return _thing.name();
 }
+
+const Apsis::World::Object& Apsis::World::Actor::object() const {
+  return _object;
+}

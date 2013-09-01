@@ -67,6 +67,71 @@ namespace Apsis {
        *  Sets the given property to the given value.
        */
       void set(const char* key, const char* value);
+      /*
+       *  Returns the value stored at the given property.
+       */
+      const Apsis::World::Value& getForEvent(unsigned int event_id,
+                                             const char* key) const;
+
+      /*
+       *  Returns the value stored at the given property.
+       */
+      const Apsis::World::Value& getForEvent(unsigned int event_id,
+                                             unsigned int key) const;
+
+      /*
+       *  Returns true when the value at the given property is stored.
+       */
+      bool hasForEvent(unsigned int event_id,
+                       const char* key) const;
+
+      /*
+       *  Returns true when the value at the given property is stored.
+       */
+      bool hasForEvent(unsigned int event_id,
+               unsigned int key) const;
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void setForEvent(unsigned int event_id,
+                       unsigned int key,
+                       double value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void setForEvent(unsigned int event_id,
+                       unsigned int key,
+                       long value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void setForEvent(unsigned int event_id,
+                       unsigned int key,
+                       const char* string);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void setForEvent(unsigned int event_id,
+                       const char* key,
+                       double value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void setForEvent(unsigned int event_id,
+                       const char* key,
+                       long value);
+
+      /*
+       *  Sets the given property to the given value.
+       */
+      void setForEvent(unsigned int event_id,
+                       const char* key,
+                       const char* value);
 
       /*
        *  Returns whether or not the object has the given state.
@@ -126,6 +191,11 @@ namespace Apsis {
        *  Returns whether or not the Object has pending events.
        */
       bool hasEvents() const;
+
+      /*
+       *  Returns true if the given Object is this Object.
+       */
+      bool isMe(const Apsis::World::Object& reference) const;
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;
@@ -138,6 +208,9 @@ namespace Apsis {
 
       // The events this object responds to.
       std::set<unsigned int> _responds_to;
+
+      // Event property lists
+      std::unordered_map<unsigned int, std::unordered_map<unsigned int, Apsis::World::Value>> _event_properties;
     };
   }
 }

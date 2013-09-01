@@ -15,23 +15,17 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
   float halfWidth  = ceil(original.width  / 2.0f);
   float halfHeight = ceil(original.height / 2.0f);
 
-  points[0].x = original.x - halfWidth;
-  points[0].y = original.y - halfHeight;
+  original.points(points);
+
   toPoints[0].x = intended.x - halfWidth;
   toPoints[0].y = intended.y - halfHeight;
 
-  points[1].x = original.x + halfWidth;
-  points[1].y = original.y - halfHeight;
   toPoints[1].x = intended.x + halfWidth;
   toPoints[1].y = intended.y - halfHeight;
 
-  points[2].x = original.x + halfWidth;
-  points[2].y = original.y + halfHeight;
   toPoints[2].x = intended.x + halfWidth;
   toPoints[2].y = intended.y + halfHeight;
 
-  points[3].x = original.x - halfWidth;
-  points[3].y = original.y + halfHeight;
   toPoints[3].x = intended.x - halfWidth;
   toPoints[3].y = intended.y + halfHeight;
 
@@ -46,31 +40,34 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
 
   Apsis::Geometry::Point calculatedPoint;
 
-  // determine if there is an intersection with any actor
-  // TODO: optimizations
+  // determine if there is an intersection with the map
+  // TODO: Multiple maps
+  // TODO: Map data is already on the gpu, so we could do all collisions
+  //       on the gpu too?
   for (unsigned int i = 0; i < scene.actorCount(); i++) {
     const Apsis::World::Actor& actor = scene.actor(i);
 
+    if (actor.object().isMe(object)) {
+      // Do not check collisions with self.
+      continue;
+    }
+
     // Do we intersect?
-    Apsis::Geometry::Rectangle rect = actor.position();
+    Apsis::Geometry::Rectangle& rect = actor.position();
 
     for (int i = 0; i < 4; i++) {
       float tMin, tMax;
       Apsis::Geometry::Line l = vectors[i];
       unsigned int edge = rect.clip(&l, &tMin, &tMax);
       if (edge > 0) {
-        if (edge == 3) {
-          if (!(tMin == 0.0 || tMax == 1.0)) {
-            //object.enableState(_collideWithTopState);
-          }
-        }
-
-        if (tMin == 0.0 && tMax == 0.0) { continue; }
+        if (tMax < 0.00005) { continue; }
         if (tMin < t) {
           // New t value is the amount we will walk down the vector
           t = tMin;
 
-          calculatedPoint = l.points[0];
+          const Apsis::Geometry::Point& point = l.points[0];
+
+          calculatedPoint = point;
           if (i == 0) {
             calculatedPoint.x += halfWidth;
             calculatedPoint.y += halfHeight;
@@ -87,6 +84,12 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
             calculatedPoint.x += halfWidth;
             calculatedPoint.y -= halfHeight;
           }
+
+          if (tMax < 0.00005) {
+            tMax = tMax;
+          }
+
+          collidedWith.actor(actor, 0.0f, actor.position().edge(edge - 1), l.points[0]);
         }
       }
     }

@@ -4,13 +4,27 @@
   "inherit": "assets/things/pink_spaceblob.json",
 
   "rules": [
-    "right", "left", "up", "down", "slide_map_collider"
+    "right", "left", "up", "down", "slide_map_collider", "actor_collider"
   ],
 
   "properties": {
     "left_speed":  200.0,
     "right_speed": 200.0,
     "up_speed":    200.0,
-    "down_speed":  200.0
-  }
+    "down_speed":  200.0,
+    "health":      10.0
+  },
+
+  "on_collides": [
+    {
+      "with": {
+        "type": "actor",
+        "name": "coin"
+      },
+      "do": "update_health",
+      "properties": {
+        "amount": 10.0
+      }
+    }
+  ]
 }

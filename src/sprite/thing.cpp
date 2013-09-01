@@ -1,5 +1,7 @@
 #include "apsis/sprite/thing.h"
 
+#include "apsis/registry/event.h"
+
 #include <algorithm>
 #include <fstream>
 
@@ -138,6 +140,86 @@ void Apsis::Sprite::Thing::_parseJSONFile() {
       } while(spriteIndex != -1);
 
       _animations.push_back(newAnimation);
+    }
+  }
+
+  // Events (collision)
+  if (_value.isMember("on_collides")) {
+    // TODO: better handling of invalid values
+    for (Json::Value::iterator it = _value["on_collides"].begin();
+         it != _value["on_collides"].end();
+         ++it) {
+      std::string event_name = "collide_with_";
+      std::string rule_name  = "";
+
+      unsigned int event_id = 0;
+      // get collision event name
+      if (!(*it).isObject()) {
+        throw "Thing description's 'on_collides' array does not contain objects.";
+      }
+
+      if ((*it).isMember("with")) {
+        if (!(*it)["with"].isObject()) {
+          throw "Thing description's 'on_collide' has a member where 'with' is not an object.";
+        }
+
+        if ((*it)["with"].isMember("type") &&
+            (*it)["with"].isMember("name")) {
+          event_name = event_name.append((*it)["with"]["type"].asCString());
+          event_name = event_name.append("_");
+          event_name = event_name.append((*it)["with"]["name"].asCString());
+
+          event_id = Apsis::Registry::Event::id(event_name.c_str());
+
+          // Tell the object we respond to this event
+          _object.respondTo(event_id);
+        }
+        else {
+          throw "Thing description's 'on_collide' members should have a 'with' object with 'type' and 'name fields.";
+        }
+      }
+      else {
+        throw "Thing description's 'on_collide' has a member without a 'with' object.";
+      }
+
+      if ((*it).isMember("do")) {
+        if (!(*it)["do"].isString()) {
+          throw "Thing description's 'on_collide' has a member where the 'do' field is not a string.";
+        }
+
+        rule_name = (*it)["do"].asCString();
+
+        std::string rule_path = "assets/rules/" + std::string(rule_name) + ".json";
+
+        _rules.addRule(Registry::Rule::load(rule_path.c_str()));
+      }
+      else {
+        throw "Thing description's 'on_collide' has a member without a 'do' object.";
+      }
+
+      if ((*it).isMember("properties")) {
+        if (!(*it)["properties"].isObject()) {
+          throw "Thing description's 'on_collide' has a member where 'properties' is not an object.";
+        }
+
+        Json::Value::Members members = (*it)["properties"].getMemberNames();
+        for (Json::Value::Members::iterator property_it = members.begin();
+             property_it != members.end();
+             ++property_it) {
+          const char* name = (*property_it).c_str();
+          unsigned int property_id = Apsis::Registry::Property::id(name);
+
+          if ((*it)["properties"][name].isDouble()) {
+            _object.setForEvent(event_id, property_id, (*it)["properties"][name].asDouble());
+          }
+          else if ((*it)["properties"][name].isString()) {
+            _object.setForEvent(event_id, property_id, (*it)["properties"][name].asCString());
+          }
+          else if ((*it)["properties"][name].isIntegral()) {
+            _object.setForEvent(event_id, property_id, (long)(*it)["properties"][name].asInt());
+          }
+        }
+      }
     }
   }
 

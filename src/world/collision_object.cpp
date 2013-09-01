@@ -113,7 +113,7 @@ const Apsis::Geometry::Line& Apsis::World::CollisionObject::edge() const {
 }
 
 unsigned int Apsis::World::CollisionObject::collideEvent() const {
-  std::string str = "collided_with_";
+  std::string str = "collide_with_";
 
   switch (_type) {
   case Type::Tile:
