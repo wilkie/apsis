@@ -135,6 +135,8 @@ namespace Apsis {
 
       // Event Queue
       std::deque<unsigned int> _events;
+
+      // The events this object responds to.
       std::set<unsigned int> _responds_to;
     };
   }
