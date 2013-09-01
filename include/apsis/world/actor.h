@@ -101,6 +101,11 @@ namespace Apsis {
        */
       const char* name() const;
 
+      /*
+       *  Responds to events.
+       */
+      void respond(Apsis::World::Scene& scene);
+
     private:
       // The base Thing for this Actor.
       const Apsis::Sprite::Thing& _thing;

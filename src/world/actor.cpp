@@ -109,10 +109,22 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
 
   if (_ruleSet.collide(scene, _object, _position, to, collidedWith, clipped)) {
     to = clipped;
+
+    unsigned int event_id = collidedWith.collideEvent();
+
+    if (_object.respondsTo(event_id)) {
+      _object.enqueueEvent(event_id);
+    }
   }
 
   _position.x = (float)to.x;
   _position.y = (float)to.y;
+}
+
+void Apsis::World::Actor::respond(Apsis::World::Scene& scene) {
+  while (_object.hasEvents()) {
+    unsigned int event_id = _object.dequeueEvent();
+  }
 }
 
 void Apsis::World::Actor::draw(const glm::mat4& projection,
