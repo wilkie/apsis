@@ -134,3 +134,18 @@ bool Apsis::World::RuleSet::collide(const Apsis::World::Scene& scene,
 
   return collided;
 }
+
+void Apsis::World::RuleSet::respond(unsigned int event_id,
+                                    Apsis::World::Object& object,
+                                    Apsis::World::Scene& scene) const {
+
+  for(unsigned int i = 0; i < _rules.size(); i++) {
+    const RuleNode& node = _rules[i];
+
+    const Apsis::Registry::Rule& rule = *node.rule;
+
+    for (unsigned int rule_id = 0; rule_id < rule.responseFunctionCount(); rule_id++) {
+      rule.responseFunction(rule_id)(event_id, scene, 0, object);
+    }
+  }
+}

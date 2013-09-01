@@ -140,6 +140,14 @@ unsigned int Apsis::Registry::Rule::actionId(unsigned int id) const {
   return _action_ids[id];
 }
 
+unsigned int Apsis::Registry::Rule::responseFunctionCount() const {
+  return _responses.size();
+}
+
+Apsis::Rules::ResponseFunction Apsis::Registry::Rule::responseFunction(unsigned int id) const {
+  return _responses[id];
+}
+
 const char* Apsis::Registry::Rule::replacement(unsigned int id) const {
   return _supercedes[id].c_str();
 }

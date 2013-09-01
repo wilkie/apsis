@@ -55,6 +55,13 @@ namespace Apsis {
                bool held,
                Apsis::World::Object& object,
                const Apsis::World::Scene& scene) const;
+
+      /*
+       *  Responds to the given event.
+       */
+      void respond(unsigned int event_id,
+                   Apsis::World::Object& object,
+                   Apsis::World::Scene& scene) const;
     private:
       // Should do this data structure for each type of function.
       struct RuleNode {

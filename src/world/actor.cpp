@@ -124,6 +124,8 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
 void Apsis::World::Actor::respond(Apsis::World::Scene& scene) {
   while (_object.hasEvents()) {
     unsigned int event_id = _object.dequeueEvent();
+
+    _ruleSet.respond(event_id, _object, scene);
   }
 }
 
