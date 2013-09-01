@@ -120,6 +120,7 @@ unsigned int Apsis::World::CollisionObject::collideEvent() const {
     str = str.append("tile");
     break;
   case Type::Actor:
+    str = str.append("actor_");
     str = str.append(_payload.actor->name());
     break;
   case Type::Map:
