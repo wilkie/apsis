@@ -95,6 +95,26 @@ namespace Apsis {
        */
       void enqueueEvent(unsigned int event_id);
       void enqueueEvent(const char* event);
+
+      /*
+       *  Adds the given event as something this Object responds to by either
+       *  its event id or the string name of the event.
+       */
+      void respondTo(unsigned int event_id);
+      void respondTo(const char* event);
+
+      /*
+       *  Stops responding to the given event by either its event id or the
+       *  string name of the event.
+       */
+      void ignore(unsigned int event_id);
+      void ignore(const char* event);
+
+      /*
+       *  Returns whether or not this Object responds to the given event by
+       *  either its event id or the string name of the event.
+       */
+      bool respondsTo(unsigned int event_id);
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;
@@ -104,6 +124,7 @@ namespace Apsis {
 
       // Event Queue
       std::deque<unsigned int> _events;
+      std::set<unsigned int> _responds_to;
     };
   }
 }

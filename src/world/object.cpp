@@ -77,3 +77,27 @@ void Apsis::World::Object::enqueueEvent(unsigned int event_id) {
 void Apsis::World::Object::enqueueEvent(const char* event) {
   enqueueEvent(Apsis::Registry::Event::id(event));
 }
+
+void Apsis::World::Object::respondTo(unsigned int event_id) {
+  _responds_to.insert(event_id);
+}
+
+void Apsis::World::Object::respondTo(const char* event) {
+  respondTo(Apsis::Registry::Event::id(event));
+}
+
+void Apsis::World::Object::ignore(unsigned int event_id) {
+  _responds_to.erase(event_id);
+}
+
+void Apsis::World::Object::ignore(const char* event) {
+  ignore(Apsis::Registry::Event::id(event));
+}
+
+bool Apsis::World::Object::respondsTo(unsigned int event_id) {
+  return _responds_to.count(event_id) == 1;
+}
+
+bool Apsis::World::Object::respondsTo(const char* event) {
+  return respondsTo(Apsis::Registry::Event::id(event));
+}
