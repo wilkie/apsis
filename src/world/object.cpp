@@ -106,6 +106,7 @@ unsigned int Apsis::World::Object::dequeueEvent() {
   // TODO: Typical std::deque race condition
   unsigned int ret = _events.front();
   _events.pop_front();
+  return ret;
 }
 
 bool Apsis::World::Object::hasEvents() const {
