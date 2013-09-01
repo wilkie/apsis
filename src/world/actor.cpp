@@ -108,6 +108,7 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
   clipped = to;
 
   if (_ruleSet.collide(scene, _object, _position, to, collidedWith, clipped)) {
+    // TODO: Query whether or not this collision impedes
     to = clipped;
 
     unsigned int event_id = collidedWith.collideEvent();
@@ -115,6 +116,11 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
     if (_object.respondsTo(event_id)) {
       _object.enqueueEvent(event_id);
     }
+
+    // TODO: We need to trigger an event for the object we collided with?
+    //       Event type: "collided_with_#{this->name()}"
+    //       Or do we have that object create a collision rule and then just
+    //       add a hint that this was already compared?
   }
 
   _position.x = (float)to.x;
