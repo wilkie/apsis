@@ -88,6 +88,13 @@ namespace Apsis {
        *  state
        */
       bool toggleState(unsigned int state);
+
+      /*
+       *  Queues the given Event by either its event id or the string name
+       *  of the event.
+       */
+      void enqueueEvent(unsigned int event_id);
+      void enqueueEvent(const char* event);
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;

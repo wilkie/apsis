@@ -1,4 +1,6 @@
-#include <apsis/world/object.h>
+#include "apsis/world/object.h"
+
+#include "apsis/registry/event.h"
 
 const Apsis::World::Value& Apsis::World::Object::get(const char* key) const {
   return this->get(Apsis::Registry::Property::id(key));
@@ -66,4 +68,12 @@ bool Apsis::World::Object::toggleState(unsigned int state) {
     this->enableState(state);
     return true;
   }
+}
+
+void Apsis::World::Object::enqueueEvent(unsigned int event_id) {
+  _events.push_back(event_id);
+}
+
+void Apsis::World::Object::enqueueEvent(const char* event) {
+  enqueueEvent(Apsis::Registry::Event::id(event));
 }
