@@ -3,8 +3,7 @@
 bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
                                           Apsis::World::Object& object,
                                           const Apsis::Geometry::Rectangle& original,
-                                          const Apsis::Geometry::Point& intended,
-                                          Apsis::Geometry::Point& clipped) {
+                                          const Apsis::Geometry::Point& intended) {
   // For every point px, py in the set of 4 defined by given Rectangle
 
   Apsis::Geometry::Point points[4];
@@ -114,7 +113,5 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
     return false;
   }
 
-  // Get the actual point we should move to
-  clipped = calculatedPoint;
   return true;
 }

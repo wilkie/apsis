@@ -29,8 +29,7 @@ namespace Apsis {
     typedef bool (*CollideFunction)(const Apsis::World::Scene&,
                                     Apsis::World::Object& object,
                                     const Apsis::Geometry::Rectangle& original,
-                                    const Apsis::Geometry::Point& intended,
-                                    Apsis::Geometry::Point& clipped);
+                                    const Apsis::Geometry::Point& intended);
   }
 }
 

@@ -24,8 +24,7 @@ namespace Apsis {
       static bool collide(const Apsis::World::Scene& scene,
                           Apsis::World::Object& object,
                           const Apsis::Geometry::Rectangle& original,
-                          const Apsis::Geometry::Point& intended,
-                          Apsis::Geometry::Point& clipped);
+                          const Apsis::Geometry::Point& intended);
     };
   }
 }

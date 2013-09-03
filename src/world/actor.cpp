@@ -95,7 +95,6 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
   Apsis::Geometry::Point point;
 
   Apsis::Geometry::Point to;
-  Apsis::Geometry::Point clipped;
 
   to.x = (float)_object.get("x").asDouble();
   to.y = (float)_object.get("y").asDouble();
@@ -103,10 +102,6 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
   if (to.x == _position.x && to.y == _position.y) {
     return;
   }
-
-  char foo[1024];
-
-  clipped = to;
 
   Apsis::Geometry::Line trajectory;
   trajectory.points[0] = _position.center();
@@ -118,7 +113,7 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
     checkCollisions = false;
 
     // Generate a list of collisions.
-    _ruleSet.collide(scene, _object, _position, to, clipped);
+    _ruleSet.collide(scene, _object, _position, to);
 
     // Collisions are iterated in the order they occur as one moves.
     for (unsigned int i = 0; i < _object.collisionCount(); i++) {

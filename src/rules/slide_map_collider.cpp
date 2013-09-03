@@ -13,14 +13,12 @@
 bool Apsis::Rules::SlideMapCollider::collide(const Apsis::World::Scene& scene,
                                              Apsis::World::Object& object,
                                              const Apsis::Geometry::Rectangle& original,
-                                             const Apsis::Geometry::Point& intended,
-                                             Apsis::Geometry::Point& clipped) {
+                                             const Apsis::Geometry::Point& intended) {
   // Use MapCollider as a base
   if (Apsis::Rules::MapCollider::collide(scene,
                                          object,
                                          original,
-                                         intended,
-                                         clipped)) {
+                                         intended)) {
     // Determine redirection vector
     for (unsigned int i = 0; i < object.collisionCount(); i++) {
       const Apsis::World::CollisionObject& collisionObject = object.collisionObject(i);

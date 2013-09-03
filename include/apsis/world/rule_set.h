@@ -44,8 +44,7 @@ namespace Apsis {
       bool collide(const Apsis::World::Scene& scene,
                    Apsis::World::Object& object,
                    const Apsis::Geometry::Rectangle& original,
-                   const Apsis::Geometry::Point& intended,
-                   Apsis::Geometry::Point& clipped) const;
+                   const Apsis::Geometry::Point& intended) const;
 
       /*
        *  Updates objects that react to a particular input action.
