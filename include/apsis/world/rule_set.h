@@ -42,10 +42,9 @@ namespace Apsis {
        *  Checks collisions of the given object within the given scene.
        */
       bool collide(const Apsis::World::Scene& scene,
-                   const Apsis::World::Object& object,
+                   Apsis::World::Object& object,
                    const Apsis::Geometry::Rectangle& original,
                    const Apsis::Geometry::Point& intended,
-                   Apsis::World::CollisionObject& collidedWith,
                    Apsis::Geometry::Point& clipped) const;
 
       /*

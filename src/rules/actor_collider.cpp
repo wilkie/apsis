@@ -1,11 +1,9 @@
 #include "apsis/rules/actor_collider.h"
 
 bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
-                                          const unsigned int objectId,
-                                          const Apsis::World::Object& object,
+                                          Apsis::World::Object& object,
                                           const Apsis::Geometry::Rectangle& original,
                                           const Apsis::Geometry::Point& intended,
-                                          Apsis::World::CollisionObject& collidedWith,
                                           Apsis::Geometry::Point& clipped) {
   // For every point px, py in the set of 4 defined by given Rectangle
 
@@ -89,7 +87,24 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
             tMax = tMax;
           }
 
-          collidedWith.actor(actor, 0.0f, actor.position().edge(edge - 1), l.points[0]);
+          Apsis::World::CollisionObject::CollisionType::CollisionTypes collision_type;
+
+          static unsigned int passable_id = Apsis::Registry::Property::id("passable");
+
+          if (!actor.object().has(passable_id) ||
+              actor.object().get(passable_id).asInteger() != 0) {
+            collision_type = Apsis::World::CollisionObject::CollisionType::Passed;
+          }
+          else {
+            collision_type = Apsis::World::CollisionObject::CollisionType::Impeded;
+          }
+
+          object.addCollision(t, Apsis::World::CollisionObject(actor,
+                                                               actor.position().edge(edge - 1),
+                                                               l.points[0],
+                                                               calculatedPoint,
+                                                               collision_type,
+                                                               0.0f));
         }
       }
     }

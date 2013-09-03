@@ -9,10 +9,30 @@
 Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Actor& actor,
                                                const Apsis::Geometry::Line& edge,
                                                const Apsis::Geometry::Point& point,
+                                               const Apsis::Geometry::Point& repositionPoint,
+                                               CollisionType::CollisionTypes effect,
                                                float direction)
   : _direction(direction),
-    _type(Apsis::World::CollisionObject::Type::Actor),
+    _object_type(ObjectType::Actor),
+    _collision_type(effect),
     _edge(edge),
+    _repositionPoint(repositionPoint),
+    _point(point) {
+  _payload.actor = &actor;
+}
+
+Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Actor& actor,
+                                               const Apsis::Geometry::Line& edge,
+                                               const Apsis::Geometry::Point& point,
+                                               const Apsis::Geometry::Point& repositionPoint,
+                                               Apsis::Geometry::Line& redirection,
+                                               float direction)
+  : _direction(direction),
+    _object_type(ObjectType::Actor),
+    _collision_type(CollisionType::Redirected),
+    _redirection(redirection),
+    _edge(edge),
+    _repositionPoint(repositionPoint),
     _point(point) {
   _payload.actor = &actor;
 }
@@ -20,10 +40,30 @@ Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Actor& actor,
 Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Map& map,
                                                const Apsis::Geometry::Line& edge,
                                                const Apsis::Geometry::Point& point,
+                                               const Apsis::Geometry::Point& repositionPoint,
+                                               CollisionType::CollisionTypes effect,
                                                float direction)
   : _direction(direction),
-    _type(Apsis::World::CollisionObject::Type::Map),
+    _object_type(ObjectType::Map),
+    _collision_type(effect),
     _edge(edge),
+    _repositionPoint(repositionPoint),
+    _point(point) {
+  _payload.map = &map;
+}
+
+Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Map& map,
+                                               const Apsis::Geometry::Line& edge,
+                                               const Apsis::Geometry::Point& point,
+                                               const Apsis::Geometry::Point& repositionPoint,
+                                               Apsis::Geometry::Line& redirection,
+                                               float direction)
+  : _direction(direction),
+    _object_type(ObjectType::Map),
+    _collision_type(CollisionType::Redirected),
+    _redirection(redirection),
+    _edge(edge),
+    _repositionPoint(repositionPoint),
     _point(point) {
   _payload.map = &map;
 }
@@ -31,20 +71,46 @@ Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Map& map,
 Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Tile& tile,
                                                const Apsis::Geometry::Line& edge,
                                                const Apsis::Geometry::Point& point,
+                                               const Apsis::Geometry::Point& repositionPoint,
+                                               CollisionType::CollisionTypes effect,
                                                float direction)
   : _direction(direction),
-    _type(Apsis::World::CollisionObject::Type::Tile),
+    _object_type(ObjectType::Tile),
+    _collision_type(effect),
     _edge(edge),
+    _repositionPoint(repositionPoint),
     _point(point) {
   _payload.tile = &tile;
 }
 
-Apsis::World::CollisionObject::Type::Types Apsis::World::CollisionObject::type() const {
-  return _type;
+Apsis::World::CollisionObject::CollisionObject(const Apsis::World::Tile& tile,
+                                               const Apsis::Geometry::Line& edge,
+                                               const Apsis::Geometry::Point& point,
+                                               const Apsis::Geometry::Point& repositionPoint,
+                                               Apsis::Geometry::Line& redirection,
+                                               float direction)
+  : _direction(direction),
+    _object_type(ObjectType::Tile),
+    _collision_type(CollisionType::Redirected),
+    _redirection(redirection),
+    _edge(edge),
+    _repositionPoint(repositionPoint),
+    _point(point) {
+  _payload.tile = &tile;
+}
+
+Apsis::World::CollisionObject::ObjectType::ObjectTypes
+Apsis::World::CollisionObject::objectType() const {
+  return _object_type;
+}
+
+Apsis::World::CollisionObject::CollisionType::CollisionTypes
+Apsis::World::CollisionObject::collisionType() const {
+  return _collision_type;
 }
 
 const Apsis::World::Actor& Apsis::World::CollisionObject::actor() const {
-  if (_type != Type::Actor) {
+  if (_object_type != ObjectType::Actor) {
     throw "CollisionObject::actor() : Object is not an Actor";
   }
 
@@ -52,7 +118,7 @@ const Apsis::World::Actor& Apsis::World::CollisionObject::actor() const {
 }
 
 const Apsis::World::Tile& Apsis::World::CollisionObject::tile() const {
-  if (_type != Type::Tile) {
+  if (_object_type != ObjectType::Tile) {
     throw "CollisionObject::actor() : Object is not a Tile";
   }
 
@@ -60,7 +126,7 @@ const Apsis::World::Tile& Apsis::World::CollisionObject::tile() const {
 }
 
 const Apsis::World::Map& Apsis::World::CollisionObject::map() const {
-  if (_type != Type::Map) {
+  if (_object_type != ObjectType::Map) {
     throw "CollisionObject::actor() : Object is not a Map";
  } 
 
@@ -68,10 +134,12 @@ const Apsis::World::Map& Apsis::World::CollisionObject::map() const {
 }
 
 void Apsis::World::CollisionObject::actor(const Apsis::World::Actor& value,
-                                          float direction,
                                           const Apsis::Geometry::Line& edge,
-                                          const Apsis::Geometry::Point& point) {
-  _type = Type::Actor;
+                                          const Apsis::Geometry::Point& point,
+                                          CollisionType::CollisionTypes effect,
+                                          float direction) {
+  _object_type = ObjectType::Actor;
+  _collision_type = effect;
   _payload.actor = &value;
   _direction = direction;
   _point = point;
@@ -79,10 +147,12 @@ void Apsis::World::CollisionObject::actor(const Apsis::World::Actor& value,
 }
 
 void Apsis::World::CollisionObject::map(const Apsis::World::Map& value,
-                                        float direction,
                                         const Apsis::Geometry::Line& edge,
-                                        const Apsis::Geometry::Point& point) {
-  _type = Type::Map;
+                                        const Apsis::Geometry::Point& point,
+                                        CollisionType::CollisionTypes effect,
+                                        float direction) {
+  _object_type = ObjectType::Map;
+  _collision_type = effect;
   _payload.map = &value;
   _direction = direction;
   _point = point;
@@ -90,10 +160,12 @@ void Apsis::World::CollisionObject::map(const Apsis::World::Map& value,
 }
 
 void Apsis::World::CollisionObject::tile(const Apsis::World::Tile& value,
-                                         float direction,
                                          const Apsis::Geometry::Line& edge,
-                                         const Apsis::Geometry::Point& point) {
-  _type = Type::Tile;
+                                         const Apsis::Geometry::Point& point,
+                                         CollisionType::CollisionTypes effect,
+                                         float direction) {
+  _object_type = ObjectType::Tile;
+  _collision_type = effect;
   _payload.tile = &value;
   _direction = direction;
   _point = point;
@@ -104,8 +176,16 @@ float Apsis::World::CollisionObject::direction() const {
   return _direction;
 }
 
+const Apsis::Geometry::Line& Apsis::World::CollisionObject::redirection() const {
+  return _redirection;
+}
+
 const Apsis::Geometry::Point& Apsis::World::CollisionObject::point() const {
   return _point;
+}
+
+const Apsis::Geometry::Point& Apsis::World::CollisionObject::repositionPoint() const {
+  return _repositionPoint;
 }
 
 const Apsis::Geometry::Line& Apsis::World::CollisionObject::edge() const {
@@ -115,15 +195,15 @@ const Apsis::Geometry::Line& Apsis::World::CollisionObject::edge() const {
 unsigned int Apsis::World::CollisionObject::collideEvent() const {
   std::string str = "collide_with_";
 
-  switch (_type) {
-  case Type::Tile:
+  switch (_object_type) {
+  case ObjectType::Tile:
     str = str.append("tile");
     break;
-  case Type::Actor:
+  case ObjectType::Actor:
     str = str.append("actor_");
     str = str.append(_payload.actor->name());
     break;
-  case Type::Map:
+  case ObjectType::Map:
     str = str.append("map");
     break;
   }

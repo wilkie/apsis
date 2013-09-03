@@ -1,12 +1,15 @@
 #ifndef APSIS_WORLD_OBJECT_H
 #define APSIS_WORLD_OBJECT_H
 
-#include <apsis/registry/state.h>
-#include <apsis/registry/property.h>
+#include "apsis/registry/state.h"
+#include "apsis/registry/property.h"
 
-#include <apsis/world/value.h>
+#include "apsis/world/value.h"
+
+#include "apsis/world/collision_object.h"
 
 #include <set>
+#include <map>
 #include <vector>
 #include <deque>
 #include <unordered_map>
@@ -196,6 +199,32 @@ namespace Apsis {
        *  Returns true if the given Object is this Object.
        */
       bool isMe(const Apsis::World::Object& reference) const;
+
+      /*
+       *  Adds the given CollisionObject at the specified fraction of movement.
+       */
+      void addCollision(float period, Apsis::World::CollisionObject& collisionObject);
+
+      /*
+       *  Returns the CollisionObject at the specified index.
+       */
+      const Apsis::World::CollisionObject& collisionObject(unsigned int index) const;
+
+      /*
+       *  Returns the period during movement that the collision took place
+       *  given by the specified index.
+       */
+      float collisionPeriod(unsigned int index) const;
+
+      /*
+       *  Returns the number of collisions.
+       */
+      unsigned int collisionCount() const;
+
+      /*
+       *  Clears the list of pending collisions.
+       */
+      void clearCollisions();
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;
@@ -210,7 +239,15 @@ namespace Apsis {
       std::set<unsigned int> _responds_to;
 
       // Event property lists
-      std::unordered_map<unsigned int, std::unordered_map<unsigned int, Apsis::World::Value>> _event_properties;
+      std::unordered_map<unsigned int, std::unordered_map<unsigned int, Apsis::World::Value> > _event_properties;
+
+      // Collisions in the current frame
+      std::map<float, Apsis::World::CollisionObject> _collisions;
+
+      // Cache for collision lookup
+      void _collisionCacheLookup(unsigned int index) const;
+      mutable std::map<float, Apsis::World::CollisionObject>::const_iterator _collisions_iterator;
+      mutable unsigned int _collisions_index;
     };
   }
 }

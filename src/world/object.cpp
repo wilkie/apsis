@@ -189,3 +189,54 @@ void Apsis::World::Object::setForEvent(unsigned int event_id,
 bool Apsis::World::Object::isMe(const Apsis::World::Object& reference) const {
   return &reference == this;
 }
+
+void Apsis::World::Object::addCollision(float period, Apsis::World::CollisionObject& collisionObject) {
+  std::pair<std::map<float, Apsis::World::CollisionObject>::iterator, bool> it
+    = _collisions.insert(
+      std::pair<float, Apsis::World::CollisionObject>(period, collisionObject)
+    );
+
+  if (it.second == false) {
+    // Already exists, replace collision object
+    it.first->second = collisionObject;
+  }
+}
+
+/*
+  *  Returns the CollisionObject at the specified index.
+  */
+const Apsis::World::CollisionObject& Apsis::World::Object::collisionObject(unsigned int index) const {
+  _collisionCacheLookup(index);
+  return (*_collisions_iterator).second;
+}
+
+float Apsis::World::Object::collisionPeriod(unsigned int index) const {
+  _collisionCacheLookup(index);
+  return (*_collisions_iterator).first;
+}
+
+void Apsis::World::Object::_collisionCacheLookup(unsigned int index) const {
+  if (index == 0) {
+    _collisions_index = 0;
+    _collisions_iterator = _collisions.begin();
+  }
+  else if (index == _collisions_index + 1) {
+    _collisions_index = index;
+    ++_collisions_iterator;
+  }
+  else {
+    _collisions_index = index;
+    _collisions_iterator = _collisions.begin();
+    for (unsigned int i = 0; i < index; i++) {
+      ++_collisions_iterator;
+    }
+  }
+}
+
+unsigned int Apsis::World::Object::collisionCount() const {
+  return _collisions.size();
+}
+
+void Apsis::World::Object::clearCollisions() {
+  _collisions.clear();
+}

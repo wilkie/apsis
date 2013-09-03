@@ -10,8 +10,8 @@ bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) {
 }
 
 bool Apsis::Geometry::Rectangle::intersects(Line* line) {
-  double deltaX = (line->points[1].x - line->points[0].x);
-  double deltaY = (line->points[1].y - line->points[0].y);
+  float deltaX = (line->points[1].x - line->points[0].x);
+  float deltaY = (line->points[1].y - line->points[0].y);
 
   // Liang-Barsky Algorithm to find the intersection point
  
@@ -23,21 +23,21 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
 
   // If these are within the range [0..1], then the line intersects the axis of
   //   the rectangle.
-  double tMin, tMax;
+  float tMin, tMax;
   tMin = 0.0;
   tMax = 1.0;
 
-  double p[4];
-  double q[4];
-  double exactPosition[4];
+  float p[4];
+  float q[4];
+  float exactPosition[4];
 
-  double halfWidth  = width / 2.0;
-  double halfHeight = height / 2.0;
+  float halfWidth  = width / 2.0;
+  float halfHeight = height / 2.0;
 
-  double left   = x - halfWidth;
-  double right  = x + halfWidth;
-  double top    = y - halfWidth;
-  double bottom = y + halfWidth;
+  float left   = x - halfWidth;
+  float right  = x + halfWidth;
+  float top    = y - halfWidth;
+  float bottom = y + halfWidth;
 
   // Left
   p[0] = -deltaX;
@@ -254,15 +254,29 @@ unsigned int Apsis::Geometry::Rectangle::clip(Line* line, float* tMin, float* tM
   if (*tMin == 0.0 && *tMax == 1.0) {
     // Inside rectangle
     for (unsigned int i = 0; i < 4; i++) {
+      // If we are touching an edge, return that edge.
       if (q[i] < 0.00005) {
-        line_index_min = i;
+        if (i < 2) {
+          line->points[0].x = exactPosition[i];
+        }
+        else {
+          line->points[0].y = exactPosition[i];
+        }
+        return i + 1;
       }
     }
 
-    if (line_index_min != 2) {
-      line_index_min = 2;
-    }
-    return line_index_min + 1;
+    return 0;
+  }
+
+  // In a special case when tMin and tMax are 0.0,
+  // tMin does not get set and thus does not have
+  // a valid line_index_min indicating which edge
+  // was the clipping edge... but tMax must be set
+  // so return that instead. (This happens when the
+  // line clips a corner)
+  if (((*tMin) - 0.00005 < (*tMax)) && ((*tMin) + 0.00005 > (*tMax))) {
+    return line_index_max + 1;
   }
 
   return line_index_min + 1;

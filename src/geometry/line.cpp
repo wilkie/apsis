@@ -108,3 +108,38 @@ bool Apsis::Geometry::Line::clips(Line* line, Point* point) {
   point->y = y1 + t1 * (y2 - y1);
   return true;
 }
+
+Apsis::Geometry::Point Apsis::Geometry::Line::at(float t) {
+  float at_x = points[0].x + (points[1].x - points[0].x) * t;
+  float at_y = points[0].y + (points[1].y - points[0].y) * t;
+  
+  Apsis::Geometry::Point p = { at_x, at_y };
+  return p;
+}
+
+float Apsis::Geometry::Line::where(Apsis::Geometry::Point& point) {
+  if (points[1].x == points[0].x) {
+    if (points[0].y == points[1].y) {
+      return 0.0f;
+    }
+
+    return (point.y - points[0].y) / (points[1].y - points[0].y);
+  }
+
+  return (point.x - points[0].x) / (points[1].x - points[0].x);
+}
+
+bool Apsis::Geometry::Line::equals(Apsis::Geometry::Line& line) {
+  if (line.points[0].x - 0.00005 < points[0].x &&
+      line.points[0].x + 0.00005 > points[0].x &&
+      line.points[1].x - 0.00005 < points[1].x &&
+      line.points[1].x + 0.00005 > points[1].x &&
+      line.points[0].y - 0.00005 < points[0].y &&
+      line.points[0].y + 0.00005 > points[0].y &&
+      line.points[1].y - 0.00005 < points[1].y &&
+      line.points[1].y + 0.00005 > points[1].y) {
+    return true;
+  }
+
+  return false;
+}

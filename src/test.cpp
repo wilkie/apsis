@@ -11,6 +11,9 @@
 
 #include <clew/clew.h>
 
+#include "apsis/geometry/line.h"
+#include "apsis/geometry/rectangle.h"
+
 int main(int argc, char** argv) {
   // initialize Apsis
   if (clewInit("OpenCL.dll") != CLEW_SUCCESS) {

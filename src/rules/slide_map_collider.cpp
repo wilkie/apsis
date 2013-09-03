@@ -10,91 +10,64 @@
 
 #include "apsis/rules/map_collider.h"
 
-#include <math.h>
-
 bool Apsis::Rules::SlideMapCollider::collide(const Apsis::World::Scene& scene,
-                                                  const unsigned int objectId,
-                                                  const Apsis::World::Object& object,
-                                                  const Apsis::Geometry::Rectangle& original,
-                                                  const Apsis::Geometry::Point& intended,
-                                                  Apsis::World::CollisionObject& collidedWith,
-                                                  Apsis::Geometry::Point& clipped) {
+                                             Apsis::World::Object& object,
+                                             const Apsis::Geometry::Rectangle& original,
+                                             const Apsis::Geometry::Point& intended,
+                                             Apsis::Geometry::Point& clipped) {
+  // Use MapCollider as a base
   if (Apsis::Rules::MapCollider::collide(scene,
-                                                   objectId,
-                                                   object,
-                                                   original,
-                                                   intended,
-                                                   collidedWith,
-                                                   clipped)) {
-    // Adjust vector to remove collision direction and try again.
-    if (collidedWith.type() == Apsis::World::CollisionObject::Type::Tile) {
-      const Apsis::World::Tile& tile = collidedWith.tile();
-      const Apsis::Geometry::Line& edge = collidedWith.edge();
+                                         object,
+                                         original,
+                                         intended,
+                                         clipped)) {
+    // Determine redirection vector
+    for (unsigned int i = 0; i < object.collisionCount(); i++) {
+      const Apsis::World::CollisionObject& collisionObject = object.collisionObject(i);
 
-      Apsis::Geometry::Point new_intended = intended;
-      Apsis::Geometry::Rectangle new_original = original;
+      if (collisionObject.collisionType() == Apsis::World::CollisionObject::CollisionType::Impeded) {
+        if (collisionObject.objectType() == Apsis::World::CollisionObject::ObjectType::Tile) {
+          float t = object.collisionPeriod(i);
 
-      Apsis::Geometry::Point clipped_1;
-      Apsis::Geometry::Point clipped_2;
+          Apsis::Geometry::Line trajectory;
+          trajectory.points[0] = original.center();
+          trajectory.points[1] = intended;
+          // This would be the first impeding tile... set a redirect vector on this collision object
 
-      new_original.x = (float)clipped.x;
-      new_original.y = (float)clipped.y;
+          const Apsis::World::Tile& tile = collisionObject.tile();
+          const Apsis::Geometry::Line& edge = collisionObject.edge();
 
-      // Try going horizontally
-      new_intended.y = clipped.y;
+          // Continue our trajectory. We will alter it to glide against the map edge.
+          Apsis::Geometry::Line redirect;
+          redirect.points[0] = collisionObject.repositionPoint();
+          redirect.points[1] = intended;
 
-      Apsis::World::CollisionObject collidedWith_1 = collidedWith;
-      Apsis::World::CollisionObject collidedWith_2 = collidedWith;
+          if (edge.points[0].x == edge.points[1].x) {
+            // Hit left or right edge, redirect vertically
+            redirect.points[1].x = redirect.points[0].x;
+          }
+          else {
+            // Hit top or bottom edge, redirect horizontally
+            redirect.points[1].y = redirect.points[0].y;
+          }
 
-      int winner = 1;
-      float winner_distance = 0.0f;
+          if (!redirect.equals(trajectory)) {
+            // Reset the collision object to now contain a redirection vector.
+            object.addCollision(t, Apsis::World::CollisionObject(tile,
+                                                                 edge,
+                                                                 collisionObject.point(),
+                                                                 collisionObject.repositionPoint(),
+                                                                 redirect,
+                                                                 collisionObject.direction()));
+          }
+        }
 
-      // Try collision again!
-      if (!Apsis::Rules::MapCollider::collide(scene,
-                                                        objectId,
-                                                        object,
-                                                        new_original,
-                                                        new_intended,
-                                                        collidedWith_1,
-                                                        clipped_1)) {
-        clipped_1 = new_intended;
-      }
-
-      Apsis::Geometry::Line line;
-      line.points[0] = new_original.center();
-      line.points[1] = clipped_1;
-      winner_distance = (float)line.magnitude();
-
-      // Try going vertically
-      new_intended.y = intended.y;
-      new_intended.x = clipped.x;
-
-      // Try collision again!
-      if (!Apsis::Rules::MapCollider::collide(scene,
-                                                        objectId,
-                                                        object,
-                                                        new_original,
-                                                        new_intended,
-                                                        collidedWith_2,
-                                                        clipped_2)) {
-        clipped_2 = new_intended;
-      }
-
-      line.points[1] = clipped_2;
-      if ((float)line.magnitude() > winner_distance) {
-        winner = 2;
-      }
-
-      if (winner == 1) {
-        collidedWith = collidedWith_1;
-        clipped = clipped_1;
-      }
-      else {
-        collidedWith = collidedWith_2;
-        clipped = clipped_2;
+        // Regardless, we are impeded. So stop going.
+        break;
       }
     }
     return true;
   }
+
   return false;
 }

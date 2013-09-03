@@ -8,21 +8,6 @@
       "thing": "pink_spaceblob",
       "x": 300,
       "y": 300
-    },
-    {
-      "thing": "coin",
-      "x": 600,
-      "y": 300
-    },
-    {
-      "thing": "coin",
-      "x": 670,
-      "y": 300
-    },
-    {
-      "thing": "coin",
-      "x": 740,
-      "y": 300
     }
   ],
 

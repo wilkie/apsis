@@ -109,13 +109,14 @@ void Apsis::World::RuleSet::act(unsigned int action_id,
 }
 
 bool Apsis::World::RuleSet::collide(const Apsis::World::Scene& scene,
-                                    const Apsis::World::Object& object,
+                                    Apsis::World::Object& object,
                                     const Apsis::Geometry::Rectangle& original,
                                     const Apsis::Geometry::Point& intended,
-                                    Apsis::World::CollisionObject& collidedWith,
                                     Apsis::Geometry::Point& clipped) const {
   bool collided = false;
   clipped = intended;
+
+  object.clearCollisions();
 
   for(unsigned int i = 0; i < _rules.size(); i++) {
     const RuleNode& node = _rules[i];
@@ -125,12 +126,14 @@ bool Apsis::World::RuleSet::collide(const Apsis::World::Scene& scene,
     for (unsigned int rule_id = 0; rule_id < rule.collideFunctionCount(); rule_id++) {
       Apsis::Geometry::Point clippedTmp = clipped;
 
-      if (rule.collideFunction(rule_id)(scene, 0, object, original, clipped, collidedWith, clippedTmp)) {
+      if (rule.collideFunction(rule_id)(scene, object, original, clipped, clippedTmp)) {
         clipped = clippedTmp;
         collided = true;
       }
     }
   }
+
+  // Interpret collisions and decide if we need another collision pass.
 
   return collided;
 }

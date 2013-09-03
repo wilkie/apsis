@@ -93,7 +93,6 @@ void Apsis::World::Actor::update(Apsis::World::Scene& scene, float elapsed) {
 void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
   Apsis::Geometry::Line  line;
   Apsis::Geometry::Point point;
-  Apsis::World::CollisionObject collidedWith(*this, line, point, 0.0f);
 
   Apsis::Geometry::Point to;
   Apsis::Geometry::Point clipped;
@@ -105,16 +104,60 @@ void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
     return;
   }
 
+  char foo[1024];
+
   clipped = to;
 
-  if (_ruleSet.collide(scene, _object, _position, to, collidedWith, clipped)) {
-    // TODO: Query whether or not this collision impedes
-    to = clipped;
+  Apsis::Geometry::Line trajectory;
+  trajectory.points[0] = _position.center();
+  trajectory.points[1] = to;
 
-    unsigned int event_id = collidedWith.collideEvent();
+  bool checkCollisions = true;
+  while (checkCollisions) {
+    // Optimistically assume we won't do another collision pass.
+    checkCollisions = false;
 
-    if (_object.respondsTo(event_id)) {
-      _object.enqueueEvent(event_id);
+    // Generate a list of collisions.
+    _ruleSet.collide(scene, _object, _position, to, clipped);
+
+    // Collisions are iterated in the order they occur as one moves.
+    for (unsigned int i = 0; i < _object.collisionCount(); i++) {
+      const Apsis::World::CollisionObject& collisionObject
+        = _object.collisionObject(i);
+
+      unsigned int event_id = collisionObject.collideEvent();
+
+      if (_object.respondsTo(event_id)) {
+        _object.enqueueEvent(event_id);
+      }
+
+      if (collisionObject.collisionType() == Apsis::World::CollisionObject::CollisionType::Impeded) {
+        // Ok, clip the movement to this and stop.
+        to = trajectory.at(_object.collisionPeriod(i));
+        break;
+      }
+      else if (collisionObject.collisionType() == Apsis::World::CollisionObject::CollisionType::Redirected) {
+        // Ok, clip our movement and then spawn a new trajectory from the
+        // redirection vector. We still break to form a new list of
+        // collisions.
+        float t = _object.collisionPeriod(i);
+        to = collisionObject.repositionPoint();
+
+        _position.x = (float)to.x;
+        _position.y = (float)to.y;
+
+        trajectory = collisionObject.redirection();
+        to = trajectory.points[1];
+
+        // We have to continue checking collisions on this new path
+        // if there is a path to check
+        if (!(to.x == _position.x && to.y == _position.y)) {
+          checkCollisions = true;
+        }
+
+        // We are done with this collision list
+        break;
+      }
     }
 
     // TODO: We need to trigger an event for the object we collided with?
