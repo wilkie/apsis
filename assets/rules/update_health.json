@@ -1,0 +1,6 @@
+{
+  "type": "rule",
+  "name": "update_health",
+
+  "internal": true
+}
