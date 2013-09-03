@@ -8,7 +8,7 @@
 
 #include "apsis/world/collision_object.h"
 
-#include <set>
+#include <map>
 
 namespace Apsis {
   namespace World {
@@ -27,11 +27,9 @@ namespace Apsis {
      *  returned, the parameters collidedWith and clipped should be ignored.
      */
     typedef bool (*CollideFunction)(const Apsis::World::Scene&,
-                                    const unsigned int objectId,
-                                    const Apsis::World::Object& object,
+                                    Apsis::World::Object& object,
                                     const Apsis::Geometry::Rectangle& original,
                                     const Apsis::Geometry::Point& intended,
-                                    Apsis::World::CollisionObject& collidedWith,
                                     Apsis::Geometry::Point& clipped);
   }
 }

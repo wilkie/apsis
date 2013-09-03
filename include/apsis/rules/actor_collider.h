@@ -23,11 +23,9 @@ namespace Apsis {
     class ActorCollider {
     public:
       static bool collide(const Apsis::World::Scene& scene,
-                          const unsigned int objectId,
-                          const Apsis::World::Object& object,
+                          Apsis::World::Object& object,
                           const Apsis::Geometry::Rectangle& original,
                           const Apsis::Geometry::Point& intended,
-                          Apsis::World::CollisionObject& collidedWith,
                           Apsis::Geometry::Point& clipped);
     };
   }
