@@ -14,8 +14,6 @@
 
 #include <string>
 
-// TODO: THEN. GET ACTORS REACTING TO EVENTS!!!
-
 // TODO: INTERFACES!!!
 
 // TODO: BACKEND NEGOTIATION!!!

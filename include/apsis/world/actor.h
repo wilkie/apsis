@@ -3,7 +3,7 @@
 
 // Actors: interact with worlds
 // Sprite: 2d actor
-//  Thing: 3d actor
+//  Model: 3d actor
 
 // Actors have agents that decide how they affect the world, how world affects
 // them.
