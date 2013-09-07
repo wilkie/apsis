@@ -617,6 +617,9 @@
     <ClCompile Include="..\..\src\rules\add_value.cpp">
       <Filter>rules</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\interface\viewport.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1297,6 +1300,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\rules\add_value.h">
       <Filter>rules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\viewport.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

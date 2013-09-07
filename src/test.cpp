@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
   if (clewInit("OpenCL.dll") != CLEW_SUCCESS) {
     //OutputDebugStringA("error opening opencl\n");
   }
-  else {  
+  else {
     cl_platform_id test[5];
     cl_uint num;
     cl_uint ok = 5;

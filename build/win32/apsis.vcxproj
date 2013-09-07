@@ -84,6 +84,7 @@
     <ClCompile Include="..\..\src\input\binding.cpp" />
     <ClCompile Include="..\..\src\interface\filler_bar.cpp" />
     <ClCompile Include="..\..\src\interface\numbers.cpp" />
+    <ClCompile Include="..\..\src\interface\viewport.cpp" />
     <ClCompile Include="..\..\src\model\animation.cpp" />
     <ClCompile Include="..\..\src\model\light.cpp" />
     <ClCompile Include="..\..\src\model\material.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="..\..\include\apsis\input\key.h" />
     <ClInclude Include="..\..\include\apsis\interface\filler_bar.h" />
     <ClInclude Include="..\..\include\apsis\interface\numbers.h" />
+    <ClInclude Include="..\..\include\apsis\interface\viewport.h" />
     <ClInclude Include="..\..\include\apsis\model\animation.h" />
     <ClInclude Include="..\..\include\apsis\model\light.h" />
     <ClInclude Include="..\..\include\apsis\model\material.h" />
