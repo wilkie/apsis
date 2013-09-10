@@ -1,5 +1,10 @@
 #include "apsis/geometry/rectangle.h"
 
+
+Apsis::Geometry::Rectangle::Rectangle(float x, float y, float width, float height)
+  : x(x), y(y), width(width), height(height) {
+}
+
 bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) {
   bool doesNotIntersect = false;
   doesNotIntersect |= rectangle->x > (x + width);
@@ -31,8 +36,8 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
   float q[4];
   float exactPosition[4];
 
-  float halfWidth  = width / 2.0;
-  float halfHeight = height / 2.0;
+  float halfWidth  = width / 2.0f;
+  float halfHeight = height / 2.0f;
 
   float left   = x - halfWidth;
   float right  = x + halfWidth;
@@ -73,9 +78,9 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
   }
 
   // Unix Vector Magnitudes
-  double magnitudeX = deltaX;
-  double magnitudeY = deltaY;
-  double r;
+  float magnitudeX = deltaX;
+  float magnitudeY = deltaY;
+  float r;
 
   for (int i = 0; i < 4; i++) {
     if (p[i] < 0.0) {

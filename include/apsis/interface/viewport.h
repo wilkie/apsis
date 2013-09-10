@@ -3,6 +3,10 @@
 
 #include "apsis/engine/scene.h"
 
+#include "apsis/interface/window.h"
+
+#include "apsis/world/object.h"
+
 #include "apsis/primitives/camera.h"
 
 #include "apsis/geometry/point3d.h"
@@ -48,15 +52,13 @@ namespace Apsis {
       void draw() const;
 
     private:
-      // Viewports have a size
-      float _width;
-      float _height;
+      static void _draw(const Apsis::Geometry::Rectangle& position,
+                        const Apsis::World::Object& object);
 
       // Viewports have a Scene, a Camera, and a Window
       const Apsis::Engine::Scene& _scene;
-
       Apsis::Primitives::Camera _camera;
-      // Apsis::Interface::Window _window;
+      Apsis::Interface::Window _window;
     };
   }
 }

@@ -16,22 +16,23 @@
   #include <GL/glu.h>
 #endif
 
-Apsis::Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
-                                     float width,
-                                     float height)
-  : _width(width),
-    _height(height),
-    _scene(scene),
-    _camera(glm::vec2(0,0), 0.0f) {
+using namespace Apsis;
+
+Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
+                              float width,
+                              float height)
+  : _scene(scene),
+    _camera(glm::vec2(0,0), 0.0f),
+    _window(width / 2.0f, height / 2.0f, width, height, _draw) {
 }
 
-void Apsis::Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
+void Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
 }
 
-void Apsis::Interface::Viewport::position(float x, float y, float z) const {
+void Interface::Viewport::position(float x, float y, float z) const {
 }
 
-Apsis::Geometry::Point3d Apsis::Interface::Viewport::position() {
+Geometry::Point3d Interface::Viewport::position() {
   Apsis::Geometry::Point3d point;
   point.x = _camera.eye().x;
   point.y = _camera.eye().y;
@@ -39,26 +40,26 @@ Apsis::Geometry::Point3d Apsis::Interface::Viewport::position() {
   return point;
 }
 
-void Apsis::Interface::Viewport::target(Apsis::Geometry::Point3d& point) const {
+void Interface::Viewport::target(Apsis::Geometry::Point3d& point) const {
 }
 
-void Apsis::Interface::Viewport::target(float x, float y, float z) const {
+void Interface::Viewport::target(float x, float y, float z) const {
 }
 
-Apsis::Geometry::Point3d Apsis::Interface::Viewport::target() {
-  Apsis::Geometry::Point3d point;
+Geometry::Point3d Interface::Viewport::target() {
+  Geometry::Point3d point;
   point.x = _camera.eye().x;
   point.y = _camera.eye().y;
   point.z = _camera.eye().z;
   return point;
 }
 
-void Apsis::Interface::Viewport::draw() const {
+void Interface::Viewport::draw() const {
   bool orthographic = true;
 
   float rotation = 0.0;
 
-  float aspect = _width / _height;
+  float aspect = _window.position().width / _window.position().height;
 
   float nearf = 1;
   float farf = 20.0;
@@ -73,8 +74,8 @@ void Apsis::Interface::Viewport::draw() const {
 
   glm::mat4 projection;
 
-  float half_height = _height / 2.0f;
-  float half_width  = _width  / 2.0f;
+  float half_height = _window.position().height / 2.0f;
+  float half_width  = _window.position().width  / 2.0f;
 
   if (orthographic) {
     projection = glm::ortho(-half_width, half_width, -half_height, half_height);
@@ -91,7 +92,13 @@ void Apsis::Interface::Viewport::draw() const {
 
   float zoom = 1.0f;
 
-  Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(x+0.5), (float)(int)(z+0.5)), zoom);
+  Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(x+0.5),
+                                                           (float)(int)(z+0.5)),
+                                                 zoom);
 
   _scene.scene().draw(projection, camera, glm::mat4(1.0f));
+}
+
+void Interface::Viewport::_draw(const Geometry::Rectangle& position,
+                                       const World::Object& object) {
 }

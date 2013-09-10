@@ -7,6 +7,8 @@
 namespace Apsis {
   namespace Geometry {
     struct Rectangle {
+      Rectangle(float x, float y, float width, float height);
+
       float x;
       float y;
 

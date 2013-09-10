@@ -15,8 +15,8 @@ Apsis::Engine::System::System(const char* path,
     _objects(_parseOrCreateObject()),                    // Initialize Object Engine
     _scene(Apsis::Engine::Scene::default()),             // Initialize Scene Engine
     _viewport(_scene,                                    // Initialize Viewport
-              (float)videoSettings.resolutionX-100,
-              (float)videoSettings.resolutionY-100) {
+              (float)videoSettings.resolutionX,
+              (float)videoSettings.resolutionY) {
 
   // Parse objects and system data and populate data and caches.
   _parseJSONFile();

@@ -1,0 +1,100 @@
+#include "apsis/interface/window.h"
+
+Apsis::Interface::Window::Window(float x,
+                                 float y,
+                                 float width,
+                                 float height,
+                                 void(&draw)(const Apsis::Geometry::Rectangle& position,
+                                             const Apsis::World::Object& object))
+  : _position(x, y, width, height),
+    _draw(draw),
+    _childCount(0),
+    _child(NULL),
+    _next(NULL),
+    _prev(NULL) {
+}
+
+const Apsis::Geometry::Rectangle& Apsis::Interface::Window::position() const {
+  return _position;
+}
+
+const Apsis::Interface::Window& Apsis::Interface::Window::next() const {
+  return *_next;
+}
+
+const Apsis::Interface::Window& Apsis::Interface::Window::prev() const {
+  return *_prev;
+}
+
+const Apsis::Interface::Window& Apsis::Interface::Window::child() const {
+  return *_child;
+}
+
+unsigned int Apsis::Interface::Window::childCount() const {
+  return _childCount;
+}
+
+void Apsis::Interface::Window::add(Apsis::Interface::Window& window) {
+  // TODO: synchronize in some manner (can we do lockfree?)
+  window._parent = this;
+
+  if (_child == NULL) {
+    // Insert as head
+    _child = &window;
+    window._next = &window;
+    window._prev = &window;
+  }
+  else {
+    // Insert into list
+    Interface::Window* old_child = _child;
+
+    _child = &window;
+    _child->_next = old_child;
+    _child->_prev = old_child->_prev;
+    old_child->_prev = _child;
+  }
+
+  _childCount++;
+}
+
+void Apsis::Interface::Window::detach() {
+  if (_parent == NULL) {
+    // Not inserted or head...
+    return;
+  }
+
+  if (_next == _prev) {
+    _parent->_child = NULL;
+  }
+  else {
+    _next->_prev = _prev;
+    _prev->_next = _next;
+
+    _next = NULL;
+    _prev = NULL;
+  }
+
+  _parent->_childCount--;
+  _parent = NULL;
+}
+
+bool Apsis::Interface::Window::attached() const {
+  return _parent != NULL;
+}
+
+void Apsis::Interface::Window::draw() const {
+  _draw(_position, _object);
+
+  if (_child == NULL) {
+    return;
+  }
+
+  // Draw children
+  Interface::Window* current = _child;
+
+  do  {
+    current->draw();
+
+    current = current->_next;
+  } while (current != _child);
+}
