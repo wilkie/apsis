@@ -17,7 +17,7 @@ Apsis::Engine::Object& Apsis::Engine::Object::load(Json::Value& value) {
   return *oe;
 }
 
-Apsis::Engine::Object& Apsis::Engine::Object::default() {
+Apsis::Engine::Object& Apsis::Engine::Object::basic() {
   Apsis::Engine::Object* oe = new Apsis::Engine::Object();
   _object_engines.push_back(oe);
   return *oe;

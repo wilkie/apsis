@@ -15,12 +15,10 @@
 
 Apsis::Hud::Numbers::Numbers(Apsis::Sprite::Sheet* spriteSheet,
                              unsigned int startIndex,
-                             float x, float y) 
+                             float x, float y)
   : _spriteSheet(spriteSheet),
-    _startIndex(startIndex) {
-  _position.x = x;
-  _position.y = y;
-
+    _startIndex(startIndex),
+    _position(x, y, 0.0f, 0.0f) {
   value(0);
 }
 

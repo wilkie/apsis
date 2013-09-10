@@ -58,7 +58,7 @@ namespace Apsis {
       /*
        *  Return: the Apsis::Geometry::Rectangle for the Apsis::Sprite.
        */
-      Apsis::Geometry::Rectangle position() const;
+      const Apsis::Geometry::Rectangle& position() const;
 
       /*
        *  Sets the current animation to be played by this Apsis::Sprite.

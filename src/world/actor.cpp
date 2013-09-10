@@ -21,9 +21,10 @@
 
 Apsis::World::Actor::Actor(const Apsis::Sprite::Thing& thing,
                            unsigned int x,
-                           unsigned int y) 
+                           unsigned int y)
   : _thing(thing),
-    _sheet(thing.sheet()) {
+    _sheet(thing.sheet()),
+    _position(0.0f, 0.0f, 0.0f, 0.0f) {
 
   // Copy over object properties
   _object = thing.object();
@@ -50,7 +51,7 @@ const Apsis::Sprite::Sheet& Apsis::World::Actor::sheet() const {
   return _sheet;
 }
 
-Apsis::Geometry::Rectangle Apsis::World::Actor::position() const {
+const Apsis::Geometry::Rectangle& Apsis::World::Actor::position() const {
   return _position;
 }
 

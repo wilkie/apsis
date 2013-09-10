@@ -15,17 +15,17 @@ namespace Apsis {
       float width;
       float height;
 
-      bool intersects(Rectangle* rectangle);
-      bool intersects(Line* line);
+      bool intersects(Rectangle* rectangle) const;
+      bool intersects(Line* line) const;
 
-      unsigned int clip(Line* line, float* tMin, float* tMax);
+      unsigned int clip(Line* line, float* tMin, float* tMax) const;
 
-      bool contains(Point* point);
+      bool contains(Point* point) const;
 
-      bool on(Point* point);
-      bool on(Line* line);
+      bool on(Point* point) const;
+      bool on(Line* line) const;
 
-      bool corner(Point* point);
+      bool corner(Point* point) const;
 
       void points(Point points[4]) const;
       void lines(Line lines[4]) const;

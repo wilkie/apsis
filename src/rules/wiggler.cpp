@@ -2,6 +2,8 @@
 
 #include "apsis/registry/state.h"
 
+#include <math.h>
+
 bool Apsis::Rules::Wiggler::update(float elapsed,
                                    const Apsis::World::Scene& scene,
                                    const unsigned int objectId,

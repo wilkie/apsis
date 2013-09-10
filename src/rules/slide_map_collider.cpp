@@ -51,12 +51,14 @@ bool Apsis::Rules::SlideMapCollider::collide(const Apsis::World::Scene& scene,
 
           if (!redirect.equals(trajectory)) {
             // Reset the collision object to now contain a redirection vector.
-            object.addCollision(t, Apsis::World::CollisionObject(tile,
-                                                                 edge,
-                                                                 collisionObject.point(),
-                                                                 collisionObject.repositionPoint(),
-                                                                 redirect,
-                                                                 collisionObject.direction()));
+            Apsis::World::CollisionObject collided
+              = Apsis::World::CollisionObject(tile,
+                                              edge,
+                                              collisionObject.point(),
+                                              collisionObject.repositionPoint(),
+                                              redirect,
+                                              collisionObject.direction());
+            object.addCollision(t, collided);
           }
         }
 

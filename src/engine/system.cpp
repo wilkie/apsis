@@ -13,7 +13,7 @@ Apsis::Engine::System::System(const char* path,
     _jsonLoaded(false),                                  // JSON
     _input(_parseOrCreateInput()),                       // Initialize Input Engine
     _objects(_parseOrCreateObject()),                    // Initialize Object Engine
-    _scene(Apsis::Engine::Scene::default()),             // Initialize Scene Engine
+    _scene(Apsis::Engine::Scene::basic()),             // Initialize Scene Engine
     _viewport(_scene,                                    // Initialize Viewport
               (float)videoSettings.resolutionX,
               (float)videoSettings.resolutionY) {
@@ -72,14 +72,14 @@ const Apsis::Engine::Object& Apsis::Engine::System::_parseOrCreateObject() {
   }
 
   // Default
-  return Apsis::Engine::Object::default();
+  return Apsis::Engine::Object::basic();
 }
 
 Apsis::Engine::Input& Apsis::Engine::System::_parseOrCreateInput() {
   _openJSONFile();
 
   // Default
-  return Apsis::Engine::Input::default();
+  return Apsis::Engine::Input::basic();
 }
 
 void Apsis::Engine::System::_parseJSONFile() {

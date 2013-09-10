@@ -4,7 +4,7 @@
 
 std::vector<Apsis::Engine::Input*> Apsis::Engine::Input::_input_engines;
 
-Apsis::Engine::Input& Apsis::Engine::Input::default() {
+Apsis::Engine::Input& Apsis::Engine::Input::basic() {
   Apsis::Engine::Input* ie = new Apsis::Engine::Input();
   _input_engines.push_back(ie);
   return *ie;

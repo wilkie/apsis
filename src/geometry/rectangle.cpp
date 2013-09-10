@@ -5,7 +5,7 @@ Apsis::Geometry::Rectangle::Rectangle(float x, float y, float width, float heigh
   : x(x), y(y), width(width), height(height) {
 }
 
-bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) {
+bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) const {
   bool doesNotIntersect = false;
   doesNotIntersect |= rectangle->x > (x + width);
   doesNotIntersect |= x            > (rectangle->x + rectangle->width);
@@ -14,16 +14,16 @@ bool Apsis::Geometry::Rectangle::intersects(Rectangle* rectangle) {
   return !doesNotIntersect;
 }
 
-bool Apsis::Geometry::Rectangle::intersects(Line* line) {
+bool Apsis::Geometry::Rectangle::intersects(Line* line) const {
   float deltaX = (line->points[1].x - line->points[0].x);
   float deltaY = (line->points[1].y - line->points[0].y);
 
   // Liang-Barsky Algorithm to find the intersection point
- 
+
   // Parametric Equation for a Line:
   // x = boundingBox.x + t * (boundingBox.width);
   // y = boundingBox.y + t * (boundingBox.height);
-  
+
   // Use these with the sides of the rectangle to find values of 't'
 
   // If these are within the range [0..1], then the line intersects the axis of
@@ -118,16 +118,16 @@ bool Apsis::Geometry::Rectangle::intersects(Line* line) {
   return true;
 }
 
-unsigned int Apsis::Geometry::Rectangle::clip(Line* line, float* tMin, float* tMax) {
+unsigned int Apsis::Geometry::Rectangle::clip(Line* line, float* tMin, float* tMax) const {
   float deltaX = (line->points[1].x - line->points[0].x);
   float deltaY = (line->points[1].y - line->points[0].y);
 
   // Liang-Barsky Algorithm to find the intersection point
- 
+
   // Parametric Equation for a Line:
   // x = boundingBox.x + t * (boundingBox.width);
   // y = boundingBox.y + t * (boundingBox.height);
-  
+
   // Use these with the sides of the rectangle to find values of 't'
 
   // If these are within the range [0..1], then the line intersects the axis of
@@ -287,7 +287,7 @@ unsigned int Apsis::Geometry::Rectangle::clip(Line* line, float* tMin, float* tM
   return line_index_min + 1;
 }
 
-bool Apsis::Geometry::Rectangle::contains(Point* point) {
+bool Apsis::Geometry::Rectangle::contains(Point* point) const {
   double halfWidth  = width  / 2.0;
   double halfHeight = height / 2.0;
 
@@ -299,7 +299,7 @@ bool Apsis::Geometry::Rectangle::contains(Point* point) {
   return containsPoint;
 }
 
-bool Apsis::Geometry::Rectangle::on(Point* point) {
+bool Apsis::Geometry::Rectangle::on(Point* point) const {
   double halfWidth  = width  / 2.0;
   double halfHeight = height / 2.0;
 
@@ -315,11 +315,11 @@ bool Apsis::Geometry::Rectangle::on(Point* point) {
   if (point->x == right && point->y >= top && point->y <= bottom) {
     return true;
   }
-  
+
   if (point->y == top && point->x >= left && point->x <= right) {
     return true;
   }
-  
+
   if (point->y == bottom && point->x >= left && point->x <= right) {
     return true;
   }
@@ -327,7 +327,7 @@ bool Apsis::Geometry::Rectangle::on(Point* point) {
   return false;
 }
 
-bool Apsis::Geometry::Rectangle::corner(Point* point) {
+bool Apsis::Geometry::Rectangle::corner(Point* point) const {
   double halfWidth  = width  / 2.0;
   double halfHeight = height / 2.0;
 
@@ -343,11 +343,11 @@ bool Apsis::Geometry::Rectangle::corner(Point* point) {
   if (point->x == left && point->y == bottom) {
     return true;
   }
-  
+
   if (point->x == right && point->y == top) {
     return true;
   }
-  
+
   if (point->x == right && point->y == bottom) {
     return true;
   }
@@ -355,7 +355,7 @@ bool Apsis::Geometry::Rectangle::corner(Point* point) {
   return false;
 }
 
-bool Apsis::Geometry::Rectangle::on(Line* line) {
+bool Apsis::Geometry::Rectangle::on(Line* line) const {
   if (line->points[0].x == line->points[1].x || line->points[0].y == line->points[1].y) {
     return this->on(&line->points[0]) && this->on(&line->points[1]);
   }

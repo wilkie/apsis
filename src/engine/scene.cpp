@@ -2,7 +2,7 @@
 
 std::vector<Apsis::Engine::Scene*> Apsis::Engine::Scene::_scene_engines;
 
-Apsis::Engine::Scene& Apsis::Engine::Scene::default() {
+Apsis::Engine::Scene& Apsis::Engine::Scene::basic() {
   Apsis::Engine::Scene* se = new Apsis::Engine::Scene();
   _scene_engines.push_back(se);
   return *se;

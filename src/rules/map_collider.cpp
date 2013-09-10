@@ -92,7 +92,8 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
       }
 
       // Do we intersect?
-      Apsis::Geometry::Rectangle tileRect;
+      // TODO: get rect from Map
+      Apsis::Geometry::Rectangle tileRect(0.0f, 0.0f, 0.0f, 0.0f);
 
       tileRect.width  = map.tileWidth();
       tileRect.height = map.tileHeight();
@@ -225,12 +226,14 @@ bool Apsis::Rules::MapCollider::collide(const Apsis::World::Scene& scene,
             }
 
             if (edge > 0 && t >= 0.0f && t <= 1.0f) {
-              object.addCollision(t, Apsis::World::CollisionObject(tile,
-                                                                   tileRect.edge(edge - 1),
-                                                                   l.points[0],
-                                                                   calculatedPoint,
-                                                                   Apsis::World::CollisionObject::CollisionType::Impeded,
-                                                                   0.0f));
+              Apsis::World::CollisionObject collided
+                = Apsis::World::CollisionObject(tile,
+                                                tileRect.edge(edge - 1),
+                                                l.points[0],
+                                                calculatedPoint,
+                                                Apsis::World::CollisionObject::CollisionType::Impeded,
+                                                0.0f);
+              object.addCollision(t, collided);
             }
           }
         }

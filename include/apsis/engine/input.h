@@ -25,7 +25,7 @@ namespace Apsis {
       /*
         *  Constructs a bare input engine.
         */
-      static Apsis::Engine::Input& default();
+      static Apsis::Engine::Input& basic();
 
       /*
         *  Tells the input engine to press the given key. It will return

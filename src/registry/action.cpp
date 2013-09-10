@@ -17,7 +17,7 @@ Apsis::Registry::Action& Apsis::Registry::Action::id(const char* name) {
     // already exists
     return *_actions[std::distance(_ids.begin(), it)];
   }
-  
+
   _actions.push_back(new Apsis::Registry::Action());
   _ids.push_back(str);
   _actions[_ids.size() - 1]->_id = _ids.size()-1;
@@ -160,14 +160,14 @@ void Apsis::Registry::Action::load(const char* path) {
           }
 
           if (action.bindingCount() < 2) {
-            action.bindSecondary(
-              Apsis::Input::Binding(code, shift, control, alt));
+            Apsis::Input::Binding binding = Apsis::Input::Binding(code, shift, control, alt);
+            action.bindSecondary(binding);
           }
         }
         else {
           if (action.bindingCount() < 2) {
-            action.bindSecondary(
-              Apsis::Input::Binding((*it_key).asCString(), false, false, false));
+            Apsis::Input::Binding binding = Apsis::Input::Binding((*it_key).asCString(), false, false, false);
+            action.bindSecondary(binding);
           }
         }
       }

@@ -13,7 +13,7 @@ namespace Apsis {
       /*
        *  Constructs a scene engine to hold and manage the scene.
        */
-      static Apsis::Engine::Scene& default();
+      static Apsis::Engine::Scene& basic();
 
       /*
        *  Sets the scene.

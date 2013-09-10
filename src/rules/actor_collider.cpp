@@ -50,7 +50,7 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
     }
 
     // Do we intersect?
-    Apsis::Geometry::Rectangle& rect = actor.position();
+    const Apsis::Geometry::Rectangle& rect = actor.position();
 
     for (int i = 0; i < 4; i++) {
       float tMin, tMax;
@@ -98,12 +98,14 @@ bool Apsis::Rules::ActorCollider::collide(const Apsis::World::Scene& scene,
             collision_type = Apsis::World::CollisionObject::CollisionType::Impeded;
           }
 
-          object.addCollision(t, Apsis::World::CollisionObject(actor,
-                                                               actor.position().edge(edge - 1),
-                                                               l.points[0],
-                                                               calculatedPoint,
-                                                               collision_type,
-                                                               0.0f));
+          Apsis::World::CollisionObject collided
+            = Apsis::World::CollisionObject(actor,
+                                            actor.position().edge(edge - 1),
+                                            l.points[0],
+                                            calculatedPoint,
+                                            collision_type,
+                                            0.0f);
+          object.addCollision(t, collided);
         }
       }
     }

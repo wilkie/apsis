@@ -56,7 +56,7 @@ namespace Apsis {
       /*
        *  Constructs an Object engine that has default properties.
        */
-      static Apsis::Engine::Object& default();
+      static Apsis::Engine::Object& basic();
 
       /*
        *  Loads or returns the existing Thing object with the given
