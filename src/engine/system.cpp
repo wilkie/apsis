@@ -5,27 +5,6 @@
 #include <fstream>
 #include <stdlib.h>
 
-// TODO: Move draw and view management to a class
-// ----------- GOES TO VIEWPORT ----------------- //
-
-// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
-#include <glm/glm.hpp>
-// glm::translate, glm::rotate, glm::scale, glm::perspective
-#include <glm/gtc/matrix_transform.hpp>
-// glm::value_ptr
-#include <glm/gtc/type_ptr.hpp>
-
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
-
-// --------- END GOES TO VIEWPORT --------------- //
-
 Apsis::Engine::System::System(const char* path,
                               const Apsis::Settings::Video& videoSettings)
   : _path(path),                                         // Set path
@@ -34,7 +13,10 @@ Apsis::Engine::System::System(const char* path,
     _jsonLoaded(false),                                  // JSON
     _input(_parseOrCreateInput()),                       // Initialize Input Engine
     _objects(_parseOrCreateObject()),                    // Initialize Object Engine
-    _scene(NULL) {                                       // Initially have no active scene
+    _scene(Apsis::Engine::Scene::default()),             // Initialize Scene Engine
+    _viewport(_scene,                                    // Initialize Viewport
+              (float)videoSettings.resolutionX-100,
+              (float)videoSettings.resolutionY-100) {
 
   // Parse objects and system data and populate data and caches.
   _parseJSONFile();
@@ -109,15 +91,16 @@ void Apsis::Engine::System::_parseJSONFile() {
       throw "System description file's 'scenes' member is not an array of strings.";
     }
 
+    bool sceneLoaded = false;
     for (Json::Value::iterator it = _value["scenes"].begin();
          it != _value["scenes"].end();
          ++it) {
       if ((*it).isString()) {
         const Apsis::Registry::Scene& scene
           = _objects.loadScene((*it).asCString());
-
-        if (_scene == NULL) {
-          _scene = new Apsis::World::Scene(scene);
+        if (!sceneLoaded) {
+          _scene.scene(*(new Apsis::World::Scene(scene)));
+          sceneLoaded = true;
         }
       }
       else {
@@ -150,21 +133,17 @@ void Apsis::Engine::System::run() {
 
   Apsis::Engine::Event core_event;
 
-  if (_scene == NULL) {
-    return;
-  }
-
   unsigned int action_id = 0;
   while(true) {
     if (_backend.poll(core_event)) {
       if (core_event.type() == Apsis::Engine::Event::Type::Press) {
         if (_input.press(core_event.binding(), action_id)) {
-          _scene->act(action_id, true);
+          _scene.scene().act(action_id, true);
         }
       }
       else if (core_event.type() == Apsis::Engine::Event::Type::Release) {
         if (_input.release(core_event.binding(), action_id)) {
-          _scene->act(action_id, false);
+          _scene.scene().act(action_id, false);
         }
       }
       else if (core_event.type() == Apsis::Engine::Event::Type::SystemEvent) {
@@ -173,53 +152,9 @@ void Apsis::Engine::System::run() {
         }
       }
     }
-    _scene->update(clock.elapsedTime());
+    _scene.scene().update(clock.elapsedTime());
 
-    // TODO: Obviously, there should be a viewport manager class...
-    // -- GOES TO VIEWPORT -- //
-
-    bool orthographic = true;
-
-    float rotation = 0.0;
-
-    float aspect = (float)_videoSettings.resolutionX / (float)_videoSettings.resolutionY;
-
-    float nearf = 1;
-    float farf = 20.0;
-
-    float fov = 45.0f;
-
-    float top = tanf(fov * 0.5f) * nearf;
-    float bottom = -top;
-
-    float left = aspect * bottom;
-    float right = aspect * top;
-
-    glm::mat4 projection;
-
-    float half_height = _videoSettings.resolutionY/2.0f;
-    float half_width  = _videoSettings.resolutionX/2.0f;
-
-    if (orthographic) {
-      projection = glm::ortho(-half_width, half_width, -half_height, half_height);
-    }
-    else {
-      projection = glm::perspective(fov, aspect, nearf, farf);
-    }
-
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    float x = half_width;
-    float z = half_height;
-
-    float zoom = 1.0f;
-
-    Apsis::Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(x+0.5), (float)(int)(z+0.5)), zoom);
-
-    _scene->draw(projection, camera, glm::mat4(1.0f));
-
-    // END GOES TO VIEWPORT //
+    _viewport.draw();
 
     _backend.swap();
   }

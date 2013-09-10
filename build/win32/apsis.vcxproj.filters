@@ -620,6 +620,9 @@
     <ClCompile Include="..\..\src\interface\viewport.cpp">
       <Filter>interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\scene.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1303,6 +1306,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\viewport.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\scene.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

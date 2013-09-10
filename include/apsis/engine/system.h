@@ -5,8 +5,11 @@
 
 #include "apsis/engine/input.h"
 #include "apsis/engine/object.h"
+#include "apsis/engine/scene.h"
 
 #include "apsis/settings/video.h"
+
+#include "apsis/interface/viewport.h"
 
 #include "apsis/world/scene.h"
 
@@ -62,6 +65,9 @@ namespace Apsis {
       // Backend
       Apsis::Backend::Sdl& _backend;
 
+      // Scene Manager
+      Apsis::Engine::Scene _scene;
+
       // Parses the given json via the path given in jsonFile.
       void _openJSONFile();
 
@@ -90,8 +96,8 @@ namespace Apsis {
       // Object Engine
       const Apsis::Engine::Object& _objects;
 
-      // Current Scene
-      Apsis::World::Scene* _scene;
+      // Screen Viewport
+      Apsis::Interface::Viewport _viewport;
     };
   }
 }

@@ -56,7 +56,7 @@ namespace Apsis {
       // Stores held events
       std::set<unsigned int> _held;
 
-      // Keeps track of Object engines system-wide.
+      // Keeps track of Input engines system-wide.
       static std::vector<Apsis::Engine::Input*> _input_engines;
     };
   }
