@@ -98,6 +98,9 @@ namespace Apsis {
       // Object Engine
       const Apsis::Engine::Object& _objects;
 
+      // Graphics Engine
+      Apsis::Engine::Graphics& _graphics;
+
       // Screen Viewport
       Apsis::Interface::Viewport _viewport;
     };

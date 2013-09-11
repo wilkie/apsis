@@ -49,10 +49,11 @@ namespace Apsis {
       /*
        *  Draws the viewport.
        */
-      void draw() const;
+      void draw(Apsis::Engine::Graphics& graphics) const;
 
     private:
-      static void _draw(const Apsis::Geometry::Rectangle& position,
+      static void _draw(Apsis::Engine::Graphics& graphics,
+                        const Apsis::Geometry::Rectangle& position,
                         const Apsis::World::Object& object);
 
       // Viewports have a Scene, a Camera, and a Window

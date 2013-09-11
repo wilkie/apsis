@@ -54,7 +54,7 @@ Geometry::Point3d Interface::Viewport::target() {
   return point;
 }
 
-void Interface::Viewport::draw() const {
+void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   bool orthographic = true;
 
   float rotation = 0.0;
@@ -99,6 +99,7 @@ void Interface::Viewport::draw() const {
   _scene.scene().draw(projection, camera, glm::mat4(1.0f));
 }
 
-void Interface::Viewport::_draw(const Geometry::Rectangle& position,
-                                       const World::Object& object) {
+void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
+                                const Geometry::Rectangle& position,
+                                const World::Object& object) {
 }

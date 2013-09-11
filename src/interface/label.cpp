@@ -2,7 +2,8 @@
 
 #include "apsis/sprite/sheet.h"
 
-void Apsis::Interface::Label::draw(const Apsis::Geometry::Rectangle& position,
+void Apsis::Interface::Label::draw(Apsis::Engine::Graphics& graphics,
+                                   const Apsis::Geometry::Rectangle& position,
                                    const Apsis::World::Object& object) {
   static unsigned int text_id = Apsis::Registry::Property::id("text");
   static unsigned int sprite_id = Apsis::Registry::Property::id("spritesheet");

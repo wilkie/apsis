@@ -1,6 +1,8 @@
 #ifndef APSIS_ENGINE_GRAPHICS_H
 #define APSIS_ENGINE_GRAPHICS_H
 
+#include <vector>
+
 namespace Apsis {
   namespace Engine {
     /*
@@ -8,6 +10,8 @@ namespace Apsis {
      */
     class Graphics {
     public:
+      static Apsis::Engine::Graphics& basic();
+
       /*
        *  Draws the given string to the given 2d coordinates.
        */
@@ -24,6 +28,9 @@ namespace Apsis {
       //const Apsis::Drawing::Font& font();
 
     private:
+      // Keep global track of all Graphics Engines
+      static std::vector<Apsis::Engine::Graphics*> _graphics_engines;
+
       // Keep track of Drawing::Font's and which are loaded...
       // Keep track of Sprite::Sheet's and which are loaded...
     };

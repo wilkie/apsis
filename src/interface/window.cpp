@@ -4,8 +4,7 @@ Apsis::Interface::Window::Window(float x,
                                  float y,
                                  float width,
                                  float height,
-                                 void(&draw)(const Apsis::Geometry::Rectangle& position,
-                                             const Apsis::World::Object& object))
+                                 DrawEvent& draw)
   : _position(x, y, width, height),
     _draw(draw),
     _childCount(0),
@@ -82,8 +81,8 @@ bool Apsis::Interface::Window::attached() const {
   return _parent != NULL;
 }
 
-void Apsis::Interface::Window::draw() const {
-  _draw(_position, _object);
+void Apsis::Interface::Window::draw(Apsis::Engine::Graphics& graphics) const {
+  _draw(graphics, _position, _object);
 
   if (_child == NULL) {
     return;
@@ -93,7 +92,7 @@ void Apsis::Interface::Window::draw() const {
   Interface::Window* current = _child;
 
   do  {
-    current->draw();
+    current->draw(graphics);
 
     current = current->_next;
   } while (current != _child);

@@ -3,6 +3,8 @@
 
 #include "apsis/world/scene.h"
 
+#include <vector>
+
 namespace Apsis {
   namespace Engine {
     /*

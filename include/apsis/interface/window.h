@@ -1,7 +1,10 @@
 #ifndef APSIS_INTERFACE_WINDOW_H
 #define APSIS_INTERFACE_WINDOW_H
 
+#include "apsis/engine/graphics.h"
+
 #include "apsis/geometry/rectangle.h"
+
 #include "apsis/world/object.h"
 
 #include <stddef.h>
@@ -23,12 +26,17 @@ namespace Apsis {
   namespace Interface {
     class Window {
     public:
+
+      // Draw function
+      typedef void(&DrawEvent)(Apsis::Engine::Graphics&          graphics,
+                               const Apsis::Geometry::Rectangle& position,
+                               const Apsis::World::Object&       object);
+
       Window(float x,
              float y,
              float width,
              float height,
-             void(&draw)(const Apsis::Geometry::Rectangle& position,
-                         const Apsis::World::Object& object));
+             DrawEvent& draw);
 
       /*
        *  Returns the position of this Window within its parent.
@@ -73,7 +81,7 @@ namespace Apsis {
       /*
        *  Draws this Window and all of its children.
        */
-      void draw() const;
+      void draw(Apsis::Engine::Graphics& graphics) const;
 
     private:
       // Dimensions
@@ -93,8 +101,7 @@ namespace Apsis {
       Apsis::World::Object _object;
 
       // Draw function
-      void(&_draw)(const Apsis::Geometry::Rectangle& position,
-                   const Apsis::World::Object&       object);
+      DrawEvent _draw;
     };
   }
 }

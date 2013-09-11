@@ -13,7 +13,8 @@ Apsis::Engine::System::System(const char* path,
     _jsonLoaded(false),                                  // JSON
     _input(_parseOrCreateInput()),                       // Initialize Input Engine
     _objects(_parseOrCreateObject()),                    // Initialize Object Engine
-    _scene(Apsis::Engine::Scene::basic()),             // Initialize Scene Engine
+    _graphics(Apsis::Engine::Graphics::basic()),         // Initialize Graphics Engine
+    _scene(Apsis::Engine::Scene::basic()),               // Initialize Scene Engine
     _viewport(_scene,                                    // Initialize Viewport
               (float)videoSettings.resolutionX,
               (float)videoSettings.resolutionY) {
@@ -154,7 +155,7 @@ void Apsis::Engine::System::run() {
     }
     _scene.scene().update(clock.elapsedTime());
 
-    _viewport.draw();
+    _viewport.draw(_graphics);
 
     _backend.swap();
   }
