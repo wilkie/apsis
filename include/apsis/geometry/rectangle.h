@@ -15,6 +15,11 @@ namespace Apsis {
       float width;
       float height;
 
+      float left() const;
+      float top() const;
+      float right() const;
+      float bottom() const;
+
       bool intersects(Rectangle* rectangle) const;
       bool intersects(Line* line) const;
 

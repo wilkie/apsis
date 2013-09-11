@@ -438,3 +438,19 @@ Apsis::Geometry::Line Apsis::Geometry::Rectangle::edge(unsigned int index) const
 
   return ret;
 }
+
+float Apsis::Geometry::Rectangle::left() const {
+  return x - width / 2.0f;
+}
+
+float Apsis::Geometry::Rectangle::top() const {
+  return y - height / 2.0f;
+}
+
+float Apsis::Geometry::Rectangle::right() const {
+  return x + width / 2.0f;
+}
+
+float Apsis::Geometry::Rectangle::bottom() const {
+  return y + height / 2.0f;
+}

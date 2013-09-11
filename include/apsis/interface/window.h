@@ -6,6 +6,19 @@
 
 #include <stddef.h>
 
+//Apsis::Graphics::Context
+//position(position) <- push position to stack
+//pop <- pop back to parent position
+//position() <- get global position
+
+//drawing functions?
+
+//fonts?
+
+//layout?
+
+//caching?
+
 namespace Apsis {
   namespace Interface {
     class Window {

@@ -42,6 +42,10 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
   return *_sheets[_ids.size() - 1];
 }
 
+const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::loaded(unsigned int index) {
+  return *_sheets[index];
+}
+
 Apsis::Sprite::Sheet::Sheet(const char* filename) {
   _id = _sheets.size();
 

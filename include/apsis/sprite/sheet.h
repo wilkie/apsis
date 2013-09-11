@@ -29,6 +29,7 @@ namespace Apsis {
       Sheet(const char* filename);
 
       static const Apsis::Sprite::Sheet& load(const char* filename);
+      static const Apsis::Sprite::Sheet& loaded(unsigned int id);
 
       /*
        *  Returns: The Texture for this SpriteSheet.

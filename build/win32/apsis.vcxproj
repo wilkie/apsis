@@ -75,6 +75,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine\event.cpp" />
+    <ClCompile Include="..\..\src\engine\graphics.cpp" />
     <ClCompile Include="..\..\src\engine\object.cpp" />
     <ClCompile Include="..\..\src\engine\scene.cpp" />
     <ClCompile Include="..\..\src\engine\system.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="..\..\include\apsis.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
     <ClInclude Include="..\..\include\apsis\engine\event.h" />
+    <ClInclude Include="..\..\include\apsis\engine\graphics.h" />
     <ClInclude Include="..\..\include\apsis\engine\object.h" />
     <ClInclude Include="..\..\include\apsis\engine\scene.h" />
     <ClInclude Include="..\..\include\apsis\engine\system.h" />
