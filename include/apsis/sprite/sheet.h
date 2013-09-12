@@ -7,8 +7,6 @@
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
-#include "apsis/sync/reference_counter.h"
-
 #include <string>
 #include <vector>
 
