@@ -10,8 +10,6 @@
 
 #include "apsis/world/tile.h"
 
-#include <glm/glm.hpp>
-
 #include <vector>
 
 namespace Apsis {
@@ -22,9 +20,8 @@ namespace Apsis {
               unsigned int height);
       ~Terrain();
 
-      void draw(glm::mat4& projection,
-                Primitives::Camera& camera,
-                glm::mat4& model);
+      void draw(const float projection[][4],
+                Primitives::Camera& camera) const;
 
       Apsis::World::Tile tileAt(unsigned int x, unsigned int z);
 
