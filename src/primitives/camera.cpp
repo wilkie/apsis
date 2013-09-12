@@ -26,11 +26,8 @@ Apsis::Primitives::Camera::Camera(const glm::vec2& position,
                      glm::vec3(zoom, zoom, zoom));
 }
 
-Apsis::Primitives::Camera::Matrix Apsis::Primitives::Camera::view() const {
-  Matrix matrix = (Matrix)glm::value_ptr(_view);
-
-
-  float foo = matrix[1][1];
+float (*Apsis::Primitives::Camera::view() const)[4] {
+  float (*matrix)[4] = (float (*)[4])glm::value_ptr(_view);
 
   return matrix;
 }

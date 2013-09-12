@@ -9,7 +9,6 @@ namespace Apsis {
   namespace Primitives {
     class Camera {
     public:
-      typedef const float(*Matrix)[4];
       /*
        *  Creates a camera at the given position looking at the given point and
        *    oriented the given direction with the given zoom.
@@ -28,7 +27,7 @@ namespace Apsis {
       /*
        *  Return a reference to the view matrix.
        */
-      Matrix view() const;
+      float (*view() const)[4];
 
       /*
        *  Return the position of the eye.
