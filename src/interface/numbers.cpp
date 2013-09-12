@@ -30,8 +30,15 @@ Apsis::Geometry::Rectangle Apsis::Hud::Numbers::position() {
   return _position;
 }
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
 // Draws the actor
-void Apsis::Hud::Numbers::draw(glm::mat4& projection,
+void Apsis::Hud::Numbers::draw(const float projection[][4],
                                Primitives::Camera& camera) {
   unsigned int tmp = _value;
 
@@ -47,7 +54,9 @@ void Apsis::Hud::Numbers::draw(glm::mat4& projection,
     glm::mat4 model = glm::translate(glm::mat4(1.0),
                                      glm::vec3(x, 0.0, _position.y));
 
-    _spriteSheet->draw(_startIndex + digit, projection, camera, model);
+    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+
+    _spriteSheet->draw(_startIndex + digit, projection, camera, model_matrix);
   }
 }
 

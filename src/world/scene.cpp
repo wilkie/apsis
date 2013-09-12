@@ -76,13 +76,12 @@ unsigned int Apsis::World::Scene::addActor(const Apsis::Sprite::Thing& thing, fl
   return _actors.size() - 1;
 }
 
-void Apsis::World::Scene::draw(const glm::mat4& projection,
-                               Primitives::Camera& camera,
-                               const glm::mat4& model) const {
+void Apsis::World::Scene::draw(const float projection[][4],
+                               Primitives::Camera& camera) const {
   for(std::vector<const Apsis::World::Map*>::const_iterator it = _maps.begin();
       it != _maps.end();
       ++it) {
-    (*it)->draw(projection, camera, model);
+    (*it)->draw(projection, camera);
   }
 
   for(std::vector<Apsis::World::Actor>::const_iterator it = _actors.begin();

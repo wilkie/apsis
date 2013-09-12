@@ -12,8 +12,6 @@
 
 #include "apsis/sync/reference_counter.h"
 
-#include <glm/glm.hpp>
-
 #include <json/json.h>
 
 #include <vector>
@@ -68,9 +66,8 @@ namespace Apsis {
       /*
        *  Renders the map.
        */
-      void draw(const glm::mat4& projection,
-                Primitives::Camera& camera,
-                const glm::mat4& model) const;
+      void draw(const float projection[][4],
+                Primitives::Camera& camera) const;
 
       /*
        *  Returns the unique id for this map.

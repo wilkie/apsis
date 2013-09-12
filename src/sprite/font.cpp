@@ -344,8 +344,7 @@ const Apsis::Sprite::Font::Glyph& Apsis::Sprite::Font::glyph(unsigned int codePo
 
 void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, unsigned int index) const {
   _vao.uploadUniform("proj", projection);
-  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
-  _vao.uploadUniform("view", view_matrix);
+  _vao.uploadUniform("view", camera.view());
   
   _vao.uploadUniform("camera", camera.eye());
 
@@ -361,8 +360,7 @@ void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Ca
 
 void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, const char* string) const {
   _vao.uploadUniform("proj", projection);
-  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
-  _vao.uploadUniform("view", view_matrix);
+  _vao.uploadUniform("view", camera.view());
   
   _vao.uploadUniform("camera", camera.eye());
 

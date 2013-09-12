@@ -80,9 +80,8 @@ namespace Apsis {
       /*
        *  Draws the scene.
        */
-      void draw(const glm::mat4& projection,
-                Primitives::Camera& camera,
-                const glm::mat4& model) const;
+      void draw(const float projection[][4],
+                Primitives::Camera& camera) const;
     private:
       // Keeps track of Scenes system-wide.
       static std::vector<std::string> _ids;

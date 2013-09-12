@@ -138,8 +138,7 @@ void Apsis::World::Background::draw(const glm::mat4& projection,
                                     const glm::mat4& model) {
   const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
   _vao.uploadUniform("proj", matrix);
-  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
-  _vao.uploadUniform("view", view_matrix);
+  _vao.uploadUniform("view", camera.view());
 
   _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("camera", camera.eye());

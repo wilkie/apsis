@@ -174,12 +174,14 @@ void Apsis::World::Actor::respond(Apsis::World::Scene& scene) {
   }
 }
 
-void Apsis::World::Actor::draw(const glm::mat4& projection,
+void Apsis::World::Actor::draw(const float projection[][4],
                                const Primitives::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
+  
+  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(model);
 
-  _sheet.draw(_frame->spriteIndex, projection, camera, model);
+  _sheet.draw(_frame->spriteIndex, projection, camera, matrix);
 }
 
 const char* Apsis::World::Actor::name() const {

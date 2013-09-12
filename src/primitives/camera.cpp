@@ -1,7 +1,11 @@
 #include "apsis/primitives/camera.h"
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
 
 Apsis::Primitives::Camera::Camera(const glm::vec3& position,
                                   const glm::vec3& target,
@@ -22,8 +26,13 @@ Apsis::Primitives::Camera::Camera(const glm::vec2& position,
                      glm::vec3(zoom, zoom, zoom));
 }
 
-const glm::mat4& Apsis::Primitives::Camera::view() const {
-  return _view;
+Apsis::Primitives::Camera::Matrix Apsis::Primitives::Camera::view() const {
+  Matrix matrix = (Matrix)glm::value_ptr(_view);
+
+
+  float foo = matrix[1][1];
+
+  return matrix;
 }
 
 const glm::vec3& Apsis::Primitives::Camera::eye() const {

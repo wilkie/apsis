@@ -454,8 +454,7 @@ void Apsis::World::Terrain::draw(glm::mat4& projection,
                                  glm::mat4& model) {
   const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
   _vao.uploadUniform("proj", matrix);
-  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
-  _vao.uploadUniform("view", view_matrix);
+  _vao.uploadUniform("view", camera.view());
   const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
   _vao.uploadUniform("model", model_matrix);
 

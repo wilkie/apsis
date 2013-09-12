@@ -276,23 +276,13 @@ unsigned int Apsis::Sprite::Sheet::count() const {
   return _sprites.size();
 }
 
-// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
-#include <glm/glm.hpp>
-// glm::translate, glm::rotate, glm::scale, glm::perspective
-#include <glm/gtc/matrix_transform.hpp>
-// glm::value_ptr
-#include <glm/gtc/type_ptr.hpp>
-
 void Apsis::Sprite::Sheet::draw(unsigned int              index,
-                                const glm::mat4&          projection,
+                                const float               projection[][4],
                                 const Primitives::Camera& camera,
-                                const glm::mat4&          model) const {
-  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
-  _vao.uploadUniform("proj", matrix);
-  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
-  _vao.uploadUniform("view", view_matrix);
-  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
-  _vao.uploadUniform("model", model_matrix);
+                                const float               model[][4]) const {
+  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("view", camera.view());
+  _vao.uploadUniform("model", model);
   
   _vao.uploadUniform("camera", camera.eye());
   _vao.drawRange(index * 6, 6);
