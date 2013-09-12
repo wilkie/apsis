@@ -248,9 +248,6 @@ void Apsis::Sprite::Font::_loadGlyphBitmap(unsigned int character) const {
   _vao.uploadUniform("tex", 0);
 }
 
-void Apsis::Sprite::Font::draw(float x, float y, const char* string) const {
-}
-
 unsigned int Apsis::Sprite::Font::_addGlyph(char character,
                                             float x,
                                             float y,
@@ -330,6 +327,7 @@ unsigned int Apsis::Sprite::Font::_addGlyph(char character,
   _bitmapGlyphs[character] = index;
 
   glyph.codePoint = (int)character;
+  glyph.index = index;
 
   _glyphs.push_back(glyph);
 
@@ -344,17 +342,43 @@ const Apsis::Sprite::Font::Glyph& Apsis::Sprite::Font::glyph(unsigned int codePo
   return _glyphs[_bitmapGlyphs.at(codePoint)];
 }
 
-void Apsis::Sprite::Font::draw(unsigned int              index,
-                               const glm::mat4&          projection,
-                               const Primitives::Camera& camera,
-                               const glm::mat4&          model) const {
-
+void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, unsigned int index) const {
   _vao.uploadUniform("proj", projection);
-  _vao.uploadUniform("view", camera.view());
-  _vao.uploadUniform("model", model);
+  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
+  _vao.uploadUniform("view", view_matrix);
   
   _vao.uploadUniform("camera", camera.eye());
-  _vao.drawRange(index * 6, 6);
+
+  const Glyph& glyph = _glyphs[index];
+
+  glm::mat4 model = glm::translate(glm::mat4(1.0),
+    glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
+  
+  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+  _vao.uploadUniform("model", model_matrix);
+  _vao.drawRange(glyph.index * 6, 6);
+}
+
+void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, const char* string) const {
+  _vao.uploadUniform("proj", projection);
+  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
+  _vao.uploadUniform("view", view_matrix);
+  
+  _vao.uploadUniform("camera", camera.eye());
+
+  while(*string != NULL) {
+    const Glyph& glyph = this->glyph(*string);
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0),
+      glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
+
+    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+    _vao.uploadUniform("model", model_matrix);
+    _vao.drawRange(glyph.index * 6, 6);
+
+    x += glyph.advanceWidth;
+    string++;
+  }
 }
 
 float Apsis::Sprite::Font::lineGap() const {

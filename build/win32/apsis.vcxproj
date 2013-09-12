@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\src\rules\wiggler.cpp" />
     <ClCompile Include="..\..\src\sprite\animation.cpp" />
     <ClCompile Include="..\..\src\sprite\font.cpp" />
+    <ClCompile Include="..\..\src\sprite\layout.cpp" />
     <ClCompile Include="..\..\src\sprite\sheet.cpp" />
     <ClCompile Include="..\..\src\sprite\thing.cpp" />
     <ClCompile Include="..\..\src\support\assimp\3DSConverter.cpp" />
@@ -345,6 +346,7 @@
     <ClInclude Include="..\..\include\apsis\settings\video.h" />
     <ClInclude Include="..\..\include\apsis\sprite\animation.h" />
     <ClInclude Include="..\..\include\apsis\sprite\font.h" />
+    <ClInclude Include="..\..\include\apsis\sprite\layout.h" />
     <ClInclude Include="..\..\include\apsis\sprite\sheet.h" />
     <ClInclude Include="..\..\include\apsis\sprite\thing.h" />
     <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h" />

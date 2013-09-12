@@ -635,6 +635,9 @@
     <ClCompile Include="..\..\src\sprite\font.cpp">
       <Filter>sprite</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\sprite\layout.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1332,6 +1335,9 @@
       <Filter>engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\sprite\font.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sprite\layout.h">
       <Filter>sprite</Filter>
     </ClInclude>
   </ItemGroup>

@@ -119,15 +119,15 @@ int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& pro
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   const glm::mat4& mat) const {
+                                                   const float mat[][4]) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, mat);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
-                                                   const glm::mat4& mat) const {
-  glUniformMatrix4fv(identifier, 1, GL_FALSE, glm::value_ptr(mat));
+                                                   const float mat[][4]) const {
+  glUniformMatrix4fv(identifier, 1, GL_FALSE, &mat[0][0]);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,

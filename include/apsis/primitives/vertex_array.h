@@ -45,8 +45,8 @@ namespace Apsis {
       /*
        *  Transfer a matrix to a uniform.
        */
-      void uploadUniform(const char* name, const glm::mat4& matrix) const;
-      void uploadUniform(int identifier, const glm::mat4& matrix) const;
+      void uploadUniform(const char* name, const float matrix[][4]) const;
+      void uploadUniform(int identifier, const float matrix[][4]) const;
 
       /*
        *  Transfer an integer to a uniform.

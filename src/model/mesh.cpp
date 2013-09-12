@@ -87,10 +87,20 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("light.color", _lights[0].color());
 }
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
 void Apsis::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model) {
-  _vao.uploadUniform("proj", projection);
-  _vao.uploadUniform("view", camera.view());
-  _vao.uploadUniform("model", model);
+  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
+  _vao.uploadUniform("proj", matrix);
+  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
+  _vao.uploadUniform("view", view_matrix);
+  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+  _vao.uploadUniform("model", model_matrix);
 
   _vao.uploadUniform("camera", camera.eye());
 

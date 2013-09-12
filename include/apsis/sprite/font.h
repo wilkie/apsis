@@ -30,6 +30,11 @@ namespace Apsis {
         int codePoint;
 
         /*
+         *  The index of the glyph in this Font.
+         */
+        unsigned int index;
+
+        /*
          *  Width of drawn glyph.
          */
         float width;
@@ -108,17 +113,12 @@ namespace Apsis {
       /*
        *  Draws the given string at the given position.
        */
-      void draw(float x, float y, const char* string) const;
+      void draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, const char* string) const;
 
       /*
        *  Draws the given glyph represented by the given index.
        */
-      void draw(float x, float y, unsigned int index) const;
-
-      void draw(unsigned int              index,
-                const glm::mat4&          projection,
-                const Primitives::Camera& camera,
-                const glm::mat4&          model) const;
+      void draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, unsigned int index) const;
 
     private:
       // Constructor

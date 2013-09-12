@@ -123,14 +123,24 @@ Apsis::Primitives::Texture* Apsis::World::Background::texture() {
   return _texture;
 }
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
 /*
   *  Renders the background.
   */
 void Apsis::World::Background::draw(const glm::mat4& projection,
                                     Primitives::Camera& camera,
                                     const glm::mat4& model) {
-  _vao.uploadUniform("proj", projection);
-  _vao.uploadUniform("view", camera.view());
+  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
+  _vao.uploadUniform("proj", matrix);
+  const float (*view_matrix)[4] = (const float (*)[4])glm::value_ptr(camera.view());
+  _vao.uploadUniform("view", view_matrix);
+
   _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("camera", camera.eye());
 
@@ -138,7 +148,8 @@ void Apsis::World::Background::draw(const glm::mat4& projection,
     for (unsigned int h = 0; h < 20; h++) {
       glm::mat4 current_model = glm::translate(glm::mat4(1.0),
                                                glm::vec3(_width * w, 0.0, _height * h));
-      _vao.uploadUniform("model", current_model);
+      const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+      _vao.uploadUniform("model", model_matrix);
       _vao.draw();
     }
   }

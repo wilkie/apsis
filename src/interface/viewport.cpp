@@ -99,20 +99,8 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   _scene.scene().draw(projection, camera, glm::mat4(1.0f));
 
   const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/NewsCycle/NewsCycle-Bold.ttf");
-  float w = font.glyph('a').width;
-  float h = font.glyph('a').height;
-  glm::mat4 model = glm::translate(glm::mat4(1.0),
-                                   glm::vec3(100.0f, 0.0, 100.0f - h));
-
-  font.draw(0, projection, camera, model);
-
-  float a = font.glyph('a').advanceWidth;
-  float b = font.glyph('b').bearingLeft;
-  h = font.glyph('b').height;
-  model = glm::translate(glm::mat4(1.0),
-                                   glm::vec3(100.0f + a + b, 0.0, 100.0f - h));
-
-  font.draw(1, projection, camera, model);
+  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
+  font.draw(matrix, camera, 100.0f, 100.0f, "Hello World How Are You?");
 }
 
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
