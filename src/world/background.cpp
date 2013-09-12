@@ -105,22 +105,22 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
 /*
   *  Returns the width of the background.
   */
-unsigned int Apsis::World::Background::width() {
+unsigned int Apsis::World::Background::width() const {
   return _width;
 }
 
 /*
   *  Returns the height of the background.
   */
-unsigned int Apsis::World::Background::height() {
+unsigned int Apsis::World::Background::height() const {
   return _height;
 }
 
 /*
   *  Returns the Apsis::Primitives::Texture being used to draw the background.
   */
-Apsis::Primitives::Texture* Apsis::World::Background::texture() {
-  return _texture;
+const Apsis::Primitives::Texture& Apsis::World::Background::texture() const {
+  return *_texture;
 }
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
@@ -133,25 +133,19 @@ Apsis::Primitives::Texture* Apsis::World::Background::texture() {
 /*
   *  Renders the background.
   */
-void Apsis::World::Background::draw(const glm::mat4& projection,
-                                    Primitives::Camera& camera,
-                                    const glm::mat4& model) {
-  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
-  _vao.uploadUniform("proj", matrix);
+void Apsis::World::Background::draw(const float projection[][4],
+                                    Primitives::Camera& camera) const {
+  _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-
-  _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("camera", camera.eye());
 
   for (unsigned int w = 0; w < 20; w++) {
     for (unsigned int h = 0; h < 20; h++) {
       glm::mat4 current_model = glm::translate(glm::mat4(1.0),
                                                glm::vec3(_width * w, 0.0, _height * h));
-      const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+      const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(current_model);
       _vao.uploadUniform("model", model_matrix);
       _vao.draw();
     }
   }
-
-  int i = 5;
 }

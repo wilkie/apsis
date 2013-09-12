@@ -27,24 +27,23 @@ namespace Apsis {
       /*
        *  Returns the width of the background.
        */
-      unsigned int width();
+      unsigned int width() const;
 
       /*
        *  Returns the height of the background.
        */
-      unsigned int height();
+      unsigned int height() const;
 
       /*
        *  Returns the Apsis::Primitives::Texture being used to draw the background.
        */
-      Apsis::Primitives::Texture* texture();
+      const Apsis::Primitives::Texture& texture() const;
 
       /*
        *  Renders the background.
        */
-      void draw(const glm::mat4& projection,
-                Primitives::Camera& camera,
-                const glm::mat4& model);
+      void draw(const float projection[][4],
+                Primitives::Camera& camera) const;
 
     private:
 
