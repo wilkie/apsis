@@ -114,6 +114,7 @@ namespace Apsis {
        */
       void draw(const Primitives::Matrix& projection,
                 const Primitives::Camera& camera,
+                const Primitives::Vector4& color,
                 float x,
                 float y,
                 const char* string) const;
@@ -123,6 +124,7 @@ namespace Apsis {
        */
       void draw(const Primitives::Matrix& projection,
                 const Primitives::Camera& camera,
+                const Primitives::Vector4& color,
                 float x,
                 float y,
                 unsigned int index) const;

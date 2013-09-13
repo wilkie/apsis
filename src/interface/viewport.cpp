@@ -100,8 +100,9 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   const Primitives::Matrix& matrix = *(const Primitives::Matrix*)glm::value_ptr(projection);
 
   const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/Cinzel/Cinzel-Bold.ttf");
-  font.draw(matrix, camera, 100.0f, 100.0f, "Hello World How Are You?");
+  Primitives::Vector4 color = {1.0f, 0.0f, 0.0f, 1.0f};
   _scene.scene().draw(matrix, camera);
+  font.draw(matrix, camera, color, 100.0f, 100.0f, "Hello World How Are You?");
 }
 
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,

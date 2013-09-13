@@ -345,12 +345,17 @@ const Apsis::Sprite::Font::Glyph& Apsis::Sprite::Font::glyph(unsigned int codePo
 
 void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
                                const Primitives::Camera& camera,
+                               const Primitives::Vector4& color,
                                float x,
                                float y,
                                unsigned int index) const {
+  _vao.bindProgram();
+
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
+
   _vao.uploadUniform("camera", camera.eye());
+  _vao.uploadUniform("color", color);
 
   const Glyph& glyph = _glyphs[index];
 
@@ -365,6 +370,7 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
 
 void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
                                const Primitives::Camera& camera,
+                               const Primitives::Vector4& color,
                                float x,
                                float y,
                                const char* string) const {
@@ -374,6 +380,7 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
   _vao.uploadUniform("view", camera.view());
   
   _vao.uploadUniform("camera", camera.eye());
+  _vao.uploadUniform("color", color);
 
   while(*string != NULL) {
     const Glyph& glyph = this->glyph(*string);
