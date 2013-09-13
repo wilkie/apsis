@@ -178,7 +178,7 @@ void Apsis::Sprite::Font::_loadGlyphBitmap(unsigned int character) const {
   for (unsigned int i = 0; i < (unsigned int)bitmap.rows; i++) {
     for (unsigned int j = 0; j < (unsigned int)bitmap.width; j++) {
       unsigned int comp = bitmap.buffer[(i * bitmap.width) + j];
-      comp = comp | (comp << 8) | (comp << 16) | (comp << 24);
+      comp = 0xffffff | (comp << 24);
       expanded[((i+1) * (bitmap.width+2)) + (j+1)] = comp;
     }
   }
