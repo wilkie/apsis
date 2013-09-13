@@ -93,7 +93,7 @@ namespace Apsis {
       /*
        *  Draws the actor.
        */
-      void draw(const float projection[][4],
+      void draw(const Primitives::Matrix& projection,
                 const Primitives::Camera& camera) const;
 
       /*

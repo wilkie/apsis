@@ -3,7 +3,7 @@
 Apsis::Model::Material::Material(float ambientIntensity,
                                  float diffuseIntensity,
                                  float specularIntensity,
-                                 glm::vec3 emission,
+                                 const Apsis::Primitives::Vector3& emission,
                                  float shininess) :
   _ambientIntensity(ambientIntensity),
   _diffuseIntensity(diffuseIntensity),
@@ -12,22 +12,22 @@ Apsis::Model::Material::Material(float ambientIntensity,
   _shininess(shininess) {
 }
 
-float Apsis::Model::Material::shininess() {
+float Apsis::Model::Material::shininess() const {
   return _shininess;
 }
 
-glm::vec3& Apsis::Model::Material::emission() {
+const Apsis::Primitives::Vector3& Apsis::Model::Material::emission() const {
   return _emission;
 }
 
-float Apsis::Model::Material::diffuseIntensity() {
+float Apsis::Model::Material::diffuseIntensity() const {
   return _diffuseIntensity;
 }
 
-float Apsis::Model::Material::specularIntensity() {
+float Apsis::Model::Material::specularIntensity() const {
   return _specularIntensity;
 }
 
-float Apsis::Model::Material::ambientIntensity() {
+float Apsis::Model::Material::ambientIntensity() const {
   return _ambientIntensity;
 }

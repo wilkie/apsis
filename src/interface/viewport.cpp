@@ -34,9 +34,9 @@ void Interface::Viewport::position(float x, float y, float z) const {
 
 Geometry::Point3d Interface::Viewport::position() {
   Apsis::Geometry::Point3d point;
-  point.x = _camera.eye().x;
-  point.y = _camera.eye().y;
-  point.z = _camera.eye().z;
+  point.x = _camera.eye().x();
+  point.y = _camera.eye().y();
+  point.z = _camera.eye().z();
   return point;
 }
 
@@ -48,9 +48,9 @@ void Interface::Viewport::target(float x, float y, float z) const {
 
 Geometry::Point3d Interface::Viewport::target() {
   Geometry::Point3d point;
-  point.x = _camera.eye().x;
-  point.y = _camera.eye().y;
-  point.z = _camera.eye().z;
+  point.x = _camera.eye().x();
+  point.y = _camera.eye().y();
+  point.z = _camera.eye().z();
   return point;
 }
 
@@ -96,7 +96,7 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
                                                            (float)(int)(z+0.5)),
                                                  zoom);
 
-  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
+  const Primitives::Matrix& matrix = *(const Primitives::Matrix*)glm::value_ptr(projection);
   _scene.scene().draw(matrix, camera);
 
   const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/NewsCycle/NewsCycle-Bold.ttf");

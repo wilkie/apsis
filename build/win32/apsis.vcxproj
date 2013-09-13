@@ -97,6 +97,7 @@
     <ClCompile Include="..\..\src\primitives\camera.cpp" />
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp" />
     <ClCompile Include="..\..\src\primitives\frame_buffer.cpp" />
+    <ClCompile Include="..\..\src\primitives\math.cpp" />
     <ClCompile Include="..\..\src\primitives\program.cpp" />
     <ClCompile Include="..\..\src\primitives\texture.cpp" />
     <ClCompile Include="..\..\src\primitives\unlinked_program.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\..\include\apsis\primitives\camera.h" />
     <ClInclude Include="..\..\include\apsis\primitives\fragment_shader.h" />
     <ClInclude Include="..\..\include\apsis\primitives\frame_buffer.h" />
+    <ClInclude Include="..\..\include\apsis\primitives\math.h" />
     <ClInclude Include="..\..\include\apsis\primitives\program.h" />
     <ClInclude Include="..\..\include\apsis\primitives\texture.h" />
     <ClInclude Include="..\..\include\apsis\primitives\unlinked_program.h" />

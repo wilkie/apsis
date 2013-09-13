@@ -39,8 +39,8 @@ Apsis::Geometry::Rectangle Apsis::Hud::FillerBar::position() {
 }
 
 // Draws the actor
-void Apsis::Hud::FillerBar::draw(const float projection[][4],
-                               Primitives::Camera& camera) {
+void Apsis::Hud::FillerBar::draw(const Primitives::Matrix& projection,
+                                 const Primitives::Camera& camera) {
   glm::mat4 model = glm::mat4(1.0);
 
   unsigned int tmp = _value;
@@ -56,7 +56,8 @@ void Apsis::Hud::FillerBar::draw(const float projection[][4],
                            glm::vec3(x, 0.0, _position.y));
     x += (unsigned int)_itemWidth;
 
-    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex + (_stages - 1), projection, camera, model_matrix);
   }
@@ -67,7 +68,8 @@ void Apsis::Hud::FillerBar::draw(const float projection[][4],
                            glm::vec3(x, 0.0, _position.y));
     x += (unsigned int)_itemWidth;
 
-    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex + (i - _value), projection, camera, model_matrix);
   }
@@ -78,7 +80,8 @@ void Apsis::Hud::FillerBar::draw(const float projection[][4],
                            glm::vec3(x, 0.0, _position.y));
     x += (unsigned int)_itemWidth;
 
-    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex, projection, camera, model_matrix);
   }

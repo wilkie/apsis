@@ -342,10 +342,13 @@ const Apsis::Sprite::Font::Glyph& Apsis::Sprite::Font::glyph(unsigned int codePo
   return _glyphs[_bitmapGlyphs.at(codePoint)];
 }
 
-void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, unsigned int index) const {
+void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
+                               const Primitives::Camera& camera,
+                               float x,
+                               float y,
+                               unsigned int index) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-  
   _vao.uploadUniform("camera", camera.eye());
 
   const Glyph& glyph = _glyphs[index];
@@ -353,12 +356,17 @@ void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Ca
   glm::mat4 model = glm::translate(glm::mat4(1.0),
     glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
   
-  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+  const Primitives::Matrix& model_matrix
+    = *(const Primitives::Matrix*)glm::value_ptr(model);
   _vao.uploadUniform("model", model_matrix);
   _vao.drawRange(glyph.index * 6, 6);
 }
 
-void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, const char* string) const {
+void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
+                               const Primitives::Camera& camera,
+                               float x,
+                               float y,
+                               const char* string) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   
@@ -370,7 +378,8 @@ void Apsis::Sprite::Font::draw(const float projection[][4], const Primitives::Ca
     glm::mat4 model = glm::translate(glm::mat4(1.0),
       glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
 
-    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(model);
     _vao.uploadUniform("model", model_matrix);
     _vao.drawRange(glyph.index * 6, 6);
 

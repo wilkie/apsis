@@ -638,6 +638,9 @@
     <ClCompile Include="..\..\src\sprite\layout.cpp">
       <Filter>sprite</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\primitives\math.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1339,6 +1342,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\sprite\layout.h">
       <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitives\math.h">
+      <Filter>primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

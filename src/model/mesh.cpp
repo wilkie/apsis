@@ -72,10 +72,14 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
-  _materials.push_back(Material(0.2f, 5.0f, 8.0f, glm::vec3(1.0, 0.0, 0.0), 15.0f));
-  _lights.push_back(Light(glm::vec3(0.0),
-                          glm::vec3(0.0, 1.0, 0.0),
-                          glm::vec3(1.0, 0.0, 1.0)));
+  Primitives::Vector3 emission = {1.0f, 0.0f, 0.0f};
+  _materials.push_back(Material(0.2f, 5.0f, 8.0f, emission, 15.0f));
+  Primitives::Vector3 position  = {0.0f, 0.0f, 0.0f};
+  Primitives::Vector3 direction = {0.0f, 1.0f, 0.0f};
+  Primitives::Vector3 color     = {1.0f, 0.0f, 1.0f};
+  _lights.push_back(Light(position,
+                          direction,
+                          color));
 
   _vao.uploadUniform("material.ambient_intensity", _materials[0].ambientIntensity());
   _vao.uploadUniform("material.diffuse_intensity", _materials[0].diffuseIntensity());
@@ -87,19 +91,10 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("light.color", _lights[0].color());
 }
 
-// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
-#include <glm/glm.hpp>
-// glm::translate, glm::rotate, glm::scale, glm::perspective
-#include <glm/gtc/matrix_transform.hpp>
-// glm::value_ptr
-#include <glm/gtc/type_ptr.hpp>
-
-void Apsis::Model::Mesh::draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model) {
-  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(projection);
-  _vao.uploadUniform("proj", matrix);
+void Apsis::Model::Mesh::draw(const Primitives::Matrix& projection, const Primitives::Camera& camera, const Primitives::Matrix& model) const {
+  _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(model);
-  _vao.uploadUniform("model", model_matrix);
+  _vao.uploadUniform("model", model);
 
   _vao.uploadUniform("camera", camera.eye());
 

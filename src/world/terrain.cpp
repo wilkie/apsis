@@ -419,13 +419,18 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
+  Primitives::Vector3 emission = {1.0f, 0.0f, 0.0f};
   _materials.push_back(Apsis::Model::Material(0.2f, 5.0f, 8.0f,
-                                              glm::vec3(1.0, 0.0, 0.0),
+                                              emission,
                                               15.0f));
+  
+  Primitives::Vector3 position  = {0.0f, 0.0f, 0.0f};
+  Primitives::Vector3 direction = {0.0f, 1.0f, 0.0f};
+  Primitives::Vector3 color     = {1.0f, 0.0f, 1.0f};
 
-  _lights.push_back(Apsis::Model::Light(glm::vec3(0.0),
-                                        glm::vec3(0.0, 1.0, 0.0),
-                                        glm::vec3(1.0, 0.0, 1.0)));
+  _lights.push_back(Apsis::Model::Light(position,
+                                        direction,
+                                        color));
 
   _vao.uploadUniform("material.ambient_intensity", _materials[0].ambientIntensity());
   _vao.uploadUniform("material.diffuse_intensity", _materials[0].diffuseIntensity());
@@ -449,11 +454,14 @@ Apsis::World::Terrain::~Terrain() {
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-void Apsis::World::Terrain::draw(const float projection[][4],
-                                 Primitives::Camera& camera) const {
+void Apsis::World::Terrain::draw(const Primitives::Matrix& projection,
+                                 const Primitives::Camera& camera) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+
   _vao.uploadUniform("model", model_matrix);
 
   _vao.uploadUniform("camera", camera.eye());

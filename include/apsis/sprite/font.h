@@ -113,12 +113,20 @@ namespace Apsis {
       /*
        *  Draws the given string at the given position.
        */
-      void draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, const char* string) const;
+      void draw(const Primitives::Matrix& projection,
+                const Primitives::Camera& camera,
+                float x,
+                float y,
+                const char* string) const;
 
       /*
        *  Draws the given glyph represented by the given index.
        */
-      void draw(const float projection[][4], const Primitives::Camera& camera, float x, float y, unsigned int index) const;
+      void draw(const Primitives::Matrix& projection,
+                const Primitives::Camera& camera,
+                float x,
+                float y,
+                unsigned int index) const;
 
     private:
       // Constructor

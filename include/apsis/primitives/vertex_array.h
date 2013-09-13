@@ -3,6 +3,8 @@
 
 #include "apsis/sync/reference_counter.h"
 
+#include "apsis/primitives/math.h"
+
 #include "apsis/primitives/vertex_buffer.h"
 #include "apsis/primitives/program.h"
 #include "apsis/primitives/texture.h"
@@ -45,32 +47,32 @@ namespace Apsis {
       /*
        *  Transfer a matrix to a uniform.
        */
-      void uploadUniform(const char* name, const float matrix[][4]) const;
-      void uploadUniform(int identifier, const float matrix[][4]) const;
+      void uploadUniform(const char* name, const Matrix& matrix) const;
+      void uploadUniform(int identifier,   const Matrix& matrix) const;
 
       /*
        *  Transfer an integer to a uniform.
        */
       void uploadUniform(const char* name, int value) const;
-      void uploadUniform(int identifier, int value) const;
+      void uploadUniform(int identifier,   int value) const;
 
       /*
        *  Transfer a float to a uniform.
        */
       void uploadUniform(const char* name, float value) const;
-      void uploadUniform(int identifier, float value) const;
+      void uploadUniform(int identifier,   float value) const;
 
       /*
        *  Transfer a 3d vector to a uniform.
        */
-      void uploadUniform(const char* name, const glm::vec3& value) const;
-      void uploadUniform(int identifier, const glm::vec3& value) const;
+      void uploadUniform(const char* name, const Vector3& value) const;
+      void uploadUniform(int identifier,   const Vector3& value) const;
 
       /*
        *  Transfer a 4d vector to a uniform.
        */
-      void uploadUniform(const char* name, const glm::vec4& value) const;
-      void uploadUniform(int identifier, const glm::vec4& value) const;
+      void uploadUniform(const char* name, const Vector4& value) const;
+      void uploadUniform(int identifier,   const Vector4& value) const;
 
       /*
        *  Bind a known texture.

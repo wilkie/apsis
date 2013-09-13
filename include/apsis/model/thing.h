@@ -14,7 +14,7 @@ namespace Apsis {
       Thing(const char* path);
       ~Thing();
 
-      void draw(glm::mat4& projection, Primitives::Camera& camera, glm::mat4& model);
+      void draw(const Primitives::Matrix& projection, const Primitives::Camera& camera, const Primitives::Matrix& model) const;
 
     private:
       void _addMesh(const void* mesh);

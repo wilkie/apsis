@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+#include "apsis/primitives/math.h"
+
 #include <vector>
 
 namespace Apsis {
@@ -27,12 +29,12 @@ namespace Apsis {
       /*
        *  Return a reference to the view matrix.
        */
-      float (*view() const)[4];
+      const Matrix& view() const;
 
       /*
        *  Return the position of the eye.
        */
-      const glm::vec3& eye() const;
+      const Vector3& eye() const;
 
     private:
       glm::vec3 _position;

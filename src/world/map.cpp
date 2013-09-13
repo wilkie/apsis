@@ -212,11 +212,14 @@ const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-void Apsis::World::Map::draw(const float projection[][4],
-                             Primitives::Camera& camera) const {
+void Apsis::World::Map::draw(const Primitives::Matrix& projection,
+                             const Primitives::Camera& camera) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-  const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+
   _vao.uploadUniform("model", model_matrix);
 
   _vao.uploadUniform("camera", camera.eye());

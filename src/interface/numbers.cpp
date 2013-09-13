@@ -38,8 +38,8 @@ Apsis::Geometry::Rectangle Apsis::Hud::Numbers::position() {
 #include <glm/gtc/type_ptr.hpp>
 
 // Draws the actor
-void Apsis::Hud::Numbers::draw(const float projection[][4],
-                               Primitives::Camera& camera) {
+void Apsis::Hud::Numbers::draw(const Primitives::Matrix& projection,
+                               const Primitives::Camera& camera) {
   unsigned int tmp = _value;
 
   // TODO: don't abuse rectangle coordinates... x should represent the center, not the left
@@ -54,7 +54,8 @@ void Apsis::Hud::Numbers::draw(const float projection[][4],
     glm::mat4 model = glm::translate(glm::mat4(1.0),
                                      glm::vec3(x, 0.0, _position.y));
 
-    const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(glm::mat4(1.0f));
+    const Primitives::Matrix& model_matrix
+      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex + digit, projection, camera, model_matrix);
   }

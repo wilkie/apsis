@@ -66,8 +66,8 @@ namespace Apsis {
       /*
        *  Renders the map.
        */
-      void draw(const float projection[][4],
-                Primitives::Camera& camera) const;
+      void draw(const Primitives::Matrix& projection,
+                const Primitives::Camera& camera) const;
 
       /*
        *  Returns the unique id for this map.

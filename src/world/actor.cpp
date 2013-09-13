@@ -92,9 +92,6 @@ void Apsis::World::Actor::update(Apsis::World::Scene& scene, float elapsed) {
 }
 
 void Apsis::World::Actor::collide(Apsis::World::Scene& scene) {
-  Apsis::Geometry::Line  line;
-  Apsis::Geometry::Point point;
-
   Apsis::Geometry::Point to;
 
   to.x = (float)_object.get("x").asDouble();
@@ -174,14 +171,15 @@ void Apsis::World::Actor::respond(Apsis::World::Scene& scene) {
   }
 }
 
-void Apsis::World::Actor::draw(const float projection[][4],
+void Apsis::World::Actor::draw(const Primitives::Matrix& projection,
                                const Primitives::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
-  
-  const float (*matrix)[4] = (const float (*)[4])glm::value_ptr(model);
 
-  _sheet.draw(_frame->spriteIndex, projection, camera, matrix);
+  const Primitives::Matrix& model_matrix
+    = *(const Primitives::Matrix*)glm::value_ptr(model);
+
+  _sheet.draw(_frame->spriteIndex, projection, camera, model_matrix);
 }
 
 const char* Apsis::World::Actor::name() const {

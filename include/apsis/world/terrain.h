@@ -20,8 +20,8 @@ namespace Apsis {
               unsigned int height);
       ~Terrain();
 
-      void draw(const float projection[][4],
-                Primitives::Camera& camera) const;
+      void draw(const Primitives::Matrix& projection,
+                const Primitives::Camera& camera) const;
 
       Apsis::World::Tile tileAt(unsigned int x, unsigned int z);
 

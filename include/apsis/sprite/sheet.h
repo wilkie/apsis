@@ -83,9 +83,9 @@ namespace Apsis {
        *  Draws the given sprite at the given location.
        */
       void draw(unsigned int              index,
-                const float               projection[][4],
+                const Primitives::Matrix& projection,
                 const Primitives::Camera& camera,
-                const float               model[][4]) const;
+                const Primitives::Matrix& model) const;
     private:
       // Registry of sprite sheets.
       static std::vector<std::string> _ids;

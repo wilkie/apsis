@@ -1,6 +1,8 @@
 #ifndef APSIS_MODEL_LIGHT_H
 #define APSIS_MODEL_LIGHT_H
 
+#include "apsis/primitives/math.h"
+
 #include "glm/glm.hpp"
 
 namespace Apsis {
@@ -10,29 +12,29 @@ namespace Apsis {
       /*
        *  Constructs a new representation of a light.
        */
-      Light(const glm::vec3& position,
-            const glm::vec3& direction,
-            const glm::vec3& color);
+      Light(const Apsis::Primitives::Vector3& position,
+            const Apsis::Primitives::Vector3& direction,
+            const Apsis::Primitives::Vector3& color);
 
       /*
        *  Retrieve the position of the light.
        */
-      glm::vec3& position();
+      const Apsis::Primitives::Vector3& position() const;
 
       /*
        *  Retrieve the direction of the light.
        */
-      glm::vec3& direction();
+      const Apsis::Primitives::Vector3& direction() const;
 
       /*
        *  Retrieve the color of the light.
        */
-      glm::vec3& color();
+      const Apsis::Primitives::Vector3& color() const;
 
     private:
-      glm::vec3 _position;
-      glm::vec3 _direction;
-      glm::vec3 _color;
+      const Apsis::Primitives::Vector3 _position;
+      const Apsis::Primitives::Vector3 _direction;
+      const Apsis::Primitives::Vector3 _color;
     };
   }
 }

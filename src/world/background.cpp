@@ -133,8 +133,8 @@ const Apsis::Primitives::Texture& Apsis::World::Background::texture() const {
 /*
   *  Renders the background.
   */
-void Apsis::World::Background::draw(const float projection[][4],
-                                    Primitives::Camera& camera) const {
+void Apsis::World::Background::draw(const Primitives::Matrix& projection,
+                                    const Primitives::Camera& camera) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("camera", camera.eye());
@@ -143,7 +143,10 @@ void Apsis::World::Background::draw(const float projection[][4],
     for (unsigned int h = 0; h < 20; h++) {
       glm::mat4 current_model = glm::translate(glm::mat4(1.0),
                                                glm::vec3(_width * w, 0.0, _height * h));
-      const float (*model_matrix)[4] = (const float (*)[4])glm::value_ptr(current_model);
+
+      const Primitives::Matrix& model_matrix
+        = *(const Primitives::Matrix*)glm::value_ptr(current_model);
+
       _vao.uploadUniform("model", model_matrix);
       _vao.draw();
     }

@@ -31,8 +31,8 @@ namespace Apsis {
         Apsis::Geometry::Rectangle position();
 
         // Draws the actor
-        void draw(const float projection[][4],
-                  Primitives::Camera& camera);
+        void draw(const Primitives::Matrix& projection,
+                  const Primitives::Camera& camera);
 
         unsigned int value();
         void value(unsigned int updated);

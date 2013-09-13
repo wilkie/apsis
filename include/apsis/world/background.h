@@ -42,8 +42,8 @@ namespace Apsis {
       /*
        *  Renders the background.
        */
-      void draw(const float projection[][4],
-                Primitives::Camera& camera) const;
+      void draw(const Primitives::Matrix& projection,
+                const Primitives::Camera& camera) const;
 
     private:
 
