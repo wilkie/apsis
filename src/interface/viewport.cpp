@@ -99,7 +99,7 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   const Primitives::Matrix& matrix = *(const Primitives::Matrix*)glm::value_ptr(projection);
   _scene.scene().draw(matrix, camera);
 
-  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/NewsCycle/NewsCycle-Bold.ttf");
+  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/Cinzel/Cinzel-Bold.ttf");
   font.draw(matrix, camera, 100.0f, 100.0f, "Hello World How Are You?");
 }
 
