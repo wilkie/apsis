@@ -19,7 +19,6 @@ namespace Apsis {
      */
     class Font {
     public:
-      // TODO: UTF8
       /*
        *  Glyph information.
        */
