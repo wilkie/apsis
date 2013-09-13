@@ -1,5 +1,13 @@
 #include "apsis/primitives/math.h"
 
+float Apsis::Primitives::Vector2::x() const {
+  return value[0];
+}
+
+float Apsis::Primitives::Vector2::y() const {
+  return value[1];
+}
+
 float Apsis::Primitives::Vector3::x() const {
   return value[0];
 }

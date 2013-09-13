@@ -15,15 +15,15 @@ namespace Apsis {
        *  Creates a camera at the given position looking at the given point and
        *    oriented the given direction with the given zoom.
        */
-      Camera(const glm::vec3& position,
-             const glm::vec3& target,
-             const glm::vec3& up,
+      Camera(const Vector3& position,
+             const Vector3& target,
+             const Vector3& up,
              float zoom);
 
       /*
        *  Creates a camera for a 2d environment.
        */
-      Camera(const glm::vec2& position,
+      Camera(const Vector2& position,
              float zoom);
 
       /*
@@ -37,11 +37,11 @@ namespace Apsis {
       const Vector3& eye() const;
 
     private:
-      glm::vec3 _position;
-      glm::vec3 _target;
-      glm::vec3 _up;
+      Vector3 _position;
+      Vector3 _target;
+      Vector3 _up;
 
-      glm::mat4 _view;
+      Matrix _view;
     };
   }
 }

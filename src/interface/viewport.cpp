@@ -22,7 +22,7 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float width,
                               float height)
   : _scene(scene),
-    _camera(glm::vec2(0,0), 0.0f),
+    _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _window(width / 2.0f, height / 2.0f, width, height, _draw) {
 }
 
@@ -92,9 +92,10 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
 
   float zoom = 1.0f;
 
-  Primitives::Camera camera = Primitives::Camera(glm::vec2((float)(int)(x+0.5),
-                                                           (float)(int)(z+0.5)),
-                                                 zoom);
+  Primitives::Camera camera = Primitives::Camera(
+    *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)(x+0.5),
+                                                    (float)(int)(z+0.5))),
+    zoom);
 
   const Primitives::Matrix& matrix = *(const Primitives::Matrix*)glm::value_ptr(projection);
   _scene.scene().draw(matrix, camera);

@@ -7,29 +7,40 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-Apsis::Primitives::Camera::Camera(const glm::vec3& position,
-                                  const glm::vec3& target,
-                                  const glm::vec3& up,
+Apsis::Primitives::Camera::Camera(const Vector3& position,
+                                  const Vector3& target,
+                                  const Vector3& up,
                                   float zoom)
   : _position(position), _target(target), _up(up) {
-  _view = glm::scale(glm::lookAt(_position, _target, _up),
-                     glm::vec3(zoom, zoom, zoom));
+
+  glm::mat4 view = glm::scale(glm::lookAt(glm::vec3(_position.value[0], _position.value[1], _position.value[2]),
+                                          glm::vec3(_target.value[0], _target.value[1], _target.value[2]),
+                                          glm::vec3(_up.value[0], _up.value[1], _up.value[2])),
+                              glm::vec3(zoom, zoom, zoom));
+
+  _view = *(Matrix*)glm::value_ptr(view);
 }
 
-Apsis::Primitives::Camera::Camera(const glm::vec2& position,
+Apsis::Primitives::Camera::Camera(const Vector2& position,
                                   float zoom) {
-  _position = glm::vec3(position.x*zoom, 1.0, position.y*zoom);
-  _target = glm::vec3(position.x*zoom, 0.0, position.y*zoom);
-  _up     = glm::normalize(glm::vec3(0.0, 0.0, -1.0));
+  glm::vec3 pos      = glm::vec3(position.x() * zoom, 1.0, position.y() * zoom);
+  glm::vec3 target   = glm::vec3(position.x() * zoom, 0.0, position.y() * zoom);
+  glm::vec3 up       = glm::normalize(glm::vec3(0.0, 0.0, -1.0));
 
-  _view = glm::scale(glm::lookAt(_position, _target, _up),
-                     glm::vec3(zoom, zoom, zoom));
+  _position = *(Vector3*)glm::value_ptr(pos);
+  _target   = *(Vector3*)glm::value_ptr(target);
+  _up       = *(Vector3*)glm::value_ptr(up);
+
+  glm::mat4 view = glm::scale(glm::lookAt(pos, target, up),
+                              glm::vec3(zoom, zoom, zoom));
+
+  _view = *(Matrix*)glm::value_ptr(view);
 }
 
 const Apsis::Primitives::Matrix& Apsis::Primitives::Camera::view() const {
-  return *(Matrix*)glm::value_ptr(_view);
+  return _view;
 }
 
 const Apsis::Primitives::Vector3& Apsis::Primitives::Camera::eye() const {
-  return *(Vector3*)glm::value_ptr(_position);
+  return _position;
 }

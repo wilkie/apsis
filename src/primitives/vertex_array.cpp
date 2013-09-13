@@ -127,7 +127,7 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
                                                    const Matrix& mat) const {
-  glUniformMatrix4fv(identifier, 1, GL_FALSE, &mat[0][0]);
+  glUniformMatrix4fv(identifier, 1, GL_FALSE, (float*)&mat.value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
