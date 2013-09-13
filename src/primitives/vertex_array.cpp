@@ -45,7 +45,7 @@ void Apsis::Primitives::VertexArray::useProgram(Program& program) {
   glUseProgram(program.identifier());
 
   // Only add if not already there
-  for(unsigned int i = 0; i < _programs.size(); i++){
+  for(unsigned int i = 0; i < _programs.size(); i++) {
     if (_programs[i].identifier() == program.identifier()) {
       return;
     }
@@ -207,5 +207,14 @@ void Apsis::Primitives::VertexArray::_bindTextures() const {
 
     glActiveTexture(GL_TEXTURE0  + slot);
     glBindTexture(GL_TEXTURE_2D, texture.identifier());
+  }
+}
+
+void Apsis::Primitives::VertexArray::bindProgram() const {
+  if (_programs.size() > 0) {
+    glUseProgram(_programs[0].identifier());
+  }
+  else {
+    glUseProgram(0);
   }
 }

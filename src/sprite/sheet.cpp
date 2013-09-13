@@ -280,6 +280,8 @@ void Apsis::Sprite::Sheet::draw(unsigned int              index,
                                 const Primitives::Matrix& projection,
                                 const Primitives::Camera& camera,
                                 const Primitives::Matrix& model) const {
+  _vao.bindProgram();
+
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);

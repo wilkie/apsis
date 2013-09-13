@@ -120,6 +120,30 @@ void Apsis::Sprite::Font::_load() {
   if (renderToBitmap) {
     if (_texture == NULL) {
       _texture = new Apsis::Primitives::Texture(512, 512);
+
+      Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
+      Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/color.glsl");
+
+      Primitives::UnlinkedProgram unlinked;
+      unlinked.attach(vs);
+      unlinked.attach(fs);
+      unlinked.defineFragmentOutput("outColor");
+      Primitives::Program program = unlinked.link();
+
+      _vao.useProgram(program);
+      program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
+      program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
+
+      _vao.defineUniform("model", program);
+      _vao.defineUniform("view",  program);
+      _vao.defineUniform("proj",  program);
+      _vao.defineUniform("color", program);
+
+      _vao.defineUniform("tex", program);
+      _vao.bindTexture(0, *_texture);
+      _vao.uploadUniform("tex", 0);
+      Primitives::Vector4 color = {0.0f, 0.3f, 0.0f, 1.0f};
+      _vao.uploadUniform("color", color);
     }
   }
   else {
@@ -219,33 +243,10 @@ void Apsis::Sprite::Font::_loadGlyphBitmap(unsigned int character) const {
     _line_height = (unsigned int)bitmap.rows + 2;
   }
 
-  // Set GL texture options
-  glBindTexture(GL_TEXTURE_2D, _texture->identifier());
   _vbo.transfer(_vertices, 5 * 4 * _bitmapGlyphs.size());
   _ebo.transfer(_elements, 6 * _bitmapGlyphs.size());
 
   _vao.bindElements(_ebo);
-
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
-
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
-
-  _vao.useProgram(program);
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
-
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-
-  _vao.defineUniform("tex", program);
-  _vao.bindTexture(0, *_texture);
-  _vao.uploadUniform("tex", 0);
 }
 
 unsigned int Apsis::Sprite::Font::_addGlyph(char character,
@@ -367,6 +368,8 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
                                float x,
                                float y,
                                const char* string) const {
+  _vao.bindProgram();
+
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   

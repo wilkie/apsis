@@ -101,6 +101,8 @@ namespace Apsis {
        */
       void drawQuadsRange(unsigned int start, unsigned int count) const;
 
+      void bindProgram() const;
+
       /*
        *  Gives the identifier for this vertex array.
        */

@@ -526,6 +526,7 @@
     <ClInclude Include="..\..\src\support\soil\stb_image_aug.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\shaders\fragment\color.glsl" />
     <None Include="..\..\src\shaders\fragment\colorize.glsl" />
     <None Include="..\..\src\shaders\fragment\directional_lighting.glsl" />
     <None Include="..\..\src\shaders\fragment\flat.glsl" />

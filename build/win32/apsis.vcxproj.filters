@@ -1452,5 +1452,8 @@
     <None Include="..\..\src\shaders\fragment\flat.glsl">
       <Filter>shaders\fragment</Filter>
     </None>
+    <None Include="..\..\src\shaders\fragment\color.glsl">
+      <Filter>shaders\fragment</Filter>
+    </None>
   </ItemGroup>
 </Project>

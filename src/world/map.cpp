@@ -214,6 +214,8 @@ const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
 
 void Apsis::World::Map::draw(const Primitives::Matrix& projection,
                              const Primitives::Camera& camera) const {
+  _vao.bindProgram();
+
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
 
