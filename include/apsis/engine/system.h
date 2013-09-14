@@ -61,9 +61,6 @@ namespace Apsis {
       void loadScene(unsigned int id);
 
     private:
-      // Video Settings
-      Apsis::Settings::Video _videoSettings;
-
       // Backend
       Apsis::Backend::Sdl& _backend;
 

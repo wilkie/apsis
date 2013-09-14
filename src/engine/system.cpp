@@ -8,12 +8,11 @@
 Apsis::Engine::System::System(const char* path,
                               const Apsis::Settings::Video& videoSettings)
   : _path(path),                                         // Set path
-    _videoSettings(videoSettings),                       // Copy video settings
     _backend(*(new Apsis::Backend::Sdl(videoSettings))), // Initialize Devices
     _jsonLoaded(false),                                  // JSON
     _input(_parseOrCreateInput()),                       // Initialize Input Engine
     _objects(_parseOrCreateObject()),                    // Initialize Object Engine
-    _graphics(Apsis::Engine::Graphics::basic()),         // Initialize Graphics Engine
+    _graphics(Apsis::Engine::Graphics::basic(videoSettings)), // Initialize Graphics Engine
     _scene(Apsis::Engine::Scene::basic()),               // Initialize Scene Engine
     _viewport(_scene,                                    // Initialize Viewport
               (float)videoSettings.resolutionX,

@@ -1,20 +1,13 @@
 #include "apsis/interface/viewport.h"
 
+#include "apsis/interface/label.h"
+
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
 // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include <glm/gtc/matrix_transform.hpp>
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
-
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
 
 using namespace Apsis;
 
@@ -24,6 +17,10 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _window(width / 2.0f, height / 2.0f, width, height, _init, _draw) {
+
+  Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f, Apsis::Interface::Label::init, Apsis::Interface::Label::draw);
+  Apsis::Interface::Window& meh = *foo;
+  _window.add(meh);
 }
 
 void Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
@@ -111,54 +108,18 @@ end
 
 */
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
-  bool orthographic = true;
-
-  float rotation = 0.0;
-
-  float aspect = _window.position().width / _window.position().height;
-
-  float nearf = 1;
-  float farf = 20.0;
-
-  float fov = 45.0f;
-
-  float top = tanf(fov * 0.5f) * nearf;
-  float bottom = -top;
-
-  float left = aspect * bottom;
-  float right = aspect * top;
-
-  glm::mat4 projection;
-
-  float half_height = _window.position().height / 2.0f;
-  float half_width  = _window.position().width  / 2.0f;
-
-  if (orthographic) {
-    projection = glm::ortho(-half_width, half_width, -half_height, half_height);
-  }
-  else {
-    projection = glm::perspective(fov, aspect, nearf, farf);
-  }
-
-  glClearColor(0, 0, 0, 0);
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  float x = half_width;
-  float z = half_height;
-
-  float zoom = 1.0f;
-
   Primitives::Camera camera = Primitives::Camera(
-    *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)(x+0.5),
-                                                    (float)(int)(z+0.5))),
-    zoom);
+    *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)(800+0.5),
+                                                    (float)(int)(300+0.5))),
+    1.0f);
 
-  const Primitives::Matrix& matrix = *(const Primitives::Matrix*)glm::value_ptr(projection);
+  graphics.orthographic();
+  graphics.camera(camera);
+  graphics.clear();
 
-  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/Cinzel/Cinzel-Bold.ttf");
-  Primitives::Vector4 color = {0.58f, 0.58f, 0.89f, 1.0f};
-  _scene.scene().draw(matrix, camera);
-  font.draw(matrix, camera, color, 100.0f, 100.0f, "Hello World How Are You?");
+  _scene.scene().draw(graphics.projection(), camera);
+
+  _window.draw(graphics);
 }
 
 void Interface::Viewport::_init(Apsis::World::Object& object) {
