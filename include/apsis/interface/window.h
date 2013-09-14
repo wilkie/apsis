@@ -27,6 +27,9 @@ namespace Apsis {
     class Window {
     public:
 
+      // Init function
+      typedef void(&InitEvent)(Apsis::World::Object& object);
+
       // Draw function
       typedef void(&DrawEvent)(Apsis::Engine::Graphics&          graphics,
                                const Apsis::Geometry::Rectangle& position,
@@ -36,6 +39,7 @@ namespace Apsis {
              float y,
              float width,
              float height,
+             InitEvent& init,
              DrawEvent& draw);
 
       /*
@@ -100,7 +104,8 @@ namespace Apsis {
 
       Apsis::World::Object _object;
 
-      // Draw function
+      // Events
+      InitEvent _init;
       DrawEvent _draw;
     };
   }

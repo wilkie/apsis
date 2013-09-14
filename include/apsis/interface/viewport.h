@@ -52,6 +52,8 @@ namespace Apsis {
       void draw(Apsis::Engine::Graphics& graphics) const;
 
     private:
+      static void _init(Apsis::World::Object& object);
+
       static void _draw(Apsis::Engine::Graphics& graphics,
                         const Apsis::Geometry::Rectangle& position,
                         const Apsis::World::Object& object);

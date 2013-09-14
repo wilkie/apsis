@@ -23,7 +23,7 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float height)
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
-    _window(width / 2.0f, height / 2.0f, width, height, _draw) {
+    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw) {
 }
 
 void Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
@@ -53,7 +53,63 @@ Geometry::Point3d Interface::Viewport::target() {
   point.z = _camera.eye().z();
   return point;
 }
+/*
 
+{
+  "type": "interface",
+
+  "windows": [
+    {
+      "widget": "label",
+      "properties": {
+        "text": "Current Item",
+        "font": "Cinzel",
+        "font-size": 16.0,
+        "x": 70.0,
+        "y": 10.0
+      }
+    },
+    {
+      "widget": "image",
+      "properties": {
+        "spritesheet": "hud",
+        "spriteindex": 0,
+        "x": 10.0,
+        "y": 100.0,
+        "width": 50.0,
+        "height": 50.0
+      }
+    }
+  ]
+}
+
+{
+  "type": "widget",
+  "name": "label",
+  "inherit": true
+}
+
+{
+  "type": "widget",
+  "name": "foobar",
+  "code": "foobar.rb"
+}
+
+module Foobar
+  def onDraw
+  end
+
+  def onInputDown
+  end
+
+  def onInputUp
+  end
+
+  def onHover
+  end
+end
+
+*/
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   bool orthographic = true;
 
@@ -100,9 +156,12 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   const Primitives::Matrix& matrix = *(const Primitives::Matrix*)glm::value_ptr(projection);
 
   const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("assets/fonts/Cinzel/Cinzel-Bold.ttf");
-  Primitives::Vector4 color = {1.0f, 0.0f, 0.0f, 1.0f};
+  Primitives::Vector4 color = {0.58f, 0.58f, 0.89f, 1.0f};
   _scene.scene().draw(matrix, camera);
   font.draw(matrix, camera, color, 100.0f, 100.0f, "Hello World How Are You?");
+}
+
+void Interface::Viewport::_init(Apsis::World::Object& object) {
 }
 
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,

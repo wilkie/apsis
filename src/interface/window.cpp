@@ -4,13 +4,18 @@ Apsis::Interface::Window::Window(float x,
                                  float y,
                                  float width,
                                  float height,
+                                 InitEvent& init,
                                  DrawEvent& draw)
   : _position(x, y, width, height),
+    _init(init),
     _draw(draw),
     _childCount(0),
     _child(NULL),
     _next(NULL),
     _prev(NULL) {
+
+  // Call init method
+  _init(_object);
 }
 
 const Apsis::Geometry::Rectangle& Apsis::Interface::Window::position() const {
