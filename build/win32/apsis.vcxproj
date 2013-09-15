@@ -74,6 +74,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
+    <ClCompile Include="..\..\src\engine\audio.cpp" />
     <ClCompile Include="..\..\src\engine\event.cpp" />
     <ClCompile Include="..\..\src\engine\graphics.cpp" />
     <ClCompile Include="..\..\src\engine\object.cpp" />
@@ -293,6 +294,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
+    <ClInclude Include="..\..\include\apsis\engine\audio.h" />
     <ClInclude Include="..\..\include\apsis\engine\event.h" />
     <ClInclude Include="..\..\include\apsis\engine\graphics.h" />
     <ClInclude Include="..\..\include\apsis\engine\object.h" />
@@ -349,6 +351,7 @@
     <ClInclude Include="..\..\include\apsis\rules\up.h" />
     <ClInclude Include="..\..\include\apsis\rules\update_function.h" />
     <ClInclude Include="..\..\include\apsis\rules\wiggler.h" />
+    <ClInclude Include="..\..\include\apsis\settings\audio.h" />
     <ClInclude Include="..\..\include\apsis\settings\video.h" />
     <ClInclude Include="..\..\include\apsis\sprite\animation.h" />
     <ClInclude Include="..\..\include\apsis\sprite\font.h" />

@@ -647,6 +647,9 @@
     <ClCompile Include="..\..\src\interface\panel.cpp">
       <Filter>interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\audio.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1357,6 +1360,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\panel.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\settings\audio.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\audio.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
