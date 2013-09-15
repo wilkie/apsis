@@ -135,12 +135,6 @@ void Apsis::Engine::System::run() {
 
   Apsis::Engine::Event core_event;
 
-  const Apsis::Audio::Music& music = Apsis::Audio::Music::load("assets/music/stabilizer_piraterap.ogg");
-  _audio.playMusic(music);
-
-  const Apsis::Audio::Sound& sound = Apsis::Audio::Sound::load("assets/sounds/phaser.wav");
-  _audio.playSound(sound);
-
   unsigned int action_id = 0;
   while(true) {
     if (_backend.poll(core_event)) {
