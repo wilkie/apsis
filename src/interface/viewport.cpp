@@ -106,6 +106,14 @@ module Foobar
   end
 end
 
+Themes can replace internal widgets? That is, a theme is basically
+just a JSON description of widget types overriding those that
+already exist. Defaults will be just built into the system or
+just removed?
+
+Interface JSON descriptions just refer to widget names. So widget
+JSON descriptions can be replaced at will.
+
 */
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   Primitives::Camera camera = Primitives::Camera(

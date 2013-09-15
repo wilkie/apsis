@@ -1,8 +1,8 @@
-#include "apsis/interface/label.h"
+#include "apsis/interface/button.h"
 
 #include "apsis/sprite/sheet.h"
 
-void Apsis::Interface::Label::init(Apsis::World::Object& object) {
+void Apsis::Interface::Button::init(Apsis::World::Object& object) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
   static unsigned int text_id    = Apsis::Registry::Property::id("text");
   static unsigned int font_id_id = Apsis::Registry::Property::id("__fontid");
@@ -12,7 +12,7 @@ void Apsis::Interface::Label::init(Apsis::World::Object& object) {
   }
 
   if (!object.has(text_id)) {
-    object.set(text_id, "Label Text");
+    object.set(text_id, "Start");
   }
 
   const char* fontname = object.get(font_id).asCString();
@@ -22,7 +22,7 @@ void Apsis::Interface::Label::init(Apsis::World::Object& object) {
   object.set(font_id_id, (long)font.id());
 }
 
-void Apsis::Interface::Label::draw(Apsis::Engine::Graphics& graphics,
+void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
                                    const Apsis::Geometry::Rectangle& position,
                                    const Apsis::World::Object& object) {
   static unsigned int text_id = Apsis::Registry::Property::id("text");

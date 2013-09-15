@@ -641,6 +641,12 @@
     <ClCompile Include="..\..\src\primitives\math.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\interface\button.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\interface\panel.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1345,6 +1351,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\primitives\math.h">
       <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\button.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\panel.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

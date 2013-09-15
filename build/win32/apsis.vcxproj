@@ -84,9 +84,11 @@
     <ClCompile Include="..\..\src\geometry\line.cpp" />
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
     <ClCompile Include="..\..\src\input\binding.cpp" />
+    <ClCompile Include="..\..\src\interface\button.cpp" />
     <ClCompile Include="..\..\src\interface\filler_bar.cpp" />
     <ClCompile Include="..\..\src\interface\label.cpp" />
     <ClCompile Include="..\..\src\interface\numbers.cpp" />
+    <ClCompile Include="..\..\src\interface\panel.cpp" />
     <ClCompile Include="..\..\src\interface\viewport.cpp" />
     <ClCompile Include="..\..\src\interface\window.cpp" />
     <ClCompile Include="..\..\src\model\animation.cpp" />
@@ -304,9 +306,11 @@
     <ClInclude Include="..\..\include\apsis\geometry\rectangle.h" />
     <ClInclude Include="..\..\include\apsis\input\binding.h" />
     <ClInclude Include="..\..\include\apsis\input\key.h" />
+    <ClInclude Include="..\..\include\apsis\interface\button.h" />
     <ClInclude Include="..\..\include\apsis\interface\filler_bar.h" />
     <ClInclude Include="..\..\include\apsis\interface\numbers.h" />
     <ClInclude Include="..\..\include\apsis\interface\label.h" />
+    <ClInclude Include="..\..\include\apsis\interface\panel.h" />
     <ClInclude Include="..\..\include\apsis\interface\viewport.h" />
     <ClInclude Include="..\..\include\apsis\interface\window.h" />
     <ClInclude Include="..\..\include\apsis\model\animation.h" />
