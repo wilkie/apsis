@@ -62,6 +62,7 @@ namespace Audio {
 */
 
 #include "apsis/audio/music.h"
+#include "apsis/audio/sound.h"
 
 namespace Apsis {
   namespace Engine {
@@ -80,7 +81,12 @@ namespace Apsis {
       /*
        *  Plays given Music.
        */
-      void play(const Apsis::Audio::Music& music);
+      void playMusic(const Apsis::Audio::Music& music);
+
+      /*
+       *  Plays given Sound.
+       */
+      void playSound(const Apsis::Audio::Sound& sound);
 
     private:
       // Constructor

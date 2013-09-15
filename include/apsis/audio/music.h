@@ -28,7 +28,7 @@ namespace Apsis {
       // Constructor
       Music(const char* path);
 
-      // Keep global track of all musics
+      // Keep global track of all musics.
       static std::map<std::string, size_t> _ids;
       static std::map<size_t, Apsis::Audio::Music*> _musics;
 

@@ -33,10 +33,18 @@ const Apsis::Settings::Audio& Apsis::Engine::Audio::settings() const {
   return _audioSettings;
 }
 
-void Apsis::Engine::Audio::play(const Apsis::Audio::Music& music) {
+void Apsis::Engine::Audio::playMusic(const Apsis::Audio::Music& music) {
   _music = &music;
 
   Mix_Music* foo = (Mix_Music*)_music->identifier();
 
   Mix_PlayMusic(foo, 0);
+}
+
+void Apsis::Engine::Audio::playSound(const Apsis::Audio::Sound& sound) {
+  Mix_Chunk* foo = (Mix_Chunk*)sound.identifier();
+
+  // TODO: Keep track of sound channels.
+
+  Mix_PlayChannel(-1, foo, -1);
 }

@@ -654,7 +654,14 @@ Mix_Chunk *Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
         if ( SDL_BuildAudioCVT(&wavecvt,
                 wavespec.format, wavespec.channels, wavespec.freq,
                 mixer.format, mixer.channels, mixer.freq) < 0 ) {
-            SDL_free(chunk->abuf);
+            switch(magic) {
+            case WAVE:
+            case RIFF:
+              SDL_FreeWAV(chunk->abuf);
+              break;
+            default:
+              SDL_free(chunk->abuf);
+            }
             SDL_free(chunk);
             return(NULL);
         }
@@ -663,12 +670,27 @@ Mix_Chunk *Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
         wavecvt.buf = (Uint8 *)SDL_calloc(1, wavecvt.len*wavecvt.len_mult);
         if ( wavecvt.buf == NULL ) {
             SDL_SetError("Out of memory");
-            SDL_free(chunk->abuf);
+            switch(magic) {
+            case WAVE:
+            case RIFF:
+              SDL_FreeWAV(chunk->abuf);
+              break;
+            default:
+              SDL_free(chunk->abuf);
+            }
             SDL_free(chunk);
             return(NULL);
         }
         SDL_memcpy(wavecvt.buf, chunk->abuf, chunk->alen);
-        SDL_free(chunk->abuf);
+
+        switch(magic) {
+        case WAVE:
+        case RIFF:
+          SDL_FreeWAV(chunk->abuf);
+          break;
+        default:
+          SDL_free(chunk->abuf);
+        }
 
         /* Run the audio converter */
         if ( SDL_ConvertAudio(&wavecvt) < 0 ) {
