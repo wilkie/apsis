@@ -73,6 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\audio\music.cpp" />
     <ClCompile Include="..\..\src\backend\sdl.cpp" />
     <ClCompile Include="..\..\src\engine\audio.cpp" />
     <ClCompile Include="..\..\src\engine\event.cpp" />
@@ -340,6 +341,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis.h" />
+    <ClInclude Include="..\..\include\apsis\audio\music.h" />
     <ClInclude Include="..\..\include\apsis\backend\sdl.h" />
     <ClInclude Include="..\..\include\apsis\engine\audio.h" />
     <ClInclude Include="..\..\include\apsis\engine\event.h" />

@@ -135,6 +135,9 @@ void Apsis::Engine::System::run() {
 
   Apsis::Engine::Event core_event;
 
+  const Apsis::Audio::Music& music = Apsis::Audio::Music::load("assets/music/stabilizer_piraterap.ogg");
+  _audio.play(music);
+
   unsigned int action_id = 0;
   while(true) {
     if (_backend.poll(core_event)) {

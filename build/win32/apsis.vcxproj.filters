@@ -791,6 +791,9 @@
     <ClCompile Include="..\..\src\support\ogg\framing.c">
       <Filter>support\ogg</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\audio\music.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1694,6 +1697,9 @@
     <ClInclude Include="..\..\src\support\vorbis\window.h">
       <Filter>support\vorbis</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\audio\music.h">
+      <Filter>audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="geometry">
@@ -1788,6 +1794,9 @@
     </Filter>
     <Filter Include="support\ogg">
       <UniqueIdentifier>{e94108fc-d908-45e6-b97e-7aa9c5f81755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="audio">
+      <UniqueIdentifier>{2660c306-e39a-4388-b8b8-d1e9095273db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

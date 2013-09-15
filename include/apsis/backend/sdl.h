@@ -11,6 +11,7 @@
 // preprocessor magicks.
 #ifndef NO_SDL
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #endif
 
 namespace Apsis {

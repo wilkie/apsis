@@ -61,6 +61,8 @@ namespace Audio {
 
 */
 
+#include "apsis/audio/music.h"
+
 namespace Apsis {
   namespace Engine {
     /*
@@ -75,6 +77,11 @@ namespace Apsis {
        */
       const Settings::Audio& settings() const;
 
+      /*
+       *  Plays given Music.
+       */
+      void play(const Apsis::Audio::Music& music);
+
     private:
       // Constructor
       Audio(const Apsis::Settings::Audio& settings);
@@ -84,6 +91,9 @@ namespace Apsis {
 
       // Audio Settings
       Apsis::Settings::Audio _audioSettings;
+
+      // Current music track
+      const Apsis::Audio::Music* _music;
     };
   }
 }
