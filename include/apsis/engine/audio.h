@@ -5,6 +5,62 @@
 
 #include <vector>
 
+/*
+
+Music is generally auto looped... so we need a Audio::Sound class or something.
+
+namespace Audio {
+  class Sound {
+  public:
+    load from JSON
+    either a collection of sound files loaded together and played as a loop or
+    a single file with metadata dividing it up.
+
+    START LOOP END
+
+    sounds should react to events
+
+
+
+  private:
+  };
+}
+
+{
+  "type": "sound",
+
+  "name": "foo",
+
+  "file": "foo.ogg",
+
+  "parts": [
+    {
+      "tag": "start",
+      "length": 10.5
+    },
+    {
+      "tag": "loop",
+      "length": 125.5
+    },
+    {
+      "tag": "battle"
+    }
+  ],
+
+  "arrangements": {
+    "normal": ["start, "loop"],
+    "transition_to_battle": ["loop", "battle"]
+  },
+
+  "playback": {
+    "start": "start",
+    "loop": "loop",
+    "end": "end"
+  }
+}
+
+*/
+
 namespace Apsis {
   namespace Engine {
     /*
