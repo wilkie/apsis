@@ -650,6 +650,147 @@
     <ClCompile Include="..\..\src\engine\audio.cpp">
       <Filter>engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\dynamic_flac.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\dynamic_fluidsynth.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\dynamic_mod.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\dynamic_modplug.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\dynamic_mp3.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\dynamic_ogg.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\effects_internal.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\effect_position.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\effect_stereoreverse.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\fluidsynth.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\load_aiff.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\load_flac.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\load_ogg.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\load_voc.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\mixer.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music_cmd.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music_flac.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music_mad.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music_mod.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music_modplug.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\music_ogg.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SDL_mixer\wavestream.c">
+      <Filter>support\SDL_mixer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\analysis.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\bitrate.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\block.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\codebook.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\envelope.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\floor0.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\floor1.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\info.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\lookup.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\lpc.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\lsp.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\mapping0.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\mdct.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\psy.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\registry.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\res0.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\sharedbook.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\smallft.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\synthesis.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\vorbisenc.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\vorbisfile.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\vorbis\window.c">
+      <Filter>support\vorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\ogg\bitwise.c">
+      <Filter>support\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\ogg\framing.c">
+      <Filter>support\ogg</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1367,6 +1508,192 @@
     <ClInclude Include="..\..\include\apsis\engine\audio.h">
       <Filter>engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\dynamic_flac.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\dynamic_fluidsynth.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\dynamic_mod.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\dynamic_modplug.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\dynamic_mp3.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\dynamic_ogg.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\effects_internal.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\fluidsynth.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\load_aiff.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\load_flac.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\load_ogg.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\load_voc.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\music_cmd.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\music_flac.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\music_mad.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\music_mod.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\music_modplug.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\music_ogg.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\SDL_mixer.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SDL_mixer\wavestream.h">
+      <Filter>support\SDL_mixer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\backends.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\bitrate.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\books\coupled\res_books_51.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\books\coupled\res_books_stereo.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\books\floor\floor_books.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\books\uncoupled\res_books_uncoupled.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\codebook.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\codec_internal.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\envelope.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\highlevel.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\lookup.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\lookup_data.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\lpc.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\lsp.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\masking.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\mdct.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\misc.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\floor_all.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\psych_11.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\psych_16.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\psych_44.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\psych_8.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\residue_16.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\residue_44.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\residue_44p51.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\residue_44u.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\residue_8.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_11.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_16.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_22.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_32.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_44.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_44p51.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_44u.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_8.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\modes\setup_X.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\os.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\psy.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\registry.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\scales.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\smallft.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\vorbis\window.h">
+      <Filter>support\vorbis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="geometry">
@@ -1452,6 +1779,15 @@
     </Filter>
     <Filter Include="rules">
       <UniqueIdentifier>{b5fbbac0-429a-40b3-a651-a28b0f3b7217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\SDL_mixer">
+      <UniqueIdentifier>{acf9c77c-b047-41e3-8792-2c7c63bbf7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\vorbis">
+      <UniqueIdentifier>{e39afb9d-0d48-459f-9ca3-fbe148ac9091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\ogg">
+      <UniqueIdentifier>{e94108fc-d908-45e6-b97e-7aa9c5f81755}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
