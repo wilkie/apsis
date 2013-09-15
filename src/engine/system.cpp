@@ -6,13 +6,15 @@
 #include <stdlib.h>
 
 Apsis::Engine::System::System(const char* path,
-                              const Apsis::Settings::Video& videoSettings)
+                              const Apsis::Settings::Video& videoSettings,
+                              const Apsis::Settings::Audio& audioSettings)
   : _path(path),                                         // Set path
     _backend(*(new Apsis::Backend::Sdl(videoSettings))), // Initialize Devices
     _jsonLoaded(false),                                  // JSON
     _input(_parseOrCreateInput()),                       // Initialize Input Engine
     _objects(_parseOrCreateObject()),                    // Initialize Object Engine
     _graphics(Apsis::Engine::Graphics::basic(videoSettings)), // Initialize Graphics Engine
+    _audio(Apsis::Engine::Audio::basic(audioSettings)),  // Initialize Audio Engine
     _scene(Apsis::Engine::Scene::basic()),               // Initialize Scene Engine
     _viewport(_scene,                                    // Initialize Viewport
               (float)videoSettings.resolutionX,

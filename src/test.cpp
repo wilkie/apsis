@@ -34,14 +34,17 @@ int main(int argc, char** argv) {
     }
   }
 
-  Apsis::Settings::Video settings;
-  settings.resolutionX = WIDTH;
-  settings.resolutionY = HEIGHT;
+  Apsis::Settings::Video videoSettings;
+  Apsis::Settings::Audio audioSettings;
+  videoSettings.resolutionX = WIDTH;
+  videoSettings.resolutionY = HEIGHT;
   try {
     //Apsis::Engine::TopDown2d* engine = new Apsis::Engine::TopDown2d(settings);
     //engine->run();
 
-    Apsis::Engine::System system("assets/games/platformer.json", settings);
+    Apsis::Engine::System system("assets/games/platformer.json",
+                                 videoSettings,
+                                 audioSettings);
     system.run();
   }
   catch (char* msg) {

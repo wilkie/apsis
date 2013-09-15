@@ -6,8 +6,11 @@
 #include "apsis/engine/input.h"
 #include "apsis/engine/object.h"
 #include "apsis/engine/scene.h"
+#include "apsis/engine/graphics.h"
+#include "apsis/engine/audio.h"
 
 #include "apsis/settings/video.h"
+#include "apsis/settings/audio.h"
 
 #include "apsis/interface/viewport.h"
 
@@ -35,7 +38,8 @@ namespace Apsis {
        *  the rest of the engines (input, audio, etc).
        */
       System(const char* path,
-             const Apsis::Settings::Video& videoSettings);
+             const Apsis::Settings::Video& videoSettings,
+             const Apsis::Settings::Audio& audioSettings);
 
       /*
        *  Returns the input engine for this system. This engine keeps
@@ -97,6 +101,9 @@ namespace Apsis {
 
       // Graphics Engine
       Apsis::Engine::Graphics& _graphics;
+
+      // Audio Engine
+      Apsis::Engine::Audio& _audio;
 
       // Screen Viewport
       Apsis::Interface::Viewport _viewport;
