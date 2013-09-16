@@ -69,9 +69,7 @@ void Apsis::Engine::Graphics::draw(float x, float y, const char* string) const {
   const Apsis::Sprite::Font& font = this->font();
 
   Primitives::Vector4 color = {0.58f, 0.58f, 0.89f, 1.0f};
-  //font.draw(matrix, camera, color, 100.0f, 100.0f, "Hello World How Are You?");
   font.draw(_projection, _camera, color, x, y, string);
-  //font.draw(x, y, string);
 }
 
 void Apsis::Engine::Graphics::draw(float x,
