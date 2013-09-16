@@ -225,9 +225,22 @@ namespace Apsis {
        *  Clears the list of pending collisions.
        */
       void clearCollisions();
+
+      /*
+       *  Sets user data pointer.
+       */
+      void userData(void* value);
+
+      /*
+       *  Returns user data pointer.
+       */
+      const void* userData() const;
     private:
       // Property collection.
       std::unordered_map<unsigned int, Apsis::World::Value> _properties;
+
+      // User data
+      void* _user;
 
       // State collection.
       std::set<unsigned int> _states;

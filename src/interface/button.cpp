@@ -10,6 +10,10 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
+static struct ButtonData {
+  Apsis::Sprite::Batch* batch;
+};
+
 void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
                                     Apsis::World::Object& object) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
@@ -113,6 +117,11 @@ void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
   batch.add(8, x, y, (position.width - sheet.width(2)) - x, (position.height - sheet.height(5)) - y);
 
   object.set(batch_id_id, (long)batch.id());
+
+  ButtonData* data = new ButtonData;
+  data->batch = &batch;
+
+  object.userData(data);
 }
 
 void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
@@ -137,6 +146,8 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   }
 
   graphics.sheet(sheet_index);
-  const Apsis::Sprite::Batch& batch = Apsis::Sprite::Batch::loaded(batch_index);
+
+  const ButtonData& data = *(ButtonData*)object.userData();
+  const Apsis::Sprite::Batch& batch = *data.batch;
   batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
 }

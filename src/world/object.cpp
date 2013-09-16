@@ -240,3 +240,11 @@ unsigned int Apsis::World::Object::collisionCount() const {
 void Apsis::World::Object::clearCollisions() {
   _collisions.clear();
 }
+
+void Apsis::World::Object::userData(void* value) {
+  _user = value;
+}
+
+const void* Apsis::World::Object::userData() const {
+  return _user;
+}
