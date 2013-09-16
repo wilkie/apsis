@@ -11,17 +11,18 @@
 #include <glm/gtc/type_ptr.hpp>
 
 static struct ButtonData {
-  Apsis::Sprite::Batch* batch;
+  const Apsis::Sprite::Font*  font;
+  const Apsis::Sprite::Sheet* sheet;
+  const Apsis::Sprite::Batch* batch;
 };
 
 void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
                                     Apsis::World::Object& object) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
   static unsigned int text_id    = Apsis::Registry::Property::id("text");
-  static unsigned int font_id_id = Apsis::Registry::Property::id("__fontid");
   static unsigned int sprite_id = Apsis::Registry::Property::id("sprite");
-  static unsigned int sprite_id_id = Apsis::Registry::Property::id("__spriteid");
-  static unsigned int batch_id_id = Apsis::Registry::Property::id("__batchid");
+
+  ButtonData* data = new ButtonData;
   
   if (!object.has(sprite_id)) {
     object.set(sprite_id, "button");
@@ -39,11 +40,11 @@ void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
 
   const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname);
 
-  object.set(font_id_id, (long)font.id());
+  data->font = &font;
 
   const Apsis::Sprite::Sheet& sheet = Apsis::Sprite::Sheet::load("assets/graphics/button.png");
 
-  object.set(sprite_id_id, (long)sheet.id());
+  data->sheet = &sheet;
 
   Apsis::Sprite::Batch& batch = Apsis::Sprite::Batch::load(sheet);
 
@@ -116,9 +117,6 @@ void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
   y = sheet.height(0);
   batch.add(8, x, y, (position.width - sheet.width(2)) - x, (position.height - sheet.height(5)) - y);
 
-  object.set(batch_id_id, (long)batch.id());
-
-  ButtonData* data = new ButtonData;
   data->batch = &batch;
 
   object.userData(data);
@@ -127,27 +125,19 @@ void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
 void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
                                    const Apsis::Geometry::Rectangle& position,
                                    const Apsis::World::Object& object) {
-  static unsigned int text_id   = Apsis::Registry::Property::id("text");
-  static unsigned int font_id   = Apsis::Registry::Property::id("__fontid");
-  static unsigned int sprite_id = Apsis::Registry::Property::id("__spriteid");
-  static unsigned int batch_id  = Apsis::Registry::Property::id("__batchid");
-
-  const char* text         = object.get(text_id).asCString();
-  unsigned int font_index  = object.get(font_id).asInteger();
-  unsigned int sheet_index = object.get(sprite_id).asInteger();
-  unsigned int batch_index = object.get(batch_id).asInteger();
-
-  // Draw text
-  graphics.font(font_index);
-  graphics.draw(position.left(), position.top(), text);
-
-  if (!object.has(batch_id)) {
-    graphics.sheet(sheet_index);
-  }
-
-  graphics.sheet(sheet_index);
+  static unsigned int text_id = Apsis::Registry::Property::id("text");
 
   const ButtonData& data = *(ButtonData*)object.userData();
   const Apsis::Sprite::Batch& batch = *data.batch;
+  const Apsis::Sprite::Sheet& sheet = *data.sheet;
+  const Apsis::Sprite::Font&  font  = *data.font;
+
+  const char* text         = object.get(text_id).asCString();
+
+  // Draw text
+  graphics.font(font.id());
+  graphics.draw(position.left(), position.top(), text);
+
+  graphics.sheet(sheet.id());
   batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
 }
