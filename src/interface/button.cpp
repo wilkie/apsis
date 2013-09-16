@@ -118,10 +118,10 @@ void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
 void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
                                    const Apsis::Geometry::Rectangle& position,
                                    const Apsis::World::Object& object) {
-  static unsigned int text_id = Apsis::Registry::Property::id("text");
-  static unsigned int font_id = Apsis::Registry::Property::id("__fontid");
+  static unsigned int text_id   = Apsis::Registry::Property::id("text");
+  static unsigned int font_id   = Apsis::Registry::Property::id("__fontid");
   static unsigned int sprite_id = Apsis::Registry::Property::id("__spriteid");
-  static unsigned int batch_id = Apsis::Registry::Property::id("__batchid");
+  static unsigned int batch_id  = Apsis::Registry::Property::id("__batchid");
 
   const char* text         = object.get(text_id).asCString();
   unsigned int font_index  = object.get(font_id).asInteger();
