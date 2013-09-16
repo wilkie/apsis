@@ -57,9 +57,6 @@ void Apsis::Engine::Graphics::sheet(unsigned int id) {
   _sheet = &Apsis::Sprite::Sheet::loaded(id);
 }
 
-/*
-  *  Returns the current sprite sheet.
-  */
 // TODO: Sprite sheets can be used simultaneously.
 const Apsis::Sprite::Sheet& Apsis::Engine::Graphics::sheet() const {
   return *_sheet;
