@@ -178,13 +178,15 @@ void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
   glUniform4fv(identifier, 1, (float*)&value);
 }
 
-void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot, Texture& texture) {
+void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot,
+                                                 const Texture& texture) {
   std::map<unsigned int, Texture>::iterator it = _textures.find(slot);
   if (it != _textures.end()) {
     _textures.erase(it);
   }
 
-  _textures.insert(_textures.begin(), std::pair<unsigned int, Texture>(slot, texture));
+  _textures.insert(_textures.begin(),
+                   std::pair<unsigned int, Texture>(slot, texture));
 
   if (slot > 31) {
     throw "Cannot bind texture. Slot too high.";

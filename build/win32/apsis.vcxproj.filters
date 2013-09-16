@@ -797,6 +797,9 @@
     <ClCompile Include="..\..\src\audio\sound.cpp">
       <Filter>audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\sprite\batch.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1705,6 +1708,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\audio\sound.h">
       <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sprite\batch.h">
+      <Filter>sprite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -77,7 +77,7 @@ namespace Apsis {
       /*
        *  Bind a known texture.
        */
-      void bindTexture(unsigned int slot, Texture& texture);
+      void bindTexture(unsigned int slot, const Texture& texture);
 
       void use();
 

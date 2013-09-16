@@ -145,7 +145,7 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
   _vao.defineUniform("proj",  program);
 
   _vao.defineUniform("tex", program);
-  _vao.bindTexture(0, *this->texture());
+  _vao.bindTexture(0, this->texture());
   _vao.uploadUniform("tex", 0);
 }
 
@@ -197,8 +197,8 @@ void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
   delete [] stat_sheet;
 }
 
-Apsis::Primitives::Texture* Apsis::Sprite::Sheet::texture() const {
-  return _texture;
+const Apsis::Primitives::Texture& Apsis::Sprite::Sheet::texture() const {
+  return *_texture;
 }
 
 void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) const {
@@ -296,4 +296,12 @@ float Apsis::Sprite::Sheet::width(unsigned int index) const {
 
 float Apsis::Sprite::Sheet::height(unsigned int index) const {
   return (float)_sprites[index].height;
+}
+
+float Apsis::Sprite::Sheet::left(unsigned int index) const {
+  return (float)_sprites[index].x;
+}
+
+float Apsis::Sprite::Sheet::top(unsigned int index) const {
+  return (float)_sprites[index].y;
 }

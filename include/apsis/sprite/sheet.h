@@ -32,7 +32,7 @@ namespace Apsis {
       /*
        *  Returns: The Texture for this SpriteSheet.
        */
-      Apsis::Primitives::Texture* texture() const;
+      const Apsis::Primitives::Texture& texture() const;
 
       /*
        *  Fills the given coordinate array with the texture coordinates of the
@@ -53,6 +53,18 @@ namespace Apsis {
         *  Returns: the number of sprites contained in the sheet.
         */
       unsigned int count() const;
+
+      /*
+       *  Returns the x position within the sheet of the sprite at the given
+       *  index.
+       */
+      float left(unsigned int index) const;
+
+      /*
+       *  Returns the y position within the sheet of the sprite at the given
+       *  index.
+       */
+      float top(unsigned int index) const;
 
       /*
        *  Returns the width of the sprite at the given index.

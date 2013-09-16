@@ -181,7 +181,7 @@ void Apsis::World::Map::_generateVAO() {
   _vao.defineUniform("proj",  program);
 
   _vao.defineUniform("tex", program);
-  _vao.bindTexture(0, *_sheet.texture());
+  _vao.bindTexture(0, _sheet.texture());
   _vao.uploadUniform("tex", 0);
 }
 

@@ -1,6 +1,7 @@
 #include "apsis/interface/button.h"
 
 #include "apsis/sprite/sheet.h"
+#include "apsis/sprite/batch.h"
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
@@ -54,63 +55,83 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   graphics.font(font_index);
   graphics.draw(position.left(), position.top(), text);
 
-  float x = 0.0f;
-  float y = 0.0f;
+  static Apsis::Sprite::Batch* batch = NULL;
 
-  graphics.sheet(sheet_index);
-  const Apsis::Sprite::Sheet& sheet = graphics.sheet();
+  if (batch == NULL) {
+    graphics.sheet(sheet_index);
+    const Apsis::Sprite::Sheet& sheet = graphics.sheet();
 
-  // Button top
-  graphics.draw(position.left(), position.top(), sheet_index, 0);
-  
-  x += sheet.width(0);
-  while (x + sheet.width(1) <= (position.width - sheet.width(2))) {
-    graphics.draw(position.left() + x, position.top() + y, sheet_index, 1);
-    x += sheet.width(1);
-  }
-  // TODO: move it so that the right of the corner lines up
-  graphics.draw(position.left() + x, position.top() + y, sheet_index, 2);
-  
-  // Button bottom
-  x = 0.0f;
-  y = position.height - sheet.height(5);
+    batch = new Apsis::Sprite::Batch(sheet);
 
-  graphics.draw(position.left() + x, position.top() + y, sheet_index, 5);
-  x += sheet.width(5);
-  while (x + sheet.width(6) <= (position.width - sheet.width(7))) {
-    graphics.draw(position.left() + x, position.top() + y, sheet_index, 6);
-    x += sheet.width(6);
-  }
-  // TODO: move it so that the right of the corner lines up
-  graphics.draw(position.left() + x, position.top() + y, sheet_index, 7);
+    float x = 0.0f;
+    float y = 0.0f;
 
-  // Button left edge
-  x = 0.0f;
-  y = sheet.height(0);
+    // Button top
 
-  while (y + sheet.height(3) <= (position.height - sheet.height(2))) {
-    graphics.draw(position.left() + x, position.top() + y, sheet_index, 3);
-    y += sheet.height(3);
-  }
-
-  // Button right edge
-  x = position.width - sheet.width(4);
-  y = sheet.height(0);
-
-  while (y + sheet.height(4) <= (position.height - sheet.height(2))) {
-    graphics.draw(position.left() + x, position.top() + y, sheet_index, 4);
-    y += sheet.height(4);
-  }
-
-  // Button inside
-  x = sheet.width(0);
-
-  while (x + sheet.width(8) <= (position.width - sheet.width(2))) {
-    y = sheet.height(0);
-    while (y + sheet.height(8) <= (position.height - sheet.height(5))) {
-      graphics.draw(position.left() + x, position.top() + y, sheet_index, 8);
-      y += sheet.height(8);
+    // Corner (topleft)
+    batch->add(0, 0.0f, 0.0f);
+    x += sheet.width(0);
+    while (x + sheet.width(1) <= (position.width - sheet.width(2))) {
+      batch->add(1, x, y);
+      x += sheet.width(1);
     }
-    x += sheet.width(8);
+    // Add last bit
+    batch->add(1, x, y, (position.width - sheet.width(2)) - x, sheet.height(1));
+    // Corner (topright)
+    batch->add(2, position.width - sheet.width(2), y);
+  
+    // Button bottom
+    x = 0.0f;
+    y = position.height - sheet.height(5);
+
+    batch->add(5, x, y);
+    x += sheet.width(5);
+    while (x + sheet.width(6) <= (position.width - sheet.width(7))) {
+      batch->add(6, x, y);
+      x += sheet.width(6);
+    }
+    // Add last bit
+    batch->add(6, x, y, (position.width - sheet.width(7)) - x, sheet.height(6));
+    // Corner
+    batch->add(7, position.width - sheet.width(7), y);
+
+    // Button left edge
+    x = 0.0f;
+    y = sheet.height(0);
+    while (y + sheet.height(3) <= (position.height - sheet.height(2))) {
+      batch->add(3, x, y);
+      y += sheet.height(3);
+    }
+    // Add last bit
+    batch->add(3, x, y, sheet.width(3), (position.height - sheet.height(2)) - y);
+
+    // Button right edge
+    x = position.width - sheet.width(4);
+    y = sheet.height(0);
+    while (y + sheet.height(4) <= (position.height - sheet.height(2))) {
+      batch->add(4, x, y);
+      y += sheet.height(4);
+    }
+    // Add last bit
+    batch->add(4, x, y, sheet.width(4), (position.height - sheet.height(2)) - y);
+
+    // Button inside
+    x = sheet.width(0);
+    while (x + sheet.width(8) <= (position.width - sheet.width(2))) {
+      y = sheet.height(0);
+      while (y + sheet.height(8) <= (position.height - sheet.height(5))) {
+        batch->add(8, x, y);
+        y += sheet.height(8);
+      }
+      // Add little bit
+      batch->add(8, x, y, sheet.width(8), (position.height - sheet.height(5)) - y);
+      x += sheet.width(8);
+    }
+
+    // Add little bit (corner)
+    y = sheet.height(0);
+    batch->add(8, x, y, (position.width - sheet.width(2)) - x, (position.height - sheet.height(5)) - y);
   }
+
+  batch->draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
 }
