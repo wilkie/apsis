@@ -1,0 +1,72 @@
+{
+  "type": "sheet",
+
+  "author":  "wilkie",
+  "license": "CC0",
+
+  "frames": [
+    {
+      "name": "topleft",
+      "x": 0,
+      "y": 0,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "top",
+      "x": 5,
+      "y": 0,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "topright",
+      "x": 195,
+      "y": 0,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "left",
+      "x": 0,
+      "y": 5,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "right",
+      "x": 195,
+      "y": 5,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "bottomleft",
+      "x": 0,
+      "y": 195,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "bottom",
+      "x": 5,
+      "y": 195,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "bottomright",
+      "x": 195,
+      "y": 195,
+      "width": 5,
+      "height": 5
+    },
+    {
+      "name": "inner",
+      "x": 5,
+      "y": 5,
+      "width": 5,
+      "height": 5
+    }
+  ]
+}

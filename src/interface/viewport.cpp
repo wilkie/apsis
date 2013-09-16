@@ -1,6 +1,7 @@
 #include "apsis/interface/viewport.h"
 
 #include "apsis/interface/label.h"
+#include "apsis/interface/button.h"
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
@@ -18,7 +19,7 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _window(width / 2.0f, height / 2.0f, width, height, _init, _draw) {
 
-  Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f, Apsis::Interface::Label::init, Apsis::Interface::Label::draw);
+  Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f, Apsis::Interface::Button::init, Apsis::Interface::Button::draw);
   Apsis::Interface::Window& meh = *foo;
   _window.add(meh);
 }
