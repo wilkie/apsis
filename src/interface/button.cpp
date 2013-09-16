@@ -54,40 +54,42 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   graphics.font(font_index);
   graphics.draw(position.left(), position.top(), text);
 
-  const Apsis::Sprite::Sheet& sheet = Apsis::Sprite::Sheet::loaded(sheet_index);
-
   float x = 0.0f;
   float y = 0.0f;
 
+  graphics.sheet(sheet_index);
+  const Apsis::Sprite::Sheet& sheet = graphics.sheet();
+
   // Button top
-  sheet.draw(0, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0, position.top()))));
+  graphics.draw(position.left(), position.top(), sheet_index, 0);
+  
   x += sheet.width(0);
   while (x + sheet.width(1) <= (position.width - sheet.width(2))) {
-    sheet.draw(1, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top()))));
+    graphics.draw(position.left() + x, position.top() + y, sheet_index, 1);
     x += sheet.width(1);
   }
   // TODO: move it so that the right of the corner lines up
-  sheet.draw(2, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top()))));
+  graphics.draw(position.left() + x, position.top() + y, sheet_index, 2);
   
   // Button bottom
   x = 0.0f;
   y = position.height - sheet.height(5);
 
-  sheet.draw(5, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0, position.top() + y))));
+  graphics.draw(position.left() + x, position.top() + y, sheet_index, 5);
   x += sheet.width(5);
   while (x + sheet.width(6) <= (position.width - sheet.width(7))) {
-    sheet.draw(6, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top() + y))));
+    graphics.draw(position.left() + x, position.top() + y, sheet_index, 6);
     x += sheet.width(6);
   }
   // TODO: move it so that the right of the corner lines up
-  sheet.draw(7, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top() + y))));
+  graphics.draw(position.left() + x, position.top() + y, sheet_index, 7);
 
   // Button left edge
   x = 0.0f;
   y = sheet.height(0);
 
   while (y + sheet.height(3) <= (position.height - sheet.height(2))) {
-    sheet.draw(3, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top() + y))));
+    graphics.draw(position.left() + x, position.top() + y, sheet_index, 3);
     y += sheet.height(3);
   }
 
@@ -96,7 +98,7 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   y = sheet.height(0);
 
   while (y + sheet.height(4) <= (position.height - sheet.height(2))) {
-    sheet.draw(4, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top() + y))));
+    graphics.draw(position.left() + x, position.top() + y, sheet_index, 4);
     y += sheet.height(4);
   }
 
@@ -106,7 +108,7 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   while (x + sheet.width(8) <= (position.width - sheet.width(2))) {
     y = sheet.height(0);
     while (y + sheet.height(8) <= (position.height - sheet.height(5))) {
-      sheet.draw(8, graphics.projection(), graphics.camera(), *(const Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left() + x, 0.0, position.top() + y))));
+      graphics.draw(position.left() + x, position.top() + y, sheet_index, 8);
       y += sheet.height(8);
     }
     x += sheet.width(8);

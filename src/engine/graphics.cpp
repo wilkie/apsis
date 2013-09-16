@@ -53,6 +53,18 @@ const Apsis::Sprite::Font& Apsis::Engine::Graphics::font() const {
   return *_font;
 }
 
+void Apsis::Engine::Graphics::sheet(unsigned int id) {
+  _sheet = &Apsis::Sprite::Sheet::loaded(id);
+}
+
+/*
+  *  Returns the current sprite sheet.
+  */
+// TODO: Sprite sheets can be used simultaneously.
+const Apsis::Sprite::Sheet& Apsis::Engine::Graphics::sheet() const {
+  return *_sheet;
+}
+
 void Apsis::Engine::Graphics::draw(float x, float y, const char* string) const {
   const Apsis::Sprite::Font& font = this->font();
 
@@ -60,6 +72,21 @@ void Apsis::Engine::Graphics::draw(float x, float y, const char* string) const {
   //font.draw(matrix, camera, color, 100.0f, 100.0f, "Hello World How Are You?");
   font.draw(_projection, _camera, color, x, y, string);
   //font.draw(x, y, string);
+}
+
+void Apsis::Engine::Graphics::draw(float x,
+                                   float y,
+                                   unsigned int sheet_id,
+                                   unsigned int sprite_id) const {
+  const Apsis::Sprite::Sheet& sheet = this->sheet();
+
+  glm::mat4 model = glm::translate(glm::mat4(1.0),
+    glm::vec3(x, 0.0, y));
+
+  const Primitives::Matrix& model_matrix
+    = *(const Primitives::Matrix*)glm::value_ptr(model);
+
+  sheet.draw(sprite_id, _projection, _camera, model_matrix);
 }
 
 void Apsis::Engine::Graphics::clear() const {

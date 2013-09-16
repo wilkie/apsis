@@ -2,6 +2,8 @@
 #define APSIS_ENGINE_GRAPHICS_H
 
 #include "apsis/sprite/font.h"
+#include "apsis/sprite/sheet.h"
+
 #include "apsis/settings/video.h"
 
 #include <vector>
@@ -29,6 +31,17 @@ namespace Apsis {
        *  Retrieves the current font.
        */
       const Apsis::Sprite::Font& font() const;
+
+      /*
+       *  Uses the given sprite sheet id.
+       */
+      void sheet(unsigned int sheet_id);
+
+      /*
+       *  Returns the current sprite sheet.
+       */
+      // TODO: Sprite sheets can be used simultaneously.
+      const Apsis::Sprite::Sheet& sheet() const;
 
       /*
        *  Clears buffer.
@@ -70,6 +83,14 @@ namespace Apsis {
        */
       void draw(float x, float y, const char* string) const;
 
+      /*
+       *  Draws the given sprite by its sheet and sprite index.
+       */
+      void draw(float x,
+                float y,
+                unsigned int sheet,
+                unsigned int sprite) const;
+
     private:
       // Constructor
       Graphics(const Apsis::Settings::Video& settings);
@@ -84,6 +105,8 @@ namespace Apsis {
       // Keep track of Sprite::Sheet's and which are loaded...
       mutable const Apsis::Sprite::Font* _default;
       const Apsis::Sprite::Font* _font;
+
+      const Apsis::Sprite::Sheet* _sheet;
 
       // Camera
       Primitives::Camera _camera;
