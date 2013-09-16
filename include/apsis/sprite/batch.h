@@ -10,7 +10,13 @@ namespace Apsis {
       /*
        *  Constructs a new Batch object using the given Sprite::Sheet.
        */
-      Batch(const Apsis::Sprite::Sheet& sheet);
+      static Apsis::Sprite::Batch& load(const Apsis::Sprite::Sheet& sheet);
+      static Apsis::Sprite::Batch& loaded(unsigned int id);
+
+      /*
+       *  Returns the unique identifier for this Batch.
+       */
+      unsigned int id() const;
 
       /*
        *  Returns the Sprite::Sheet that this Batch object is using.
@@ -53,6 +59,15 @@ namespace Apsis {
                 const Primitives::Camera& camera,
                 const Primitives::Matrix& model) const;
     private:
+      // Constructor
+      Batch(const Apsis::Sprite::Sheet& sheet);
+
+      // Registry of batches.
+      static std::vector<Apsis::Sprite::Batch*> _batches;
+
+      // Id
+      unsigned int _id;
+
       const Apsis::Sprite::Sheet& _sheet;
 
       // Graphics primitives for storing on gpu and drawing.

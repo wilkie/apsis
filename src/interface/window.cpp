@@ -15,7 +15,7 @@ Apsis::Interface::Window::Window(float x,
     _prev(NULL) {
 
   // Call init method
-  _init(_object);
+  _init(_position, _object);
 }
 
 const Apsis::Geometry::Rectangle& Apsis::Interface::Window::position() const {

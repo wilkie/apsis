@@ -6,6 +6,19 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
+#include <algorithm>
+
+std::vector<Apsis::Sprite::Batch*> Apsis::Sprite::Batch::_batches;
+
+Apsis::Sprite::Batch& Apsis::Sprite::Batch::load(const Apsis::Sprite::Sheet& sheet) {
+  _batches.push_back(new Apsis::Sprite::Batch(sheet));
+  return *_batches[_batches.size() - 1];
+}
+
+Apsis::Sprite::Batch& Apsis::Sprite::Batch::loaded(unsigned int index) {
+  return *_batches[index];
+}
+
 Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
   : _sheet(sheet),
     _vertexCount(0),
@@ -13,6 +26,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
     _elementCount(0),
     _elements(NULL),
     _dirty(false) {
+
+  _id = _batches.size();
 
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
@@ -34,6 +49,10 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
 
   _vao.defineUniform("tex", program);
   _vao.bindTexture(0, _sheet.texture());
+}
+
+unsigned int Apsis::Sprite::Batch::id() const {
+  return _id;
 }
 
 const Apsis::Sprite::Sheet& Apsis::Sprite::Batch::sheet() const {

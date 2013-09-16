@@ -131,7 +131,8 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   _window.draw(graphics);
 }
 
-void Interface::Viewport::_init(Apsis::World::Object& object) {
+void Interface::Viewport::_init(const Apsis::Geometry::Rectangle& position,
+                                Apsis::World::Object& object) {
 }
 
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,

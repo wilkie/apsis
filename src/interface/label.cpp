@@ -2,7 +2,8 @@
 
 #include "apsis/sprite/sheet.h"
 
-void Apsis::Interface::Label::init(Apsis::World::Object& object) {
+void Apsis::Interface::Label::init(const Apsis::Geometry::Rectangle& position,
+                                   Apsis::World::Object& object) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
   static unsigned int text_id    = Apsis::Registry::Property::id("text");
   static unsigned int font_id_id = Apsis::Registry::Property::id("__fontid");

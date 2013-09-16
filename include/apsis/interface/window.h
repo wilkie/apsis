@@ -28,7 +28,8 @@ namespace Apsis {
     public:
 
       // Init function
-      typedef void(&InitEvent)(Apsis::World::Object& object);
+      typedef void(&InitEvent)(const Apsis::Geometry::Rectangle& position,
+                               Apsis::World::Object& object);
 
       // Draw function
       typedef void(&DrawEvent)(Apsis::Engine::Graphics&          graphics,
