@@ -102,9 +102,12 @@ void Apsis::Sprite::Font::_load() {
     throw "Sprite::Font Error: Cannot find font family on this system.";
   }
 
-  _ascent  = face->ascender;
-  _descent = face->descender;
-  _lineGap = face->height;
+  _ascent  = (float)(face->ascender >> 6)
+           + ((float)(face->ascender & 0x3f)  / (float)0x3f);
+  _descent = (float)(face->descender >> 6)
+           + ((float)(face->descender & 0x3f)  / (float)0x3f);
+  _lineGap = (float)(face->height >> 6)
+           + ((float)(face->height & 0x3f)  / (float)0x3f);
 
   // Our height is in pixels, this is in device points of 1/64 of a pixel.
   // Use dpi of 96
@@ -408,4 +411,19 @@ float Apsis::Sprite::Font::ascent() const {
 
 float Apsis::Sprite::Font::descent() const {
   return _descent;
+}
+
+float Apsis::Sprite::Font::width(const char* string) const {
+  float x = 0;
+  while(*string != NULL) {
+    const Glyph& glyph = this->glyph(*string);
+    x += glyph.advanceWidth;
+    string++;
+  }
+
+  return x;
+}
+
+float Apsis::Sprite::Font::height(const char* string) const {
+  return _lineGap;
 }

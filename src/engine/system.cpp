@@ -135,20 +135,36 @@ void Apsis::Engine::System::run() {
 
   Apsis::Engine::Event core_event;
 
+  const Apsis::Interface::Window& mainWindow = _viewport.window();
+
   unsigned int action_id = 0;
   while(true) {
     if (_backend.poll(core_event)) {
-      if (core_event.type() == Apsis::Engine::Event::Type::Press) {
-        if (_input.press(core_event.binding(), action_id)) {
+      if (core_event.isInput()) {
+        bool pressed = true;
+        if (core_event.type() == Apsis::Engine::Event::Type::Release) {
+          pressed = false;
+        }
+
+        const Apsis::Input::Binding& binding = core_event.binding();
+
+        if (binding.isMouse()) {
+          const Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
+          if (&window != &mainWindow) {
+            // TODO: interface events
+          }
+        }
+
+        if (pressed && _input.press(binding, action_id)) {
           _scene.scene().act(action_id, true);
         }
-      }
-      else if (core_event.type() == Apsis::Engine::Event::Type::Release) {
-        if (_input.release(core_event.binding(), action_id)) {
+        else if (!pressed && _input.release(binding, action_id)) {
           _scene.scene().act(action_id, false);
         }
       }
-      else if (core_event.type() == Apsis::Engine::Event::Type::SystemEvent) {
+      // TODO: Mouse/Touch movement (hover)
+      // TODO: Check interface
+      else if (core_event.isSystem()) {
         if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
           break;
         }

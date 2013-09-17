@@ -148,6 +148,15 @@ Apsis::Input::Binding::Binding(const char* key,
     _alt(alt) {
 }
 
+bool Apsis::Input::Binding::isMouse() const {
+  return (_key >= Key::MOUSE_0 && _key <= Key::MOUSE_4);
+}
+
+bool Apsis::Input::Binding::isAxis() const {
+  return (_key == Key::JOY_DOWN || _key == Key::JOY_UP ||
+          _key == Key::JOY_LEFT || _key == Key::JOY_RIGHT);
+}
+
 Apsis::Key::Code Apsis::Input::Binding::key() const {
   return _key;
 }

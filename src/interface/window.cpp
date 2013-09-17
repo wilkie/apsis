@@ -102,3 +102,34 @@ void Apsis::Interface::Window::draw(Apsis::Engine::Graphics& graphics) const {
     current = current->_next;
   } while (current != _child);
 }
+
+bool Apsis::Interface::Window::contains(float x, float y) const {
+  Apsis::Geometry::Point p = {x, y};
+  return _position.contains(&p);
+}
+
+const Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) const {
+  if (_child == NULL) {
+    return *this;
+  }
+
+  Interface::Window* current = _child;
+
+  // TODO: reverse direction since we want the order in which the widgets
+  //       are seen and interacted (reverse to the order in which they
+  //       are drawn.
+  do  {
+    if (current->contains(x, y)) {
+      // Reposition point with local coordinates.
+      float window_x = x - current->position().left();
+      float window_y = y - current->position().top();
+
+      // Recurse to the child window.
+      return current->at(window_x, window_y);
+    }
+
+    current = current->_next;
+  } while (current != _child);
+
+  return *this;
+}

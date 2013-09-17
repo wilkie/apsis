@@ -65,7 +65,7 @@ const Apsis::Sprite::Sheet& Apsis::Engine::Graphics::sheet() const {
 void Apsis::Engine::Graphics::draw(float x, float y, const char* string) const {
   const Apsis::Sprite::Font& font = this->font();
 
-  Primitives::Vector4 color = {0.58f, 0.58f, 0.89f, 1.0f};
+  Primitives::Vector4 color = {0.78f, 0.78f, 0.99f, 1.0f};
   font.draw(_projection, _camera, color, x, y, string);
 }
 

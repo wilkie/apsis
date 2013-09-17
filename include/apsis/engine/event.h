@@ -21,7 +21,8 @@ namespace Apsis {
         enum Types {
           SystemEvent,
           Press,
-          Release
+          Release,
+          Movement
         };
       };
 
@@ -57,7 +58,30 @@ namespace Apsis {
        *  type to indicate the event is a key binding depending on whether it
        *  has been indicated that the key was pressed or released.
        */
-      void binding(const Apsis::Input::Binding& binding, bool pressed);
+      void binding(const Apsis::Input::Binding& binding,
+                   float x,
+                   float y,
+                   bool pressed);
+
+      /*
+       *  Returns the x position of the event.
+       */
+      float x() const;
+
+      /*
+       *  Returns the y position of the event.
+       */
+      float y() const;
+
+      /*
+       *  Returns whether or not the event is a response to input of any kind.
+       */
+      bool isInput() const;
+
+      /*
+       *  Returns whether or not the event is a response to the system.
+       */
+      bool isSystem() const;
 
     private:
       Type::Types _type;
@@ -69,6 +93,8 @@ namespace Apsis {
           bool shift;
           bool alt;
           bool control;
+          float x;
+          float y;
         } binding;
       } _payload;
     };

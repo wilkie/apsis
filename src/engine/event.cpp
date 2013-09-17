@@ -31,12 +31,36 @@ const Apsis::Input::Binding Apsis::Engine::Event::binding() const {
   throw "Event is not an input event.";
 }
 
+float Apsis::Engine::Event::x() const {
+  if (_type == Apsis::Engine::Event::Type::Press ||
+      _type == Apsis::Engine::Event::Type::Release) {
+    return _payload.binding.x;
+  }
+
+  // TODO: i18n?
+  throw "Event is not an input event.";
+}
+
+float Apsis::Engine::Event::y() const {
+  if (_type == Apsis::Engine::Event::Type::Press ||
+      _type == Apsis::Engine::Event::Type::Release) {
+    return _payload.binding.y;
+  }
+
+  // TODO: i18n?
+  throw "Event is not an input event.";
+}
+
 void Apsis::Engine::Event::binding(const Apsis::Input::Binding& binding,
+                                   float x,
+                                   float y,
                                    bool pressed) {
   _payload.binding.code    = binding.key();
   _payload.binding.alt     = binding.alt();
   _payload.binding.control = binding.control();
   _payload.binding.shift   = binding.shift();
+  _payload.binding.x       = x;
+  _payload.binding.y       = y;
 
   if (pressed) {
     _type = Apsis::Engine::Event::Type::Press;
@@ -44,4 +68,13 @@ void Apsis::Engine::Event::binding(const Apsis::Input::Binding& binding,
   else {
     _type = Apsis::Engine::Event::Type::Release;
   }
+}
+
+bool Apsis::Engine::Event::isInput() const {
+  return (_type == Apsis::Engine::Event::Type::Press ||
+          _type == Apsis::Engine::Event::Type::Release);
+}
+
+bool Apsis::Engine::Event::isSystem() const {
+  return _type == Apsis::Engine::Event::Type::SystemEvent;
 }

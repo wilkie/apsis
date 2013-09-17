@@ -36,6 +36,17 @@ namespace Apsis {
                                const Apsis::Geometry::Rectangle& position,
                                const Apsis::World::Object&       object);
 
+      // Input function
+      // TODO: pass in input event (separate event types into separate classes?)
+      typedef void(&InputEvent)(const Apsis::Geometry::Rectangle& position,
+                                const Apsis::World::Object&       object);
+
+      // Hover function
+      // TODO: pass in input event
+      typedef void(&HoverEvent)(const Apsis::Geometry::Point&     point,
+                                const Apsis::Geometry::Rectangle& position,
+                                const Apsis::World::Object&       object);
+
       Window(float x,
              float y,
              float width,
@@ -87,6 +98,20 @@ namespace Apsis {
        *  Draws this Window and all of its children.
        */
       void draw(Apsis::Engine::Graphics& graphics) const;
+
+      /*
+       *  Returns true if the given point is within this Window. The
+       *  coordinates are local to the Window's parent.
+       */
+      bool contains(float x, float y) const;
+
+      /*
+       *  Returns the descendant Window at the foreground at the given point.
+       *  The coordinates are local to the Window's parent. Will return its
+       *  self when the point is not over any other Window. Will return self if
+       *  the point is outside of this Window.
+       */
+      const Apsis::Interface::Window& at(float x, float y) const;
 
     private:
       // Dimensions

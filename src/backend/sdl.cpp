@@ -12,6 +12,29 @@
 #include <GL/glew.h>
 
 #ifndef NO_SDL
+
+static void _translateSDLPosition(float& x, float& y, const SDL_Event& event) {
+  // Get mouse position or joystick pressure
+
+  if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) {
+    // Mouse position
+    x = (float)event.button.x;
+    y = (float)event.button.y;
+  }
+  else if (event.type == SDL_JOYBUTTONDOWN) {
+    // Pressure sensitivity?
+  }
+  else if (event.type == SDL_JOYAXISMOTION) {
+    // Axis motion
+    x = (float)((int)event.jaxis.value + 32768) / (32768.0f*2.0f);
+  }
+  else if (event.type == SDL_JOYBALLMOTION) {
+    // Ball motion
+    x = (float)(event.jball.xrel);
+    y = (float)(event.jball.yrel);
+  }
+}
+
 // OMG LONG FUNCTION JEEZ WEEZ CHEEZ WIZ (tm).
 static bool _translateSDLKey(Apsis::Input::Binding& binding, const SDL_Event& event, bool& pressed) {
   if (event.type == SDL_KEYDOWN ||
@@ -304,7 +327,9 @@ bool Apsis::Backend::Sdl::poll(Apsis::Engine::Event& event) {
     Apsis::Input::Binding binding(Apsis::Key::A, false, false, false);
     bool pressed = true;
     if (_translateSDLKey(binding, sdl_event, pressed)) {
-      event.binding(binding, pressed);
+      float x, y;
+      _translateSDLPosition(x, y, sdl_event);
+      event.binding(binding, x, y, pressed);
       return true;
     }
     return false;

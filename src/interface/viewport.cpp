@@ -118,8 +118,8 @@ JSON descriptions can be replaced at will.
 */
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   Primitives::Camera camera = Primitives::Camera(
-    *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)(800+0.5),
-                                                    (float)(int)(300+0.5))),
+    *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)((_window.position().width/2.0f)+0.5),
+                                                    (float)(int)((_window.position().height/2.0f)+0.5))),
     1.0f);
 
   graphics.orthographic();
@@ -138,4 +138,8 @@ void Interface::Viewport::_init(const Apsis::Geometry::Rectangle& position,
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
                                 const Geometry::Rectangle& position,
                                 const World::Object& object) {
+}
+
+const Apsis::Interface::Window& Apsis::Interface::Viewport::window() const {
+  return _window;
 }

@@ -33,6 +33,16 @@ namespace Apsis {
       Apsis::Key::Code key() const;
 
       /*
+       *  Returns whether or not this is a mouse device event.
+       */
+      bool isMouse() const;
+
+      /*
+       *  Returns whether or not this is an axis device event.
+       */
+      bool isAxis() const;
+
+      /*
        *  Returns whether or not the shift key is held.
        */
       bool shift() const;

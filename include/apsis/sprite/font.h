@@ -129,6 +129,16 @@ namespace Apsis {
                 float y,
                 unsigned int index) const;
 
+      /*
+       *  Computes the width of the given string.
+       */
+      float width(const char* string) const;
+
+      /*
+       *  Computes the height of the given string.
+       */
+      float height(const char* string) const;
+
     private:
       // Constructor
       Font(const char* family);
