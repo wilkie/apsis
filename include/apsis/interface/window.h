@@ -42,8 +42,17 @@ namespace Apsis {
                                 const Apsis::World::Object&       object);
 
       // Hover function
-      // TODO: pass in input event
-      typedef void(&HoverEvent)(const Apsis::Geometry::Point&     point,
+      typedef void(&MotionEvent)(const Apsis::Geometry::Point&     point,
+                                 const Apsis::Geometry::Rectangle& position,
+                                 const Apsis::World::Object&       object);
+
+      // When input pointer enters bounds
+      typedef void(&EnterEvent)(const Apsis::Geometry::Point&     point,
+                                const Apsis::Geometry::Rectangle& position,
+                                const Apsis::World::Object&       object);
+
+      // When input pointer leaves bounds
+      typedef void(&LeaveEvent)(const Apsis::Geometry::Point&     point,
                                 const Apsis::Geometry::Rectangle& position,
                                 const Apsis::World::Object&       object);
 
@@ -52,7 +61,9 @@ namespace Apsis {
              float width,
              float height,
              InitEvent& init,
-             DrawEvent& draw);
+             DrawEvent& draw,
+             EnterEvent& enter,
+             LeaveEvent& leave);
 
       /*
        *  Returns the position of this Window within its parent.
@@ -100,6 +111,18 @@ namespace Apsis {
       void draw(Apsis::Engine::Graphics& graphics) const;
 
       /*
+       *  Tells the window that a pointer device has entered its bounds at
+       *  the given point.
+       */
+      void enter(const Apsis::Geometry::Point& point);
+
+      /*
+       *  Tells the window that a pointer device has left its bounds at
+       *  the given point.
+       */
+      void leave(const Apsis::Geometry::Point& point);
+
+      /*
        *  Returns true if the given point is within this Window. The
        *  coordinates are local to the Window's parent.
        */
@@ -111,6 +134,7 @@ namespace Apsis {
        *  self when the point is not over any other Window. Will return self if
        *  the point is outside of this Window.
        */
+      Apsis::Interface::Window& at(float x, float y);
       const Apsis::Interface::Window& at(float x, float y) const;
 
     private:
@@ -131,8 +155,10 @@ namespace Apsis {
       Apsis::World::Object _object;
 
       // Events
-      InitEvent _init;
-      DrawEvent _draw;
+      InitEvent  _init;
+      DrawEvent  _draw;
+      EnterEvent _enter;
+      LeaveEvent _leave_;
     };
   }
 }

@@ -5,6 +5,7 @@
 #include <SDL/SDL.h>
 #endif
 
+#include "apsis/geometry/point.h"
 #include "apsis/input/key.h"
 #include "apsis/input/binding.h"
 
@@ -71,6 +72,11 @@ namespace Apsis {
                   float y);
 
       /*
+       *  Returns the affective coordinate of the event.
+       */
+      const Apsis::Geometry::Point& point() const;
+
+      /*
        *  Returns the x position of the event.
        */
       float x() const;
@@ -105,8 +111,7 @@ namespace Apsis {
           bool shift;
           bool alt;
           bool control;
-          float x;
-          float y;
+          Apsis::Geometry::Point point;
         } binding;
       } _payload;
     };

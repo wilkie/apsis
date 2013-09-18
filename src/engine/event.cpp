@@ -31,11 +31,22 @@ const Apsis::Input::Binding Apsis::Engine::Event::binding() const {
   throw "Event is not an input event.";
 }
 
+const Apsis::Geometry::Point& Apsis::Engine::Event::point() const {
+  if (_type == Apsis::Engine::Event::Type::Press ||
+      _type == Apsis::Engine::Event::Type::Release ||
+      _type == Apsis::Engine::Event::Type::Motion) {
+    return _payload.binding.point;
+  }
+
+  // TODO: i18n?
+  throw "Event is not an input event.";
+}
+
 float Apsis::Engine::Event::x() const {
   if (_type == Apsis::Engine::Event::Type::Press ||
       _type == Apsis::Engine::Event::Type::Release ||
       _type == Apsis::Engine::Event::Type::Motion) {
-    return _payload.binding.x;
+    return _payload.binding.point.x;
   }
 
   // TODO: i18n?
@@ -46,7 +57,7 @@ float Apsis::Engine::Event::y() const {
   if (_type == Apsis::Engine::Event::Type::Press ||
       _type == Apsis::Engine::Event::Type::Release ||
       _type == Apsis::Engine::Event::Type::Motion) {
-    return _payload.binding.y;
+    return _payload.binding.point.y;
   }
 
   // TODO: i18n?
@@ -61,8 +72,8 @@ void Apsis::Engine::Event::binding(const Apsis::Input::Binding& binding,
   _payload.binding.alt     = binding.alt();
   _payload.binding.control = binding.control();
   _payload.binding.shift   = binding.shift();
-  _payload.binding.x       = x;
-  _payload.binding.y       = y;
+  _payload.binding.point.x = x;
+  _payload.binding.point.y = y;
 
   if (pressed) {
     _type = Apsis::Engine::Event::Type::Press;
@@ -89,6 +100,6 @@ void Apsis::Engine::Event::motion(float x,
                                   float y) {
   _type = Apsis::Engine::Event::Type::Motion;
 
-  _payload.binding.x = x;
-  _payload.binding.y = y;
+  _payload.binding.point.x = x;
+  _payload.binding.point.y = y;
 }

@@ -5,10 +5,14 @@ Apsis::Interface::Window::Window(float x,
                                  float width,
                                  float height,
                                  InitEvent& init,
-                                 DrawEvent& draw)
+                                 DrawEvent& draw,
+                                 EnterEvent& enter,
+                                 LeaveEvent& leave)
   : _position(x, y, width, height),
     _init(init),
     _draw(draw),
+    _enter(enter),
+    _leave_(leave),
     _childCount(0),
     _child(NULL),
     _next(NULL),
@@ -123,7 +127,7 @@ const Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) c
       // Reposition point with local coordinates.
       float window_x = x - current->position().left();
       float window_y = y - current->position().top();
-
+       
       // Recurse to the child window.
       return current->at(window_x, window_y);
     }
@@ -132,4 +136,38 @@ const Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) c
   } while (current != _child);
 
   return *this;
+}
+
+Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) {
+  if (_child == NULL) {
+    return *this;
+  }
+
+  Interface::Window* current = _child;
+
+  // TODO: reverse direction since we want the order in which the widgets
+  //       are seen and interacted (reverse to the order in which they
+  //       are drawn.
+  do  {
+    if (current->contains(x, y)) {
+      // Reposition point with local coordinates.
+      float window_x = x - current->position().left();
+      float window_y = y - current->position().top();
+       
+      // Recurse to the child window.
+      return current->at(window_x, window_y);
+    }
+
+    current = current->_next;
+  } while (current != _child);
+
+  return *this;
+}
+
+void Apsis::Interface::Window::enter(const Apsis::Geometry::Point& point) {
+  _enter(point, _position, _object);
+}
+
+void Apsis::Interface::Window::leave(const Apsis::Geometry::Point& point) {
+  _leave_(point, _position, _object);
 }

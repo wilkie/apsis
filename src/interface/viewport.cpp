@@ -17,9 +17,13 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float height)
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
-    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw) {
+    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _enter, _leave_) {
 
-  Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f, Apsis::Interface::Button::init, Apsis::Interface::Button::draw);
+  Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f,
+                                                               Apsis::Interface::Button::init,
+                                                               Apsis::Interface::Button::draw,
+                                                               Apsis::Interface::Button::enter,
+                                                               Apsis::Interface::Button::leave);
   Apsis::Interface::Window& meh = *foo;
   _window.add(meh);
 }
@@ -140,6 +144,20 @@ void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
                                 const World::Object& object) {
 }
 
+void Interface::Viewport::_enter(const Apsis::Geometry::Point& point,
+                                 const Apsis::Geometry::Rectangle& position,
+                                 const Apsis::World::Object& object) {
+}
+
+void Interface::Viewport::_leave_(const Apsis::Geometry::Point& point,
+                                  const Apsis::Geometry::Rectangle& position,
+                                  const Apsis::World::Object& object) {
+}
+
 const Apsis::Interface::Window& Apsis::Interface::Viewport::window() const {
+  return _window;
+}
+
+Apsis::Interface::Window& Apsis::Interface::Viewport::window() {
   return _window;
 }

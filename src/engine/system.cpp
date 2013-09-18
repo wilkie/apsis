@@ -135,7 +135,7 @@ void Apsis::Engine::System::run() {
 
   Apsis::Engine::Event core_event;
 
-  const Apsis::Interface::Window& mainWindow = _viewport.window();
+  Apsis::Interface::Window& mainWindow = _viewport.window();
 
   unsigned int action_id = 0;
   while(true) {
@@ -149,7 +149,7 @@ void Apsis::Engine::System::run() {
         const Apsis::Input::Binding& binding = core_event.binding();
 
         if (binding.isMouse()) {
-          const Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
+          Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
           if (&window != &mainWindow) {
             // TODO: interface events
           }
@@ -163,9 +163,9 @@ void Apsis::Engine::System::run() {
         }
       }
       else if (core_event.isMotion()) {
-        const Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
+        Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
         if (&window != &mainWindow) {
-          // TODO: interface events
+          window.enter(core_event.point());
         }
       }
       else if (core_event.isSystem()) {

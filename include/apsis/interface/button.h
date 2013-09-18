@@ -15,6 +15,14 @@ namespace Apsis {
       static void draw(Apsis::Engine::Graphics& graphics,
                        const Apsis::Geometry::Rectangle& position,
                        const Apsis::World::Object& object);
+
+      static void enter(const Apsis::Geometry::Point& point,
+                        const Apsis::Geometry::Rectangle& position,
+                        const Apsis::World::Object& object);
+
+      static void leave(const Apsis::Geometry::Point& point,
+                        const Apsis::Geometry::Rectangle& position,
+                        const Apsis::World::Object& object);
     };
   }
 }

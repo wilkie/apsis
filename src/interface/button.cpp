@@ -10,7 +10,7 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-static struct ButtonData {
+struct ButtonData {
   const Apsis::Sprite::Font*  font;
   const Apsis::Sprite::Sheet* sheet;
 
@@ -174,4 +174,14 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   // Draw text
   graphics.font(font.id());
   graphics.draw(position.left() + data.text_x, position.top() + data.text_y, text);
+}
+
+void Apsis::Interface::Button::enter(const Apsis::Geometry::Point& point,
+                                     const Apsis::Geometry::Rectangle& position,
+                                     const Apsis::World::Object& object) {
+}
+
+void Apsis::Interface::Button::leave(const Apsis::Geometry::Point& point,
+                                     const Apsis::Geometry::Rectangle& position,
+                                     const Apsis::World::Object& object) {
 }
