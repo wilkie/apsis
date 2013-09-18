@@ -326,7 +326,13 @@ bool Apsis::Backend::Sdl::poll(Apsis::Engine::Event& event) {
     //       Do that and we never need a mutable Binding.
     Apsis::Input::Binding binding(Apsis::Key::A, false, false, false);
     bool pressed = true;
-    if (_translateSDLKey(binding, sdl_event, pressed)) {
+    if (sdl_event.type == SDL_MOUSEMOTION) {
+      float x = sdl_event.motion.x;
+      float y = sdl_event.motion.y;
+      event.motion(x, y);
+      return true;
+    }
+    else if (_translateSDLKey(binding, sdl_event, pressed)) {
       float x, y;
       _translateSDLPosition(x, y, sdl_event);
       event.binding(binding, x, y, pressed);

@@ -162,8 +162,12 @@ void Apsis::Engine::System::run() {
           _scene.scene().act(action_id, false);
         }
       }
-      // TODO: Mouse/Touch movement (hover)
-      // TODO: Check interface
+      else if (core_event.isMotion()) {
+        const Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
+        if (&window != &mainWindow) {
+          // TODO: interface events
+        }
+      }
       else if (core_event.isSystem()) {
         if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
           break;

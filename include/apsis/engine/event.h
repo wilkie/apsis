@@ -22,7 +22,7 @@ namespace Apsis {
           SystemEvent,
           Press,
           Release,
-          Movement
+          Motion,
         };
       };
 
@@ -64,6 +64,13 @@ namespace Apsis {
                    bool pressed);
 
       /*
+       *  Sets the event data to reflect a motion event of the given
+       *  coordinates.
+       */
+      void motion(float x,
+                  float y);
+
+      /*
        *  Returns the x position of the event.
        */
       float x() const;
@@ -82,6 +89,11 @@ namespace Apsis {
        *  Returns whether or not the event is a response to the system.
        */
       bool isSystem() const;
+
+      /*
+       *  Returns whether or not the event is a motion event.
+       */
+      bool isMotion() const;
 
     private:
       Type::Types _type;

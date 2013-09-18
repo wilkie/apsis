@@ -33,7 +33,8 @@ const Apsis::Input::Binding Apsis::Engine::Event::binding() const {
 
 float Apsis::Engine::Event::x() const {
   if (_type == Apsis::Engine::Event::Type::Press ||
-      _type == Apsis::Engine::Event::Type::Release) {
+      _type == Apsis::Engine::Event::Type::Release ||
+      _type == Apsis::Engine::Event::Type::Motion) {
     return _payload.binding.x;
   }
 
@@ -43,7 +44,8 @@ float Apsis::Engine::Event::x() const {
 
 float Apsis::Engine::Event::y() const {
   if (_type == Apsis::Engine::Event::Type::Press ||
-      _type == Apsis::Engine::Event::Type::Release) {
+      _type == Apsis::Engine::Event::Type::Release ||
+      _type == Apsis::Engine::Event::Type::Motion) {
     return _payload.binding.y;
   }
 
@@ -77,4 +79,16 @@ bool Apsis::Engine::Event::isInput() const {
 
 bool Apsis::Engine::Event::isSystem() const {
   return _type == Apsis::Engine::Event::Type::SystemEvent;
+}
+
+bool Apsis::Engine::Event::isMotion() const {
+  return _type == Apsis::Engine::Event::Type::Motion;
+}
+
+void Apsis::Engine::Event::motion(float x,
+                                  float y) {
+  _type = Apsis::Engine::Event::Type::Motion;
+
+  _payload.binding.x = x;
+  _payload.binding.y = y;
 }
