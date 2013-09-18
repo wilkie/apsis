@@ -17,15 +17,25 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float height)
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
-    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _enter, _leave_) {
+    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _update, _enter, _leave_) {
 
   Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f,
                                                                Apsis::Interface::Button::init,
                                                                Apsis::Interface::Button::draw,
+                                                               Apsis::Interface::Button::update,
                                                                Apsis::Interface::Button::enter,
                                                                Apsis::Interface::Button::leave);
   Apsis::Interface::Window& meh = *foo;
   _window.add(meh);
+
+  foo = new Apsis::Interface::Window(550.0f, 550.0f, 100.0f, 100.0f,
+                                     Apsis::Interface::Button::init,
+                                     Apsis::Interface::Button::draw,
+                                     Apsis::Interface::Button::update,
+                                     Apsis::Interface::Button::enter,
+                                     Apsis::Interface::Button::leave);
+  Apsis::Interface::Window& meh2 = *foo;
+  _window.add(meh2);
 }
 
 void Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
@@ -142,6 +152,11 @@ void Interface::Viewport::_init(const Apsis::Geometry::Rectangle& position,
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
                                 const Geometry::Rectangle& position,
                                 const World::Object& object) {
+}
+
+void Interface::Viewport::_update(float elapsed,
+                                  Apsis::Geometry::Rectangle& position,
+                                  Apsis::World::Object& object) {
 }
 
 void Interface::Viewport::_enter(const Apsis::Geometry::Point& point,

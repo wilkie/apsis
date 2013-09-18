@@ -36,6 +36,11 @@ namespace Apsis {
                                const Apsis::Geometry::Rectangle& position,
                                const Apsis::World::Object&       object);
 
+      // Update function (for animations)
+      typedef void(&UpdateEvent)(float elapsed,
+                                 Apsis::Geometry::Rectangle& position,
+                                 Apsis::World::Object&       object);
+
       // Input function
       // TODO: pass in input event (separate event types into separate classes?)
       typedef void(&InputEvent)(const Apsis::Geometry::Rectangle& position,
@@ -62,6 +67,7 @@ namespace Apsis {
              float height,
              InitEvent& init,
              DrawEvent& draw,
+             UpdateEvent& update,
              EnterEvent& enter,
              LeaveEvent& leave);
 
@@ -111,6 +117,11 @@ namespace Apsis {
       void draw(Apsis::Engine::Graphics& graphics) const;
 
       /*
+       *  Updates this Window and all of its children.
+       */
+      void update(float elapsed);
+
+      /*
        *  Tells the window that a pointer device has entered its bounds at
        *  the given point.
        */
@@ -155,10 +166,15 @@ namespace Apsis {
       Apsis::World::Object _object;
 
       // Events
-      InitEvent  _init;
-      DrawEvent  _draw;
-      EnterEvent _enter;
-      LeaveEvent _leave_;
+      InitEvent   _init;
+      DrawEvent   _draw;
+      EnterEvent  _enter;
+      LeaveEvent  _leave_;
+      UpdateEvent _update;
+
+      // Update interval (a timer)
+      float _updateInterval;
+      float _updateElapsed;
     };
   }
 }

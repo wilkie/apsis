@@ -16,6 +16,10 @@ namespace Apsis {
                        const Apsis::Geometry::Rectangle& position,
                        const Apsis::World::Object& object);
 
+      static void update(float elapsed,
+                         Apsis::Geometry::Rectangle& position,
+                         Apsis::World::Object& object);
+
       static void enter(const Apsis::Geometry::Point& point,
                         const Apsis::Geometry::Rectangle& position,
                         Apsis::World::Object& object);

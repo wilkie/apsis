@@ -141,6 +141,8 @@ void Apsis::Engine::System::run() {
 
   unsigned int action_id = 0;
   while(true) {
+    // TODO: Place this inside an interface engine or something.
+    //       Remove the responsibility from the main viewport.
     if (_backend.poll(core_event)) {
       if (core_event.isInput()) {
         bool pressed = true;
@@ -186,10 +188,23 @@ void Apsis::Engine::System::run() {
         }
       }
     }
-    _scene.scene().update(clock.elapsedTime());
 
+    // Read the clock
+    float elapsed = clock.elapsedTime();
+
+    // TODO: Adjust the clock (cap minimum speed) to not
+    //       under-simulate due to underflow?
+
+    // Update interface
+    _viewport.window().update(elapsed);
+
+    // Update scene actors
+    _scene.scene().update(elapsed);
+
+    // Draw scene and interface
     _viewport.draw(_graphics);
 
+    // Display
     _backend.swap();
   }
 

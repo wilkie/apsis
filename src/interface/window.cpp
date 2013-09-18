@@ -6,17 +6,21 @@ Apsis::Interface::Window::Window(float x,
                                  float height,
                                  InitEvent& init,
                                  DrawEvent& draw,
+                                 UpdateEvent& update,
                                  EnterEvent& enter,
                                  LeaveEvent& leave)
   : _position(x, y, width, height),
     _init(init),
     _draw(draw),
+    _update(update),
     _enter(enter),
     _leave_(leave),
     _childCount(0),
     _child(NULL),
     _next(NULL),
-    _prev(NULL) {
+    _prev(NULL),
+    _updateInterval(0),
+    _updateElapsed(0) {
 
   // Call init method
   _init(_position, _object);
@@ -59,6 +63,7 @@ void Apsis::Interface::Window::add(Apsis::Interface::Window& window) {
     _child = &window;
     _child->_next = old_child;
     _child->_prev = old_child->_prev;
+    old_child->_prev->_next = _child;
     old_child->_prev = _child;
   }
 
@@ -102,6 +107,33 @@ void Apsis::Interface::Window::draw(Apsis::Engine::Graphics& graphics) const {
 
   do  {
     current->draw(graphics);
+
+    current = current->_next;
+  } while (current != _child);
+}
+
+void Apsis::Interface::Window::update(float elapsed) {
+  if (_updateInterval > 0) {
+    _updateElapsed += elapsed;
+
+    while (_updateElapsed > _updateInterval) {
+      _updateElapsed -= _updateInterval;
+      _update(_updateInterval, _position, _object);
+    }
+  }
+
+  if (_child == NULL) {
+    return;
+  }
+
+  // TODO: We can pass up information about intervals to parents.
+  //       With that we can decide we don't need to traverse further.
+
+  // Update children
+  Interface::Window* current = _child;
+
+  do  {
+    current->update(elapsed);
 
     current = current->_next;
   } while (current != _child);

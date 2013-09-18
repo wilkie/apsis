@@ -183,6 +183,11 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   graphics.draw(position.left() + data.text_x, position.top() + data.text_y, text);
 }
 
+void Apsis::Interface::Button::update(float elapsed,
+                                      Apsis::Geometry::Rectangle& position,
+                                      Apsis::World::Object& object) {
+}
+
 void Apsis::Interface::Button::enter(const Apsis::Geometry::Point& point,
                                      const Apsis::Geometry::Rectangle& position,
                                      Apsis::World::Object& object) {

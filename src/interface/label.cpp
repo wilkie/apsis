@@ -42,6 +42,11 @@ void Apsis::Interface::Label::enter(const Apsis::Geometry::Point& point,
                                     Apsis::World::Object& object) {
 }
 
+void Apsis::Interface::Label::update(float elapsed,
+                                     Apsis::Geometry::Rectangle& position,
+                                     Apsis::World::Object& object) {
+}
+
 void Apsis::Interface::Label::leave(const Apsis::Geometry::Point& point,
                                     const Apsis::Geometry::Rectangle& position,
                                     Apsis::World::Object& object) {
