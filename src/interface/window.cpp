@@ -149,11 +149,9 @@ const Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) c
     return *this;
   }
 
-  Interface::Window* current = _child;
+  Interface::Window* start   = _child->_prev;
+  Interface::Window* current = start;
 
-  // TODO: reverse direction since we want the order in which the widgets
-  //       are seen and interacted (reverse to the order in which they
-  //       are drawn.
   do  {
     if (current->contains(x, y)) {
       // Reposition point with local coordinates.
@@ -164,8 +162,8 @@ const Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) c
       return current->at(window_x, window_y);
     }
 
-    current = current->_next;
-  } while (current != _child);
+    current = current->_prev;
+  } while (current != start);
 
   return *this;
 }
@@ -175,11 +173,9 @@ Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) {
     return *this;
   }
 
-  Interface::Window* current = _child;
+  Interface::Window* start   = _child->_prev;
+  Interface::Window* current = start;
 
-  // TODO: reverse direction since we want the order in which the widgets
-  //       are seen and interacted (reverse to the order in which they
-  //       are drawn.
   do  {
     if (current->contains(x, y)) {
       // Reposition point with local coordinates.
@@ -190,8 +186,8 @@ Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) {
       return current->at(window_x, window_y);
     }
 
-    current = current->_next;
-  } while (current != _child);
+    current = current->_prev;
+  } while (current != start);
 
   return *this;
 }
