@@ -39,10 +39,10 @@ void Apsis::Interface::Label::draw(Apsis::Engine::Graphics& graphics,
 
 void Apsis::Interface::Label::enter(const Apsis::Geometry::Point& point,
                                     const Apsis::Geometry::Rectangle& position,
-                                    const Apsis::World::Object& object) {
+                                    Apsis::World::Object& object) {
 }
 
 void Apsis::Interface::Label::leave(const Apsis::Geometry::Point& point,
                                     const Apsis::Geometry::Rectangle& position,
-                                    const Apsis::World::Object& object) {
+                                    Apsis::World::Object& object) {
 }

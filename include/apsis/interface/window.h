@@ -49,12 +49,12 @@ namespace Apsis {
       // When input pointer enters bounds
       typedef void(&EnterEvent)(const Apsis::Geometry::Point&     point,
                                 const Apsis::Geometry::Rectangle& position,
-                                const Apsis::World::Object&       object);
+                                Apsis::World::Object&             object);
 
       // When input pointer leaves bounds
       typedef void(&LeaveEvent)(const Apsis::Geometry::Point&     point,
                                 const Apsis::Geometry::Rectangle& position,
-                                const Apsis::World::Object&       object);
+                                Apsis::World::Object&             object);
 
       Window(float x,
              float y,

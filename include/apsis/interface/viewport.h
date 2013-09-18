@@ -67,11 +67,11 @@ namespace Apsis {
 
       static void _enter(const Apsis::Geometry::Point& point,
                          const Apsis::Geometry::Rectangle& position,
-                         const Apsis::World::Object& object);
+                         Apsis::World::Object& object);
 
       static void _leave_(const Apsis::Geometry::Point& point,
                           const Apsis::Geometry::Rectangle& position,
-                          const Apsis::World::Object& object);
+                          Apsis::World::Object& object);
 
       // Viewports have a Scene, a Camera, and a Window
       const Apsis::Engine::Scene& _scene;

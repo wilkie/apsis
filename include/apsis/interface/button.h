@@ -18,11 +18,11 @@ namespace Apsis {
 
       static void enter(const Apsis::Geometry::Point& point,
                         const Apsis::Geometry::Rectangle& position,
-                        const Apsis::World::Object& object);
+                        Apsis::World::Object& object);
 
       static void leave(const Apsis::Geometry::Point& point,
                         const Apsis::Geometry::Rectangle& position,
-                        const Apsis::World::Object& object);
+                        Apsis::World::Object& object);
     };
   }
 }

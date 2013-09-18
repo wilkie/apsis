@@ -162,6 +162,7 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
 
   const ButtonData& data = *(ButtonData*)object.userData();
   const Apsis::Sprite::Batch& batch = *data.batch;
+  const Apsis::Sprite::Batch& batch_hover = *data.batch_hover;
   const Apsis::Sprite::Sheet& sheet = *data.sheet;
   const Apsis::Sprite::Font&  font  = *data.font;
 
@@ -169,7 +170,13 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
 
   // Draw button
   graphics.sheet(sheet.id());
-  batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+
+  if (object.has("hover") && object.get("hover").asInteger() == 1) {
+    batch_hover.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+  }
+  else {
+    batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+  }
 
   // Draw text
   graphics.font(font.id());
@@ -178,10 +185,12 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
 
 void Apsis::Interface::Button::enter(const Apsis::Geometry::Point& point,
                                      const Apsis::Geometry::Rectangle& position,
-                                     const Apsis::World::Object& object) {
+                                     Apsis::World::Object& object) {
+  object.set("hover", (long)1);
 }
 
 void Apsis::Interface::Button::leave(const Apsis::Geometry::Point& point,
                                      const Apsis::Geometry::Rectangle& position,
-                                     const Apsis::World::Object& object) {
+                                     Apsis::World::Object& object) {
+  object.set("hover", (long)0);
 }

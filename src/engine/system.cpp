@@ -137,6 +137,8 @@ void Apsis::Engine::System::run() {
 
   Apsis::Interface::Window& mainWindow = _viewport.window();
 
+  Apsis::Interface::Window* hovered = NULL;
+
   unsigned int action_id = 0;
   while(true) {
     if (_backend.poll(core_event)) {
@@ -165,7 +167,17 @@ void Apsis::Engine::System::run() {
       else if (core_event.isMotion()) {
         Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
         if (&window != &mainWindow) {
-          window.enter(core_event.point());
+          if (&window != hovered) {
+            if (hovered != NULL) {
+              hovered->leave(core_event.point());
+            }
+            hovered = &window;
+            window.enter(core_event.point());
+          }
+        }
+        else if (hovered != NULL) {
+          hovered->leave(core_event.point());
+          hovered = NULL;
         }
       }
       else if (core_event.isSystem()) {

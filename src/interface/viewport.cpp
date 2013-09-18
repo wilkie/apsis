@@ -146,12 +146,12 @@ void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
 
 void Interface::Viewport::_enter(const Apsis::Geometry::Point& point,
                                  const Apsis::Geometry::Rectangle& position,
-                                 const Apsis::World::Object& object) {
+                                 Apsis::World::Object& object) {
 }
 
 void Interface::Viewport::_leave_(const Apsis::Geometry::Point& point,
                                   const Apsis::Geometry::Rectangle& position,
-                                  const Apsis::World::Object& object) {
+                                  Apsis::World::Object& object) {
 }
 
 const Apsis::Interface::Window& Apsis::Interface::Viewport::window() const {
