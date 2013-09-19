@@ -137,9 +137,6 @@ void Apsis::Engine::System::run() {
 
   Apsis::Interface::Window& mainWindow = _viewport.window();
 
-  Apsis::Interface::Window* hovered = NULL;
-  Apsis::Interface::Window* focused = NULL;
-
   unsigned int action_id = 0;
   while(true) {
     // TODO: Place this inside an interface engine or something.
@@ -153,6 +150,10 @@ void Apsis::Engine::System::run() {
 
         const Apsis::Input::Binding& binding = core_event.binding();
 
+        // Give focused window the input
+        mainWindow.input(pressed, core_event.point(), binding);
+
+        // Give mouse interaction to the window under the cursor
         if (binding.isMouse()) {
           Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
           if (&window != &mainWindow) {
@@ -160,6 +161,7 @@ void Apsis::Engine::System::run() {
           }
         }
 
+        // Give Scene the interaction if it is bound to an Action
         if (pressed && _input.press(binding, action_id)) {
           _scene.scene().act(action_id, true);
         }
@@ -168,20 +170,7 @@ void Apsis::Engine::System::run() {
         }
       }
       else if (core_event.isMotion()) {
-        Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
-        if (&window != &mainWindow) {
-          if (&window != hovered) {
-            if (hovered != NULL) {
-              hovered->leave(core_event.point());
-            }
-            hovered = &window;
-            window.enter(core_event.point());
-          }
-        }
-        else if (hovered != NULL) {
-          hovered->leave(core_event.point());
-          hovered = NULL;
-        }
+        mainWindow.motion(core_event.point());
       }
       else if (core_event.isSystem()) {
         if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {

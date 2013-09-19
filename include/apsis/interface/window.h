@@ -134,6 +134,11 @@ namespace Apsis {
                  const Apsis::Input::Binding& binding);
 
       /*
+       *  Tells the window that there is pointer movement across this Window.
+       */
+      void motion(const Apsis::Geometry::Point& point);
+
+      /*
        *  Tells the window that a pointer device has entered its bounds at
        *  the given point.
        */
@@ -160,6 +165,17 @@ namespace Apsis {
       Apsis::Interface::Window& at(float x, float y);
       const Apsis::Interface::Window& at(float x, float y) const;
 
+      /*
+       *  Returns whether or not this Window has focus.
+       */
+      bool focused() const;
+
+      /*
+       *  Returns whether or not this Window is hovered over by
+       *  a pointing device.
+       */
+      bool hovered() const;
+
     private:
       // Dimensions
       Geometry::Rectangle _position;
@@ -174,6 +190,18 @@ namespace Apsis {
 
       // Parent
       Interface::Window* _parent;
+
+      // Which child has focus
+      Interface::Window* _focus;
+
+      // Which child is hovered
+      Interface::Window* _hover;
+
+      // Do we have focus
+      bool _focused;
+
+      // Are we hovered
+      bool _hovered;
 
       Apsis::World::Object _object;
 
