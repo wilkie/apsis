@@ -153,14 +153,6 @@ void Apsis::Engine::System::run() {
         // Give focused window the input
         mainWindow.input(pressed, core_event.point(), binding);
 
-        // Give mouse interaction to the window under the cursor
-        if (binding.isMouse()) {
-          Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
-          if (&window != &mainWindow) {
-            window.input(pressed, core_event.point(), core_event.binding());
-          }
-        }
-
         // Give Scene the interaction if it is bound to an Action
         if (pressed && _input.press(binding, action_id)) {
           _scene.scene().act(action_id, true);

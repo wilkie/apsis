@@ -148,8 +148,35 @@ void Apsis::Interface::Window::update(float elapsed) {
 void Apsis::Interface::Window::input(bool pressed,
                                      const Apsis::Geometry::Point& point,
                                      const Apsis::Input::Binding& binding) {
+  // Input event for parent window
   _input(pressed, binding, point, _position, _object);
 
+  if (binding.isMouse()) {
+    // Pass along event to window under cursor if pointer event.
+
+    // Find window under the pointer
+    Interface::Window& window = childAt(point.x, point.y);
+
+    if (&window != this) {
+      // This window becomes focused window if a press
+      if (pressed) {
+        if (_focus != NULL) {
+          _focus->_focused = false;
+          // TODO: window unfocus event?
+          _focus = NULL;
+        }
+
+        _focus = &window;
+        window._focused = true;
+        // TODO: window focus event?
+      }
+
+      // The event will be passed as a result of the normal passing
+      // of input to focused child below.
+    }
+  }
+
+  // Pass along event to focused child window
   if (_focus != NULL) {
     _focus->input(pressed, point, binding);
   }
@@ -163,16 +190,20 @@ void Apsis::Interface::Window::motion(const Apsis::Geometry::Point& point) {
   }
 
   // Find window under the pointer
-  Interface::Window& window = at(point.x, point.y);
+  Interface::Window& window = childAt(point.x, point.y);
 
   // Pass the motion down
   if (&window != this) {
-    window.motion(point);
+    Apsis::Geometry::Point inner_point = point;
+    inner_point.x -= _position.left();
+    inner_point.y -= _position.top();
+
+    window.motion(inner_point);
 
     // We should leave() the previously hovered child if hovering
     // a different child.
     if (_hover != NULL && _hover != &window) {
-      _hover->leave(point);
+      _hover->leave(inner_point);
     }
 
     _hover = &window;
@@ -181,7 +212,10 @@ void Apsis::Interface::Window::motion(const Apsis::Geometry::Point& point) {
     // We are not hovering over any of our children, so call leave for any
     // that were previously hovered.
     if (_hover != NULL) {
-      _hover->leave(point);
+      Apsis::Geometry::Point inner_point = point;
+      inner_point.x -= _position.left();
+      inner_point.y -= _position.top();
+      _hover->leave(inner_point);
       _hover = NULL;
     }
   }
@@ -200,6 +234,44 @@ bool Apsis::Interface::Window::focused() const {
 
 bool Apsis::Interface::Window::hovered() const {
   return _hovered;
+}
+
+const Apsis::Interface::Window& Apsis::Interface::Window::childAt(float x, float y) const {
+  if (_child == NULL) {
+    return *this;
+  }
+
+  Interface::Window* start   = _child->_prev;
+  Interface::Window* current = start;
+
+  do  {
+    if (current->contains(x, y)) {
+      return *current;
+    }
+
+    current = current->_prev;
+  } while (current != start);
+
+  return *this;
+}
+
+Apsis::Interface::Window& Apsis::Interface::Window::childAt(float x, float y) {
+  if (_child == NULL) {
+    return *this;
+  }
+
+  Interface::Window* start   = _child->_prev;
+  Interface::Window* current = start;
+
+  do  {
+    if (current->contains(x, y)) {
+      return *current;
+    }
+
+    current = current->_prev;
+  } while (current != start);
+
+  return *this;
 }
 
 const Apsis::Interface::Window& Apsis::Interface::Window::at(float x, float y) const {
@@ -264,7 +336,10 @@ void Apsis::Interface::Window::leave(const Apsis::Geometry::Point& point) {
 
   // We also leave the hovered child, if there is one
   if (_hover != NULL) {
-    _hover->leave(point);
+    Apsis::Geometry::Point inner_point = point;
+    inner_point.x -= _position.left();
+    inner_point.y -= _position.top();
+    _hover->leave(inner_point);
     _hover = NULL;
   }
 

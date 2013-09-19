@@ -165,6 +165,15 @@ namespace Apsis {
       Apsis::Interface::Window& at(float x, float y);
       const Apsis::Interface::Window& at(float x, float y) const;
 
+      /* TODO: cleanup this description.
+       *  Returns the child Window at the foreground at the given point.
+       *  The coordinates are local to the Window's parent. Will return its
+       *  self when the point is not over any other Window. Will return self if
+       *  the point is outside of this Window.
+       */
+      Apsis::Interface::Window& childAt(float x, float y);
+      const Apsis::Interface::Window& childAt(float x, float y) const;
+
       /*
        *  Returns whether or not this Window has focus.
        */
