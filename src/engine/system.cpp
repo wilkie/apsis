@@ -138,6 +138,7 @@ void Apsis::Engine::System::run() {
   Apsis::Interface::Window& mainWindow = _viewport.window();
 
   Apsis::Interface::Window* hovered = NULL;
+  Apsis::Interface::Window* focused = NULL;
 
   unsigned int action_id = 0;
   while(true) {
@@ -155,7 +156,7 @@ void Apsis::Engine::System::run() {
         if (binding.isMouse()) {
           Apsis::Interface::Window& window = mainWindow.at(core_event.x(), core_event.y());
           if (&window != &mainWindow) {
-            // TODO: interface events
+            window.input(pressed, core_event.point(), core_event.binding());
           }
         }
 

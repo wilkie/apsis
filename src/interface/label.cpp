@@ -37,6 +37,13 @@ void Apsis::Interface::Label::draw(Apsis::Engine::Graphics& graphics,
   graphics.draw(position.left(), position.top(), text);
 }
 
+void Apsis::Interface::Label::input(bool pressed,
+                                    const Apsis::Input::Binding&      binding,
+                                    const Apsis::Geometry::Point&     point,
+                                    const Apsis::Geometry::Rectangle& position,
+                                    Apsis::World::Object&             object) {
+}
+
 void Apsis::Interface::Label::enter(const Apsis::Geometry::Point& point,
                                     const Apsis::Geometry::Rectangle& position,
                                     Apsis::World::Object& object) {

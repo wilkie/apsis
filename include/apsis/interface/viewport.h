@@ -65,6 +65,12 @@ namespace Apsis {
                         const Apsis::Geometry::Rectangle& position,
                         const Apsis::World::Object& object);
 
+      static void _input(bool pressed,
+                         const Apsis::Input::Binding&      binding,
+                         const Apsis::Geometry::Point&     point,
+                         const Apsis::Geometry::Rectangle& position,
+                         Apsis::World::Object&             object);
+
       static void _update(float elapsed,
                           Apsis::Geometry::Rectangle& position,
                           Apsis::World::Object& object);

@@ -6,12 +6,14 @@ Apsis::Interface::Window::Window(float x,
                                  float height,
                                  InitEvent& init,
                                  DrawEvent& draw,
+                                 InputEvent& input,
                                  UpdateEvent& update,
                                  EnterEvent& enter,
                                  LeaveEvent& leave)
   : _position(x, y, width, height),
     _init(init),
     _draw(draw),
+    _input(input),
     _update(update),
     _enter(enter),
     _leave_(leave),
@@ -137,6 +139,14 @@ void Apsis::Interface::Window::update(float elapsed) {
 
     current = current->_next;
   } while (current != _child);
+}
+
+void Apsis::Interface::Window::input(bool pressed,
+                                     const Apsis::Geometry::Point& point,
+                                     const Apsis::Input::Binding& binding) {
+  _input(pressed, binding, point, _position, _object);
+
+  // TODO: Pass down to the focused window
 }
 
 bool Apsis::Interface::Window::contains(float x, float y) const {

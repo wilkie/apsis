@@ -7,6 +7,8 @@
 
 #include "apsis/world/object.h"
 
+#include "apsis/input/binding.h"
+
 #include <stddef.h>
 
 //Apsis::Graphics::Context
@@ -42,9 +44,11 @@ namespace Apsis {
                                  Apsis::World::Object&       object);
 
       // Input function
-      // TODO: pass in input event (separate event types into separate classes?)
-      typedef void(&InputEvent)(const Apsis::Geometry::Rectangle& position,
-                                const Apsis::World::Object&       object);
+      typedef void(&InputEvent)(bool pressed,
+                                const Apsis::Input::Binding&      binding,
+                                const Apsis::Geometry::Point&     point,
+                                const Apsis::Geometry::Rectangle& position,
+                                Apsis::World::Object&             object);
 
       // Hover function
       typedef void(&MotionEvent)(const Apsis::Geometry::Point&     point,
@@ -67,6 +71,7 @@ namespace Apsis {
              float height,
              InitEvent& init,
              DrawEvent& draw,
+             InputEvent& input,
              UpdateEvent& update,
              EnterEvent& enter,
              LeaveEvent& leave);
@@ -122,6 +127,13 @@ namespace Apsis {
       void update(float elapsed);
 
       /*
+       *  Tells the window that there is some input interaction.
+       */
+      void input(bool pressed,
+                 const Apsis::Geometry::Point& point,
+                 const Apsis::Input::Binding& binding);
+
+      /*
        *  Tells the window that a pointer device has entered its bounds at
        *  the given point.
        */
@@ -168,6 +180,7 @@ namespace Apsis {
       // Events
       InitEvent   _init;
       DrawEvent   _draw;
+      InputEvent  _input;
       EnterEvent  _enter;
       LeaveEvent  _leave_;
       UpdateEvent _update;
