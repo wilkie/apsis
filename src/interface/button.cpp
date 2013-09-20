@@ -214,7 +214,9 @@ void Apsis::Interface::Button::input(bool pressed,
                                      const Apsis::Geometry::Point&   point,
                                      const Apsis::Interface::Window& window,
                                      Apsis::World::Object&           object) {
-  if (pressed) {
+  if (!binding.isMouse()) {
+  }
+  else if (pressed) {
     object.set("pressed", (long)1);
   }
   else {
