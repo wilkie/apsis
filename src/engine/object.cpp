@@ -180,6 +180,14 @@ const Apsis::Registry::Interface& Apsis::Engine::Object::loadInterface(const cha
   return Apsis::Registry::Interface::load(found.c_str(), *this);
 }
 
+const Apsis::Registry::Widget& Apsis::Engine::Object::loadWidget(const char* name) const {
+  std::string found = _findFile(_widget_path, std::string(name));
+  if (found == "") {
+    throw "Widget description not found or loaded.";
+  }
+  return Apsis::Registry::Widget::load(found.c_str(), *this);
+}
+
 void Apsis::Engine::Object::loadBindings(const char* name) const {
   std::string found = _findFile(_binding_path, std::string(name));
   if (found == "") {

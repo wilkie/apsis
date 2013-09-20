@@ -21,6 +21,7 @@ namespace Apsis {
     class Property;
     class State;
     class Interface;
+    class Widget;
   }
 
   namespace World {
@@ -90,6 +91,12 @@ namespace Apsis {
       const Apsis::Registry::Interface& loadInterface(const char* name) const;
 
       /*
+       *  Loads or returns the existing Widget object with the given
+       *  name or path.
+       */
+      const Apsis::Registry::Widget& loadWidget(const char* name) const;
+
+      /*
        *  Loads bindings.
        */
       void loadBindings(const char* name) const;
@@ -134,6 +141,7 @@ namespace Apsis {
 #include "apsis/registry/property.h"
 #include "apsis/registry/state.h"
 #include "apsis/registry/interface.h"
+#include "apsis/registry/widget.h"
 
 #include "apsis/sprite/thing.h"
 
