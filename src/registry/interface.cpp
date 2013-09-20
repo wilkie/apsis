@@ -26,6 +26,7 @@ Registry::Interface::load(const char* path,
 
 Registry::Interface::Interface(const char* path,
                                const Engine::Object& loader) {
+  _id = _ids.size();
 
   Json::Reader reader;
   Json::Value  value;
@@ -179,18 +180,20 @@ void Registry::Interface::_buildWidgets(Apsis::Interface::Window* parent,
   }
 }
 
-Apsis::Interface::Window* Registry::Interface::instance() const {
-  Apsis::Interface::Window* ret = new Apsis::Interface::Window(0.0f,
-                                                               0.0f,
-                                                               0.0f,
-                                                               0.0f,
-                                                               Apsis::Interface::Event::defaultInit,
-                                                               Apsis::Interface::Event::defaultDraw,
-                                                               Apsis::Interface::Event::defaultInput,
-                                                               Apsis::Interface::Event::defaultMotion,
-                                                               Apsis::Interface::Event::defaultUpdate,
-                                                               Apsis::Interface::Event::defaultEnter,
-                                                               Apsis::Interface::Event::defaultLeave);
+Apsis::Interface::Window* Registry::Interface::instance(float width,
+                                                        float height) const {
+  Apsis::Interface::Window* ret
+    = new Apsis::Interface::Window(width  / 2.0f,
+                                   height / 2.0f,
+                                   width,
+                                   height,
+                                   Apsis::Interface::Event::defaultInit,
+                                   Apsis::Interface::Event::defaultDraw,
+                                   Apsis::Interface::Event::defaultInput,
+                                   Apsis::Interface::Event::defaultMotion,
+                                   Apsis::Interface::Event::defaultUpdate,
+                                   Apsis::Interface::Event::defaultEnter,
+                                   Apsis::Interface::Event::defaultLeave);
 
   Apsis::Interface::Window& current = *ret;
 
@@ -198,4 +201,8 @@ Apsis::Interface::Window* Registry::Interface::instance() const {
   _buildWidgets(ret, 0, 0, n_spans, n_nodes);
 
   return ret;
+}
+
+unsigned int Registry::Interface::id() const {
+  return _id;
 }

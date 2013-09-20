@@ -10,6 +10,7 @@
 #include "apsis/input/binding.h"
 
 #include <vector>
+#include <map>
 
 namespace Apsis {
   namespace Engine {
@@ -18,21 +19,38 @@ namespace Apsis {
       /*
        *  Constructs an interface engine to hold and manage interfaces.
        */
-      static Apsis::Engine::Interface& basic();
+      static Apsis::Engine::Interface& basic(float width,
+                                             float height);
 
       /*
-       *  Sets the current Interface.
+       *  Adds the current Interface to the stack.
        */
-      void iface(const Apsis::Registry::Interface& scene);
+      void push(const Apsis::Registry::Interface& iface);
+
+      /*
+       *  Removes the foreground Interface from the stack.
+       */
+      void pop();
+
+      /*
+       *  Returns the number of active interfaces.
+       */
+      unsigned int count() const;
+
+      /*
+       *  Removes the given Interface from the stack.
+       */
+      void pop(const Apsis::Registry::Interface& iface);
 
       /*
        *  Returns the current foreground Interface.
        */
-      const Apsis::Registry::Interface& iface() const;
+      const Apsis::Registry::Interface& top() const;
 
       /*
-       *  Interact with the given input event.
+       *  Removes all interfaces.
        */
+      void clear();
 
       /*
        *  Draw with the given Graphics engine.
@@ -68,14 +86,17 @@ namespace Apsis {
       void leave(const Apsis::Geometry::Point& point);
 
     private:
-      Interface();
-
-      const Apsis::Registry::Interface* _interface;
+      Interface(float width, float height);
 
       // Keeps track of Interface engines system-wide.
       static std::vector<Apsis::Engine::Interface*> _interface_engines;
 
-      Apsis::Interface::Window* _mainWindow;
+      Apsis::Interface::Window _mainWindow;
+
+      // Keep our own list of children by mapping the Interface id to the
+      // window it spawned as an instance.
+      std::map<unsigned int, Apsis::Interface::Window*> _windows;
+      std::vector<const Apsis::Registry::Interface*> _interfaces;
     };
   }
 }

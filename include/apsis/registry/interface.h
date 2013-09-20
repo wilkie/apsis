@@ -17,9 +17,14 @@ namespace Apsis {
                                              const Engine::Object& loader);
 
       /*
-       *  Returns an instance of this interface.
+       *  Returns an instance of this interface with the given size.
        */
-      Apsis::Interface::Window* instance() const;
+      Apsis::Interface::Window* instance(float width, float height) const;
+
+      /*
+       *  Returns the unique global identifier for this Interface.
+       */
+      unsigned int id() const;
     private:
       // Constructors
       Interface(const char* path,
@@ -28,6 +33,9 @@ namespace Apsis {
       // Keeps track of Interfaces system-wide.
       static std::vector<std::string> _ids;
       static std::vector<Registry::Interface*> _interfaces;
+
+      // Id
+      unsigned int _id;
 
       // Windows
       std::vector<const Apsis::Registry::Widget*> _widgets;
