@@ -22,6 +22,14 @@ namespace Apsis {
       // Keeps track of Interfaces system-wide.
       static std::vector<std::string> _ids;
       static std::vector<Registry::Interface*> _interfaces;
+
+      // Windows
+      Apsis::Interface::Window _window;
+
+      // Parse widget info
+      void _parseWidgets(Json::Value& value,
+                         Apsis::Interface::Window& parent,
+                         const Engine::Object& loader);
     };
   }
 }

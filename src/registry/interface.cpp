@@ -48,57 +48,73 @@ Registry::Interface::Interface(const char* path,
 
   if (value.isMember("widgets")) {
     // Load widgets
-    for (Json::Value::iterator it = value["widgets"].begin();
-         it != value["widgets"].end();
-         ++it) {
-      if ((*it).isObject()) {
-        if ((*it).isMember("widget")) {
-          const char* widget_name = (*it)["widget"].asCString();
+    _parseWidgets(value, _window);
+  }
+}
 
-          const Registry::Widget& widget = loader.loadWidget(widget_name);
-          Apsis::World::Object object;
+void Registry::Interface::_parseWidgets(Json::Value& value,
+                                        Apsis::Interface::Window& parent,
+                                        const Engine::Object& loader) {
+                                          
+  for (Json::Value::iterator it = value["widgets"].begin();
+        it != value["widgets"].end();
+        ++it) {
+    if ((*it).isObject()) {
+      if ((*it).isMember("widget")) {
+        const char* widget_name = (*it)["widget"].asCString();
 
-          if ((*it).isMember("properties")) {
-            Json::Value::Members members = (*it)["properties"].getMemberNames();
-            for (Json::Value::Members::iterator property_it = members.begin();
-                 property_it != members.end();
-                 ++property_it) {
-              const char* name = (*property_it).c_str();
-              unsigned int property_id = Apsis::Registry::Property::id(name);
+        const Registry::Widget& widget = loader.loadWidget(widget_name);
+        Apsis::World::Object object;
 
-              if ((*it)["properties"][name].isDouble()) {
-                object.set(property_id, (*it)["properties"][name].asDouble());
-              }
-              else if ((*it)["properties"][name].isString()) {
-                object.set(property_id, (*it)["properties"][name].asCString());
-              }
-              else if ((*it)["properties"][name].isIntegral()) {
-                object.set(property_id, (long)(*it)["properties"][name].asInt());
-              }
+        if ((*it).isMember("properties")) {
+          Json::Value::Members members = (*it)["properties"].getMemberNames();
+          for (Json::Value::Members::iterator property_it = members.begin();
+                property_it != members.end();
+                ++property_it) {
+            const char* name = (*property_it).c_str();
+            unsigned int property_id = Apsis::Registry::Property::id(name);
+
+            if ((*it)["properties"][name].isDouble()) {
+              object.set(property_id, (*it)["properties"][name].asDouble());
+            }
+            else if ((*it)["properties"][name].isString()) {
+              object.set(property_id, (*it)["properties"][name].asCString());
+            }
+            else if ((*it)["properties"][name].isIntegral()) {
+              object.set(property_id, (long)(*it)["properties"][name].asInt());
             }
           }
+        }
 
-          // Defaults
-          for (unsigned int i = 0; i < widget.propertyCount(); i++) {
-            const char* name = widget.propertyName(i);
-            const char* def  = widget.propertyDefault(i);
+        // Defaults
+        for (unsigned int i = 0; i < widget.propertyCount(); i++) {
+          const char* name = widget.propertyName(i);
+          const char* def  = widget.propertyDefault(i);
 
-            if (!object.has(name)) {
-              object.set(name, def);
-            }
+          if (!object.has(name)) {
+            object.set(name, def);
           }
+        }
 
-          Apsis::Interface::Window& window = Apsis::Interface::Window(widget,
-                                                                      object,
-                                                                      0.0f,
-                                                                      0.0f,
-                                                                      0.0f,
-                                                                      0.0f);
+        // Create the window
+        Apsis::Interface::Window* window = new Apsis::Interface::Window(widget,
+                                                                        object,
+                                                                        0.0f,
+                                                                        0.0f,
+                                                                        0.0f,
+                                                                        0.0f);
+
+        // Add to the parent
+        parent.add(*window);
+
+        // Child windows
+        if ((*it).isMember("widgets")) {
+          _parseWidgets(*it, *window, loader);
         }
       }
-      else {
-        throw "Interface file's 'widgets' section is malformed.";
-      }
+    }
+    else {
+      throw "Interface file's 'widgets' section is malformed.";
     }
   }
 }
