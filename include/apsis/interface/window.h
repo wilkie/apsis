@@ -64,6 +64,7 @@ namespace Apsis {
              Event::Leave& leave);
 
       Window(const Registry::Widget& widget,
+             World::Object& object,
              float x,
              float y,
              float width,

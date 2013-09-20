@@ -37,6 +37,7 @@ Interface::Window::Window(float x,
 }
 
 Interface::Window::Window(const Registry::Widget& widget,
+                          World::Object& object,
                           float x,
                           float y,
                           float width,
@@ -58,15 +59,8 @@ Interface::Window::Window(const Registry::Widget& widget,
     _focus(NULL),
     _hover(NULL),
     _focused(false),
-    _hovered(false) {
-
-  // Set properties
-  for (unsigned int i = 0; i < widget.propertyCount(); i++) {
-    const char* name = widget.propertyName(i);
-    const char* def  = widget.propertyDefault(i);
-
-    _object.set(name, def);
-  }
+    _hovered(false),
+    _object(object) {
 
   // Call init method
   _init(*this, _object);

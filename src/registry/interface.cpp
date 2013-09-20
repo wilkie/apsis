@@ -1,5 +1,7 @@
 #include "apsis/registry/interface.h"
 
+#include "apsis/interface/window.h"
+
 #include <algorithm>
 #include <fstream>
 
@@ -53,11 +55,45 @@ Registry::Interface::Interface(const char* path,
         if ((*it).isMember("widget")) {
           const char* widget_name = (*it)["widget"].asCString();
 
-          //const Registry::Widget& widget = loader.loadWidget(widget_name);
-          //Interface::Window& window = widget.spawn();
+          const Registry::Widget& widget = loader.loadWidget(widget_name);
+          Apsis::World::Object object;
+
           if ((*it).isMember("properties")) {
-            Json::Value& val = (*it)["properties"];
+            Json::Value::Members members = (*it)["properties"].getMemberNames();
+            for (Json::Value::Members::iterator property_it = members.begin();
+                 property_it != members.end();
+                 ++property_it) {
+              const char* name = (*property_it).c_str();
+              unsigned int property_id = Apsis::Registry::Property::id(name);
+
+              if ((*it)["properties"][name].isDouble()) {
+                object.set(property_id, (*it)["properties"][name].asDouble());
+              }
+              else if ((*it)["properties"][name].isString()) {
+                object.set(property_id, (*it)["properties"][name].asCString());
+              }
+              else if ((*it)["properties"][name].isIntegral()) {
+                object.set(property_id, (long)(*it)["properties"][name].asInt());
+              }
+            }
           }
+
+          // Defaults
+          for (unsigned int i = 0; i < widget.propertyCount(); i++) {
+            const char* name = widget.propertyName(i);
+            const char* def  = widget.propertyDefault(i);
+
+            if (!object.has(name)) {
+              object.set(name, def);
+            }
+          }
+
+          Apsis::Interface::Window& window = Apsis::Interface::Window(widget,
+                                                                      object,
+                                                                      0.0f,
+                                                                      0.0f,
+                                                                      0.0f,
+                                                                      0.0f);
         }
       }
       else {
