@@ -1,16 +1,18 @@
 #include "apsis/interface/window.h"
 
-Apsis::Interface::Window::Window(float x,
-                                 float y,
-                                 float width,
-                                 float height,
-                                 InitEvent& init,
-                                 DrawEvent& draw,
-                                 InputEvent& input,
-                                 MotionEvent& motion,
-                                 UpdateEvent& update,
-                                 EnterEvent& enter,
-                                 LeaveEvent& leave)
+using namespace Apsis;
+
+Interface::Window::Window(float x,
+                          float y,
+                          float width,
+                          float height,
+                          Event::Init& init,
+                          Event::Draw& draw,
+                          Event::Input& input,
+                          Event::Motion& motion,
+                          Event::Update& update,
+                          Event::Enter& enter,
+                          Event::Leave& leave)
   : _position(x, y, width, height),
     _init(init),
     _draw(draw),
@@ -29,6 +31,42 @@ Apsis::Interface::Window::Window(float x,
     _hover(NULL),
     _focused(false),
     _hovered(false) {
+
+  // Call init method
+  _init(*this, _object);
+}
+
+Interface::Window::Window(const Registry::Widget& widget,
+                          float x,
+                          float y,
+                          float width,
+                          float height)
+  : _position(x, y, width, height),
+    _init(widget.initEvent()),
+    _draw(widget.drawEvent()),
+    _input(widget.inputEvent()),
+    _motion(widget.motionEvent()),
+    _update(widget.updateEvent()),
+    _enter(widget.enterEvent()),
+    _leave_(widget.leaveEvent()),
+    _childCount(0),
+    _child(NULL),
+    _next(NULL),
+    _prev(NULL),
+    _updateInterval(0),
+    _updateElapsed(0),
+    _focus(NULL),
+    _hover(NULL),
+    _focused(false),
+    _hovered(false) {
+
+  // Set properties
+  for (unsigned int i = 0; i < widget.propertyCount(); i++) {
+    const char* name = widget.propertyName(i);
+    const char* def  = widget.propertyDefault(i);
+
+    _object.set(name, def);
+  }
 
   // Call init method
   _init(*this, _object);

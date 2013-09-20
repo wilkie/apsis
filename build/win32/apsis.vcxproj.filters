@@ -803,6 +803,12 @@
     <ClCompile Include="..\..\src\registry\interface.cpp">
       <Filter>registry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\registry\widget.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\interface\event.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1717,6 +1723,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\registry\interface.h">
       <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\widget.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\event.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

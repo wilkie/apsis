@@ -9,6 +9,10 @@
 
 #include "apsis/input/binding.h"
 
+#include "apsis/registry/widget.h"
+
+#include "apsis/interface/event.h"
+
 #include <stddef.h>
 
 //Apsis::Graphics::Context
@@ -47,53 +51,23 @@ namespace Apsis {
     class Window {
     public:
 
-      // Init function
-      typedef void(&InitEvent)(const Apsis::Interface::Window& window,
-                               Apsis::World::Object& object);
-
-      // Draw function
-      typedef void(&DrawEvent)(Apsis::Engine::Graphics&        graphics,
-                               const Apsis::Interface::Window& window,
-                               const Apsis::World::Object&     object);
-
-      // Update function (for animations)
-      typedef void(&UpdateEvent)(float elapsed,
-                                 Apsis::Geometry::Rectangle& position,
-                                 Apsis::World::Object&       object);
-
-      // Input function
-      typedef void(&InputEvent)(bool pressed,
-                                const Apsis::Input::Binding&    binding,
-                                const Apsis::Geometry::Point&   point,
-                                const Apsis::Interface::Window& window,
-                                Apsis::World::Object&           object);
-
-      // Hover function
-      typedef void(&MotionEvent)(const Apsis::Geometry::Point&   point,
-                                 const Apsis::Interface::Window& window,
-                                 Apsis::World::Object&           object);
-
-      // When input pointer enters bounds
-      typedef void(&EnterEvent)(const Apsis::Geometry::Point&   point,
-                                const Apsis::Interface::Window& window,
-                                Apsis::World::Object&           object);
-
-      // When input pointer leaves bounds
-      typedef void(&LeaveEvent)(const Apsis::Geometry::Point&   point,
-                                const Apsis::Interface::Window& window,
-                                Apsis::World::Object&           object);
-
       Window(float x,
              float y,
              float width,
              float height,
-             InitEvent& init,
-             DrawEvent& draw,
-             InputEvent& input,
-             MotionEvent& motion,
-             UpdateEvent& update,
-             EnterEvent& enter,
-             LeaveEvent& leave);
+             Event::Init& init,
+             Event::Draw& draw,
+             Event::Input& input,
+             Event::Motion& motion,
+             Event::Update& update,
+             Event::Enter& enter,
+             Event::Leave& leave);
+
+      Window(const Registry::Widget& widget,
+             float x,
+             float y,
+             float width,
+             float height);
 
       /*
        *  Returns the position of this Window within its parent.
@@ -234,13 +208,13 @@ namespace Apsis {
       Apsis::World::Object _object;
 
       // Events
-      InitEvent   _init;
-      DrawEvent   _draw;
-      InputEvent  _input;
-      MotionEvent _motion;
-      EnterEvent  _enter;
-      LeaveEvent  _leave_;
-      UpdateEvent _update;
+      Event::Init&   _init;
+      Event::Draw&   _draw;
+      Event::Input&  _input;
+      Event::Motion& _motion;
+      Event::Enter&  _enter;
+      Event::Leave&  _leave_;
+      Event::Update& _update;
 
       // Update interval (a timer)
       float _updateInterval;

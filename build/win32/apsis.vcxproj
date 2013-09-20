@@ -88,6 +88,7 @@
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
     <ClCompile Include="..\..\src\input\binding.cpp" />
     <ClCompile Include="..\..\src\interface\button.cpp" />
+    <ClCompile Include="..\..\src\interface\event.cpp" />
     <ClCompile Include="..\..\src\interface\filler_bar.cpp" />
     <ClCompile Include="..\..\src\interface\label.cpp" />
     <ClCompile Include="..\..\src\interface\numbers.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="..\..\src\registry\rule.cpp" />
     <ClCompile Include="..\..\src\registry\scene.cpp" />
     <ClCompile Include="..\..\src\registry\state.cpp" />
+    <ClCompile Include="..\..\src\registry\widget.cpp" />
     <ClCompile Include="..\..\src\rules\actor_collider.cpp" />
     <ClCompile Include="..\..\src\rules\add_value.cpp" />
     <ClCompile Include="..\..\src\rules\update_health.cpp" />
@@ -362,6 +364,7 @@
     <ClInclude Include="..\..\include\apsis\input\binding.h" />
     <ClInclude Include="..\..\include\apsis\input\key.h" />
     <ClInclude Include="..\..\include\apsis\interface\button.h" />
+    <ClInclude Include="..\..\include\apsis\interface\event.h" />
     <ClInclude Include="..\..\include\apsis\interface\filler_bar.h" />
     <ClInclude Include="..\..\include\apsis\interface\numbers.h" />
     <ClInclude Include="..\..\include\apsis\interface\label.h" />
@@ -390,6 +393,7 @@
     <ClInclude Include="..\..\include\apsis\registry\rule.h" />
     <ClInclude Include="..\..\include\apsis\registry\scene.h" />
     <ClInclude Include="..\..\include\apsis\registry\state.h" />
+    <ClInclude Include="..\..\include\apsis\registry\widget.h" />
     <ClInclude Include="..\..\include\apsis\rules\actor_collider.h" />
     <ClInclude Include="..\..\include\apsis\rules\act_function.h" />
     <ClInclude Include="..\..\include\apsis\rules\add_value.h" />
