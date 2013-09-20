@@ -135,7 +135,9 @@ void Apsis::Engine::System::run() {
 
   Apsis::Engine::Event core_event;
 
-  Apsis::Interface::Window& mainWindow = _viewport.window();
+  const Apsis::Registry::Interface& iface = _objects.loadInterface("hud");
+
+  Apsis::Interface::Window& mainWindow = *iface.instance();
 
   unsigned int action_id = 0;
   while(true) {
@@ -178,13 +180,16 @@ void Apsis::Engine::System::run() {
     //       under-simulate due to underflow?
 
     // Update interface
-    _viewport.window().update(elapsed);
+    mainWindow.update(elapsed);
 
     // Update scene actors
     _scene.scene().update(elapsed);
 
-    // Draw scene and interface
+    // Draw scene
     _viewport.draw(_graphics);
+
+    // Draw interface
+    mainWindow.draw(_graphics);
 
     // Display
     _backend.swap();

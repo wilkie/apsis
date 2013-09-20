@@ -1,0 +1,27 @@
+{
+  "type": "widget",
+  "name": "button",
+
+  "internal": true,
+
+  "properties": [
+    {
+      "name": "text",
+      "type": "string",
+      "description": "The text that will be displayed on this button",
+      "default": "Button"
+    },
+    {
+      "name": "textcolor",
+      "type": "color",
+      "description": "The color of the text on this button.",
+      "default": "rgba(255, 255, 255, 255)"
+    },
+    {
+      "name": "color",
+      "type": "color",
+      "description": "The color of the button.",
+      "default": "rgba(128, 128, 128, 0)"
+    }
+  ]
+}

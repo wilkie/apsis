@@ -1,5 +1,7 @@
 #include "apsis/registry/widget.h"
 
+#include "apsis/engine/object.h"
+
 #include "apsis/interface/label.h"
 #include "apsis/interface/button.h"
 
@@ -144,6 +146,8 @@ void Registry::Widget::_openJSONFile() {
 }
 
 void Registry::Widget::_parseJSONFile() {
+  _openJSONFile();
+
   if (_value.isMember("type") &&
       _value["type"].compare(Json::Value("widget")) == 0) {
   }
@@ -178,6 +182,7 @@ void Registry::Widget::_parseJSONFile() {
 }
 
 Interface::Event::Init& Registry::Widget::_getInitFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_inits.count(_name) > 0) {
@@ -188,6 +193,7 @@ Interface::Event::Init& Registry::Widget::_getInitFunction() {
 }
 
 Interface::Event::Draw& Registry::Widget::_getDrawFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_draws.count(_name) > 0) {
@@ -198,6 +204,7 @@ Interface::Event::Draw& Registry::Widget::_getDrawFunction() {
 }
 
 Interface::Event::Motion& Registry::Widget::_getMotionFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_motions.count(_name) > 0) {
@@ -208,6 +215,7 @@ Interface::Event::Motion& Registry::Widget::_getMotionFunction() {
 }
 
 Interface::Event::Enter& Registry::Widget::_getEnterFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_enters.count(_name) > 0) {
@@ -218,6 +226,7 @@ Interface::Event::Enter& Registry::Widget::_getEnterFunction() {
 }
 
 Interface::Event::Leave& Registry::Widget::_getLeaveFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_leaves.count(_name) > 0) {
@@ -228,6 +237,7 @@ Interface::Event::Leave& Registry::Widget::_getLeaveFunction() {
 }
 
 Interface::Event::Input& Registry::Widget::_getInputFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_inputs.count(_name) > 0) {
@@ -238,6 +248,7 @@ Interface::Event::Input& Registry::Widget::_getInputFunction() {
 }
 
 Interface::Event::Update& Registry::Widget::_getUpdateFunction() {
+  _openJSONFile();
   if (_value.isMember("internal")) {
     // Get the internal function
     if (_internal_updates.count(_name) > 0) {

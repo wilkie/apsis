@@ -1,0 +1,41 @@
+{
+  "type": "interface",
+  "name": "hud",
+
+  "widgets": [
+    {
+      "widget": "label",
+      "properties": {
+        "text": "My Label",
+        "-font": "Cinzel",
+        "font-size": 16.0,
+        "x": 570.0,
+        "y": 510.0
+      }
+    },
+    {
+      "widget": "button",
+      "properties": {
+        "text": "My Button",
+        "-font": "Cinzel",
+        "font-size": 16.0,
+        "x": 390.0,
+        "y": 510.0,
+        "width": 190.0,
+        "height": 30.0
+      }
+    },
+    {
+      "widget": "button",
+      "properties": {
+        "text": "Button Two",
+        "-font": "Cinzel",
+        "font-size": 16.0,
+        "x": 390.0,
+        "y": 550.0,
+        "width": 190.0,
+        "height": 30.0
+      }
+    }
+  ]
+}

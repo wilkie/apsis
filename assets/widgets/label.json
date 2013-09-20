@@ -1,0 +1,27 @@
+{
+  "type": "widget",
+  "name": "label",
+
+  "internal": true,
+
+  "properties": [
+    {
+      "name": "text",
+      "type": "string",
+      "description": "The text that will be displayed on this label",
+      "default": "Label"
+    },
+    {
+      "name": "textcolor",
+      "type": "color",
+      "description": "The color of the text on this label.",
+      "default": "rgba(255, 255, 255, 255)"
+    },
+    {
+      "name": "color",
+      "type": "color",
+      "description": "The background color of the label.",
+      "default": "rgba(128, 128, 128, 0)"
+    }
+  ]
+}

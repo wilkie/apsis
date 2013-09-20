@@ -15,37 +15,6 @@
 
 #include <stddef.h>
 
-//Apsis::Graphics::Context
-//position(position) <- push position to stack
-//pop <- pop back to parent position
-//position() <- get global position
-
-//drawing functions?
-
-//fonts?
-
-//layout?
-
-//caching?
-
-/*
-
-Engine::Interface
-  loadWidget(const char* json) -- loads a widget
-  load(const char* json) -- loads an interface
-  use(const char* name) -- uses the already loaded interface
-
-Engine::Object
-  loadWidget(const char* name) -- loads a widget through Interface::Engine
-  loadInterface(const char* name) -- loads interface through Interface::Engine
-  loadScene(const char* name) -- loads scene through Scene::Engine
-
-Engine::Scene
-  load(const char* json) -- loads the scene
-  use(const char* name) -- uses the given scene
-
-*/
-
 namespace Apsis {
   namespace Interface {
     class Window {
@@ -64,7 +33,7 @@ namespace Apsis {
              Event::Leave& leave);
 
       Window(const Registry::Widget& widget,
-             World::Object& object,
+             const World::Object& object,
              float x,
              float y,
              float width,

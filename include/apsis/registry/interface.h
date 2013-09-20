@@ -2,6 +2,7 @@
 #define APSIS_REGISTRY_INTERFACE_H
 
 #include "apsis/engine/object.h"
+#include "apsis/interface/window.h"
 
 #include <json/json.h>
 
@@ -14,6 +15,11 @@ namespace Apsis {
     public:
       static const Registry::Interface& load(const char* path,
                                              const Engine::Object& loader);
+
+      /*
+       *  Returns an instance of this interface.
+       */
+      Apsis::Interface::Window* instance() const;
     private:
       // Constructors
       Interface(const char* path,
@@ -24,12 +30,19 @@ namespace Apsis {
       static std::vector<Registry::Interface*> _interfaces;
 
       // Windows
-      Apsis::Interface::Window _window;
+      std::vector<const Apsis::Registry::Widget*> _widgets;
+      std::vector<const Apsis::World::Object*>    _objects;
+      std::vector<unsigned int>                   _spans;
 
       // Parse widget info
       void _parseWidgets(Json::Value& value,
-                         Apsis::Interface::Window& parent,
                          const Engine::Object& loader);
+
+      void _buildWidgets(Apsis::Interface::Window* parent,
+                         unsigned int span_index,
+                         unsigned int node_index,
+                         unsigned int& number_spans,
+                         unsigned int& number_nodes) const;
     };
   }
 }

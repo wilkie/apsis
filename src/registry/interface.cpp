@@ -1,7 +1,5 @@
 #include "apsis/registry/interface.h"
 
-#include "apsis/interface/window.h"
-
 #include <algorithm>
 #include <fstream>
 
@@ -28,6 +26,7 @@ Registry::Interface::load(const char* path,
 
 Registry::Interface::Interface(const char* path,
                                const Engine::Object& loader) {
+
   Json::Reader reader;
   Json::Value  value;
 
@@ -46,25 +45,26 @@ Registry::Interface::Interface(const char* path,
     // TODO: inherit interfaces
   }
 
+  _spans.push_back(0);
   if (value.isMember("widgets")) {
     // Load widgets
-    _parseWidgets(value, _window);
+    _parseWidgets(value, loader);
   }
 }
 
 void Registry::Interface::_parseWidgets(Json::Value& value,
-                                        Apsis::Interface::Window& parent,
                                         const Engine::Object& loader) {
-                                          
+  unsigned int index = _spans.size() - 1;
   for (Json::Value::iterator it = value["widgets"].begin();
         it != value["widgets"].end();
         ++it) {
     if ((*it).isObject()) {
       if ((*it).isMember("widget")) {
+        _spans[index]++;
         const char* widget_name = (*it)["widget"].asCString();
 
         const Registry::Widget& widget = loader.loadWidget(widget_name);
-        Apsis::World::Object object;
+        Apsis::World::Object& object = *(new Apsis::World::Object);
 
         if ((*it).isMember("properties")) {
           Json::Value::Members members = (*it)["properties"].getMemberNames();
@@ -96,20 +96,14 @@ void Registry::Interface::_parseWidgets(Json::Value& value,
           }
         }
 
-        // Create the window
-        Apsis::Interface::Window* window = new Apsis::Interface::Window(widget,
-                                                                        object,
-                                                                        0.0f,
-                                                                        0.0f,
-                                                                        0.0f,
-                                                                        0.0f);
-
-        // Add to the parent
-        parent.add(*window);
+        // Push to tree
+        _widgets.push_back(&widget);
+        _objects.push_back(&object);
 
         // Child windows
+        _spans.push_back(0);
         if ((*it).isMember("widgets")) {
-          _parseWidgets(*it, *window, loader);
+          _parseWidgets(*it, loader);
         }
       }
     }
@@ -117,4 +111,91 @@ void Registry::Interface::_parseWidgets(Json::Value& value,
       throw "Interface file's 'widgets' section is malformed.";
     }
   }
+}
+
+void Registry::Interface::_buildWidgets(Apsis::Interface::Window* parent,
+                                        unsigned int span_index,
+                                        unsigned int node_index,
+                                        unsigned int& number_spans,
+                                        unsigned int& number_nodes) const {
+  // traverse tree
+  unsigned int children = _spans[span_index];
+  span_index++;
+
+  number_spans = 1;
+  number_nodes = children;
+
+  for (unsigned int i = 0; i < children; i++) {
+    const Apsis::Registry::Widget& widget = *_widgets[node_index];
+    const Apsis::World::Object&    object = *_objects[node_index];
+
+    node_index++;
+
+    float x = 0.0f;
+    float y = 0.0f;
+    float w = 10.0f;
+    float h = 10.0f;
+
+    if (object.has("x")) {
+      x = (float)object.get("x").asDouble();
+    }
+
+    if (object.has("y")) {
+      y = (float)object.get("y").asDouble();
+    }
+
+    if (object.has("width")) {
+      w = (float)object.get("width").asDouble();
+    }
+
+    if (object.has("height")) {
+      h = (float)object.get("height").asDouble();
+    }
+
+    // Create the window
+    Apsis::Interface::Window* window = new Apsis::Interface::Window(widget,
+                                                                    object,
+                                                                    x,
+                                                                    y,
+                                                                    w,
+                                                                    h);
+
+    parent->add(*window);
+
+    unsigned int n_spans = 0;
+    unsigned int n_nodes = 0;
+
+    _buildWidgets(window,
+                  span_index,
+                  node_index,
+                  n_spans,
+                  n_nodes);
+
+    number_spans += n_spans;
+    number_nodes += n_nodes;
+
+    node_index += n_nodes;
+    span_index += n_spans;
+  }
+}
+
+Apsis::Interface::Window* Registry::Interface::instance() const {
+  Apsis::Interface::Window* ret = new Apsis::Interface::Window(0.0f,
+                                                               0.0f,
+                                                               0.0f,
+                                                               0.0f,
+                                                               Apsis::Interface::Event::defaultInit,
+                                                               Apsis::Interface::Event::defaultDraw,
+                                                               Apsis::Interface::Event::defaultInput,
+                                                               Apsis::Interface::Event::defaultMotion,
+                                                               Apsis::Interface::Event::defaultUpdate,
+                                                               Apsis::Interface::Event::defaultEnter,
+                                                               Apsis::Interface::Event::defaultLeave);
+
+  Apsis::Interface::Window& current = *ret;
+
+  unsigned int n_nodes, n_spans;
+  _buildWidgets(ret, 0, 0, n_spans, n_nodes);
+
+  return ret;
 }

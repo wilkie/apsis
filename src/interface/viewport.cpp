@@ -18,28 +18,6 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _input, _motion, _update, _enter, _leave_) {
-
-  Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f,
-                                                               Apsis::Interface::Button::init,
-                                                               Apsis::Interface::Button::draw,
-                                                               Apsis::Interface::Button::input,
-                                                               Apsis::Interface::Button::motion,
-                                                               Apsis::Interface::Button::update,
-                                                               Apsis::Interface::Button::enter,
-                                                               Apsis::Interface::Button::leave);
-  Apsis::Interface::Window& meh = *foo;
-  _window.add(meh);
-
-  foo = new Apsis::Interface::Window(550.0f, 550.0f, 100.0f, 100.0f,
-                                     Apsis::Interface::Button::init,
-                                     Apsis::Interface::Button::draw,
-                                     Apsis::Interface::Button::input,
-                                     Apsis::Interface::Button::motion,
-                                     Apsis::Interface::Button::update,
-                                     Apsis::Interface::Button::enter,
-                                     Apsis::Interface::Button::leave);
-  Apsis::Interface::Window& meh2 = *foo;
-  _window.add(meh2);
 }
 
 void Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
@@ -81,8 +59,6 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   graphics.clear();
 
   _scene.scene().draw(graphics.projection(), camera);
-
-  _window.draw(graphics);
 }
 
 void Interface::Viewport::_init(const Apsis::Interface::Window& window,

@@ -107,6 +107,9 @@ namespace Apsis {
 
       // Screen Viewport
       Apsis::Interface::Viewport _viewport;
+
+      // Interface
+      Apsis::Registry::Interface* _interface;
     };
   }
 }

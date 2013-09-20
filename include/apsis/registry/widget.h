@@ -1,7 +1,6 @@
 #ifndef APSIS_REGISTRY_WIDGET_H
 #define APSIS_REGISTRY_WIDGET_H
 
-#include "apsis/engine/object.h"
 #include "apsis/interface/event.h"
 
 #include <json/json.h>
@@ -10,7 +9,12 @@
 #include <string>
 
 namespace Apsis {
+  namespace Engine {
+    class Object;
+  }
+
   namespace Registry {
+
     class Widget {
     public:
       /*

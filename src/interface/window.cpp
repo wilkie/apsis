@@ -37,7 +37,7 @@ Interface::Window::Window(float x,
 }
 
 Interface::Window::Window(const Registry::Widget& widget,
-                          World::Object& object,
+                          const World::Object& object,
                           float x,
                           float y,
                           float width,
