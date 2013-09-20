@@ -809,6 +809,9 @@
     <ClCompile Include="..\..\src\interface\event.cpp">
       <Filter>interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\interface.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1729,6 +1732,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\event.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\interface.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

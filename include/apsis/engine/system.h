@@ -8,6 +8,7 @@
 #include "apsis/engine/scene.h"
 #include "apsis/engine/graphics.h"
 #include "apsis/engine/audio.h"
+#include "apsis/engine/interface.h"
 
 #include "apsis/settings/video.h"
 #include "apsis/settings/audio.h"
@@ -105,11 +106,11 @@ namespace Apsis {
       // Audio Engine
       Apsis::Engine::Audio& _audio;
 
+      // Interface Engine
+      Apsis::Engine::Interface& _interface;
+
       // Screen Viewport
       Apsis::Interface::Viewport _viewport;
-
-      // Interface
-      Apsis::Registry::Interface* _interface;
     };
   }
 }

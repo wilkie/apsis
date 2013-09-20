@@ -16,6 +16,7 @@ Apsis::Engine::System::System(const char* path,
     _graphics(Apsis::Engine::Graphics::basic(videoSettings)), // Initialize Graphics Engine
     _audio(Apsis::Engine::Audio::basic(audioSettings)),  // Initialize Audio Engine
     _scene(Apsis::Engine::Scene::basic()),               // Initialize Scene Engine
+    _interface(Apsis::Engine::Interface::basic()),       // Initialize Interface Engine
     _viewport(_scene,                                    // Initialize Viewport
               (float)videoSettings.resolutionX,
               (float)videoSettings.resolutionY) {
@@ -137,7 +138,7 @@ void Apsis::Engine::System::run() {
 
   const Apsis::Registry::Interface& iface = _objects.loadInterface("hud");
 
-  Apsis::Interface::Window& mainWindow = *iface.instance();
+  _interface.iface(iface);
 
   unsigned int action_id = 0;
   while(true) {
@@ -152,8 +153,8 @@ void Apsis::Engine::System::run() {
 
         const Apsis::Input::Binding& binding = core_event.binding();
 
-        // Give focused window the input
-        mainWindow.input(pressed, core_event.point(), binding);
+        // Give interface the input
+        _interface.input(pressed, core_event.point(), binding);
 
         // Give Scene the interaction if it is bound to an Action
         if (pressed && _input.press(binding, action_id)) {
@@ -164,7 +165,8 @@ void Apsis::Engine::System::run() {
         }
       }
       else if (core_event.isMotion()) {
-        mainWindow.motion(core_event.point());
+        // Give interface the motion input
+        _interface.motion(core_event.point());
       }
       else if (core_event.isSystem()) {
         if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
@@ -179,17 +181,17 @@ void Apsis::Engine::System::run() {
     // TODO: Adjust the clock (cap minimum speed) to not
     //       under-simulate due to underflow?
 
-    // Update interface
-    mainWindow.update(elapsed);
-
     // Update scene actors
     _scene.scene().update(elapsed);
+
+    // Update interface
+    _interface.update(elapsed);
 
     // Draw scene
     _viewport.draw(_graphics);
 
     // Draw interface
-    mainWindow.draw(_graphics);
+    _interface.draw(_graphics);
 
     // Display
     _backend.swap();
