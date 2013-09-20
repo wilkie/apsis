@@ -111,6 +111,8 @@ namespace Apsis {
       std::string _graphics_path;
       std::string _background_path;
       std::string _rule_path;
+      std::string _interface_path;
+      std::string _widget_path;
 
       // Keeps track of Object engines system-wide.
       static std::vector<Apsis::Engine::Object*> _object_engines;

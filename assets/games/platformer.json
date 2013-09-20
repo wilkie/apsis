@@ -8,7 +8,9 @@
     "bindings": "assets/bindings",
     "graphics": "assets/graphics",
     "backgrounds": "assets/backgrounds",
-    "rules": "assets/rules"
+    "rules": "assets/rules",
+    "widgets": "assets/widgets",
+    "interfaces": "assets/interfaces"
   },
 
   "scenes": [

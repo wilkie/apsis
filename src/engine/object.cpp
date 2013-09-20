@@ -102,11 +102,27 @@ void Apsis::Engine::Object::_loadFromJSON(Json::Value& value) {
     }
   }
 
-  if (value.isMember("rule")) {
-    _rule_path = value["rule"].asCString();
+  if (value.isMember("rules")) {
+    _rule_path = value["rules"].asCString();
     if (_rule_path.size() > 0 &&
         _rule_path[_rule_path.size() - 1] != '/') {
       _rule_path.append("/");
+    }
+  }
+
+  if (value.isMember("interfaces")) {
+    _interface_path = value["interfaces"].asCString();
+    if (_interface_path.size() > 0 &&
+        _interface_path[_interface_path.size() - 1] != '/') {
+      _interface_path.append("/");
+    }
+  }
+
+  if (value.isMember("widgets")) {
+    _widget_path = value["widgets"].asCString();
+    if (_widget_path.size() > 0 &&
+        _widget_path[_widget_path.size() - 1] != '/') {
+      _widget_path.append("/");
     }
   }
 }
@@ -119,6 +135,8 @@ void Apsis::Engine::Object::_loadDefaults() {
   _graphics_path = "";
   _background_path = "";
   _rule_path = "";
+  _interface_path = "";
+  _widget_path = "";
 }
 
 const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) const {
