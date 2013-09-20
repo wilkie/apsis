@@ -7,6 +7,7 @@ Apsis::Interface::Window::Window(float x,
                                  InitEvent& init,
                                  DrawEvent& draw,
                                  InputEvent& input,
+                                 MotionEvent& motion,
                                  UpdateEvent& update,
                                  EnterEvent& enter,
                                  LeaveEvent& leave)
@@ -14,6 +15,7 @@ Apsis::Interface::Window::Window(float x,
     _init(init),
     _draw(draw),
     _input(input),
+    _motion(motion),
     _update(update),
     _enter(enter),
     _leave_(leave),
@@ -29,7 +31,7 @@ Apsis::Interface::Window::Window(float x,
     _hovered(false) {
 
   // Call init method
-  _init(_position, _object);
+  _init(*this, _object);
 }
 
 const Apsis::Geometry::Rectangle& Apsis::Interface::Window::position() const {
@@ -102,7 +104,7 @@ bool Apsis::Interface::Window::attached() const {
 }
 
 void Apsis::Interface::Window::draw(Apsis::Engine::Graphics& graphics) const {
-  _draw(graphics, _position, _object);
+  _draw(graphics, *this, _object);
 
   if (_child == NULL) {
     return;
@@ -149,7 +151,7 @@ void Apsis::Interface::Window::input(bool pressed,
                                      const Apsis::Geometry::Point& point,
                                      const Apsis::Input::Binding& binding) {
   // Input event for parent window
-  _input(pressed, binding, point, _position, _object);
+  _input(pressed, binding, point, *this, _object);
 
   if (binding.isMouse()) {
     // Pass along event to window under cursor if pointer event.
@@ -174,6 +176,11 @@ void Apsis::Interface::Window::input(bool pressed,
       // The event will be passed as a result of the normal passing
       // of input to focused child below.
     }
+    else if (pressed) {
+      // Do not send a mouse click to the focused window if there is
+      // not a new focused window.
+      return;
+    }
   }
 
   // Pass along event to focused child window
@@ -192,12 +199,12 @@ void Apsis::Interface::Window::motion(const Apsis::Geometry::Point& point) {
   // Find window under the pointer
   Interface::Window& window = childAt(point.x, point.y);
 
+  Apsis::Geometry::Point inner_point = point;
+  inner_point.x -= _position.left();
+  inner_point.y -= _position.top();
+
   // Pass the motion down
   if (&window != this) {
-    Apsis::Geometry::Point inner_point = point;
-    inner_point.x -= _position.left();
-    inner_point.y -= _position.top();
-
     window.motion(inner_point);
 
     // We should leave() the previously hovered child if hovering
@@ -220,7 +227,7 @@ void Apsis::Interface::Window::motion(const Apsis::Geometry::Point& point) {
     }
   }
 
-  // TODO: motion event
+  _motion(inner_point, *this, _object);
 }
 
 bool Apsis::Interface::Window::contains(float x, float y) const {
@@ -327,7 +334,7 @@ void Apsis::Interface::Window::enter(const Apsis::Geometry::Point& point) {
   _hovered = true;
 
   // Event
-  _enter(point, _position, _object);
+  _enter(point, *this, _object);
 }
 
 void Apsis::Interface::Window::leave(const Apsis::Geometry::Point& point) {
@@ -344,5 +351,5 @@ void Apsis::Interface::Window::leave(const Apsis::Geometry::Point& point) {
   }
 
   // Event
-  _leave_(point, _position, _object);
+  _leave_(point, *this, _object);
 }

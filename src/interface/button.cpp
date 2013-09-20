@@ -25,11 +25,13 @@ struct ButtonData {
   float text_y;
 };
 
-void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
+void Apsis::Interface::Button::init(const Apsis::Interface::Window& window,
                                     Apsis::World::Object& object) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
   static unsigned int text_id    = Apsis::Registry::Property::id("text");
   static unsigned int sprite_id = Apsis::Registry::Property::id("sprite");
+
+  const Apsis::Geometry::Rectangle& position = window.position();
 
   ButtonData* data = new ButtonData;
   
@@ -174,9 +176,11 @@ void Apsis::Interface::Button::init(const Apsis::Geometry::Rectangle& position,
 }
 
 void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
-                                   const Apsis::Geometry::Rectangle& position,
-                                   const Apsis::World::Object& object) {
+                                    const Apsis::Interface::Window& window,
+                                    const Apsis::World::Object& object) {
   static unsigned int text_id = Apsis::Registry::Property::id("text");
+
+  const Apsis::Geometry::Rectangle& position = window.position();
 
   const ButtonData& data = *(ButtonData*)object.userData();
   const Apsis::Sprite::Batch& batch = *data.batch;
@@ -193,7 +197,7 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   if (object.has("pressed") && object.get("pressed").asInteger() == 1) {
     batch_down.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
-  else if (object.has("hover") && object.get("hover").asInteger() == 1) {
+  else if (window.hovered()) {
     batch_hover.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
   else {
@@ -206,10 +210,10 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
 }
 
 void Apsis::Interface::Button::input(bool pressed,
-                                     const Apsis::Input::Binding&      binding,
-                                     const Apsis::Geometry::Point&     point,
-                                     const Apsis::Geometry::Rectangle& position,
-                                     Apsis::World::Object&             object) {
+                                     const Apsis::Input::Binding&    binding,
+                                     const Apsis::Geometry::Point&   point,
+                                     const Apsis::Interface::Window& window,
+                                     Apsis::World::Object&           object) {
   if (pressed) {
     object.set("pressed", (long)1);
   }
@@ -218,19 +222,22 @@ void Apsis::Interface::Button::input(bool pressed,
   }
 }
 
+void Apsis::Interface::Button::motion(const Apsis::Geometry::Point& point,
+                                      const Apsis::Interface::Window& window,
+                                      Apsis::World::Object& object) {
+}
+
 void Apsis::Interface::Button::update(float elapsed,
                                       Apsis::Geometry::Rectangle& position,
                                       Apsis::World::Object& object) {
 }
 
 void Apsis::Interface::Button::enter(const Apsis::Geometry::Point& point,
-                                     const Apsis::Geometry::Rectangle& position,
+                                     const Apsis::Interface::Window& window,
                                      Apsis::World::Object& object) {
-  object.set("hover", (long)1);
 }
 
 void Apsis::Interface::Button::leave(const Apsis::Geometry::Point& point,
-                                     const Apsis::Geometry::Rectangle& position,
+                                     const Apsis::Interface::Window& window,
                                      Apsis::World::Object& object) {
-  object.set("hover", (long)0);
 }

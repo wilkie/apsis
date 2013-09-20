@@ -58,29 +58,33 @@ namespace Apsis {
       const Apsis::Interface::Window& window() const;
 
     private:
-      static void _init(const Apsis::Geometry::Rectangle& position,
+      static void _init(const Apsis::Interface::Window& window,
                         Apsis::World::Object& object);
 
       static void _draw(Apsis::Engine::Graphics& graphics,
-                        const Apsis::Geometry::Rectangle& position,
+                        const Apsis::Interface::Window& window,
                         const Apsis::World::Object& object);
 
       static void _input(bool pressed,
-                         const Apsis::Input::Binding&      binding,
-                         const Apsis::Geometry::Point&     point,
-                         const Apsis::Geometry::Rectangle& position,
-                         Apsis::World::Object&             object);
+                         const Apsis::Input::Binding&    binding,
+                         const Apsis::Geometry::Point&   point,
+                         const Apsis::Interface::Window& window,
+                         Apsis::World::Object&           object);
+
+      static void _motion(const Apsis::Geometry::Point& point,
+                          const Apsis::Interface::Window& window,
+                          Apsis::World::Object& object);
 
       static void _update(float elapsed,
                           Apsis::Geometry::Rectangle& position,
                           Apsis::World::Object& object);
 
       static void _enter(const Apsis::Geometry::Point& point,
-                         const Apsis::Geometry::Rectangle& position,
+                         const Apsis::Interface::Window& window,
                          Apsis::World::Object& object);
 
       static void _leave_(const Apsis::Geometry::Point& point,
-                          const Apsis::Geometry::Rectangle& position,
+                          const Apsis::Interface::Window& window,
                           Apsis::World::Object& object);
 
       // Viewports have a Scene, a Camera, and a Window

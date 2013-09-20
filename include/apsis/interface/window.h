@@ -30,13 +30,13 @@ namespace Apsis {
     public:
 
       // Init function
-      typedef void(&InitEvent)(const Apsis::Geometry::Rectangle& position,
+      typedef void(&InitEvent)(const Apsis::Interface::Window& window,
                                Apsis::World::Object& object);
 
       // Draw function
-      typedef void(&DrawEvent)(Apsis::Engine::Graphics&          graphics,
-                               const Apsis::Geometry::Rectangle& position,
-                               const Apsis::World::Object&       object);
+      typedef void(&DrawEvent)(Apsis::Engine::Graphics&        graphics,
+                               const Apsis::Interface::Window& window,
+                               const Apsis::World::Object&     object);
 
       // Update function (for animations)
       typedef void(&UpdateEvent)(float elapsed,
@@ -45,25 +45,25 @@ namespace Apsis {
 
       // Input function
       typedef void(&InputEvent)(bool pressed,
-                                const Apsis::Input::Binding&      binding,
-                                const Apsis::Geometry::Point&     point,
-                                const Apsis::Geometry::Rectangle& position,
-                                Apsis::World::Object&             object);
+                                const Apsis::Input::Binding&    binding,
+                                const Apsis::Geometry::Point&   point,
+                                const Apsis::Interface::Window& window,
+                                Apsis::World::Object&           object);
 
       // Hover function
-      typedef void(&MotionEvent)(const Apsis::Geometry::Point&     point,
-                                 const Apsis::Geometry::Rectangle& position,
-                                 const Apsis::World::Object&       object);
+      typedef void(&MotionEvent)(const Apsis::Geometry::Point&   point,
+                                 const Apsis::Interface::Window& window,
+                                 Apsis::World::Object&           object);
 
       // When input pointer enters bounds
-      typedef void(&EnterEvent)(const Apsis::Geometry::Point&     point,
-                                const Apsis::Geometry::Rectangle& position,
-                                Apsis::World::Object&             object);
+      typedef void(&EnterEvent)(const Apsis::Geometry::Point&   point,
+                                const Apsis::Interface::Window& window,
+                                Apsis::World::Object&           object);
 
       // When input pointer leaves bounds
-      typedef void(&LeaveEvent)(const Apsis::Geometry::Point&     point,
-                                const Apsis::Geometry::Rectangle& position,
-                                Apsis::World::Object&             object);
+      typedef void(&LeaveEvent)(const Apsis::Geometry::Point&   point,
+                                const Apsis::Interface::Window& window,
+                                Apsis::World::Object&           object);
 
       Window(float x,
              float y,
@@ -72,6 +72,7 @@ namespace Apsis {
              InitEvent& init,
              DrawEvent& draw,
              InputEvent& input,
+             MotionEvent& motion,
              UpdateEvent& update,
              EnterEvent& enter,
              LeaveEvent& leave);
@@ -218,6 +219,7 @@ namespace Apsis {
       InitEvent   _init;
       DrawEvent   _draw;
       InputEvent  _input;
+      MotionEvent _motion;
       EnterEvent  _enter;
       LeaveEvent  _leave_;
       UpdateEvent _update;

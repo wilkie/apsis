@@ -17,12 +17,13 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float height)
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
-    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _input, _update, _enter, _leave_) {
+    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _input, _motion, _update, _enter, _leave_) {
 
   Apsis::Interface::Window* foo = new Apsis::Interface::Window(500.0f, 500.0f, 100.0f, 100.0f,
                                                                Apsis::Interface::Button::init,
                                                                Apsis::Interface::Button::draw,
                                                                Apsis::Interface::Button::input,
+                                                               Apsis::Interface::Button::motion,
                                                                Apsis::Interface::Button::update,
                                                                Apsis::Interface::Button::enter,
                                                                Apsis::Interface::Button::leave);
@@ -33,6 +34,7 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                                      Apsis::Interface::Button::init,
                                      Apsis::Interface::Button::draw,
                                      Apsis::Interface::Button::input,
+                                     Apsis::Interface::Button::motion,
                                      Apsis::Interface::Button::update,
                                      Apsis::Interface::Button::enter,
                                      Apsis::Interface::Button::leave);
@@ -147,20 +149,20 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   _window.draw(graphics);
 }
 
-void Interface::Viewport::_init(const Apsis::Geometry::Rectangle& position,
+void Interface::Viewport::_init(const Apsis::Interface::Window& window,
                                 Apsis::World::Object& object) {
 }
 
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,
-                                const Geometry::Rectangle& position,
+                                const Apsis::Interface::Window& window,
                                 const World::Object& object) {
 }
 
 void Interface::Viewport::_input(bool pressed,
-                                 const Apsis::Input::Binding&      binding,
-                                 const Apsis::Geometry::Point&     point,
-                                 const Apsis::Geometry::Rectangle& position,
-                                 Apsis::World::Object&             object) {
+                                 const Apsis::Input::Binding&    binding,
+                                 const Apsis::Geometry::Point&   point,
+                                 const Apsis::Interface::Window& window,
+                                 Apsis::World::Object&           object) {
 }
 
 void Interface::Viewport::_update(float elapsed,
@@ -168,13 +170,18 @@ void Interface::Viewport::_update(float elapsed,
                                   Apsis::World::Object& object) {
 }
 
+void Interface::Viewport::_motion(const Apsis::Geometry::Point& point,
+                                  const Apsis::Interface::Window& window,
+                                  Apsis::World::Object& object) {
+}
+
 void Interface::Viewport::_enter(const Apsis::Geometry::Point& point,
-                                 const Apsis::Geometry::Rectangle& position,
+                                 const Apsis::Interface::Window& window,
                                  Apsis::World::Object& object) {
 }
 
 void Interface::Viewport::_leave_(const Apsis::Geometry::Point& point,
-                                  const Apsis::Geometry::Rectangle& position,
+                                  const Apsis::Interface::Window& window,
                                   Apsis::World::Object& object) {
 }
 
