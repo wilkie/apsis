@@ -33,7 +33,7 @@ namespace Apsis {
       Scene(const char* path,
             const Apsis::Engine::Object& loader);
 
-      // Keeps track of Things system-wide.
+      // Keeps track of Scenes system-wide.
       static std::vector<std::string> _ids;
       static std::vector<Apsis::Registry::Scene*> _scenes;
 

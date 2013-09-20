@@ -69,71 +69,7 @@ Geometry::Point3d Interface::Viewport::target() {
   point.z = _camera.eye().z();
   return point;
 }
-/*
 
-{
-  "type": "interface",
-
-  "windows": [
-    {
-      "widget": "label",
-      "properties": {
-        "text": "Current Item",
-        "font": "Cinzel",
-        "font-size": 16.0,
-        "x": 70.0,
-        "y": 10.0
-      }
-    },
-    {
-      "widget": "image",
-      "properties": {
-        "spritesheet": "hud",
-        "spriteindex": 0,
-        "x": 10.0,
-        "y": 100.0,
-        "width": 50.0,
-        "height": 50.0
-      }
-    }
-  ]
-}
-
-{
-  "type": "widget",
-  "name": "label",
-  "inherit": true
-}
-
-{
-  "type": "widget",
-  "name": "foobar",
-  "code": "foobar.rb"
-}
-
-module Foobar
-  def onDraw
-  end
-
-  def onInputDown
-  end
-
-  def onInputUp
-  end
-
-  def onHover
-  end
-end
-
-Themes can replace internal widgets? That is, a theme is basically
-just a JSON description of widget types overriding those that
-already exist. Defaults will be just built into the system or
-just removed?
-
-Interface JSON descriptions just refer to widget names. So widget
-JSON descriptions can be replaced at will.
-
-*/
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   Primitives::Camera camera = Primitives::Camera(
     *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)((_window.position().width/2.0f)+0.5),
