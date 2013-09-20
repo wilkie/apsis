@@ -1,8 +1,8 @@
 #ifndef APSIS_REGISTRY_WIDGET_H
 #define APSIS_REGISTRY_WIDGET_H
 
-#include "apsis/interface/event.h"
 #include "apsis/engine/object.h"
+#include "apsis/interface/event.h"
 
 #include <json/json.h>
 
@@ -23,37 +23,37 @@ namespace Apsis {
       /*
        *  Returns the initialization function for this widget.
        */
-      Interface::Event::Init& initEvent() const;
+      Apsis::Interface::Event::Init& initEvent() const;
 
       /*
        *  Returns the drawing function for this widget.
        */
-      Interface::Event::Draw& drawEvent() const;
+      Apsis::Interface::Event::Draw& drawEvent() const;
 
       /*
        *  Returns the update function for this widget.
        */
-      Interface::Event::Update& updateEvent() const;
+      Apsis::Interface::Event::Update& updateEvent() const;
 
       /*
        *  Returns the leave function for this widget.
        */
-      Interface::Event::Leave& leaveEvent() const;
+      Apsis::Interface::Event::Leave& leaveEvent() const;
 
       /*
        *  Returns the enter function for this widget.
        */
-      Interface::Event::Enter& enterEvent() const;
+      Apsis::Interface::Event::Enter& enterEvent() const;
 
       /*
        *  Returns the motion event for this widget.
        */
-      Interface::Event::Motion& motionEvent() const;
+      Apsis::Interface::Event::Motion& motionEvent() const;
 
       /*
        *  Returns the input event for this widget.
        */
-      Interface::Event::Input& inputEvent() const;
+      Apsis::Interface::Event::Input& inputEvent() const;
 
       /*
        *  Returns the number of properties defined for this widget.
@@ -103,22 +103,22 @@ namespace Apsis {
       std::string _name;
 
       // Internal functions
-      static std::map<std::string, Interface::Event::Init*>   _internal_inits;
-      static std::map<std::string, Interface::Event::Draw*>   _internal_draws;
-      static std::map<std::string, Interface::Event::Input*>  _internal_inputs;
-      static std::map<std::string, Interface::Event::Motion*> _internal_motions;
-      static std::map<std::string, Interface::Event::Enter*>  _internal_enters;
-      static std::map<std::string, Interface::Event::Leave*>  _internal_leaves;
-      static std::map<std::string, Interface::Event::Update*> _internal_updates;
+      static std::map<std::string, Apsis::Interface::Event::Init*>   _internal_inits;
+      static std::map<std::string, Apsis::Interface::Event::Draw*>   _internal_draws;
+      static std::map<std::string, Apsis::Interface::Event::Input*>  _internal_inputs;
+      static std::map<std::string, Apsis::Interface::Event::Motion*> _internal_motions;
+      static std::map<std::string, Apsis::Interface::Event::Enter*>  _internal_enters;
+      static std::map<std::string, Apsis::Interface::Event::Leave*>  _internal_leaves;
+      static std::map<std::string, Apsis::Interface::Event::Update*> _internal_updates;
 
       // Pull out functions
-      Interface::Event::Init&   _getInitFunction();
-      Interface::Event::Draw&   _getDrawFunction();
-      Interface::Event::Input&  _getInputFunction();
-      Interface::Event::Motion& _getMotionFunction();
-      Interface::Event::Enter&  _getEnterFunction();
-      Interface::Event::Leave&  _getLeaveFunction();
-      Interface::Event::Update& _getUpdateFunction();
+      Apsis::Interface::Event::Init&   _getInitFunction();
+      Apsis::Interface::Event::Draw&   _getDrawFunction();
+      Apsis::Interface::Event::Input&  _getInputFunction();
+      Apsis::Interface::Event::Motion& _getMotionFunction();
+      Apsis::Interface::Event::Enter&  _getEnterFunction();
+      Apsis::Interface::Event::Leave&  _getLeaveFunction();
+      Apsis::Interface::Event::Update& _getUpdateFunction();
 
       // Properties
       std::vector<std::string> _properties;
@@ -126,13 +126,13 @@ namespace Apsis {
       std::vector<std::string> _values;
 
       // Event functions
-      Interface::Event::Init&   _init;
-      Interface::Event::Draw&   _draw;
-      Interface::Event::Input&  _input;
-      Interface::Event::Motion& _motion;
-      Interface::Event::Enter&  _enter;
-      Interface::Event::Leave&  _leave_;
-      Interface::Event::Update& _update;
+      Apsis::Interface::Event::Init&   _init;
+      Apsis::Interface::Event::Draw&   _draw;
+      Apsis::Interface::Event::Input&  _input;
+      Apsis::Interface::Event::Motion& _motion;
+      Apsis::Interface::Event::Enter&  _enter;
+      Apsis::Interface::Event::Leave&  _leave_;
+      Apsis::Interface::Event::Update& _update;
     };
   }
 }

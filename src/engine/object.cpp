@@ -1,4 +1,5 @@
 #include "apsis/engine/object.h"
+#include "apsis/registry/interface.h"
 
 #include <fstream>
 #include <sys/stat.h>
@@ -169,6 +170,14 @@ const Apsis::Registry::Scene& Apsis::Engine::Object::loadScene(const char* name)
     throw "Scene description not found or loaded.";
   }
   return Apsis::Registry::Scene::load(found.c_str(), *this);
+}
+
+const Apsis::Registry::Interface& Apsis::Engine::Object::loadInterface(const char* name) const {
+  std::string found = _findFile(_interface_path, std::string(name));
+  if (found == "") {
+    throw "Interface description not found or loaded.";
+  }
+  return Apsis::Registry::Interface::load(found.c_str(), *this);
 }
 
 void Apsis::Engine::Object::loadBindings(const char* name) const {

@@ -180,57 +180,71 @@ void Registry::Widget::_parseJSONFile() {
 Interface::Event::Init& Registry::Widget::_getInitFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_inits.at(_name);
+    if (_internal_inits.count(_name) > 0) {
+      return *_internal_inits.at(_name);
+    }
   }
-  return Interface::Event::defaultInit;
+  return Apsis::Interface::Event::defaultInit;
 }
 
 Interface::Event::Draw& Registry::Widget::_getDrawFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_draws.at(_name);
+    if (_internal_draws.count(_name) > 0) {
+      return *_internal_draws.at(_name);
+    }
   }
-  return Interface::Event::defaultDraw;
+  return Apsis::Interface::Event::defaultDraw;
 }
 
 Interface::Event::Motion& Registry::Widget::_getMotionFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_motions.at(_name);
+    if (_internal_motions.count(_name) > 0) {
+      return *_internal_motions.at(_name);
+    }
   }
-  return Interface::Event::defaultMotion;
+  return Apsis::Interface::Event::defaultMotion;
 }
 
 Interface::Event::Enter& Registry::Widget::_getEnterFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_enters.at(_name);
+    if (_internal_enters.count(_name) > 0) {
+      return *_internal_enters.at(_name);
+    }
   }
-  return Interface::Event::defaultEnter;
+  return Apsis::Interface::Event::defaultEnter;
 }
 
 Interface::Event::Leave& Registry::Widget::_getLeaveFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_leaves.at(_name);
+    if (_internal_leaves.count(_name) > 0) {
+      return *_internal_leaves.at(_name);
+    }
   }
-  return Interface::Event::defaultLeave;
+  return Apsis::Interface::Event::defaultLeave;
 }
 
 Interface::Event::Input& Registry::Widget::_getInputFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_inputs.at(_name);
+    if (_internal_inputs.count(_name) > 0) {
+      return *_internal_inputs.at(_name);
+    }
   }
-  return Interface::Event::defaultInput;
+  return Apsis::Interface::Event::defaultInput;
 }
 
 Interface::Event::Update& Registry::Widget::_getUpdateFunction() {
   if (_value.isMember("internal")) {
     // Get the internal function
-    return *_internal_updates.at(_name);
+    if (_internal_updates.count(_name) > 0) {
+      return *_internal_updates.at(_name);
+    }
   }
-  return Interface::Event::defaultUpdate;
+  return Apsis::Interface::Event::defaultUpdate;
 }
 
 Interface::Event::Init& Registry::Widget::initEvent() const {

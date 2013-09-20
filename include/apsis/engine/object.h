@@ -20,6 +20,7 @@ namespace Apsis {
     class Rule;
     class Property;
     class State;
+    class Interface;
   }
 
   namespace World {
@@ -83,6 +84,12 @@ namespace Apsis {
       const Apsis::Registry::Scene& loadScene(const char* name) const;
 
       /*
+       *  Loads or returns the existing Interface object with the given
+       *  name or path.
+       */
+      const Apsis::Registry::Interface& loadInterface(const char* name) const;
+
+      /*
        *  Loads bindings.
        */
       void loadBindings(const char* name) const;
@@ -126,6 +133,7 @@ namespace Apsis {
 #include "apsis/registry/rule.h"
 #include "apsis/registry/property.h"
 #include "apsis/registry/state.h"
+#include "apsis/registry/interface.h"
 
 #include "apsis/sprite/thing.h"
 
