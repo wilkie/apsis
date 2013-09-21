@@ -812,6 +812,9 @@
     <ClCompile Include="..\..\src\engine\interface.cpp">
       <Filter>engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\interface\check_box.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\support\soil\image_DXT.h">
@@ -1735,6 +1738,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\engine\interface.h">
       <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\interface\check_box.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

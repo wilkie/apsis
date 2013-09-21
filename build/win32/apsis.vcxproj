@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\src\geometry\rectangle.cpp" />
     <ClCompile Include="..\..\src\input\binding.cpp" />
     <ClCompile Include="..\..\src\interface\button.cpp" />
+    <ClCompile Include="..\..\src\interface\check_box.cpp" />
     <ClCompile Include="..\..\src\interface\event.cpp" />
     <ClCompile Include="..\..\src\interface\filler_bar.cpp" />
     <ClCompile Include="..\..\src\interface\label.cpp" />
@@ -366,6 +367,7 @@
     <ClInclude Include="..\..\include\apsis\input\binding.h" />
     <ClInclude Include="..\..\include\apsis\input\key.h" />
     <ClInclude Include="..\..\include\apsis\interface\button.h" />
+    <ClInclude Include="..\..\include\apsis\interface\check_box.h" />
     <ClInclude Include="..\..\include\apsis\interface\event.h" />
     <ClInclude Include="..\..\include\apsis\interface\filler_bar.h" />
     <ClInclude Include="..\..\include\apsis\interface\numbers.h" />

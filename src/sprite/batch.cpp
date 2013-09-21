@@ -62,10 +62,12 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Batch::sheet() const {
 void Apsis::Sprite::Batch::add(unsigned int index,
                                float x,
                                float y,
+                               float width,
+                               float height,
                                float src_x,
                                float src_y,
-                               float width,
-                               float height) {
+                               float src_width,
+                               float src_height) {
   if (width == 0 || height == 0) {
     return;
   }
@@ -94,10 +96,10 @@ void Apsis::Sprite::Batch::add(unsigned int index,
 
   // Texture Coordinates
   float coords[4];
-  coords[0] = (_sheet.left(index) + src_x)          / _sheet.texture().width();
-  coords[1] = (_sheet.top(index)  + src_y)          / _sheet.texture().height();
-  coords[2] = (_sheet.left(index) + src_x + width)  / _sheet.texture().width();
-  coords[3] = (_sheet.top(index)  + src_y + height) / _sheet.texture().height();
+  coords[0] = (_sheet.left(index) + src_x)              / _sheet.texture().width();
+  coords[1] = (_sheet.top(index)  + src_y)              / _sheet.texture().height();
+  coords[2] = (_sheet.left(index) + src_x + src_width)  / _sheet.texture().width();
+  coords[3] = (_sheet.top(index)  + src_y + src_height) / _sheet.texture().height();
 
   unsigned int vi = _vertexCount / 5;
   _vertices[vi * 5 + 0] = x;
@@ -148,19 +150,28 @@ void Apsis::Sprite::Batch::add(unsigned int index,
 
   _dirty = true;
 }
+void Apsis::Sprite::Batch::add(unsigned int index,
+                               float x,
+                               float y,
+                               float src_x,
+                               float src_y,
+                               float width,
+                               float height) {
+  add(index, x, y, width, height, src_x, src_y, width, height);
+}
 
 void Apsis::Sprite::Batch::add(unsigned int index,
                                float x,
                                float y,
                                float width,
                                float height) {
-  add(index, x, y, 0.0f, 0.0f, width, height);
+  add(index, x, y, width, height, 0.0f, 0.0f, width, height);
 }
 
 void Apsis::Sprite::Batch::add(unsigned int index,
                                float x,
                                float y) {
-  add(index, x, y, 0.0f, 0.0f, _sheet.width(index), _sheet.height(index));
+  add(index, x, y, _sheet.width(index), _sheet.height(index), 0.0f, 0.0f, _sheet.width(index), _sheet.height(index));
 }
 
 void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,

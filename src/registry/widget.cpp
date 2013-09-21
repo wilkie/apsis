@@ -4,6 +4,7 @@
 
 #include "apsis/interface/label.h"
 #include "apsis/interface/button.h"
+#include "apsis/interface/check_box.h"
 
 #include <algorithm>
 #include <fstream>
@@ -20,6 +21,7 @@ typedef std::map<std::string, Interface::Event::Init*>::value_type InitPair;
 static InitPair pairs_inits[] = {
   InitPair("label", &Interface::Label::init),
   InitPair("button", &Interface::Button::init),
+  InitPair("check_box", &Interface::CheckBox::init),
 };
 
 static const unsigned int inits_count = sizeof(pairs_inits) / sizeof(InitPair);
@@ -31,6 +33,7 @@ typedef std::map<std::string, Interface::Event::Draw*>::value_type DrawPair;
 static DrawPair pairs_draws[] = {
   DrawPair("label", &Interface::Label::draw),
   DrawPair("button", &Interface::Button::draw),
+  DrawPair("check_box", &Interface::CheckBox::draw),
 };
 
 static const unsigned int draws_count = sizeof(pairs_draws) / sizeof(DrawPair);
@@ -42,6 +45,7 @@ typedef std::map<std::string, Interface::Event::Update*>::value_type UpdatePair;
 static UpdatePair pairs_updates[] = {
   UpdatePair("label", &Interface::Label::update),
   UpdatePair("button", &Interface::Button::update),
+  UpdatePair("check_box", &Interface::CheckBox::update),
 };
 
 static const unsigned int updates_count = sizeof(pairs_updates) / sizeof(UpdatePair);
@@ -53,6 +57,7 @@ typedef std::map<std::string, Interface::Event::Input*>::value_type InputPair;
 static InputPair pairs_inputs[] = {
   InputPair("label", &Interface::Label::input),
   InputPair("button", &Interface::Button::input),
+  InputPair("check_box", &Interface::CheckBox::input),
 };
 
 static const unsigned int inputs_count = sizeof(pairs_inputs) / sizeof(InputPair);
@@ -64,6 +69,7 @@ typedef std::map<std::string, Interface::Event::Enter*>::value_type EnterPair;
 static EnterPair pairs_enters[] = {
   EnterPair("label", &Interface::Label::enter),
   EnterPair("button", &Interface::Button::enter),
+  EnterPair("check_box", &Interface::CheckBox::enter),
 };
 
 static const unsigned int enters_count = sizeof(pairs_enters) / sizeof(EnterPair);
@@ -75,6 +81,7 @@ typedef std::map<std::string, Interface::Event::Leave*>::value_type LeavePair;
 static LeavePair pairs_leaves[] = {
   LeavePair("label", &Interface::Label::leave),
   LeavePair("button", &Interface::Button::leave),
+  LeavePair("check_box", &Interface::CheckBox::leave),
 };
 
 static const unsigned int leaves_count = sizeof(pairs_leaves) / sizeof(LeavePair);
@@ -86,6 +93,7 @@ typedef std::map<std::string, Interface::Event::Motion*>::value_type MotionPair;
 static MotionPair pairs_motions[] = {
   MotionPair("label", &Interface::Label::motion),
   MotionPair("button", &Interface::Button::motion),
+  MotionPair("check_box", &Interface::CheckBox::motion),
 };
 
 static const unsigned int motions_count = sizeof(pairs_motions) / sizeof(MotionPair);

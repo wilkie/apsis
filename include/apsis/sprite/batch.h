@@ -24,6 +24,20 @@ namespace Apsis {
       const Apsis::Sprite::Sheet& sheet() const;
 
       /*
+       *  Adds the given sprite to this Batch cropped and scaled
+       *  using the given dimensions.
+       */
+      void add(unsigned int sprite_id,
+               float x,
+               float y,
+               float width,
+               float height,
+               float src_x,
+               float src_y,
+               float src_width,
+               float src_height);
+
+      /*
        *  Adds the given sprite to this Batch cropped using the given
        *  dimensions.
        */

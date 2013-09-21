@@ -14,6 +14,42 @@
       }
     },
     {
+      "widget": "check_box",
+      "properties": {
+        "text": "Some Setting",
+        "-font": "Cinzel",
+        "font-size": 16.0,
+        "x": 570.0,
+        "y": 460.0,
+        "width": 190.0,
+        "height": 30.0
+      }
+    },
+    {
+      "widget": "check_box",
+      "properties": {
+        "text": "Video Setting",
+        "-font": "Cinzel",
+        "font-size": 16.0,
+        "x": 570.0,
+        "y": 420.0,
+        "width": 190.0,
+        "height": 30.0
+      }
+    },
+    {
+      "widget": "check_box",
+      "properties": {
+        "text": "Audio Setting",
+        "-font": "Cinzel",
+        "font-size": 16.0,
+        "x": 570.0,
+        "y": 380.0,
+        "width": 190.0,
+        "height": 30.0
+      }
+    },
+    {
       "widget": "button",
       "properties": {
         "text": "My Button",
