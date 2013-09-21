@@ -15,7 +15,7 @@ struct LabelData {
 void Apsis::Interface::Label::init(const Apsis::Interface::Window& window,
                                    Apsis::World::Object& object) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
-  static unsigned int text_id    = Apsis::Registry::Property::id("text");
+  static unsigned int text_id = Apsis::Registry::Property::id("text");
 
   LabelData* data = new LabelData;
 
@@ -39,7 +39,7 @@ void Apsis::Interface::Label::init(const Apsis::Interface::Window& window,
   data->text_height = font.height(text);
 
   data->text_x = (position.width  - data->text_width)  / 2.0f;
-  data->text_y = (position.height - data->text_height) / 2.0f;
+  data->text_y = (position.height - data->text_height - font.descent()) / 2.0f;
   data->text_y += font.ascent();
 
   object.userData(data);

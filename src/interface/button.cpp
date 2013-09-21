@@ -194,7 +194,7 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   // Draw button
   graphics.sheet(sheet.id());
   
-  if (object.has("pressed") && object.get("pressed").asInteger() == 1) {
+  if (window.hovered() && object.has("pressed") && object.get("pressed").asInteger() == 1) {
     batch_down.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
   else if (window.hovered()) {
@@ -221,6 +221,10 @@ void Apsis::Interface::Button::input(bool pressed,
   }
   else {
     object.set("pressed", (long)0);
+
+    if (window.hovered()) {
+      // Issue event
+    }
   }
 }
 

@@ -9,11 +9,34 @@ namespace Apsis {
   namespace Interface {
     class Panel {
     public:
-      static void init(Apsis::World::Object& object);
+      static void init(const Apsis::Interface::Window& window,
+                       Apsis::World::Object& object);
 
       static void draw(Apsis::Engine::Graphics& graphics,
-                       const Apsis::Geometry::Rectangle& position,
+                       const Apsis::Interface::Window& window,
                        const Apsis::World::Object& object);
+
+      static void input(bool pressed,
+                        const Apsis::Input::Binding&    binding,
+                        const Apsis::Geometry::Point&   point,
+                        const Apsis::Interface::Window& window,
+                        Apsis::World::Object&           object);
+
+      static void motion(const Apsis::Geometry::Point& point,
+                        const Apsis::Interface::Window& window,
+                         Apsis::World::Object& object);
+
+      static void update(float elapsed,
+                         Apsis::Geometry::Rectangle& position,
+                         Apsis::World::Object& object);
+
+      static void enter(const Apsis::Geometry::Point& point,
+                        const Apsis::Interface::Window& window,
+                        Apsis::World::Object& object);
+
+      static void leave(const Apsis::Geometry::Point& point,
+                        const Apsis::Interface::Window& window,
+                        Apsis::World::Object& object);
     };
   }
 }

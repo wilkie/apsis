@@ -5,6 +5,7 @@
 #include "apsis/interface/label.h"
 #include "apsis/interface/button.h"
 #include "apsis/interface/check_box.h"
+#include "apsis/interface/panel.h"
 
 #include <algorithm>
 #include <fstream>
@@ -22,6 +23,7 @@ static InitPair pairs_inits[] = {
   InitPair("label", &Interface::Label::init),
   InitPair("button", &Interface::Button::init),
   InitPair("check_box", &Interface::CheckBox::init),
+  InitPair("panel", &Interface::Panel::init),
 };
 
 static const unsigned int inits_count = sizeof(pairs_inits) / sizeof(InitPair);
@@ -34,6 +36,7 @@ static DrawPair pairs_draws[] = {
   DrawPair("label", &Interface::Label::draw),
   DrawPair("button", &Interface::Button::draw),
   DrawPair("check_box", &Interface::CheckBox::draw),
+  DrawPair("panel", &Interface::Panel::draw),
 };
 
 static const unsigned int draws_count = sizeof(pairs_draws) / sizeof(DrawPair);
@@ -46,6 +49,7 @@ static UpdatePair pairs_updates[] = {
   UpdatePair("label", &Interface::Label::update),
   UpdatePair("button", &Interface::Button::update),
   UpdatePair("check_box", &Interface::CheckBox::update),
+  UpdatePair("panel", &Interface::Panel::update),
 };
 
 static const unsigned int updates_count = sizeof(pairs_updates) / sizeof(UpdatePair);
@@ -58,6 +62,7 @@ static InputPair pairs_inputs[] = {
   InputPair("label", &Interface::Label::input),
   InputPair("button", &Interface::Button::input),
   InputPair("check_box", &Interface::CheckBox::input),
+  InputPair("panel", &Interface::Panel::input),
 };
 
 static const unsigned int inputs_count = sizeof(pairs_inputs) / sizeof(InputPair);
@@ -70,6 +75,7 @@ static EnterPair pairs_enters[] = {
   EnterPair("label", &Interface::Label::enter),
   EnterPair("button", &Interface::Button::enter),
   EnterPair("check_box", &Interface::CheckBox::enter),
+  EnterPair("panel", &Interface::Panel::enter),
 };
 
 static const unsigned int enters_count = sizeof(pairs_enters) / sizeof(EnterPair);
@@ -82,6 +88,7 @@ static LeavePair pairs_leaves[] = {
   LeavePair("label", &Interface::Label::leave),
   LeavePair("button", &Interface::Button::leave),
   LeavePair("check_box", &Interface::CheckBox::leave),
+  LeavePair("panel", &Interface::Panel::leave),
 };
 
 static const unsigned int leaves_count = sizeof(pairs_leaves) / sizeof(LeavePair);
@@ -94,6 +101,7 @@ static MotionPair pairs_motions[] = {
   MotionPair("label", &Interface::Label::motion),
   MotionPair("button", &Interface::Button::motion),
   MotionPair("check_box", &Interface::CheckBox::motion),
+  MotionPair("panel", &Interface::Panel::motion),
 };
 
 static const unsigned int motions_count = sizeof(pairs_motions) / sizeof(MotionPair);
