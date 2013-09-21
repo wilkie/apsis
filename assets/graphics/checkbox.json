@@ -74,6 +74,20 @@
       "y": 80,
       "width": 84,
       "height": 80
+    },
+    {
+      "name": "check_hover",
+      "x": 201,
+      "y": 0,
+      "width": 84,
+      "height": 80
+    },
+    {
+      "name": "check_hover_2",
+      "x": 286,
+      "y": 0,
+      "width": 84,
+      "height": 80
     }
   ]
 }

@@ -18,6 +18,8 @@ struct CheckBoxData {
 
   const Sprite::Batch* batch;
   const Sprite::Batch* check;
+  const Sprite::Batch* check_hover;
+  const Sprite::Batch* check_pressed_hover;
 
   float text_width;
   float text_height;
@@ -155,6 +157,30 @@ void Interface::CheckBox::init(const Interface::Window& window,
                   sheet.height(9));
   data->check = &check_batch;
 
+  Apsis::Sprite::Batch& check_hover_batch = Apsis::Sprite::Batch::load(sheet);
+  check_hover_batch.add(10,
+                        sheet.width(0),
+                        sheet.height(0),
+                        box_width - sheet.width(0) - sheet.width(7),
+                        box_height - sheet.height(0) - sheet.height(7),
+                        0.0f,
+                        0.0f,
+                        sheet.width(9),
+                        sheet.height(9));
+  data->check_hover = &check_hover_batch;
+
+  Apsis::Sprite::Batch& check_hover_2_batch = Apsis::Sprite::Batch::load(sheet);
+  check_hover_2_batch.add(11,
+                        sheet.width(0),
+                        sheet.height(0),
+                        box_width - sheet.width(0) - sheet.width(7),
+                        box_height - sheet.height(0) - sheet.height(7),
+                        0.0f,
+                        0.0f,
+                        sheet.width(9),
+                        sheet.height(9));
+  data->check_pressed_hover = &check_hover_2_batch;
+
   const char* text = object.get(text_id).asCString();
   data->text_width = font.width(text);
   data->text_height = font.height(text);
@@ -176,6 +202,8 @@ void Interface::CheckBox::draw(Engine::Graphics& graphics,
   const CheckBoxData& data = *(CheckBoxData*)object.userData();
   const Apsis::Sprite::Batch& batch = *data.batch;
   const Apsis::Sprite::Batch& check_batch = *data.check;
+  const Apsis::Sprite::Batch& check_hover_batch = *data.check_hover;
+  const Apsis::Sprite::Batch& check_pressed_hover_batch = *data.check_pressed_hover;
   const Apsis::Sprite::Sheet& sheet = *data.sheet;
   const Apsis::Sprite::Font&  font  = *data.font;
 
@@ -187,7 +215,15 @@ void Interface::CheckBox::draw(Engine::Graphics& graphics,
 
   if (object.has("value") && object.get("value").asInteger() == 1) {
     // Draw check
-    check_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    if (window.hovered()) {
+      check_pressed_hover_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    }
+    else {
+      check_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    }
+  }
+  else if (window.hovered()) {
+    check_hover_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
 
   // Draw text
@@ -205,7 +241,7 @@ void Apsis::Interface::CheckBox::input(bool pressed,
   else if (pressed) {
     object.set("pressed", (long)1);
   }
-  else {
+  else if (object.has("pressed") && object.get("pressed").asInteger() == 1) {
     bool value = false;
     if (object.has("value") && object.get("value").asInteger() == 1) {
       value = true;
