@@ -19,6 +19,13 @@ namespace Apsis {
   }
 
   /*
+   *  Contains routines that describe how objects in the world interact with
+   *  each other and the scene itself.
+   */
+  namespace Rules {
+  }
+
+  /*
    *  Contains low-level classes that help synchronize and time events occuring
    *  throughout the system.
    */
