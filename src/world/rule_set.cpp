@@ -143,7 +143,7 @@ void Apsis::World::RuleSet::respond(unsigned int event_id,
     const Apsis::Registry::Rule& rule = *node.rule;
 
     for (unsigned int rule_id = 0; rule_id < rule.responseFunctionCount(); rule_id++) {
-      rule.responseFunction(rule_id)(event_id, scene, 0, object);
+      rule.responseFunction(rule_id)(event_id, scene, object);
     }
   }
 }

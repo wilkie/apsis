@@ -13,7 +13,6 @@ namespace Apsis {
     // TODO: document this
     typedef void (*ResponseFunction)(unsigned int event_id,
                                      const Apsis::World::Scene&,
-                                     const unsigned int objectId,
                                      Apsis::World::Object& object);
   }
 }

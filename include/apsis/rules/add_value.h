@@ -12,7 +12,6 @@ namespace Apsis {
     public:
       static void respond(unsigned int event_id,
                           const Apsis::World::Scene&,
-                          const unsigned int objectId,
                           Apsis::World::Object& object);
     };
   }

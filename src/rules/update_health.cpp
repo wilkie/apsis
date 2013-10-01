@@ -2,7 +2,6 @@
 
 void Apsis::Rules::UpdateHealth::respond(unsigned int event_id,
                                          const Apsis::World::Scene&,
-                                         const unsigned int objectId,
                                          Apsis::World::Object& object) {
   static unsigned int health_id = Apsis::Registry::Property::id("health");
   static unsigned int amount_id = Apsis::Registry::Property::id("amount");
