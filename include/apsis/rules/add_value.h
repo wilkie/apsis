@@ -11,7 +11,7 @@ namespace Apsis {
     class AddValue {
     public:
       static void respond(unsigned int event_id,
-                          const Apsis::World::Scene&,
+                          const Apsis::World::Scene& scene,
                           Apsis::World::Object& object);
     };
   }
