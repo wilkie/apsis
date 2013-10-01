@@ -1,5 +1,5 @@
-#ifndef APSIS_RULES_UPDATE_HEALTH_H
-#define APSIS_RULES_UPDATE_HEALTH_H
+#ifndef APSIS_RULES_ADD_VALUE_H
+#define APSIS_RULES_ADD_VALUE_H
 
 #include "apsis/world/scene.h"
 #include "apsis/world/object.h"
