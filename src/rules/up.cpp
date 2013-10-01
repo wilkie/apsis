@@ -4,7 +4,6 @@
 
 bool Apsis::Rules::Up::update(float elapsed,
                               const Apsis::World::Scene& scene,
-                              const unsigned int objectId,
                               Apsis::World::Object& object) {
 
   static unsigned int y_id     = Apsis::Registry::Property::id("y");
@@ -30,7 +29,6 @@ const char* Apsis::Rules::Up::action = "up";
 bool Apsis::Rules::Up::act(unsigned int action_id,
                            bool held,
                            const Apsis::World::Scene& scene,
-                           const unsigned int objectId,
                            Apsis::World::Object& object) {
   static unsigned int up_action_id = Apsis::Registry::Action::id("up").id();
   static unsigned int up_id = Apsis::Registry::State::id("moving_up");

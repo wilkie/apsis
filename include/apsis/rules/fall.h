@@ -10,7 +10,6 @@ namespace Apsis {
     public:
       static bool update(float elapsed,
                          const Apsis::World::Scene& scene,
-                         const unsigned int objectId,
                          Apsis::World::Object& object);
     };
   }

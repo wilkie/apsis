@@ -4,7 +4,6 @@
 
 bool Apsis::Rules::Fall::update(float elapsed,
                                 const Apsis::World::Scene& scene,
-                                const unsigned int objectId,
                                 Apsis::World::Object& object) {
   static unsigned int collideWithTopState = Apsis::Registry::State::id("collideWithTop");
   static unsigned int jumpingState        = Apsis::Registry::State::id("jumping");

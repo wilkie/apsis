@@ -6,7 +6,6 @@
 
 bool Apsis::Rules::Wiggler::update(float elapsed,
                                    const Apsis::World::Scene& scene,
-                                   const unsigned int objectId,
                                    Apsis::World::Object& object) {
   static unsigned int wiggle_amount_id    = Apsis::Registry::Property::id("wiggle_amount");
   static unsigned int wiggle_time_id      = Apsis::Registry::Property::id("wiggle_time");

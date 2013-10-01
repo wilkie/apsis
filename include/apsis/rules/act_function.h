@@ -14,7 +14,6 @@ namespace Apsis {
     typedef bool (*ActFunction)(unsigned int action_id,
                                 bool held,
                                 const Apsis::World::Scene&,
-                                const unsigned int objectId,
                                 Apsis::World::Object& object);
   }
 }

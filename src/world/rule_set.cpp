@@ -72,7 +72,7 @@ void Apsis::World::RuleSet::update(float elapsed,
     const Apsis::Registry::Rule& rule = *node.rule;
 
     for (unsigned int rule_id = 0; rule_id < rule.updateFunctionCount(); rule_id++) {
-      bool updated = rule.updateFunction(rule_id)(elapsed, scene, 0, object);
+      bool updated = rule.updateFunction(rule_id)(elapsed, scene, object);
 
       // Skip inner rules
       if (updated) {
@@ -93,7 +93,7 @@ void Apsis::World::RuleSet::act(unsigned int action_id,
 
     for (unsigned int rule_id = 0; rule_id < rule.actFunctionCount(); rule_id++) {
       if (rule.actionId(rule_id) == action_id) {
-        bool updated = rule.actFunction(rule_id)(action_id, held, scene, 0, object);
+        bool updated = rule.actFunction(rule_id)(action_id, held, scene, object);
 
         // Skip inner rules
         if (updated) {

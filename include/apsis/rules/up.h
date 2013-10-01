@@ -12,7 +12,6 @@ namespace Apsis {
     public:
       static bool update(float elapsed,
                           const Apsis::World::Scene& scene,
-                          const unsigned int objectId,
                           Apsis::World::Object& object);
 
       static const char* action;
@@ -20,7 +19,6 @@ namespace Apsis {
       static bool act(unsigned int action_id,
                       bool held,
                       const Apsis::World::Scene& scene,
-                      const unsigned int objectId,
                       Apsis::World::Object& object);
     };
   }

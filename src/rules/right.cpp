@@ -4,7 +4,6 @@
 
 bool Apsis::Rules::Right::update(float elapsed,
                                  const Apsis::World::Scene& scene,
-                                 const unsigned int objectId,
                                  Apsis::World::Object& object) {
 
   static unsigned int x_id     = Apsis::Registry::Property::id("x");
@@ -30,7 +29,6 @@ const char* Apsis::Rules::Right::action = "right";
 bool Apsis::Rules::Right::act(unsigned int action_id,
                               bool held,
                               const Apsis::World::Scene& scene,
-                              const unsigned int objectId,
                               Apsis::World::Object& object) {
   static unsigned int right_action_id = Apsis::Registry::Action::id("right").id();
   static unsigned int right_id = Apsis::Registry::State::id("moving_right");

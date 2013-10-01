@@ -13,7 +13,6 @@ namespace Apsis {
     //       that each update function sees the same object.
     typedef bool (*UpdateFunction)(float elapsed,
                                    const Apsis::World::Scene&,
-                                   const unsigned int objectId,
                                    Apsis::World::Object& object);
   }
 }
