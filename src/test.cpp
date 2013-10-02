@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
   /* This is the cleaning up part */
   Mix_CloseAudio();
   }
-  catch (char* msg) {
+  catch (const char* msg) {
 #ifdef _WIN32
     OutputDebugStringA("*** Exception ***\n");
     OutputDebugStringA(msg);
