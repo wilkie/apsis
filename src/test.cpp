@@ -44,9 +44,6 @@ int main(int argc, char** argv) {
                                  audioSettings);
 
     system.run();
-
-  /* This is the cleaning up part */
-  Mix_CloseAudio();
   }
   catch (const char* msg) {
 #ifdef _WIN32
