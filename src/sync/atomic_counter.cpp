@@ -40,11 +40,11 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
 
     // |    old
     // |RA |ebp|ref|cmp|exc|
-    //  EBP  +4  +8 +12 +16
+    //  EBP  +0  +4 +8  +12
 
-    mov ECX, [EBP+16]; // assign ECX to exchange
-    mov EAX, [EBP+12]; // assign accumulator to compare
-    mov EDX, [EBP+8];  // get pointer to reference
+    mov ECX, [EBP+12]; // assign ECX to exchange
+    mov EAX, [EBP+8]; // assign accumulator to compare
+    mov EDX, [EBP+4];  // get pointer to reference
 
     lock cmpxchg [EDX], ECX;
 
@@ -56,10 +56,16 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
     setz AL;
   }
 #elif defined(__GNUC__) // GNU C Compiler
-  asm("mov ECX, [EBP+16];"
-      "mov EAX, [EBP+12];"
-      "mov EDX, [EBP+8];"
+#ifdef __x86_64__
+  asm("mov  EAX, ESI;"
+      "lock cmpxchg [RDI], EDX;"
+      "setz AL;");
+#else
+  asm("mov ECX, [EBP+12];"
+      "mov EAX, [EBP+8];"
+      "mov EDX, [EBP+4];"
       "lock cmpxchg [EDX], ECX;"
       "setz AL;");
+#endif
 #endif
 }

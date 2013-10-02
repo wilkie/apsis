@@ -95,12 +95,13 @@ const Apsis::Registry::Rule& Apsis::Registry::Rule::load(const char* path) {
     return *_all_rules[std::distance(_ids.begin(), it)];
   }
 
+  printf("Loading rule %s\n", path);
   _all_rules.push_back(new Apsis::Registry::Rule(path));
   _ids.push_back(str);
   return *_all_rules[_ids.size() - 1];
 }
 
-Apsis::Registry::Rule::Rule(const char* path) 
+Apsis::Registry::Rule::Rule(const char* path)
   : _path(path),
     _jsonLoaded(false) {
   _parseJSONFile();

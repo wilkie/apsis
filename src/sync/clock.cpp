@@ -10,6 +10,7 @@ namespace Apsis {
   struct ClockPlatformInternal {
 #ifdef _WIN32
     LARGE_INTEGER _freq, _start, _end;
+#elif defined(__linux)
 #endif
   };
 }
@@ -20,6 +21,7 @@ Apsis::Clock::Clock() {
   _internal = (void*)clock;
   QueryPerformanceFrequency(&clock->_freq);
   QueryPerformanceCounter(&clock->_start);
+#elif defined(__linux)
 #endif
 }
 
@@ -30,5 +32,6 @@ float Apsis::Clock::elapsedTime() {
   LONGLONG amt = (clock->_end.QuadPart - clock->_start.QuadPart) * 1000 / clock->_freq.QuadPart;
   clock->_start = clock->_end;
   return (float)amt / 1000.0f;
+#elif defined(__linux)
 #endif
 }

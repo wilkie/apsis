@@ -1,13 +1,13 @@
 #include "apsis/model/thing.h"
 
-#include "assimp/AssimpPCH.h"
+//#include "assimp/AssimpPCH.h"
 
 #include <glm/glm.hpp>
 
 #include <vector>
 
 Apsis::Model::Thing::Thing(const char* path) {
-  Assimp::Importer Importer;
+  /*Assimp::Importer Importer;
 
   const aiScene* pScene = Importer.ReadFile(path, aiProcess_Triangulate |
                                                   aiProcess_GenSmoothNormals |
@@ -26,13 +26,14 @@ Apsis::Model::Thing::Thing(const char* path) {
 
   for (unsigned int i = 0; i < numberOfMaterials; i++) {
     _addMaterial(pScene->mMaterials[i]);
-  }
+  }*/
 }
 
 Apsis::Model::Thing::~Thing() {
 }
 
 void Apsis::Model::Thing::_addMesh(const void* mesh_ptr) {
+  /*
   const aiMesh* mesh = (const aiMesh*)mesh_ptr;
 
   unsigned int materialIndex = mesh->mMaterialIndex;
@@ -72,9 +73,11 @@ void Apsis::Model::Thing::_addMesh(const void* mesh_ptr) {
   }
 
   _meshes.push_back(Mesh(vertices, normals, textureCoords, elements));
+  */
 }
 
 void Apsis::Model::Thing::_addMaterial(const void* mat_ptr) {
+  /*
   const aiMaterial* mat = (const aiMaterial*)mat_ptr;
 
   unsigned int textureCount = mat->GetTextureCount(aiTextureType_DIFFUSE);
@@ -87,6 +90,7 @@ void Apsis::Model::Thing::_addMaterial(const void* mat_ptr) {
       throw path.C_Str();
     }
   }
+  */
 }
 
 void Apsis::Model::Thing::draw(const Primitives::Matrix& projection,

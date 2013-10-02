@@ -32,7 +32,7 @@ namespace Apsis {
       unsigned int value() const;
 
     private:
-      bool _compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange);
+      static bool _compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange);
       unsigned int _value;
     };
   }

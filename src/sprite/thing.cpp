@@ -12,7 +12,7 @@ Apsis::Sprite::Thing::Thing(const char* path)
   : _jsonLoaded(false),
     _path(path),
     _sheet(Apsis::Sprite::Thing::_loadSpriteSheet()) {
-  
+
   _id = _things.size();
 
   _parseJSONFile();
@@ -35,6 +35,7 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
     return *_things[std::distance(_ids.begin(), it)];
   }
 
+  printf("Loading thing %s\n", path);
   _things.push_back(new Apsis::Sprite::Thing(path));
   _ids.push_back(str);
   return *_things[_ids.size() - 1];
@@ -43,7 +44,7 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
 const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::sheet() const {
   return _sheet;
 }
-  
+
 const Apsis::World::Object& Apsis::Sprite::Thing::object() const {
   return _object;
 }

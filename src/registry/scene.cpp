@@ -16,6 +16,7 @@ const Apsis::Registry::Scene& Apsis::Registry::Scene::load(const char* path,
     return *_scenes[std::distance(_ids.begin(), it)];
   }
 
+  printf("Loading scene %s\n", path);
   _scenes.push_back(new Apsis::Registry::Scene(path, loader));
   _ids.push_back(str);
   return *_scenes[_ids.size() - 1];
@@ -51,6 +52,7 @@ Apsis::Registry::Scene::Scene(const char* path,
             (*it).isMember("x") &&
             (*it).isMember("y")) {
           ActorInfo actor_info;
+
           actor_info.thing = &loader.loadThing((*it)["thing"].asCString());
           actor_info.x = (float)((*it)["x"].asDouble());
           actor_info.y = (float)((*it)["y"].asDouble());

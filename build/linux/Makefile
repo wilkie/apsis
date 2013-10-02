@@ -24,11 +24,17 @@ OBJS=${OBJS_CPP} ${OBJS_C} ${OBJS_CC}
 LIBS_CMD=$(patsubst %,-l%,$(LIBS))
 INCLUDE_CMD=$(patsubst %,-I%,$(INCLUDE))
 
+#DEBUG_FLAGS=-g
+DEBUG_FLAGS=
 #DEADCODE_ELIM_FLAGS=-fdata-sections -ffunction-sections
 DEADCODE_ELIM_FLAGS=
 
-CPPFLAGS=-std=c++11 -O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
-CFLAGS=-O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
+CPPFLAGS=-std=c++11 -O3 -masm=intel ${DEADCODE_ELIM_FLAGS} ${DEBUG_FLAGS}
+UNOPTIMIZATION_FLAGS=-O0
+OPTIMIZATION_FLAGS=-O3
+BASE_CFLAGS=-masm=intel ${DEADCODE_ELIM_FLAGS} ${DEBUG_FLAGS}
+CFLAGS=${OPTIMIZATION_FLAGS} ${BASE_CFLAGS}
+CFLAGS_NO_OPT=${UNOPTIMIZATION_FLAGS} ${BASE_CFLAGS}
 
 all: bin/apsis
 
@@ -85,7 +91,11 @@ freetype.a:
 	make -f ft_make
 
 bin/apsis: bin json.a glew.a clew.a soil.a sdl_mixer.a ogg.a vorbis.a freetype.a ${OBJS}
-	${LD} -o bin/apsis ${OBJS} support/ogg/*.o glew.a clew.a json.a soil.a sdl_mixer.a freetype.a vorbis.a ${LIBS_CMD} -Wl,--gc-sections -Wl,-s
+	${LD} -o bin/apsis ${OBJS} support/ogg/*.o glew.a clew.a json.a soil.a sdl_mixer.a freetype.a vorbis.a ${LIBS_CMD} #-Wl,--gc-sections -Wl,-s
+
+objs/sync/atomic_counter.o: ${FILEPATH}/sync/atomic_counter.cpp objs
+	@mkdir -p $(dir $@)
+	${CC} -o $@ -c $< -I $(dir $<) ${INCLUDE_CMD} ${CFLAGS_NO_OPT}
 
 objs/%.o: ${FILEPATH}/%.cc objs
 	@mkdir -p $(dir $@)

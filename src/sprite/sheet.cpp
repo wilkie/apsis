@@ -37,6 +37,7 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
     return *_sheets[std::distance(_ids.begin(), it)];
   }
 
+  printf("Loading sprite sheet %s\n", name);
   _ids.push_back(str);
   _sheets.push_back(new Apsis::Sprite::Sheet(name));
   return *_sheets[_ids.size() - 1];
@@ -67,7 +68,7 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   2 per texcoord
   this->_vertices = new float[5 * vertices_size];
-  
+
   unsigned int i = 0;
   unsigned int ei = 0;
   unsigned int ti = 0;
@@ -94,7 +95,7 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
     _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
     i++;
-      
+
     _vertices[i * 5 + 0] = -(float)sprite.center_x + (float)sprite.width;
     _vertices[i * 5 + 1] = 0.0f;
     _vertices[i * 5 + 2] = -(float)sprite.center_y + (float)sprite.height;
@@ -103,7 +104,7 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
     _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
     i++;
-      
+
     _vertices[i * 5 + 0] = -(float)sprite.center_x;
     _vertices[i * 5 + 1] = 0.0f;
     _vertices[i * 5 + 2] = -(float)sprite.center_y + (float)sprite.height;
@@ -285,7 +286,7 @@ void Apsis::Sprite::Sheet::draw(unsigned int              index,
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
-  
+
   _vao.uploadUniform("camera", camera.eye());
   _vao.drawRange(index * 6, 6);
 }
