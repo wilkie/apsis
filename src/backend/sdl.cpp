@@ -407,7 +407,7 @@ bool Apsis::Backend::Sdl::_start() {
     fprintf(stderr, "Unable to initialize SDL: SDL_SetVideoMode failed: %s\n", SDL_GetError());
     return false;
   }
-  
+
   if (SDL_InitSubSystem(SDL_INIT_TIMER) < 0) {
     // Error
     char error[1024];
