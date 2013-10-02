@@ -157,11 +157,17 @@ void Apsis::Engine::System::run() {
 
   _interface.push(iface);
 
+  static Apsis::Geometry::Point cursor;
+  static Apsis::Geometry::Point new_point;
+
   unsigned int action_id = 0;
   while(true) {
+    float elapsed = clock.elapsedTime();
+
     // TODO: Place this inside an interface engine or something.
     //       Remove the responsibility from the main viewport.
-    if (_backend.poll(core_event)) {
+    // TODO: Rate limit events to keep up with drawing frame limit.
+    while (_backend.poll(core_event)) {
       if (core_event.isInput()) {
         bool pressed = true;
         if (core_event.type() == Apsis::Engine::Event::Type::Release) {
@@ -182,18 +188,29 @@ void Apsis::Engine::System::run() {
         }
       }
       else if (core_event.isMotion()) {
-        // Give interface the motion input
-        _interface.motion(core_event.point());
+        new_point = core_event.point();
       }
       else if (core_event.isSystem()) {
-        if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
-          break;
-        }
+        break;
       }
     }
 
-    // Read the clock
-    float elapsed = clock.elapsedTime();
+    if (core_event.isSystem() &&
+        core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
+      break;
+    }
+
+    // Give interface the motion input
+    // Rate-limit motion events
+    static float last = 0.0f;
+    last += elapsed;
+    if (last > 0.1f) {
+      if (cursor.x != new_point.x || cursor.y != new_point.y) {
+        cursor = new_point;
+        _interface.motion(cursor);
+      }
+      last = fmod(last, 0.1f);
+    }
 
     // TODO: Adjust the clock (cap minimum speed) to not
     //       under-simulate due to underflow?
