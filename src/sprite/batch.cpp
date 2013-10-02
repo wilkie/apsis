@@ -7,6 +7,8 @@
 #include "apsis/primitives/program.h"
 
 #include <algorithm>
+#include <string.h>
+#include <stdlib.h>
 
 std::vector<Apsis::Sprite::Batch*> Apsis::Sprite::Batch::_batches;
 

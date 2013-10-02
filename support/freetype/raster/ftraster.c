@@ -60,6 +60,9 @@
 
 #include <ft2build.h>
 #include "ftraster.h"
+#ifndef FT_INTERNAL_CALC_H
+#define FT_INTERNAL_CALC_H "foo"
+#endif
 #include FT_INTERNAL_CALC_H   /* for FT_MulDiv and FT_MulDiv_No_Round */
 
 #include "rastpic.h"

@@ -1,3 +1,5 @@
 objs
 bin
 tags
+*.o
+*.a

@@ -1,0 +1,57 @@
+FILEPATH=../../src
+LIBS=m stdc++ GL SDL dl
+INCLUDE=${FILEPATH}/../include
+CC=gcc
+LD=${CC}
+CPPC=${CC}
+
+LIBS_CMD=$(patsubst %,-l%,$(LIBS))
+INCLUDE_CMD=$(patsubst %,-I%,$(INCLUDE))
+
+#DEADCODE_ELIM_FLAGS=-fdata-sections -ffunction-sections
+DEADCODE_ELIM_FLAGS=
+
+CPPFLAGS=-std=c++11 -O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
+CFLAGS=-O3 -masm=intel ${DEADCODE_ELIM_FLAGS}
+
+FREETYPE_SOURCES_TMP=$(shell find ${FILEPATH}/../support/freetype -name *.c)
+FREETYPE_SOURCES=$(patsubst $(FILEPATH)/%,%,${FREETYPE_SOURCES_TMP})
+FREETYPE_OBJS_TMP=$(patsubst %.c,%.o,$(FREETYPE_SOURCES))
+FREETYPE_OBJS=$(patsubst %,objs/%,$(FREETYPE_OBJS_TMP))
+freetype.a: ${FREETYPE_OBJS}
+	ar rcs $@ support/freetype/autofit/autofit.o support/freetype/base/ftbase.o support/freetype/base/ftobjs.o support/freetype/type42/type42.o support/freetype/type1/type1.o support/freetype/truetype/truetype.o support/freetype/smooth/smooth.o support/freetype/raster/raster.o support/freetype/sfnt/sfnt.o support/freetype/psnames/psnames.o support/freetype/gxvalid/gxvalid.o support/freetype/gzip/ftgzip.o support/freetype/otvalid/otvalid.o support/freetype/pcf/pcf.o support/freetype/psaux/psaux.o support/freetype/pfr/pfr.o support/freetype/pshinter/pshinter.o support/freetype/bdf/bdf.o support/freetype/cache/ftcache.o support/freetype/cff/cff.o support/freetype/cid/type1cid.o support/freetype/base/ftinit.o support/freetype/base/ftbitmap.o support/freetype/lzw/ftlzw.o support/freetype/base/ftmac.o support/freetype/base/*.o support/freetype/winfonts/*.o
+
+DEFINES=FT2_BUILD_LIBRARY
+DEFINES_CMD=$(patsubst %,-D%,$(DEFINES))
+
+objs/%.o: ${FILEPATH}/%.cc objs
+	@mkdir -p $(dir $@)
+	${CC} -o $@ -c $< -I $(dir $<) ${DEFINES_CMD} ${INCLUDE_CMD} ${CFLAGS}
+
+objs/%.o: ${FILEPATH}/%.c objs
+	@mkdir -p $(dir $@)
+	${CC} -o $@ -c $< -I $(dir $<) ${DEFINES_CMD} ${INCLUDE_CMD} ${CFLAGS}
+
+objs/%.o: ${FILEPATH}/%.cpp objs
+	@mkdir -p $(dir $@)
+	${CPPC} -o $@ -c $< ${INCLUDE_CMD} ${CPPFLAGS}
+
+objs:
+	mkdir -p objs
+
+bin:
+	mkdir -p bin
+
+ctags:
+	ctags ${SOURCES}
+
+docs: ctags
+
+clean:
+	rm -rf objs
+	rm -rf tags
+
+realclean: veryclean
+
+veryclean: clean
+	rm -rf bin

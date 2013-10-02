@@ -71,6 +71,7 @@
 #include FT_INTERNAL_STREAM_H
 #include "ftbase.h"
 
+#if _OSX
   /* This is for Mac OS X.  Without redefinition, OS_INLINE */
   /* expands to `static inline' which doesn't survive the   */
   /* -ansi compilation flag of GCC.                         */
@@ -1059,3 +1060,4 @@
 
 
 /* END */
+#endif

@@ -385,7 +385,7 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
   _vao.uploadUniform("camera", camera.eye());
   _vao.uploadUniform("color", color);
 
-  while(*string != NULL) {
+  while(*string != '\0') {
     const Glyph& glyph = this->glyph(*string);
 
     glm::mat4 model = glm::translate(glm::mat4(1.0),
@@ -415,7 +415,7 @@ float Apsis::Sprite::Font::descent() const {
 
 float Apsis::Sprite::Font::width(const char* string) const {
   float x = 0;
-  while(*string != NULL) {
+  while(*string != '\0') {
     const Glyph& glyph = this->glyph(*string);
     x += glyph.advanceWidth;
     string++;
