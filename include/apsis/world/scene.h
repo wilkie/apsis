@@ -82,6 +82,12 @@ namespace Apsis {
        */
       void draw(const Primitives::Matrix& projection,
                 const Primitives::Camera& camera) const;
+
+      /*
+       *  Retrieves the object representation of the scene.
+       */
+      World::Object& object();
+      const World::Object& object() const;
     private:
       // Keeps track of Scenes system-wide.
       static std::vector<std::string> _ids;
@@ -90,6 +96,9 @@ namespace Apsis {
       // Collections of objects within the scene
       std::vector<Apsis::World::Actor>      _actors;
       std::vector<const Apsis::World::Map*> _maps;
+
+      // Object
+      Apsis::World::Object _object;
     };
   }
 }

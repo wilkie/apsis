@@ -116,3 +116,11 @@ const Apsis::World::Scene& Apsis::World::Scene::load(const char* path) {
   _ids.push_back(str);
   return *_scenes[_ids.size() - 1];
 }
+
+Apsis::World::Object& Apsis::World::Scene::object() {
+  return _object;
+}
+
+const Apsis::World::Object& Apsis::World::Scene::object() const {
+  return _object;
+}
