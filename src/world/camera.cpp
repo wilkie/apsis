@@ -44,3 +44,11 @@ const Apsis::Primitives::Matrix& Apsis::World::Camera::view() const {
 const Apsis::Primitives::Vector3& Apsis::World::Camera::eye() const {
   return _position;
 }
+
+Apsis::World::Object& Apsis::World::Camera::object() {
+  return _object;
+}
+
+const Apsis::World::Object& Apsis::World::Camera::object() const {
+  return _object;
+}

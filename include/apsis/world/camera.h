@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 
+#include "apsis/world/object.h"
 #include "apsis/primitives/math.h"
 
 #include <vector>
@@ -36,12 +37,20 @@ namespace Apsis {
        */
       const Primitives::Vector3& eye() const;
 
+      /*
+       *  Returns the object.
+       */
+      World::Object& object();
+      const World::Object& object() const;
+
     private:
       Primitives::Vector3 _position;
       Primitives::Vector3 _target;
       Primitives::Vector3 _up;
 
       Primitives::Matrix _view;
+
+      World::Object _object;
     };
   }
 }
