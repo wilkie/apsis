@@ -4,6 +4,7 @@
 #include "apsis/world/map.h"
 #include "apsis/world/actor.h"
 #include "apsis/world/camera.h"
+#include "apsis/world/rule_set.h"
 
 #include "apsis/registry/scene.h"
 
@@ -98,6 +99,9 @@ namespace Apsis {
 
       // Object
       Apsis::World::Object _object;
+
+      // RuleSet
+      Apsis::World::RuleSet _ruleSet;
     };
   }
 }
