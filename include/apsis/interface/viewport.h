@@ -6,8 +6,7 @@
 #include "apsis/interface/window.h"
 
 #include "apsis/world/object.h"
-
-#include "apsis/primitives/camera.h"
+#include "apsis/world/camera.h"
 
 #include "apsis/geometry/point3d.h"
 
@@ -89,7 +88,7 @@ namespace Apsis {
 
       // Viewports have a Scene, a Camera, and a Window
       const Apsis::Engine::Scene& _scene;
-      Apsis::Primitives::Camera _camera;
+      Apsis::World::Camera _camera;
       Apsis::Interface::Window _window;
     };
   }

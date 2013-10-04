@@ -43,9 +43,6 @@
     <ClCompile Include="..\..\src\sync\reference_counter.cpp">
       <Filter>sync</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\primitives\camera.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
@@ -452,6 +449,9 @@
     <ClCompile Include="..\..\src\backend\sdl2.cpp">
       <Filter>backend</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\world\camera.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis\geometry\circle.h">
@@ -486,9 +486,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h">
       <Filter>sync</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\camera.h">
-      <Filter>primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\primitives\fragment_shader.h">
       <Filter>primitives</Filter>
@@ -919,6 +916,9 @@
     </ClInclude>
     <ClInclude Include="..\..\support\vorbis\window.h">
       <Filter>support\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\world\camera.h">
+      <Filter>world</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

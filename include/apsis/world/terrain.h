@@ -4,7 +4,8 @@
 #include "apsis/model/material.h"
 #include "apsis/model/light.h"
 
-#include "apsis/primitives/camera.h"
+#include "apsis/world/camera.h"
+
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
@@ -21,7 +22,7 @@ namespace Apsis {
       ~Terrain();
 
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera) const;
+                const World::Camera& camera) const;
 
       Apsis::World::Tile tileAt(unsigned int x, unsigned int z);
 

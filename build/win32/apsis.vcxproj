@@ -102,7 +102,6 @@
     <ClCompile Include="..\..\src\model\material.cpp" />
     <ClCompile Include="..\..\src\model\mesh.cpp" />
     <ClCompile Include="..\..\src\model\thing.cpp" />
-    <ClCompile Include="..\..\src\primitives\camera.cpp" />
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp" />
     <ClCompile Include="..\..\src\primitives\frame_buffer.cpp" />
     <ClCompile Include="..\..\src\primitives\math.cpp" />
@@ -142,6 +141,7 @@
     <ClCompile Include="..\..\src\sync\reference_counter.cpp" />
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\world\background.cpp" />
+    <ClCompile Include="..\..\src\world\camera.cpp" />
     <ClCompile Include="..\..\src\world\collision_object.cpp" />
     <ClCompile Include="..\..\src\world\map.cpp" />
     <ClCompile Include="..\..\src\world\actor.cpp" />
@@ -259,7 +259,6 @@
     <ClInclude Include="..\..\include\apsis\model\material.h" />
     <ClInclude Include="..\..\include\apsis\model\mesh.h" />
     <ClInclude Include="..\..\include\apsis\model\thing.h" />
-    <ClInclude Include="..\..\include\apsis\primitives\camera.h" />
     <ClInclude Include="..\..\include\apsis\primitives\fragment_shader.h" />
     <ClInclude Include="..\..\include\apsis\primitives\frame_buffer.h" />
     <ClInclude Include="..\..\include\apsis\primitives\math.h" />
@@ -304,6 +303,7 @@
     <ClInclude Include="..\..\include\apsis\sync\clock.h" />
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h" />
     <ClInclude Include="..\..\include\apsis\world\background.h" />
+    <ClInclude Include="..\..\include\apsis\world\camera.h" />
     <ClInclude Include="..\..\include\apsis\world\collision_object.h" />
     <ClInclude Include="..\..\include\apsis\world\map.h" />
     <ClInclude Include="..\..\include\apsis\world\actor.h" />

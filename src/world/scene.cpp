@@ -77,7 +77,7 @@ unsigned int Apsis::World::Scene::addActor(const Apsis::Sprite::Thing& thing, fl
 }
 
 void Apsis::World::Scene::draw(const Primitives::Matrix& projection,
-                               const Primitives::Camera& camera) const {
+                               const World::Camera& camera) const {
   for(std::vector<const Apsis::World::Map*>::const_iterator it = _maps.begin();
       it != _maps.end();
       ++it) {

@@ -3,8 +3,7 @@
 
 #include "apsis/world/map.h"
 #include "apsis/world/actor.h"
-
-#include "apsis/primitives/camera.h"
+#include "apsis/world/camera.h"
 
 #include "apsis/registry/scene.h"
 
@@ -81,7 +80,7 @@ namespace Apsis {
        *  Draws the scene.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera) const;
+                const World::Camera& camera) const;
 
       /*
        *  Retrieves the object representation of the scene.

@@ -213,7 +213,7 @@ const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
 #include <glm/gtc/type_ptr.hpp>
 
 void Apsis::World::Map::draw(const Primitives::Matrix& projection,
-                             const Primitives::Camera& camera) const {
+                             const World::Camera& camera) const {
   _vao.bindProgram();
 
   _vao.uploadUniform("proj", projection);

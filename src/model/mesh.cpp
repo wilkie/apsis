@@ -91,7 +91,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("light.color", _lights[0].color());
 }
 
-void Apsis::Model::Mesh::draw(const Primitives::Matrix& projection, const Primitives::Camera& camera, const Primitives::Matrix& model) const {
+void Apsis::Model::Mesh::draw(const Primitives::Matrix& projection, const World::Camera& camera, const Primitives::Matrix& model) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);

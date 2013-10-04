@@ -172,7 +172,7 @@ void Apsis::World::Actor::respond(Apsis::World::Scene& scene) {
 }
 
 void Apsis::World::Actor::draw(const Primitives::Matrix& projection,
-                               const Primitives::Camera& camera) const {
+                               const World::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
 

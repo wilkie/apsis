@@ -94,7 +94,7 @@ void Apsis::Model::Thing::_addMaterial(const void* mat_ptr) {
 }
 
 void Apsis::Model::Thing::draw(const Primitives::Matrix& projection,
-                               const Primitives::Camera& camera,
+                               const World::Camera& camera,
                                const Primitives::Matrix& model) const {
   for (unsigned int i = 0; i < _meshes.size(); i++) {
     _meshes[i].draw(projection, camera, model);

@@ -70,7 +70,7 @@ namespace Apsis {
        *  Draws the Batch object with the given matrices.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera,
+                const World::Camera& camera,
                 const Primitives::Matrix& model) const;
     private:
       // Constructor

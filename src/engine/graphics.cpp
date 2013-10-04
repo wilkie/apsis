@@ -133,10 +133,10 @@ const Apsis::Primitives::Matrix& Apsis::Engine::Graphics::view() const {
   return _camera.view();
 }
 
-const Apsis::Primitives::Camera& Apsis::Engine::Graphics::camera() const {
+const Apsis::World::Camera& Apsis::Engine::Graphics::camera() const {
   return _camera;
 }
 
-void Apsis::Engine::Graphics::camera(Primitives::Camera& camera) {
+void Apsis::Engine::Graphics::camera(World::Camera& camera) {
   _camera = camera;
 }

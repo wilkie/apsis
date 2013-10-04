@@ -61,12 +61,12 @@ namespace Apsis {
       /*
        *  Retrieves the current camera.
        */
-      const Primitives::Camera& camera() const;
+      const World::Camera& camera() const;
 
       /*
        *  Sets the current camera.
        */
-      void camera(Primitives::Camera& camera);
+      void camera(World::Camera& camera);
 
       /*
        *  Returns the active projection matrix.
@@ -109,7 +109,7 @@ namespace Apsis {
       const Apsis::Sprite::Sheet* _sheet;
 
       // Camera
-      Primitives::Camera _camera;
+      World::Camera _camera;
 
       // Matrices
       Primitives::Matrix _projection;

@@ -3,9 +3,10 @@
 
 #include "apsis/primitives/texture.h"
 
-#include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
+
+#include "apsis/world/camera.h"
 
 #include <string>
 #include <vector>
@@ -113,7 +114,7 @@ namespace Apsis {
        *  Draws the given string at the given position.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera,
+                const World::Camera& camera,
                 const Primitives::Vector4& color,
                 float x,
                 float y,
@@ -123,7 +124,7 @@ namespace Apsis {
        *  Draws the given glyph represented by the given index.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera,
+                const World::Camera& camera,
                 const Primitives::Vector4& color,
                 float x,
                 float y,

@@ -40,7 +40,7 @@ Apsis::Geometry::Rectangle Apsis::Hud::FillerBar::position() {
 
 // Draws the actor
 void Apsis::Hud::FillerBar::draw(const Primitives::Matrix& projection,
-                                 const Primitives::Camera& camera) {
+                                 const World::Camera& camera) {
   glm::mat4 model = glm::mat4(1.0);
 
   unsigned int tmp = _value;

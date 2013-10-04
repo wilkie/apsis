@@ -2,7 +2,7 @@
 #define APSIS_HUD_NUMBERS_H
 
 #include <apsis/sprite/sheet.h>
-#include <apsis/primitives/camera.h>
+#include <apsis/world/camera.h>
 #include <apsis/primitives/vertex_array.h>
 #include <apsis/primitives/vertex_buffer.h>
 #include <apsis/geometry/rectangle.h>
@@ -32,7 +32,7 @@ namespace Apsis {
 
         // Draws the actor
         void draw(const Primitives::Matrix& projection,
-                  const Primitives::Camera& camera);
+                  const World::Camera& camera);
 
         unsigned int value();
         void value(unsigned int updated);

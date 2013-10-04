@@ -26,8 +26,8 @@
 
 #include "apsis/world/object.h"
 #include "apsis/world/rule_set.h"
+#include "apsis/world/camera.h"
 
-#include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
@@ -94,7 +94,7 @@ namespace Apsis {
        *  Draws the actor.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera) const;
+                const World::Camera& camera) const;
 
       /*
        *  Returns the name of this Actor.

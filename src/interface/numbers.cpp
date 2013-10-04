@@ -39,7 +39,7 @@ Apsis::Geometry::Rectangle Apsis::Hud::Numbers::position() {
 
 // Draws the actor
 void Apsis::Hud::Numbers::draw(const Primitives::Matrix& projection,
-                               const Primitives::Camera& camera) {
+                               const World::Camera& camera) {
   unsigned int tmp = _value;
 
   // TODO: don't abuse rectangle coordinates... x should represent the center, not the left

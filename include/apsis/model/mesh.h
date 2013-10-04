@@ -4,8 +4,9 @@
 #include "apsis/model/material.h"
 #include "apsis/model/light.h"
 
+#include "apsis/world/camera.h"
+
 #include "apsis/primitives/math.h"
-#include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
@@ -22,7 +23,7 @@ namespace Apsis {
            std::vector<glm::vec2>& textureCoords,
            std::vector<unsigned int>& elements);
 
-      void draw(const Primitives::Matrix& projection, const Primitives::Camera& camera, const Primitives::Matrix& model) const;
+      void draw(const Primitives::Matrix& projection, const World::Camera& camera, const Primitives::Matrix& model) const;
 
     private:
       Primitives::VertexArray _vao;

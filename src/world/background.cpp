@@ -134,7 +134,7 @@ const Apsis::Primitives::Texture& Apsis::World::Background::texture() const {
   *  Renders the background.
   */
 void Apsis::World::Background::draw(const Primitives::Matrix& projection,
-                                    const Primitives::Camera& camera) const {
+                                    const World::Camera& camera) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("camera", camera.eye());

@@ -3,9 +3,10 @@
 
 #include "apsis/primitives/texture.h"
 
-#include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
+
+#include "apsis/world/camera.h"
 
 #include <string>
 #include <vector>
@@ -96,7 +97,7 @@ namespace Apsis {
        */
       void draw(unsigned int              index,
                 const Primitives::Matrix& projection,
-                const Primitives::Camera& camera,
+                const World::Camera& camera,
                 const Primitives::Matrix& model) const;
     private:
       // Registry of sprite sheets.

@@ -347,7 +347,7 @@ const Apsis::Sprite::Font::Glyph& Apsis::Sprite::Font::glyph(unsigned int codePo
 }
 
 void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
-                               const Primitives::Camera& camera,
+                               const World::Camera& camera,
                                const Primitives::Vector4& color,
                                float x,
                                float y,
@@ -372,7 +372,7 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
 }
 
 void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
-                               const Primitives::Camera& camera,
+                               const World::Camera& camera,
                                const Primitives::Vector4& color,
                                float x,
                                float y,

@@ -4,9 +4,10 @@
 #include "apsis/engine/object.h"
 
 #include "apsis/world/tile.h"
+#include "apsis/world/camera.h"
+
 #include "apsis/sprite/sheet.h"
 
-#include "apsis/primitives/camera.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
@@ -67,7 +68,7 @@ namespace Apsis {
        *  Renders the map.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera) const;
+                const World::Camera& camera) const;
 
       /*
        *  Returns the unique id for this map.

@@ -1,9 +1,9 @@
 #ifndef APSIS_WORLD_BACKGROUND_H
 #define APSIS_WORLD_BACKGROUND_H
 
-#include "apsis/primitives/texture.h"
+#include "apsis/world/camera.h"
 
-#include "apsis/primitives/camera.h"
+#include "apsis/primitives/texture.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
@@ -43,7 +43,7 @@ namespace Apsis {
        *  Renders the background.
        */
       void draw(const Primitives::Matrix& projection,
-                const Primitives::Camera& camera) const;
+                const World::Camera& camera) const;
 
     private:
 

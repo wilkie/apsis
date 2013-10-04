@@ -3,7 +3,7 @@
 
 #include "apsis/sync/reference_counter.h"
 
-#include "apsis/primitives/camera.h"
+#include "apsis/world/camera.h"
 
 #include "apsis/model/mesh.h"
 
@@ -14,7 +14,7 @@ namespace Apsis {
       Thing(const char* path);
       ~Thing();
 
-      void draw(const Primitives::Matrix& projection, const Primitives::Camera& camera, const Primitives::Matrix& model) const;
+      void draw(const Primitives::Matrix& projection, const World::Camera& camera, const Primitives::Matrix& model) const;
 
     private:
       void _addMesh(const void* mesh);

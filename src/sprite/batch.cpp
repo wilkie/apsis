@@ -177,7 +177,7 @@ void Apsis::Sprite::Batch::add(unsigned int index,
 }
 
 void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
-                                const Primitives::Camera& camera,
+                                const World::Camera& camera,
                                 const Primitives::Matrix& model) const {
 
   if (_dirty) {

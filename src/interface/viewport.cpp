@@ -49,7 +49,7 @@ Geometry::Point3d Interface::Viewport::target() {
 }
 
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
-  Primitives::Camera camera = Primitives::Camera(
+  World::Camera camera = World::Camera(
     *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)((_window.position().width/2.0f)+0.5),
                                                     (float)(int)((_window.position().height/2.0f)+0.5))),
     1.0f);
