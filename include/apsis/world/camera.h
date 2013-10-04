@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 
 #include "apsis/world/object.h"
+#include "apsis/world/rule_set.h"
+
 #include "apsis/primitives/math.h"
 
 #include <vector>
@@ -44,13 +46,19 @@ namespace Apsis {
       const World::Object& object() const;
 
     private:
+      // Positioning
       Primitives::Vector3 _position;
       Primitives::Vector3 _target;
       Primitives::Vector3 _up;
 
+      // View
       Primitives::Matrix _view;
 
+      // Object
       World::Object _object;
+
+      // Rules
+      World::RuleSet _ruleSet;
     };
   }
 }
