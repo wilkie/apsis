@@ -2,8 +2,8 @@
 #include "apsis/world/actor.h"
 #include "apsis/engine/system.h"
 
-#define WIDTH 1536
-#define HEIGHT 864
+#define WIDTH 800
+#define HEIGHT 600
 
 #ifdef _WIN32
   #include <Windows.h>

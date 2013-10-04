@@ -42,9 +42,9 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
     // |RA |ebp|ref|cmp|exc|
     //  EBP  +0  +4 +8  +12
 
-    mov ECX, [EBP+12]; // assign ECX to exchange
-    mov EAX, [EBP+8]; // assign accumulator to compare
-    mov EDX, [EBP+4];  // get pointer to reference
+    mov ECX, [EBP+16]; // assign ECX to exchange
+    mov EAX, [EBP+12]; // assign accumulator to compare
+    mov EDX, [EBP+8];  // get pointer to reference
 
     lock cmpxchg [EDX], ECX;
 

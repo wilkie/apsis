@@ -244,8 +244,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\support\freetype\autofit\autofit.c" />
-    <ClCompile Include="..\..\src\support\freetype\bdf\bdf.c">
+    <ClCompile Include="..\..\support\freetype\autofit\autofit.c" />
+    <ClCompile Include="..\..\support\freetype\bdf\bdf.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -268,7 +268,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\cff\cff.c">
+    <ClCompile Include="..\..\support\freetype\cff\cff.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -291,7 +291,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftbase.c">
+    <ClCompile Include="..\..\support\freetype\base\ftbase.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -314,8 +314,8 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftbitmap.c" />
-    <ClCompile Include="..\..\src\support\freetype\cache\ftcache.c">
+    <ClCompile Include="..\..\support\freetype\base\ftbitmap.c" />
+    <ClCompile Include="..\..\support\freetype\cache\ftcache.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -338,9 +338,9 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftfstype.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftgasp.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftglyph.c">
+    <ClCompile Include="..\..\support\freetype\base\ftfstype.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftgasp.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftglyph.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -363,7 +363,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\gzip\ftgzip.c">
+    <ClCompile Include="..\..\support\freetype\gzip\ftgzip.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -386,7 +386,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftinit.c">
+    <ClCompile Include="..\..\support\freetype\base\ftinit.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -409,7 +409,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\lzw\ftlzw.c">
+    <ClCompile Include="..\..\support\freetype\lzw\ftlzw.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -432,8 +432,8 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftstroke.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftsystem.c">
+    <ClCompile Include="..\..\support\freetype\base\ftstroke.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftsystem.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -456,7 +456,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\smooth\smooth.c">
+    <ClCompile Include="..\..\support\freetype\smooth\smooth.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -479,8 +479,8 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftbbox.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftmm.c">
+    <ClCompile Include="..\..\support\freetype\base\ftbbox.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftmm.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -503,16 +503,16 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\base\ftpfr.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftsynth.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\fttype1.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftwinfnt.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftxf86.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftlcdfil.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftgxval.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftotval.c" />
-    <ClCompile Include="..\..\src\support\freetype\base\ftpatent.c" />
-    <ClCompile Include="..\..\src\support\freetype\pcf\pcf.c">
+    <ClCompile Include="..\..\support\freetype\base\ftpfr.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftsynth.c" />
+    <ClCompile Include="..\..\support\freetype\base\fttype1.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftwinfnt.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftxf86.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftlcdfil.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftgxval.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftotval.c" />
+    <ClCompile Include="..\..\support\freetype\base\ftpatent.c" />
+    <ClCompile Include="..\..\support\freetype\pcf\pcf.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -535,7 +535,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\pfr\pfr.c">
+    <ClCompile Include="..\..\support\freetype\pfr\pfr.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -558,7 +558,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\psaux\psaux.c">
+    <ClCompile Include="..\..\support\freetype\psaux\psaux.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -581,7 +581,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\pshinter\pshinter.c">
+    <ClCompile Include="..\..\support\freetype\pshinter\pshinter.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -604,7 +604,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\psnames\psmodule.c">
+    <ClCompile Include="..\..\support\freetype\psnames\psmodule.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -627,7 +627,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\raster\raster.c">
+    <ClCompile Include="..\..\support\freetype\raster\raster.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -650,7 +650,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\sfnt\sfnt.c">
+    <ClCompile Include="..\..\support\freetype\sfnt\sfnt.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -673,7 +673,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\truetype\truetype.c">
+    <ClCompile Include="..\..\support\freetype\truetype\truetype.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -696,7 +696,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\type1\type1.c">
+    <ClCompile Include="..\..\support\freetype\type1\type1.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -719,7 +719,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\cid\type1cid.c">
+    <ClCompile Include="..\..\support\freetype\cid\type1cid.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -742,7 +742,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\type42\type42.c">
+    <ClCompile Include="..\..\support\freetype\type42\type42.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -765,7 +765,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\support\freetype\winfonts\winfnt.c">
+    <ClCompile Include="..\..\support\freetype\winfonts\winfnt.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug Multithreaded|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
