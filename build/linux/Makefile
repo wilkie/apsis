@@ -1,18 +1,26 @@
 FILEPATH=../../src
-LIBS=m stdc++ GL SDL dl
+LIBS=m stdc++ GL dl SDL2
 INCLUDE=${FILEPATH}/../include
 CC=gcc
 LD=${CC}
 CPPC=${CC}
 
+EXCLUDE=backend/sdl.cpp
+
+# Generate list of sources
 SOURCES_CPP_TMP=$(shell find ${FILEPATH} -name *.cpp)
 SOURCES_CPP=$(patsubst $(FILEPATH)/%,%,${SOURCES_CPP_TMP})
 SOURCES_C_TMP=$(shell find ${FILEPATH} -name *.c)
 SOURCES_C=$(patsubst $(FILEPATH)/%,%,${SOURCES_C_TMP})
 SOURCES_CC_TMP=$(shell find ${FILEPATH} -name *.cc)
 SOURCES_CC=$(patsubst $(FILEPATH)/%,%,${SOURCES_CC_TMP})
-SOURCES=${SOURCES_CPP_TMP} ${SOURCES_C_TMP} ${SOURCES_CC_TMP}
 
+# Exclude specified files
+SOURCES_CPP:=${filter-out $(EXCLUDE),${SOURCES_CPP}}
+SOURCES_CC:=${filter-out $(EXCLUDE),${SOURCES_CC}}
+SOURCES_C:=${filter-out $(EXCLUDE),${SOURCES_C}}
+
+# Generate object list
 OBJS_TMP=$(patsubst %.cpp,%.o,$(SOURCES_CPP))
 OBJS_CPP=$(patsubst %,objs/%,${OBJS_TMP})
 OBJS_C_TMP=$(patsubst %.c,%.o,$(SOURCES_C))
@@ -21,6 +29,7 @@ OBJS_CC_TMP=$(patsubst %.cc,%.o,$(SOURCES_CC))
 OBJS_CC=$(patsubst %,objs/%,${OBJS_CC_TMP})
 OBJS=${OBJS_CPP} ${OBJS_C} ${OBJS_CC}
 
+# Generate compiler commands
 LIBS_CMD=$(patsubst %,-l%,$(LIBS))
 INCLUDE_CMD=$(patsubst %,-I%,$(INCLUDE))
 

@@ -2,3 +2,5 @@ build/src
 build/support
 *.swp
 *.swo
+apsis
+apsis.dump
