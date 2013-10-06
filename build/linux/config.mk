@@ -1,0 +1,2 @@
+C_COMPILER=clang
+CPP_COMPILER=clang

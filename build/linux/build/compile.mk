@@ -39,6 +39,10 @@ ifdef PROJECT
 include $(PROJECT).mk
 endif
 
+ifdef CONFIG
+include $(CONFIG).mk
+endif
+
 # Default tools
 ifndef C_COMPILER
 C_COMPILER=gcc

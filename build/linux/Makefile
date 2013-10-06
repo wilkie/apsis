@@ -1,7 +1,8 @@
 PROJECTS=apsis
+CONFIG=config
 
 %: %.mk
-	@PROJECT="$@" make -f build/build.mk ${BUILD} --no-print-directory
+	@PROJECT="$@" CONFIG="${CONFIG}" make -f build/build.mk ${BUILD} --no-print-directory
 
 all: release
 
