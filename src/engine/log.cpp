@@ -9,6 +9,12 @@
   #include <dlfcn.h>
   #include <cxxabi.h>
 
+/*
+ * Thanks to Farooq Mela for the helpful code!
+ * Very glad to not have to figure out backtrace libraries.
+ *
+ * Original: https://gist.github.com/fmela/591333
+ */
 static void _backtrace(int skip = 1) {
   void *callstack[128];
   const int nMaxFrames = sizeof(callstack) / sizeof(callstack[0]);
@@ -17,19 +23,23 @@ static void _backtrace(int skip = 1) {
   char **symbols = backtrace_symbols(callstack, nFrames);
 
   for (int i = skip; i < nFrames; i++) {
-//    printf("%s\n", symbols[i]);
-
     Dl_info info;
+
     if (dladdr(callstack[i], &info) && info.dli_sname) {
       char *demangled = NULL;
       int status = -1;
-      if (info.dli_sname[0] == '_')
+
+      if (info.dli_sname[0] == '_') {
         demangled = abi::__cxa_demangle(info.dli_sname, NULL, 0, &status);
-      snprintf(buf, sizeof(buf), "%-3d %*p %s + %zd\n",
-          i, int(2 + sizeof(void*) * 2), callstack[i],
-          status == 0 ? demangled :
-          info.dli_sname == 0 ? symbols[i] : info.dli_sname,
-          (char *)callstack[i] - (char *)info.dli_saddr);
+      }
+
+      snprintf(buf, sizeof(buf),
+               "%-3d %*p %s + %zd\n",
+               i, int(2 + sizeof(void*) * 2), callstack[i],
+               status == 0 ? demangled :
+               info.dli_sname == 0 ? symbols[i] : info.dli_sname,
+               (char *)callstack[i] - (char *)info.dli_saddr);
+
       free(demangled);
     } else {
       snprintf(buf, sizeof(buf), "%-3d %*p %s!!\n",
