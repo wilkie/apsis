@@ -211,7 +211,6 @@ void Apsis::World::Map::draw(const Primitives::Matrix& projection,
 
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-
   _vao.uploadUniform("model", Primitives::Matrix::identity());
 
   _vao.draw();
