@@ -35,6 +35,7 @@ unsigned int Apsis::Sync::AtomicCounter::value() const {
 // TODO: Maybe do something with a mutex when architectures don't support things.
 bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
 #ifdef _MSC_VER // Microsoft C++ Compiler
+
   __asm {
     // Stack:
 
@@ -55,19 +56,25 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
     // Therefore set EAX to be 0 when the update did not occur, 1 otherwise
     setz AL;
   }
+
 #elif defined(__GNUC__) // GNU C Compiler
+
 #ifdef __x86_64__
-  asm("movl %esi, %eax;"
-      "lock cmpxchg %edx, (%rdi);"
-      "setz %al;"
-      "ret");
+  asm volatile("movl %esi, %eax;"
+               "lock cmpxchg %edx, (%rdi);"
+               "setz %al;"
+               "ret");
 #else
-  asm("mov ECX, [EBP+12];"
-      "mov EAX, [EBP+8];"
-      "mov EDX, [EBP+4];"
-      "lock cmpxchg [EDX], ECX;"
-      "setz AL;");
+  asm volatile("mov (%ebp+12), %ecx;"
+               "mov (%ebp+8),  %eax;"
+               "mov (%ebp+4),  %edx;"
+               "lock cmpxchg %ecx, (%edx);"
+               "setz %al;"
+               "ret");
 #endif
+
+#else
 #endif
+
   return false;
 }
