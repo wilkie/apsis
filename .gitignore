@@ -3,3 +3,4 @@ build/support
 *.swp
 *.swo
 apsis.dump
+*~
