@@ -8,9 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Apsis::Primitives::Matrix Apsis::Primitives::Matrix::identity() {
-  const Primitives::Matrix& matrix
-    = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
-  return matrix;
+  return *(Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 }
 
 float Apsis::Primitives::Vector2::x() const {
