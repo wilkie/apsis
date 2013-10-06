@@ -57,9 +57,10 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
   }
 #elif defined(__GNUC__) // GNU C Compiler
 #ifdef __x86_64__
-  asm("mov  EAX, ESI;"
-      "lock cmpxchg [RDI], EDX;"
-      "setz AL;");
+  asm("movl %esi, %eax;"
+      "lock cmpxchg %edx, (%rdi);"
+      "setz %al;"
+      "ret");
 #else
   asm("mov ECX, [EBP+12];"
       "mov EAX, [EBP+8];"
@@ -68,4 +69,5 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
       "setz AL;");
 #endif
 #endif
+  return false;
 }
