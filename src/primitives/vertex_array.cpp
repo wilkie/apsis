@@ -33,21 +33,37 @@ static void _throwGLError(const char* function) {
 
 Apsis::Primitives::VertexArray::VertexArray() {
   glGenVertexArrays(1, &this->_vao);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("~constructor");
+#endif
 }
 
 Apsis::Primitives::VertexArray::~VertexArray() {
   if (_counter.isAlone()) {
     glDeleteVertexArrays(1, &this->_vao);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+    _throwGLError("~destructor");
+#endif
   }
 }
 
 void Apsis::Primitives::VertexArray::use() {
   glBindVertexArray(this->_vao);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("use");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
   glBindVertexArray(this->_vao);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.identifier());
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("bindElements");
+#endif
 
   if (_elementBuffer.size() > 0) {
     _elementBuffer.clear();
@@ -58,6 +74,10 @@ void Apsis::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
 void Apsis::Primitives::VertexArray::useProgram(Program& program) {
   glBindVertexArray(this->_vao);
   glUseProgram(program.identifier());
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("useProgram");
+#endif
 
   // Only add if not already there
   for(unsigned int i = 0; i < _programs.size(); i++) {
@@ -80,6 +100,10 @@ void Apsis::Primitives::VertexArray::draw() const {
   _bindTextures();
 
   glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("draw");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) const {
@@ -92,6 +116,10 @@ void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int 
   _bindTextures();
 
   glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("drawRange");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::drawQuads() const {
@@ -106,6 +134,10 @@ void Apsis::Primitives::VertexArray::drawQuads() const {
   _bindTextures();
 
   glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, 0);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("drawQuads");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
@@ -153,7 +185,6 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
                                                    int         value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
-  printf("%s\n", name);
   uploadUniform(uniform, value);
 }
 
