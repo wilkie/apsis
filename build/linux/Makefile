@@ -1,5 +1,5 @@
 FILEPATH=../../src
-LIBS=m stdc++ GL dl SDL2
+LIBS=m stdc++ GL dl SDL2 GLU
 INCLUDE=${FILEPATH}/../include
 CC=gcc
 LD=${CC}
@@ -32,20 +32,38 @@ OBJS=${OBJS_CPP} ${OBJS_C} ${OBJS_CC}
 # Generate compiler commands
 LIBS_CMD=$(patsubst %,-l%,$(LIBS))
 INCLUDE_CMD=$(patsubst %,-I%,$(INCLUDE))
+LD_FLAGS=
 
-#DEBUG_FLAGS=-g
-DEBUG_FLAGS=
-#DEADCODE_ELIM_FLAGS=-fdata-sections -ffunction-sections
-DEADCODE_ELIM_FLAGS=
+DEBUG_FLAGS=-g -DDEBUG_THROW_GL_ERRORS
+DEBUG_LD_FLAGS=-rdynamic
+DEADCODE_ELIM_FLAGS=-fdata-sections -ffunction-sections
 
-CPPFLAGS=-std=c++11 -O3 -masm=intel ${DEADCODE_ELIM_FLAGS} ${DEBUG_FLAGS}
+CPPFLAGS=-DAPSIS -std=c++11 -masm=intel
+CFLAGS=-DAPSIS
 UNOPTIMIZATION_FLAGS=-O0
 OPTIMIZATION_FLAGS=-O3
-BASE_CFLAGS=-masm=intel ${DEADCODE_ELIM_FLAGS} ${DEBUG_FLAGS}
-CFLAGS=${OPTIMIZATION_FLAGS} ${BASE_CFLAGS}
-CFLAGS_NO_OPT=${UNOPTIMIZATION_FLAGS} ${BASE_CFLAGS}
+CFLAGS_NO_OPT=${UNOPTIMIZATION_FLAGS}
 
-all: bin/apsis
+all: release_build
+
+release_build:
+	$(eval CPPFLAGS:=${CPPFLAGS} ${OPTIMIZATION_FLAGS} ${DEADCODE_ELIM_FLAGS})
+	$(eval CFLAGS:=${CFLAGS} ${OPTIMIZATION_FLAGS} ${DEADCODE_ELIM_FLAGS})
+	@echo Building Release Version...
+	@echo CFLAGS=${CFLAGS}
+	@echo CPPFLAGS=${CPPFLAGS}
+
+debug_build:
+	$(eval CPPFLAGS:=${CPPFLAGS} ${UNOPTIMIZATION_FLAGS} ${DEBUG_FLAGS})
+	$(eval CFLAGS:=${CFLAGS} ${UNOPTIMIZATION_FLAGS} ${DEBUG_FLAGS})
+	$(eval LD_FLAGS:=${LD_FLAGS} ${DEBUG_LD_FLAGS})
+	@echo Building Debug Version...
+	@echo CFLAGS=${CFLAGS}
+	@echo CPPFLAGS=${CPPFLAGS}
+
+release: release_build bin/apsis
+
+debug: debug_build bin/apsis
 
 JSON_SOURCES_TMP=$(shell find ${FILEPATH}/../support/json -name *.cpp)
 JSON_SOURCES=$(patsubst $(FILEPATH)/%,%,${JSON_SOURCES_TMP})
@@ -100,11 +118,12 @@ freetype.a:
 	make -f ft_make
 
 bin/apsis: bin json.a glew.a clew.a soil.a sdl_mixer.a ogg.a vorbis.a freetype.a ${OBJS}
-	${LD} -o bin/apsis ${OBJS} support/ogg/*.o glew.a clew.a json.a soil.a sdl_mixer.a freetype.a vorbis.a ${LIBS_CMD} #-Wl,--gc-sections -Wl,-s
+	${LD} -o bin/apsis ${OBJS} support/ogg/*.o glew.a clew.a json.a soil.a sdl_mixer.a freetype.a vorbis.a ${LIBS_CMD} ${LD_FLAGS}
+	#-Wl,--gc-sections -Wl,-s
 
 objs/sync/atomic_counter.o: ${FILEPATH}/sync/atomic_counter.cpp objs
 	@mkdir -p $(dir $@)
-	${CC} -o $@ -c $< -I $(dir $<) ${INCLUDE_CMD} ${CFLAGS_NO_OPT}
+	${CC} -o $@ -c $< -I $(dir $<) ${INCLUDE_CMD} -masm=intel ${CFLAGS_NO_OPT}
 
 objs/%.o: ${FILEPATH}/%.cc objs
 	@mkdir -p $(dir $@)
@@ -132,6 +151,7 @@ docs: ctags
 clean:
 	rm -rf objs
 	rm -rf tags
+	rm -rf support
 
 realclean: veryclean
 

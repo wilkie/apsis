@@ -37,6 +37,7 @@ Apsis::Primitives::FragmentShader::~FragmentShader() {
 }
 
 Apsis::Primitives::FragmentShader Apsis::Primitives::FragmentShader::fromFile(const char* path) {
+  printf("Loading Fragment Shader %s\n", path);
   FILE* f = fopen(path, "rb");
   if (f == NULL) {
     throw "Shader not found.";

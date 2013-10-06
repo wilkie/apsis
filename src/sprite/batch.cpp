@@ -179,6 +179,7 @@ void Apsis::Sprite::Batch::add(unsigned int index,
 void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
                                 const World::Camera& camera,
                                 const Primitives::Matrix& model) const {
+  _vao.bindProgram();
 
   if (_dirty) {
     // TODO: sync
@@ -192,12 +193,9 @@ void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
     _dirty = false;
   }
 
-  _vao.bindProgram();
-
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
-  
-  _vao.uploadUniform("camera", camera.eye());
+
   _vao.draw();
 }

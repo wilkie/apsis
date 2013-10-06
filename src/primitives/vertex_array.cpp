@@ -16,6 +16,21 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
+#include "apsis/engine/log.h"
+
+static void _throwError(const char* function, const char* message) {
+  Apsis::Engine::Log::error("Primitives", "VertexArray", function, message);
+}
+
+#ifdef DEBUG_THROW_GL_ERRORS
+static void _throwGLError(const char* function) {
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    _throwError(function, (char*)gluErrorString(error));
+  }
+}
+#endif
+
 Apsis::Primitives::VertexArray::VertexArray() {
   glGenVertexArrays(1, &this->_vao);
 }
@@ -110,8 +125,8 @@ int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& pro
   GLint uniform = glGetUniformLocation(program.identifier(), name);
   if (uniform < 0) {
     char error[1024];
-    sprintf(error, "VertexArray.defineUniform: Error: Cannot upload uniform %.250s. Uniform not found.", name);
-    throw error;
+    sprintf(error, "Cannot upload uniform %.250s. Uniform not found.", name);
+    _throwError("defineUniform", error);
   }
   std::string key = name;
   _uniforms[name] = uniform;
@@ -128,18 +143,27 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
                                                    const Matrix& mat) const {
   glUniformMatrix4fv(identifier, 1, GL_FALSE, (float*)&mat.value);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("uploadUniform (Matrix)");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
                                                    int         value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
+  printf("%s\n", name);
   uploadUniform(uniform, value);
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
                                                    int value) const {
   glUniform1i(identifier, value);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("uploadUniform (int)");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
@@ -152,6 +176,10 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 void Apsis::Primitives::VertexArray::uploadUniform(int   identifier,
                                                    float value) const {
   glUniform1f(identifier, value);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("uploadUniform (float)");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
@@ -164,6 +192,10 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
                                                    const Vector3& value) const {
   glUniform3fv(identifier, 1, (float*)&value);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("uploadUniform (Vector3)");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
@@ -176,6 +208,10 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
                                                    const Vector4& value) const {
   glUniform4fv(identifier, 1, (float*)&value);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("uploadUniform (Vector4)");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot,
@@ -189,11 +225,15 @@ void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot,
                    std::pair<unsigned int, Texture>(slot, texture));
 
   if (slot > 31) {
-    throw "Cannot bind texture. Slot too high.";
+    _throwError("bindTexture", "Cannot bind texture. Slot too high.");
   }
 
   glActiveTexture(GL_TEXTURE0  + slot);
   glBindTexture(GL_TEXTURE_2D, texture.identifier());
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("bindTexture");
+#endif
 }
 
 unsigned int Apsis::Primitives::VertexArray::identifier() const {
@@ -209,6 +249,10 @@ void Apsis::Primitives::VertexArray::_bindTextures() const {
 
     glActiveTexture(GL_TEXTURE0  + slot);
     glBindTexture(GL_TEXTURE_2D, texture.identifier());
+
+#ifdef DEBUG_THROW_GL_ERRORS
+    _throwGLError("_bindTextures");
+#endif
   }
 }
 
@@ -219,4 +263,8 @@ void Apsis::Primitives::VertexArray::bindProgram() const {
   else {
     glUseProgram(0);
   }
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("bindProgram");
+#endif
 }

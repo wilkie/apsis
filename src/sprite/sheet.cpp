@@ -287,7 +287,6 @@ void Apsis::Sprite::Sheet::draw(unsigned int              index,
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
 
-  _vao.uploadUniform("camera", camera.eye());
   _vao.drawRange(index * 6, 6);
 }
 

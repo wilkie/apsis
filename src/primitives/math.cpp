@@ -1,5 +1,18 @@
 #include "apsis/primitives/math.h"
 
+// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
+#include <glm/glm.hpp>
+// glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/matrix_transform.hpp>
+// glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
+Apsis::Primitives::Matrix Apsis::Primitives::Matrix::identity() {
+  const Primitives::Matrix& matrix
+    = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+  return matrix;
+}
+
 float Apsis::Primitives::Vector2::x() const {
   return value[0];
 }

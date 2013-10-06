@@ -271,7 +271,7 @@ unsigned int Apsis::Sprite::Font::_addGlyph(char character,
 
   // Add glyph
   unsigned int index = _bitmapGlyphs.size();
-  
+
   unsigned int i = 4 * index;
   unsigned int ei = 6 * index;
 
@@ -301,7 +301,7 @@ unsigned int Apsis::Sprite::Font::_addGlyph(char character,
   _vertices[i * 5 + 4] = coords[1]; //textureCoords[i].y;
 
   i++;
-      
+
   _vertices[i * 5 + 0] = 0.0f + w;
   _vertices[i * 5 + 1] = 0.0f;
   _vertices[i * 5 + 2] = 0.0f + h;
@@ -310,7 +310,7 @@ unsigned int Apsis::Sprite::Font::_addGlyph(char character,
   _vertices[i * 5 + 4] = coords[3]; //textureCoords[i].y;
 
   i++;
-      
+
   _vertices[i * 5 + 0] = 0.0f;
   _vertices[i * 5 + 1] = 0.0f;
   _vertices[i * 5 + 2] = 0.0f + h;
@@ -357,14 +357,13 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
 
-  _vao.uploadUniform("camera", camera.eye());
   _vao.uploadUniform("color", color);
 
   const Glyph& glyph = _glyphs[index];
 
   glm::mat4 model = glm::translate(glm::mat4(1.0),
     glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
-  
+
   const Primitives::Matrix& model_matrix
     = *(const Primitives::Matrix*)glm::value_ptr(model);
   _vao.uploadUniform("model", model_matrix);
@@ -381,8 +380,7 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
 
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-  
-  _vao.uploadUniform("camera", camera.eye());
+
   _vao.uploadUniform("color", color);
 
   while(*string != '\0') {

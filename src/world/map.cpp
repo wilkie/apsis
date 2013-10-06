@@ -205,13 +205,6 @@ const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
   return _sheet;
 }
 
-// glm::vec3, glm::vec4, glm::ivec4, glm::mat4
-#include <glm/glm.hpp>
-// glm::translate, glm::rotate, glm::scale, glm::perspective
-#include <glm/gtc/matrix_transform.hpp>
-// glm::value_ptr
-#include <glm/gtc/type_ptr.hpp>
-
 void Apsis::World::Map::draw(const Primitives::Matrix& projection,
                              const World::Camera& camera) const {
   _vao.bindProgram();
@@ -219,12 +212,8 @@ void Apsis::World::Map::draw(const Primitives::Matrix& projection,
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
 
-    const Primitives::Matrix& model_matrix
-      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+  _vao.uploadUniform("model", Primitives::Matrix::identity());
 
-  _vao.uploadUniform("model", model_matrix);
-
-  _vao.uploadUniform("camera", camera.eye());
   _vao.draw();
 }
 

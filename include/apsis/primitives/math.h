@@ -7,6 +7,8 @@ namespace Apsis {
     public:
       float value[4][4];
 
+      static Primitives::Matrix identity();
+
     private:
     };
 

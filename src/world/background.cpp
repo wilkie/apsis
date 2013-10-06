@@ -137,7 +137,6 @@ void Apsis::World::Background::draw(const Primitives::Matrix& projection,
                                     const World::Camera& camera) const {
   _vao.uploadUniform("proj", projection);
   _vao.uploadUniform("view", camera.view());
-  _vao.uploadUniform("camera", camera.eye());
 
   for (unsigned int w = 0; w < 20; w++) {
     for (unsigned int h = 0; h < 20; h++) {
