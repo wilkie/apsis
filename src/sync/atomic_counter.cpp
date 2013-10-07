@@ -34,8 +34,11 @@ unsigned int Apsis::Sync::AtomicCounter::value() const {
 
 // TODO: Maybe do something with a mutex when architectures don't support things.
 bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsigned int compare, unsigned int exchange) {
-#ifdef _MSC_VER // Microsoft C++ Compiler
-
+#ifdef JS_MODE // Javascript (emscripten)
+  // JS Mode is Single Threaded
+  *reference = exchange;
+  return true;
+#elif defined(_MSC_VER) // Microsoft C++ Compiler
   __asm {
     // Stack:
 

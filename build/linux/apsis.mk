@@ -23,7 +23,9 @@ CPP_FLAGS=-std=c++11
 DO_NOT_OPTIMIZE=sync/atomic_counter.cpp
 
 # List of files to not compile
-EXCLUDE=backend/sdl.cpp
+EXCLUDE=backend/sdl2.cpp
+
+DEFINE=SDL1
 
 # Output
 BINARY=apsis

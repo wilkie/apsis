@@ -10,8 +10,15 @@
 // This is here instead of the cpp because main() is overriden by
 // preprocessor magicks.
 #ifndef NO_SDL
+#ifdef JS_MODE
+#include <SDL/SDL.h>
+#elif defined(SDL1)
 #include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
+#else
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_mixer.h"
+#endif
 #endif
 
 // Include GLEW on desktops

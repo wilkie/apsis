@@ -116,7 +116,9 @@ endif
 
 ifeq "${BUILD}" "js"
 OBJECT_EXTENSION=.bc
+ifdef BINARY
 OUTPUT_EXTENSION=.html
+endif
 else
 OBJECT_EXTENSION=.o
 endif
