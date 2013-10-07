@@ -140,10 +140,14 @@ endif
 all: header ${OUTPUT} footer
 
 header:
-	@echo Building ${NAME} \(${BUILD}\)
+ifndef QUIET
+#	@echo Building ${NAME} \(${BUILD}\)
+endif
 
 footer:
-	@echo
+ifndef QUIET
+#	@echo
+endif
 
 optimized_objs: OPT_FLAGS:=${OPTIMIZATION_FLAGS}
 optimized_objs: ${OBJS}
@@ -155,7 +159,9 @@ unoptimized_objs: ${OBJS_NO_OPT}
 ifdef BINARY
 bin/${BUILD}/${BINARY_FILE}: optimized_objs unoptimized_objs
 	@mkdir -p bin/${BUILD}
+ifndef QUIET
 	@echo " >> Linking $@"
+endif
 	@${LINKER} -o $@ ${LINK} ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD}
 endif
 
@@ -163,14 +169,18 @@ endif
 ifdef LIBRARY
 lib/${BUILD}/${LIBRARY_FILE}: optimized_objs unoptimized_objs
 	@mkdir -p lib/${BUILD}
+ifndef QUIET
 	@echo " >> Archiving $@"
+endif
 	@ar rcs $@ ${OBJS} ${OBJS_NO_OPT} ${LINK}
 endif
 
 # CC file compilation
 objs/${BUILD}/${NAME}/%.o: ${SOURCE_PATH}/%.cc
 	@mkdir -p $(dir $@)
+ifndef QUIET
 	@echo " -- $(patsubst $(SOURCE_PATH)/%,%,$<)"
+endif
 ifeq "${BUILD}" "debug"
 	@${CPP_COMPILER} -o $@ -c $< ${INCLUDE_CMD} ${CPPFLAGS_FINAL} ${UNOPTIMIZATION_FLAGS}
 else
@@ -180,7 +190,9 @@ endif
 # C file compilation
 objs/${BUILD}/${NAME}/%.o: ${SOURCE_PATH}/%.c
 	@mkdir -p $(dir $@)
+ifndef QUIET
 	@echo " -- $(patsubst $(SOURCE_PATH)/%,%,$<)"
+endif
 ifeq "${BUILD}" "debug"
 	@${C_COMPILER} -o $@ -c $< -I $(dir $<) ${INCLUDE_CMD} ${CFLAGS_FINAL} ${UNOPTIMIZATION_FLAGS}
 else
@@ -190,7 +202,9 @@ endif
 # C++ file compilation
 objs/${BUILD}/${NAME}/%.o: ${SOURCE_PATH}/%.cpp
 	@mkdir -p $(dir $@)
+ifndef QUIET
 	@echo " -- $(patsubst $(SOURCE_PATH)/%,%,$<)"
+endif
 ifeq "${BUILD}" "debug"
 	@${CPP_COMPILER} -o $@ -c $< ${INCLUDE_CMD} ${CPPFLAGS_FINAL} ${UNOPTIMIZATION_FLAGS}
 else
