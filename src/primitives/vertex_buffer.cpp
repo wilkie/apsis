@@ -1,17 +1,6 @@
 #include "apsis/primitives/vertex_buffer.h"
 
-// Include GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
-
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
+#include "apsis/backend/sdl.h"
 
 Apsis::Primitives::VertexBuffer::VertexBuffer() {
   glGenBuffers(1, &this->_vbo);

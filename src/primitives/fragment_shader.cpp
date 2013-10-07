@@ -2,18 +2,7 @@
 
 #include <stdio.h>
 
-// Include GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
-
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
+#include "apsis/backend/sdl.h"
 
 Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
   this->_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);

@@ -1,17 +1,6 @@
 #include "apsis/primitives/program.h"
 
-// Include GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
-
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
+#include "apsis/backend/sdl.h"
 
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
