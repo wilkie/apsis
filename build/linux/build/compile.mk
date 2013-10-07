@@ -65,6 +65,11 @@ ARCHIVER=ar
 endif
 endif
 
+# Asset handling
+ifeq "${BUILD}" "js"
+ASSET_FLAG=--embed-file ${ASSETS}@/
+endif
+
 # Default include path is off of the source path
 ifndef HEADER_PATH
 HEADER_PATH=${SOURCE_PATH}/../include
@@ -111,7 +116,7 @@ endif
 
 ifeq "${BUILD}" "js"
 OBJECT_EXTENSION=.bc
-OUTPUT_EXTENSION=.js
+OUTPUT_EXTENSION=.html
 else
 OBJECT_EXTENSION=.o
 endif
@@ -191,7 +196,7 @@ bin/${BUILD}/${BINARY_FILE}${OUTPUT_EXTENSION}: optimized_objs unoptimized_objs
 ifndef QUIET
 	@echo " >> Linking $@"
 endif
-	@${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD}
+	${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD} ${ASSET_FLAG}
 endif
 
 # build the library

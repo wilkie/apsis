@@ -13,6 +13,9 @@ CPP_COMPILER=clang
 # Weird thing: doesn't seem to properly link ogg from .a
 LINK=objs/${BUILD}/ogg/bitwise objs/${BUILD}/ogg/framing
 
+# Asset path
+ASSETS=../../assets
+
 # C++ flags
 CPP_FLAGS=-std=c++11
 

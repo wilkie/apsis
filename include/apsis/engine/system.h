@@ -66,6 +66,12 @@ namespace Apsis {
       void loadScene(unsigned int id);
 
     private:
+      // Game loop iterator (stops the game when it returns false)
+      bool _iterate();
+
+      // Loop iterator for C/js bindings
+      static void _c_iterate();
+
       // Backend
       Apsis::Backend::Sdl& _backend;
 

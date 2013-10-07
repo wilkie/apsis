@@ -5,6 +5,10 @@
 #include <fstream>
 #include <stdlib.h>
 
+#ifdef JS_MODE
+#include <emscripten.h>
+#endif
+
 Apsis::Engine::System::System(const char* path,
                               const Apsis::Settings::Video& videoSettings,
                               const Apsis::Settings::Audio& audioSettings)
@@ -148,88 +152,105 @@ void Apsis::Engine::System::_parseJSONFile() {
   }
 }
 
+#ifdef JS_MODE
+// Unsafe singleton pointer for C/js systems
+static Apsis::Engine::System* _c_this;
+#endif
+
 void Apsis::Engine::System::run() {
-  Apsis::Clock clock;
+  const Apsis::Registry::Interface& iface = _objects.loadInterface("hud");
+  _interface.push(iface);
+
+#ifdef JS_MODE
+  _c_this = this;
+  emscripten_set_main_loop(Apsis::Engine::System::_c_iterate, 60, 1);
+#else
+  while(_iterate()) {}
+#endif
+
+  _backend.quit();
+}
+
+void Apsis::Engine::System::_c_iterate() {
+#ifdef JS_MODE
+  _c_this->_iterate();
+#endif
+}
+
+bool Apsis::Engine::System::_iterate() {
+  static Apsis::Clock clock;
 
   Apsis::Engine::Event core_event;
-
-  const Apsis::Registry::Interface& iface = _objects.loadInterface("hud");
-
-  _interface.push(iface);
 
   static Apsis::Geometry::Point cursor;
   static Apsis::Geometry::Point new_point;
 
   unsigned int action_id = 0;
-  while(true) {
-    float elapsed = clock.elapsedTime();
 
-    // TODO: Place this inside an interface engine or something.
-    //       Remove the responsibility from the main viewport.
-    // TODO: Rate limit events to keep up with drawing frame limit.
-    while (_backend.poll(core_event)) {
-      if (core_event.isInput()) {
-        bool pressed = true;
-        if (core_event.type() == Apsis::Engine::Event::Type::Release) {
-          pressed = false;
-        }
+  float elapsed = clock.elapsedTime();
 
-        const Apsis::Input::Binding& binding = core_event.binding();
-
-        // Give interface the input
-        _interface.input(pressed, core_event.point(), binding);
-
-        // Give Scene the interaction if it is bound to an Action
-        if (pressed && _input.press(binding, action_id)) {
-          _scene.scene().act(action_id, true);
-        }
-        else if (!pressed && _input.release(binding, action_id)) {
-          _scene.scene().act(action_id, false);
-        }
+  // TODO: Place this inside an interface engine or something.
+  //       Remove the responsibility from the main viewport.
+  // TODO: Rate limit events to keep up with drawing frame limit.
+  while (_backend.poll(core_event)) {
+    if (core_event.isInput()) {
+      bool pressed = true;
+      if (core_event.type() == Apsis::Engine::Event::Type::Release) {
+        pressed = false;
       }
-      else if (core_event.isMotion()) {
-        new_point = core_event.point();
+
+      const Apsis::Input::Binding& binding = core_event.binding();
+
+      // Give interface the input
+      _interface.input(pressed, core_event.point(), binding);
+
+      // Give Scene the interaction if it is bound to an Action
+      if (pressed && _input.press(binding, action_id)) {
+        _scene.scene().act(action_id, true);
       }
-      else if (core_event.isSystem()) {
-        break;
+      else if (!pressed && _input.release(binding, action_id)) {
+        _scene.scene().act(action_id, false);
       }
     }
-
-    if (core_event.isSystem() &&
-        core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
-      break;
+    else if (core_event.isMotion()) {
+      new_point = core_event.point();
     }
-
-    // Give interface the motion input
-    // Rate-limit motion events
-    static float last = 0.0f;
-    last += elapsed;
-    if (last > 0.1f) {
-      if (cursor.x != new_point.x || cursor.y != new_point.y) {
-        cursor = new_point;
-        _interface.motion(cursor);
+    else if (core_event.isSystem()) {
+      if (core_event.systemEvent() == Apsis::Engine::Event::SystemEvent::Quit) {
+        return false;
       }
-      last = fmod(last, 0.1f);
     }
-
-    // TODO: Adjust the clock (cap minimum speed) to not
-    //       under-simulate due to underflow?
-
-    // Update scene actors
-    _scene.scene().update(elapsed);
-
-    // Update interface
-    _interface.update(elapsed);
-
-    // Draw scene
-    _viewport.draw(_graphics);
-
-    // Draw interface
-    _interface.draw(_graphics);
-
-    // Display
-    _backend.swap();
   }
 
-  _backend.quit();
+  // Give interface the motion input
+  // Rate-limit motion events
+  static float last = 0.0f;
+  last += elapsed;
+  if (last > 0.1f) {
+    if (cursor.x != new_point.x || cursor.y != new_point.y) {
+      cursor = new_point;
+      _interface.motion(cursor);
+    }
+    last = fmod(last, 0.1f);
+  }
+
+  // TODO: Adjust the clock (cap minimum speed) to not
+  //       under-simulate due to underflow?
+
+  // Update scene actors
+  _scene.scene().update(elapsed);
+
+  // Update interface
+  _interface.update(elapsed);
+
+  // Draw scene
+  _viewport.draw(_graphics);
+
+  // Draw interface
+  _interface.draw(_graphics);
+
+  // Display
+  _backend.swap();
+
+  return true;
 }
