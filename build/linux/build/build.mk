@@ -17,3 +17,6 @@ release: invoke
 
 debug: BUILD:="debug"
 debug: invoke
+
+js: BUILD:="js"
+js: invoke
