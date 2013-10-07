@@ -27,7 +27,9 @@
 	#define APIENTRY
 #else
 	#include <GL/gl.h>
+#ifndef JS_MODE
 	#include <GL/glx.h>
+#endif
 #endif
 
 #include "SOIL.h"
