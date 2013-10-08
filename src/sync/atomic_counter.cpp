@@ -79,5 +79,7 @@ bool Apsis::Sync::AtomicCounter::_compareExchange(unsigned int* reference, unsig
 #else
 #endif
 
+#ifndef _MSC_VER
   return false;
+#endif
 }
