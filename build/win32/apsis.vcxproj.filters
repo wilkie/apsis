@@ -446,9 +446,6 @@
     <ClCompile Include="..\..\support\zlib\inftrees.c">
       <Filter>support\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\backend\sdl2.cpp">
-      <Filter>backend</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\world\camera.cpp">
       <Filter>world</Filter>
     </ClCompile>
@@ -457,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\log.cpp">
       <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\backend\sdl.cpp">
+      <Filter>backend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

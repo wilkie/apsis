@@ -32,7 +32,7 @@
 #include <SDL/SDL_endian.h>
 #include <SDL/SDL_version.h>
 
-#include "SDL/begin_code.h"
+#include "SDL2/begin_code.h"
 
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
@@ -629,6 +629,6 @@ extern DECLSPEC void SDLCALL Mix_CloseAudio(void);
 #ifdef __cplusplus
 }
 #endif
-#include "SDL/close_code.h"
+#include "SDL2/close_code.h"
 
 #endif /* _SDL_MIXER_H */
