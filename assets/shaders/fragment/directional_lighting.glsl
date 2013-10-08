@@ -1,7 +1,7 @@
-#version 150
+#version 100
 
-in vec3 Normal;
-in vec3 Position;
+attribute vec3 Normal;
+attribute vec3 Position;
 
 struct DirectionalLight {
   vec3 color;

@@ -1,7 +1,7 @@
-#version 150
+#version 100
 
-in vec3 Normal;
-in vec2 Texcoord;
+attribute vec3 Normal;
+attribute vec2 Texcoord;
 
 uniform sampler2D tex;
 

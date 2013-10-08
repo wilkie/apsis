@@ -388,11 +388,11 @@
     <ClInclude Include="..\..\support\vorbis\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\shaders\fragment\color.glsl" />
-    <None Include="..\..\src\shaders\fragment\colorize.glsl" />
-    <None Include="..\..\src\shaders\fragment\directional_lighting.glsl" />
-    <None Include="..\..\src\shaders\fragment\flat.glsl" />
-    <None Include="..\..\src\shaders\vertex\position.glsl" />
+    <None Include="..\..\assets\shaders\fragment\color.glsl" />
+    <None Include="..\..\assets\shaders\fragment\colorize.glsl" />
+    <None Include="..\..\assets\shaders\fragment\directional_lighting.glsl" />
+    <None Include="..\..\assets\shaders\fragment\flat.glsl" />
+    <None Include="..\..\assets\shaders\vertex\position.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,12 +1,12 @@
-#version 150
+#version 100
 
-in vec3 normal;
-in vec3 position;
-in vec2 texcoord;
+attribute vec3 normal;
+attribute vec3 position;
+attribute vec2 texcoord;
 
-out vec2 Texcoord;
-out vec3 Normal;
-out vec3 Position;
+varying vec2 Texcoord;
+varying vec3 Normal;
+varying vec3 Position;
 
 uniform mat4 model;
 uniform mat4 view;

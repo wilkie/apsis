@@ -1023,20 +1023,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\shaders\fragment\colorize.glsl">
+    <None Include="..\..\assets\shaders\fragment\color.glsl">
       <Filter>shaders\fragment</Filter>
     </None>
-    <None Include="..\..\src\shaders\fragment\directional_lighting.glsl">
+    <None Include="..\..\assets\shaders\fragment\colorize.glsl">
       <Filter>shaders\fragment</Filter>
     </None>
-    <None Include="..\..\src\shaders\vertex\position.glsl">
+    <None Include="..\..\assets\shaders\fragment\directional_lighting.glsl">
+      <Filter>shaders\fragment</Filter>
+    </None>
+    <None Include="..\..\assets\shaders\fragment\flat.glsl">
+      <Filter>shaders\fragment</Filter>
+    </None>
+    <None Include="..\..\assets\shaders\vertex\position.glsl">
       <Filter>shaders\vertex</Filter>
-    </None>
-    <None Include="..\..\src\shaders\fragment\flat.glsl">
-      <Filter>shaders\fragment</Filter>
-    </None>
-    <None Include="..\..\src\shaders\fragment\color.glsl">
-      <Filter>shaders\fragment</Filter>
     </None>
   </ItemGroup>
 </Project>
