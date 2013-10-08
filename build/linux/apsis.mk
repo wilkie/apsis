@@ -14,7 +14,10 @@ CPP_COMPILER=clang
 LINK=objs/${BUILD}/ogg/bitwise objs/${BUILD}/ogg/framing
 
 # Asset path
+# Place everything in ../../assets as though it would be accessed
+# by the relative path "assets/*"
 ASSETS=../../assets
+ASSET_PATH=/assets
 
 # C++ flags
 CPP_FLAGS=-std=c++11
@@ -25,7 +28,7 @@ DO_NOT_OPTIMIZE=sync/atomic_counter.cpp
 # List of files to not compile
 EXCLUDE=backend/sdl2.cpp
 
-DEFINE=SDL1
+DEFINE=SDL1 NO_AUDIO
 
 # Output
 BINARY=apsis

@@ -67,7 +67,7 @@ endif
 
 # Asset handling
 ifeq "${BUILD}" "js"
-ASSET_FLAG=--embed-file ${ASSETS}@/
+ASSET_FLAG=--embed-file ${ASSETS}@${ASSET_PATH}
 endif
 
 # Default include path is off of the source path
