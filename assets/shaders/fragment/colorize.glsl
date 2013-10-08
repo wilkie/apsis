@@ -1,6 +1,6 @@
 #version 100
 
-attribute vec2 Texcoord;
+in vec2 Texcoord;
 
 uniform sampler2D tex;
 
