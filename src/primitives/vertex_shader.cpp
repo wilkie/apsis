@@ -1,19 +1,8 @@
 #include "apsis/primitives/vertex_shader.h"
 
+#include "apsis/backend/sdl.h"
+
 #include <stdio.h>
-
-// Include GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
-
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
 
 Apsis::Primitives::VertexShader::VertexShader(const char* source) {
   this->_vertexShader = glCreateShader(GL_VERTEX_SHADER);

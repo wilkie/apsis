@@ -1,5 +1,9 @@
 objs
 bin
+lib
 tags
 *.o
 *.a
+*.so
+*.html
+*.js

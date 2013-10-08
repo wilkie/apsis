@@ -7,10 +7,6 @@
 
 #include "math.h"
 
-// Include GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
-
 #ifndef NO_SDL
 
 static SDL_Window* _window;
@@ -417,9 +413,11 @@ bool Apsis::Backend::Sdl::_start() {
     throw error;
   }
 
+#ifndef JS_MODE
   // Initialize GLEW
   glewExperimental = GL_TRUE;
   glewInit();
+#endif
 
   return true;
 #endif

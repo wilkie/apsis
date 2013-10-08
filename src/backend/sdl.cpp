@@ -7,10 +7,6 @@
 
 #include "math.h"
 
-// Include GLEW
-#define GLEW_STATIC
-#include <GL/glew.h>
-
 #ifndef NO_SDL
 
 static void _translateSDLPosition(float& x, float& y, const SDL_Event& event) {
@@ -418,8 +414,10 @@ bool Apsis::Backend::Sdl::_start() {
   SDL_WM_SetCaption("Apsis", "Apsis");
 
   // Initialize GLEW
+#ifndef JS_MODE
   glewExperimental = GL_TRUE;
   glewInit();
+#endif
 
   return true;
 #endif

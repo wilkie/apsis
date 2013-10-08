@@ -7,7 +7,7 @@
 #   PROJECT         -- load inputs from "$PROJECT.mk"
 #
 # Mode:
-#   BUILD           -- either "debug" or "release"
+#   BUILD           -- either "debug", "release", "js"
 #
 # Files:
 #   SOURCE_PATH     -- path to all files
@@ -24,6 +24,7 @@
 #   C_COMPILER      -- the C compiler
 #   CPP_COMPILER    -- the C++ compiler
 #   LINKER          -- the linker
+#   ARCHIVER        -- static library archiver
 #
 # Options:
 #   LIBS            -- list of libraries to link in
@@ -44,6 +45,12 @@ include $(CONFIG).mk
 endif
 
 # Default tools
+ifeq "${BUILD}" "js"
+C_COMPILER=emcc
+CPP_COMPILER=em++
+LINKER=emcc
+ARCHIVER=emar
+else
 ifndef C_COMPILER
 C_COMPILER=gcc
 endif
@@ -52,6 +59,15 @@ LINKER=gcc
 endif
 ifndef CPP_COMPILER
 CPP_COMPILER=gcc
+endif
+ifndef ARCHIVER
+ARCHIVER=ar
+endif
+endif
+
+# Asset handling
+ifeq "${BUILD}" "js"
+ASSET_FLAG=--embed-file ${ASSETS}@/
 endif
 
 # Default include path is off of the source path
@@ -78,18 +94,31 @@ RELEASE_FLAGS=${DEADCODE_ELIM_FLAGS}
 
 # Optimization flags
 UNOPTIMIZATION_FLAGS=-O0
+ifeq "${BUILD}" "js"
+OPTIMIZATION_FLAGS=-O2
+else
 OPTIMIZATION_FLAGS=-O3
+endif
 
 ifdef BINARY
 TYPE="executable"
 NAME=${BINARY}
 BINARY_FILE=${BINARY}
+OUTPUT_EXTENSION=
 OUTPUT=bin/${BUILD}/${BINARY_FILE}
 else
 TYPE="library"
 NAME=${LIBRARY}
-LIBRARY_FILE=${LIBRARY}.a
+LIBRARY_FILE=${LIBRARY}
+OUTPUT_EXTENSION=.a
 OUTPUT=lib/${BUILD}/${LIBRARY_FILE}
+endif
+
+ifeq "${BUILD}" "js"
+OBJECT_EXTENSION=.bc
+OUTPUT_EXTENSION=.html
+else
+OBJECT_EXTENSION=.o
 endif
 
 # Generate list of sources
@@ -112,15 +141,15 @@ SOURCES:=${filter-out $(DO_NOT_OPTIMIZE),${SOURCES}}
 
 # Generate object list
 OBJS=${SOURCES}
-OBJS:=$(patsubst %.cpp,%.o,$(OBJS))
-OBJS:=$(patsubst %.cc,%.o,$(OBJS))
-OBJS:=$(patsubst %.c,%.o,$(OBJS))
+OBJS:=$(patsubst %.cpp,%${OBJECT_EXTENSION},$(OBJS))
+OBJS:=$(patsubst %.cc,%${OBJECT_EXTENSION},$(OBJS))
+OBJS:=$(patsubst %.c,%${OBJECT_EXTENSION},$(OBJS))
 OBJS:=$(patsubst %,objs/${BUILD}/${NAME}/%,${OBJS})
 
 # Generate Do-Not-Optimize list
-OBJS_NO_OPT_TMP=$(patsubst %.cc,%.o,$(DO_NOT_OPTIMIZE))
-OBJS_NO_OPT_TMP:=$(patsubst %.cpp,%.o,$(OBJS_NO_OPT_TMP))
-OBJS_NO_OPT_TMP:=$(patsubst %.c,%.o,$(OBJS_NO_OPT_TMP))
+OBJS_NO_OPT_TMP=$(patsubst %.cc,%${OBJECT_EXTENSION},$(DO_NOT_OPTIMIZE))
+OBJS_NO_OPT_TMP:=$(patsubst %.cpp,%${OBJECT_EXTENSION},$(OBJS_NO_OPT_TMP))
+OBJS_NO_OPT_TMP:=$(patsubst %.c,%${OBJECT_EXTENSION},$(OBJS_NO_OPT_TMP))
 OBJS_NO_OPT=$(patsubst %,objs/${BUILD}/${NAME}/%,${OBJS_NO_OPT_TMP})
 
 # Generate compiler commands
@@ -133,11 +162,16 @@ ifeq "${BUILD}" "debug"
 CFLAGS_FINAL=${C_FLAGS} ${DEFINE_CMD} -DDEBUG_MODE ${DEBUG_FLAGS}
 CPPFLAGS_FINAL=${CPP_FLAGS} ${DEFINE_CMD} -DDEBUG_MODE ${DEBUG_FLAGS}
 else
+ifeq "${BUILD}" "js"
+CFLAGS_FINAL=${C_FLAGS} ${DEFINE_CMD} -DJS_MODE ${RELEASE_FLAGS}
+CPPFLAGS_FINAL=${CPP_FLAGS} ${DEFINE_CMD} -DJS_MODE ${RELEASE_FLAGS}
+else
 CFLAGS_FINAL=${C_FLAGS} ${DEFINE_CMD} -DRELEASE_MODE ${RELEASE_FLAGS}
 CPPFLAGS_FINAL=${CPP_FLAGS} ${DEFINE_CMD} -DRELEASE_MODE ${RELEASE_FLAGS}
 endif
+endif
 
-all: header ${OUTPUT} footer
+all: header ${OUTPUT}${OUTPUT_EXTENSION} footer
 
 header:
 ifndef QUIET
@@ -157,26 +191,26 @@ unoptimized_objs: ${OBJS_NO_OPT}
 
 # Build the binary executable
 ifdef BINARY
-bin/${BUILD}/${BINARY_FILE}: optimized_objs unoptimized_objs
+bin/${BUILD}/${BINARY_FILE}${OUTPUT_EXTENSION}: optimized_objs unoptimized_objs
 	@mkdir -p bin/${BUILD}
 ifndef QUIET
 	@echo " >> Linking $@"
 endif
-	@${LINKER} -o $@ ${LINK} ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD}
+	${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD} ${ASSET_FLAG}
 endif
 
 # build the library
 ifdef LIBRARY
-lib/${BUILD}/${LIBRARY_FILE}: optimized_objs unoptimized_objs
+lib/${BUILD}/${LIBRARY_FILE}${OUTPUT_EXTENSION}: optimized_objs unoptimized_objs
 	@mkdir -p lib/${BUILD}
 ifndef QUIET
 	@echo " >> Archiving $@"
 endif
-	@ar rcs $@ ${OBJS} ${OBJS_NO_OPT} ${LINK}
+	@${ARCHIVER} rcs $@ ${OBJS} ${OBJS_NO_OPT} ${LINK}
 endif
 
 # CC file compilation
-objs/${BUILD}/${NAME}/%.o: ${SOURCE_PATH}/%.cc
+objs/${BUILD}/${NAME}/%${OBJECT_EXTENSION}: ${SOURCE_PATH}/%.cc
 	@mkdir -p $(dir $@)
 ifndef QUIET
 	@echo " -- $(patsubst $(SOURCE_PATH)/%,%,$<)"
@@ -188,7 +222,7 @@ else
 endif
 
 # C file compilation
-objs/${BUILD}/${NAME}/%.o: ${SOURCE_PATH}/%.c
+objs/${BUILD}/${NAME}/%${OBJECT_EXTENSION}: ${SOURCE_PATH}/%.c
 	@mkdir -p $(dir $@)
 ifndef QUIET
 	@echo " -- $(patsubst $(SOURCE_PATH)/%,%,$<)"
@@ -200,7 +234,7 @@ else
 endif
 
 # C++ file compilation
-objs/${BUILD}/${NAME}/%.o: ${SOURCE_PATH}/%.cpp
+objs/${BUILD}/${NAME}/%${OBJECT_EXTENSION}: ${SOURCE_PATH}/%.cpp
 	@mkdir -p $(dir $@)
 ifndef QUIET
 	@echo " -- $(patsubst $(SOURCE_PATH)/%,%,$<)"

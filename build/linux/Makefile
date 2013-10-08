@@ -11,3 +11,6 @@ release: ${PROJECTS}
 
 debug: BUILD:="debug"
 debug: ${PROJECTS}
+
+js: BUILD:="js"
+js: ${PROJECTS}
