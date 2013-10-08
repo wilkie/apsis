@@ -455,6 +455,9 @@
     <ClCompile Include="..\..\src\interface\text_field.cpp">
       <Filter>interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\log.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis\geometry\circle.h">
@@ -925,6 +928,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\text_field.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\log.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
