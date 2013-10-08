@@ -39,9 +39,9 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 
   _vao.bindElements(_ebo);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/colorize.glsl");
-  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("src/shaders/fragment/directional_lighting.glsl");
+  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/colorize.glsl");
+  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("assets/shaders/fragment/directional_lighting.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);

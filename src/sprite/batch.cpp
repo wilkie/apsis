@@ -31,8 +31,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
 
   _id = _batches.size();
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
+  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);

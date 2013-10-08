@@ -22,8 +22,12 @@
 #endif
 
 // Include GLEW on desktops
-#define GLEW_STATIC
-#include <GL/glew.h>
+#ifndef JS_MODE
+  #define GLEW_STATIC
+  #include <GL/glew.h>
+#else
+  #include "SDL/SDL_opengl.h"
+#endif
 
 #ifndef NO_GL
   #ifdef _WIN32

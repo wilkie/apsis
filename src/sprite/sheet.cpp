@@ -38,8 +38,10 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
   }
 
   printf("Loading sprite sheet %s\n", name);
+
   _ids.push_back(str);
-  _sheets.push_back(new Apsis::Sprite::Sheet(name));
+  Apsis::Sprite::Sheet* sheet = new Apsis::Sprite::Sheet(name);
+  _sheets.push_back(sheet);
   return *_sheets[_ids.size() - 1];
 }
 
@@ -128,8 +130,8 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
 
   _vao.bindElements(_ebo);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
+  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);

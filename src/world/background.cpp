@@ -80,8 +80,8 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
 
   _vao.bindElements(_ebo);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/flat.glsl");
+  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
 
   Primitives::UnlinkedProgram unlinked;
   unlinked.attach(vs);

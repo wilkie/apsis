@@ -419,6 +419,8 @@ bool Apsis::Backend::Sdl::_start() {
   glewInit();
 #endif
 
+  glClearColor(0, 0, 0, 0);
+
   return true;
 #endif
 }

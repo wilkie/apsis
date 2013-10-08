@@ -124,8 +124,8 @@ void Apsis::Sprite::Font::_load() {
     if (_texture == NULL) {
       _texture = new Apsis::Primitives::Texture(512, 512);
 
-      Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("src/shaders/vertex/position.glsl");
-      Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("src/shaders/fragment/color.glsl");
+      Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+      Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/color.glsl");
 
       Primitives::UnlinkedProgram unlinked;
       unlinked.attach(vs);
