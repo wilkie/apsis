@@ -304,7 +304,9 @@ Apsis::Backend::Sdl::Sdl(const Apsis::Settings::Video& videoSettings)
 void Apsis::Backend::Sdl::swap() {
 #ifndef NO_SDL
   SDL_GL_SwapBuffers();
+#ifndef JS_MODE
   SDL_Delay(1);
+#endif
 #endif
 }
 

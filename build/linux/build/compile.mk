@@ -198,7 +198,7 @@ bin/${BUILD}/${BINARY_FILE}${OUTPUT_EXTENSION}: optimized_objs unoptimized_objs
 ifndef QUIET
 	@echo " >> Linking $@"
 endif
-	${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD} ${ASSET_FLAG} -s LEGACY_GL_EMULATION=1 #-s VERBOSE=1
+	${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD} ${ASSET_FLAG} -s TOTAL_MEMORY=100000000 #-s VERBOSE=1
 endif
 
 # build the library

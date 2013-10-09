@@ -5,6 +5,7 @@
 #include "apsis/backend/sdl.h"
 
 Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
+  printf("---\n%s\n---\n", source);
   this->_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(this->_fragmentShader, 1, &source, NULL);
   glCompileShader(this->_fragmentShader);

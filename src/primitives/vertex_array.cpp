@@ -7,6 +7,8 @@
 
 #include "apsis/engine/log.h"
 
+unsigned int Apsis::Primitives::VertexArray::_current_vao = 0xffffffff;
+
 static void _throwError(const char* function, const char* message) {
   Apsis::Engine::Log::error("Primitives", "VertexArray", function, message);
 }
@@ -21,7 +23,11 @@ static void _throwGLError(const char* function) {
 #endif
 
 Apsis::Primitives::VertexArray::VertexArray() {
+#ifdef JS_MODE // Older GL / GLES2
+  glGenBuffers(1, &this->_vao);
+#else
   glGenVertexArrays(1, &this->_vao);
+#endif
 
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("~constructor");
@@ -30,7 +36,11 @@ Apsis::Primitives::VertexArray::VertexArray() {
 
 Apsis::Primitives::VertexArray::~VertexArray() {
   if (_counter.isAlone()) {
-    glDeleteVertexArrays(1, &this->_vao);
+#ifdef JS_MODE // Older GL / GLES2
+  glDeleteBuffers(1, &this->_vao);
+#else
+  glDeleteVertexArrays(1, &this->_vao);
+#endif
 
 #ifdef DEBUG_THROW_GL_ERRORS
     _throwGLError("~destructor");
@@ -38,16 +48,27 @@ Apsis::Primitives::VertexArray::~VertexArray() {
   }
 }
 
-void Apsis::Primitives::VertexArray::use() {
+void Apsis::Primitives::VertexArray::_bind() const {
+#ifdef JS_MODE
+  if (_current_vao != this->_vao) {
+    glBindBuffer(GL_ARRAY_BUFFER, this->_vao);
+    _current_vao = this->_vao;
+  }
+#else
   glBindVertexArray(this->_vao);
+#endif
 
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("use");
 #endif
 }
 
+void Apsis::Primitives::VertexArray::use() {
+  _bind();
+}
+
 void Apsis::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
-  glBindVertexArray(this->_vao);
+  _bind();
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.identifier());
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -61,7 +82,7 @@ void Apsis::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
 }
 
 void Apsis::Primitives::VertexArray::useProgram(Program& program) {
-  glBindVertexArray(this->_vao);
+  _bind();
   glUseProgram(program.identifier());
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -78,7 +99,7 @@ void Apsis::Primitives::VertexArray::useProgram(Program& program) {
 }
 
 void Apsis::Primitives::VertexArray::draw() const {
-  glBindVertexArray(this->_vao);
+  _bind();
 
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
@@ -96,7 +117,7 @@ void Apsis::Primitives::VertexArray::draw() const {
 }
 
 void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) const {
-  glBindVertexArray(this->_vao);
+  _bind();
 
   if (_elementBuffer.size() > 0) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
@@ -112,7 +133,7 @@ void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int 
 }
 
 void Apsis::Primitives::VertexArray::drawQuads() const {
-  glBindVertexArray(this->_vao);
+  _bind();
 
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
@@ -130,7 +151,7 @@ void Apsis::Primitives::VertexArray::drawQuads() const {
 }
 
 void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
-  glBindVertexArray(this->_vao);
+  _bind();
 
   if (_elementBuffer.size() > 0) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());

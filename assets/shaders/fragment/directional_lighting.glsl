@@ -1,7 +1,9 @@
-#version 100
+#ifdef GL_ES
+precision highp float;
+#endif
 
-in vec3 Normal;
-in vec3 Position;
+varying vec3 Normal;
+varying vec3 Position;
 
 struct DirectionalLight {
   vec3 color;

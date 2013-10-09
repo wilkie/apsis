@@ -1,7 +1,9 @@
-#version 100
+#ifdef GL_ES
+precision highp float;
+#endif
 
-in vec3 Normal;
-in vec2 Texcoord;
+varying vec3 Normal;
+varying vec2 Texcoord;
 
 uniform sampler2D tex;
 

@@ -110,8 +110,10 @@ namespace Apsis {
 
     private:
       void _bindTextures() const;
+      void _bind() const;
 
       unsigned int _vao;
+      static unsigned int _current_vao;
 
       Sync::ReferenceCounter _counter;
 

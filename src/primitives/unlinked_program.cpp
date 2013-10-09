@@ -28,7 +28,7 @@ void Apsis::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) 
 }
 
 void Apsis::Primitives::UnlinkedProgram::defineFragmentOutput(const char* name) {
-  glBindFragDataLocation(this->_program, 0, name);
+  //glBindFragDataLocation(this->_program, 0, name);
 }
 
 Apsis::Primitives::Program Apsis::Primitives::UnlinkedProgram::link() {
