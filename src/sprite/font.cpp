@@ -59,6 +59,8 @@ Apsis::Sprite::Font::Font(const char* family)
     _elements(NULL),
     _x(0),
     _y(0),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements),
     _line_height(0) {
   _id = _fonts.size();
 
@@ -249,8 +251,8 @@ void Apsis::Sprite::Font::_loadGlyphBitmap(unsigned int character) const {
   _vbo.transfer(_vertices, 5 * 4 * _bitmapGlyphs.size());
   _ebo.transfer(_elements, 6 * _bitmapGlyphs.size());
 
-  _vao.bindBuffer(_vbo);
-  _vao.bindElements(_ebo);
+  _vao.bind(_vbo);
+  _vao.bind(_ebo);
 }
 
 unsigned int Apsis::Sprite::Font::_addGlyph(char character,

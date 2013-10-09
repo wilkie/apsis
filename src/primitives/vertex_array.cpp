@@ -78,32 +78,23 @@ void Apsis::Primitives::VertexArray::use() {
   _bind();
 }
 
-void Apsis::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
+void Apsis::Primitives::VertexArray::bind(VertexBuffer& buffer) {
   _bind();
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.identifier());
 
-#ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("bindElements");
-#endif
-
-  if (_elementBuffer.size() > 0) {
-    _elementBuffer.clear();
+  if (buffer.target() == VertexBuffer::Target::Elements) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.identifier());
+    if (_elementBuffer.size() > 0) {
+      _elementBuffer.clear();
+    }
+    _elementBuffer.push_back(buffer);
   }
-  _elementBuffer.push_back(buffer);
-}
-
-void Apsis::Primitives::VertexArray::bindBuffer(VertexBuffer& buffer) {
-  _bind();
-  glBindBuffer(GL_ARRAY_BUFFER, buffer.identifier());
-
-#ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("bindElements");
-#endif
-
-  if (_dataBuffer.size() > 0) {
-    _dataBuffer.clear();
+  else if (buffer.target() == VertexBuffer::Target::Elements) {
+    glBindBuffer(GL_ARRAY_BUFFER, buffer.identifier());
+    if (_dataBuffer.size() > 0) {
+      _dataBuffer.clear();
+    }
+    _dataBuffer.push_back(buffer);
   }
-  _dataBuffer.push_back(buffer);
 }
 
 void Apsis::Primitives::VertexArray::useProgram(Program& program) {
@@ -129,7 +120,7 @@ void Apsis::Primitives::VertexArray::draw() const {
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
     count = _elementBuffer[0].count();
-    _elementBuffer[0].bindElements();
+    _elementBuffer[0].bind();
   }
 
   if (_dataBuffer.size() > 0) {
@@ -149,7 +140,7 @@ void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int 
   _bind();
 
   if (_elementBuffer.size() > 0) {
-    _elementBuffer[0].bindElements();
+    _elementBuffer[0].bind();
   }
 
   if (_dataBuffer.size() > 0) {

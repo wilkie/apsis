@@ -27,6 +27,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
     _vertices(NULL),
     _elementCount(0),
     _elements(NULL),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements),
     _dirty(false) {
 
   _id = _batches.size();
@@ -186,8 +188,8 @@ void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
     _vbo.transfer(_vertices, _vertexCount);
     _ebo.transfer(_elements, _elementCount);
 
-    _vao.bindBuffer(_vbo);
-    _vao.bindElements(_ebo);
+    _vao.bind(_vbo);
+    _vao.bind(_ebo);
 
     // TODO: Worry about texture slots
     _vao.uploadUniform("tex", 0);

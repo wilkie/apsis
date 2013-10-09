@@ -49,7 +49,9 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::loaded(unsigned int index) {
   return *_sheets[index];
 }
 
-Apsis::Sprite::Sheet::Sheet(const char* filename) {
+Apsis::Sprite::Sheet::Sheet(const char* filename)
+  : _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements) {
   _id = _sheets.size();
 
   _texture = new Apsis::Primitives::Texture(filename);
@@ -149,8 +151,8 @@ Apsis::Sprite::Sheet::Sheet(const char* filename) {
   _vao.bindTexture(0, this->texture());
   _vao.uploadUniform("tex", 0);
 
-  _vao.bindBuffer(_vbo);
-  _vao.bindElements(_ebo);
+  _vao.bind(_vbo);
+  _vao.bind(_ebo);
 }
 
 unsigned int Apsis::Sprite::Sheet::id() const {

@@ -7,6 +7,8 @@ Sprite::Layout::Layout()
     _vertices(NULL),
     _elementCount(0),
     _elements(NULL),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements),
     _dirty(false)  {
 }
 

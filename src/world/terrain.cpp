@@ -93,7 +93,9 @@ static void controlPoints(Apsis::Geometry::Point3d* points,
 
 Apsis::World::Terrain::Terrain(unsigned int width,
                                unsigned int height)
-  : _width(width), _height(height) {
+  : _width(width), _height(height),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements) {
   // width = 3, height = 2 creates map like this:
   //
   //   +---+---+---+
@@ -383,9 +385,6 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   _vbo.transfer(_vertices, 8 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
-  _vao.bindBuffer(_vbo);
-  _vao.bindElements(_ebo);
-
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/colorize.glsl");
   Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("assets/shaders/fragment/directional_lighting.glsl");
@@ -441,6 +440,9 @@ Apsis::World::Terrain::Terrain(unsigned int width,
 
   _vao.uploadUniform("light.direction", _lights[0].direction());
   _vao.uploadUniform("light.color", _lights[0].color());
+
+  _vao.bind(_vbo);
+  _vao.bind(_ebo);
 }
 
 Apsis::World::Terrain::~Terrain() {

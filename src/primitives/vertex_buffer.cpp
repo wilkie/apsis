@@ -7,7 +7,7 @@
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "VertexArray", function, message);
+  Apsis::Engine::Log::error("Primitives", "VertexBuffer", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -32,7 +32,13 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::VertexBuffer::VertexBuffer() {
+Apsis::Primitives::VertexBuffer::Target::Targets
+Apsis::Primitives::VertexBuffer::target() const {
+  return _target;
+}
+
+Apsis::Primitives::VertexBuffer::VertexBuffer(Target::Targets target)
+  : _target(target) {
   glGenBuffers(1, &this->_vbo);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -45,7 +51,7 @@ Apsis::Primitives::VertexBuffer::~VertexBuffer() {
     //glDeleteBuffers(1, &this->_vbo);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-    _throwGLError("~denstructor");
+    _throwGLError("~destructor");
 #endif
   }
 }
@@ -120,48 +126,69 @@ void Apsis::Primitives::VertexBuffer::defineInput(const char*    name,
 }
 
 void Apsis::Primitives::VertexBuffer::transfer(const float* elements, unsigned int count) {
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  GLenum target = GL_ARRAY_BUFFER;
+  if (_target == Target::Data) {
+    target = GL_ARRAY_BUFFER;
+  }
+  else if (_target == Target::Elements) {
+    target = GL_ELEMENT_ARRAY_BUFFER;
+  }
+  glBindBuffer(target, this->_vbo);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBindBuffer)");
+  _throwGLError("transferf(glBindBuffer)");
 #endif
 
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * 4, elements, GL_STATIC_DRAW);
+  glBufferData(target, count * 4, elements, GL_STATIC_DRAW);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBufferData)");
+  _throwGLError("transferf(glBufferData)");
 #endif
 
   _count = count;
 }
 
 void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count) {
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  GLenum target = GL_ARRAY_BUFFER;
+  if (_target == Target::Data) {
+    target = GL_ARRAY_BUFFER;
+  }
+  else if (_target == Target::Elements) {
+    target = GL_ELEMENT_ARRAY_BUFFER;
+  }
+  glBindBuffer(target, this->_vbo);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBindBuffer)");
+  _throwGLError("transferi(glBindBuffer)");
 #endif
 
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * 4, elements, GL_STATIC_DRAW);
+  glBufferData(target, count * 4, elements, GL_STATIC_DRAW);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBufferData)");
+  _throwGLError("transferi(glBufferData)");
 #endif
 
   _count = count;
 }
 
 void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count, unsigned int at) {
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  GLenum target = GL_ARRAY_BUFFER;
+  if (_target == Target::Data) {
+    target = GL_ARRAY_BUFFER;
+  }
+  else if (_target == Target::Elements) {
+    target = GL_ELEMENT_ARRAY_BUFFER;
+  }
+  glBindBuffer(target, this->_vbo);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBindBuffer)");
+  _throwGLError("transferisub(glBindBuffer)");
 #endif
 
-  glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)(at * sizeof(GLint)), count, elements);
+  glBufferSubData(target, (GLintptr)(at * sizeof(GLint)), count, elements);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBufferData)");
+  _throwGLError("transferisub(glBufferData)");
 #endif
 }
 
@@ -174,10 +201,15 @@ unsigned int Apsis::Primitives::VertexBuffer::identifier() const {
 }
 
 void Apsis::Primitives::VertexBuffer::bind() const {
-  glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
+  if (_target == Target::Data) {
+    glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
+  }
+  else if (_target == Target::Elements) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
+  }
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBindBuffer)");
+  _throwGLError("bind(glBindBuffer)");
 #endif
 
 #ifdef JS_MODE
@@ -187,7 +219,7 @@ void Apsis::Primitives::VertexBuffer::bind() const {
     glEnableVertexAttribArray(attr.attribute);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glEnableVertexAttribArray)");
+  _throwGLError("bind(glEnableVertexAttribArray)");
 #endif
 
     GLenum gltype;
@@ -206,16 +238,8 @@ void Apsis::Primitives::VertexBuffer::bind() const {
                           (const GLvoid*)(size_t)(attr.offset * glsize));
 
 #ifdef DEBUG_THROW_GL_ERRORS
-    _throwGLError("defineInput(glVertexAttribPointer)");
+    _throwGLError("bind(glVertexAttribPointer)");
 #endif
   }
-#endif
-}
-
-void Apsis::Primitives::VertexBuffer::bindElements() const {
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_vbo);
-
-#ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("defineInput(glBindBuffer)");
 #endif
 }

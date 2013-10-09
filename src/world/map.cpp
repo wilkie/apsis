@@ -28,6 +28,8 @@ const Apsis::World::Map& Apsis::World::Map::load(const char* json,
 Apsis::World::Map::Map(const char* json)
   : _jsonLoaded(false),
     _path(json),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements),
     _sheet(_loadSpriteSheet()) {
 
   _parseJSONFile();
@@ -42,12 +44,14 @@ Apsis::World::Map::Map(unsigned int width,
                        unsigned int height,
                        float tileWidth,
                        float tileHeight,
-                       const Apsis::Sprite::Sheet& spriteSheet) :
-                   _width(width),
-                   _height(height),
-                   _sheet(spriteSheet),
-                   _tileWidth(tileWidth),
-                   _tileHeight(tileHeight) {
+                       const Apsis::Sprite::Sheet& spriteSheet)
+  : _width(width),
+    _height(height),
+    _sheet(spriteSheet),
+    _tileWidth(tileWidth),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements),
+    _tileHeight(tileHeight) {
 
   // Blank out tiles
   for(unsigned int x = 0; x < _width * _height; x++) {
@@ -182,8 +186,8 @@ void Apsis::World::Map::_generateVAO() {
   _vao.bindTexture(0, _sheet.texture());
   _vao.uploadUniform("tex", 0);
 
-  _vao.bindBuffer(_vbo);
-  _vao.bindElements(_ebo);
+  _vao.bind(_vbo);
+  _vao.bind(_ebo);
 }
 
 unsigned int Apsis::World::Map::width() const {

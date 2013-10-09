@@ -17,11 +17,23 @@ namespace Apsis {
         };
       };
 
+      struct Target {
+        enum Targets {
+          Data,
+          Elements
+        };
+      };
+
       /*
        *  Constructs a vertex buffer object.
        */
-      VertexBuffer();
+      VertexBuffer(Target::Targets target);
       ~VertexBuffer();
+
+      /*
+       *  Returns the target.
+       */
+      Target::Targets target() const;
 
       /*
        *  Defines the representation of the input attribute with the given
@@ -61,11 +73,6 @@ namespace Apsis {
        */
       void bind() const;
 
-      /*
-       *  Binds as elements array.
-       */
-      void bindElements() const;
-
     private:
       struct AttributeInfo {
         unsigned int attribute;
@@ -82,6 +89,8 @@ namespace Apsis {
       unsigned int _vbo;
       unsigned int _count;
       Sync::ReferenceCounter _counter;
+
+      Target::Targets _target;
     };
   }
 }

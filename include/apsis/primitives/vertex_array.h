@@ -26,14 +26,9 @@ namespace Apsis {
       ~VertexArray();
 
       /*
-       *  Bind a vertex buffer to the elements array to describe what to draw.
+       *  Bind a vertex buffer to this vertex array object.
        */
-      void bindElements(VertexBuffer& buffer);
-
-      /*
-       *  Bind a vertex buffer to the data array to describe what to draw.
-       */
-      void bindBuffer(VertexBuffer& buffer);
+      void bind(VertexBuffer& buffer);
 
       /*
        *  Use the given program.

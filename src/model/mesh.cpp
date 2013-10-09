@@ -9,7 +9,9 @@
 Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
                          std::vector<glm::vec3>& normals,
                          std::vector<glm::vec2>& textureCoords,
-                         std::vector<unsigned int>& elements) {
+                         std::vector<unsigned int>& elements)
+  : _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements) {
   // Create buffer array
   float* vert_array = new float[8 * vertices.size()];
 
@@ -37,8 +39,8 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 
   delete [] element_array;
 
-  _vao.bindBuffer(_vbo);
-  _vao.bindElements(_ebo);
+  _vao.bind(_vbo);
+  _vao.bind(_ebo);
 
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/colorize.glsl");

@@ -14,7 +14,9 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
-  : _texture(texture) {
+  : _texture(texture),
+    _vbo(Primitives::VertexBuffer::Target::Data),
+    _ebo(Primitives::VertexBuffer::Target::Elements) {
 
   _width  = _texture->width();
   _height = _texture->height();
@@ -78,9 +80,6 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   _vbo.transfer(_vertices, 5 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
-  _vao.bindBuffer(_vbo);
-  _vao.bindElements(_ebo);
-
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
 
@@ -101,6 +100,9 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   _vao.defineUniform("tex", program);
   _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("tex", 0);
+
+  _vao.bind(_vbo);
+  _vao.bind(_ebo);
 }
 
 /*
