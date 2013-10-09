@@ -3,8 +3,6 @@
 
 #include "apsis/sync/reference_counter.h"
 
-#include "apsis/primitives/vertex_buffer.h"
-
 #include "apsis/primitives/vertex_shader.h"
 #include "apsis/primitives/fragment_shader.h"
 
@@ -16,12 +14,6 @@ namespace Apsis {
   namespace Primitives {
     class Program {
     public:
-      struct Type {
-        enum Types {
-          Float
-        };
-      };
-
       /*
        *  Links the given unlinked program.
        */
@@ -29,18 +21,6 @@ namespace Apsis {
               std::vector<VertexShader> vertexShaders,
               std::vector<FragmentShader> fragmentShaders);
       ~Program();
-
-      /*
-       *  Defines the representation of the input attribute with the given
-       *    name.
-       */
-      void defineInput(const char*   name,
-                       VertexBuffer& buffer,
-                       unsigned int  numberOfComponents,
-                       Type::Types   type,
-                       bool          normalized,
-                       unsigned int  stride,
-                       unsigned int  offset) const;
 
       /*
        *  Uploads the given matrix to the given uniform variable.

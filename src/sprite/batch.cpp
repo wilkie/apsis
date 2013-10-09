@@ -42,8 +42,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
 
   _vao.useProgram(program);
 
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
@@ -186,6 +186,7 @@ void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
     _vbo.transfer(_vertices, _vertexCount);
     _ebo.transfer(_elements, _elementCount);
 
+    _vao.bindBuffer(_vbo);
     _vao.bindElements(_ebo);
 
     // TODO: Worry about texture slots

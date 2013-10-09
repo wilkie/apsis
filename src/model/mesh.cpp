@@ -37,6 +37,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 
   delete [] element_array;
 
+  _vao.bindBuffer(_vbo);
   _vao.bindElements(_ebo);
 
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
@@ -51,9 +52,9 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   Primitives::Program program = unlinked.link();
 
   _vao.useProgram(program);
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 8, 0);
-  program.defineInput("normal",   _vbo, 3, Primitives::Program::Type::Float, false, 8, 3);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 8, 6);
+  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 8, 0);
+  _vbo.defineInput("normal",   program, 3, Primitives::VertexBuffer::Type::Float, false, 8, 3);
+  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 8, 6);
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
   _vao.defineUniform("proj",  program);

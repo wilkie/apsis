@@ -134,8 +134,8 @@ void Apsis::Sprite::Font::_load() {
       Primitives::Program program = unlinked.link();
 
       _vao.useProgram(program);
-      program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
-      program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
+      _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+      _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
       _vao.defineUniform("model", program);
       _vao.defineUniform("view",  program);
@@ -249,6 +249,7 @@ void Apsis::Sprite::Font::_loadGlyphBitmap(unsigned int character) const {
   _vbo.transfer(_vertices, 5 * 4 * _bitmapGlyphs.size());
   _ebo.transfer(_elements, 6 * _bitmapGlyphs.size());
 
+  _vao.bindBuffer(_vbo);
   _vao.bindElements(_ebo);
 }
 

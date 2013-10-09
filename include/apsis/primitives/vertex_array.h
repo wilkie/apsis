@@ -19,10 +19,6 @@ namespace Apsis {
   namespace Primitives {
     class VertexArray {
     public:
-      typedef enum {
-        Float,
-      } Type;
-
       /*
        *  Constructs a vertex array object.
        */
@@ -33,6 +29,11 @@ namespace Apsis {
        *  Bind a vertex buffer to the elements array to describe what to draw.
        */
       void bindElements(VertexBuffer& buffer);
+
+      /*
+       *  Bind a vertex buffer to the data array to describe what to draw.
+       */
+      void bindBuffer(VertexBuffer& buffer);
 
       /*
        *  Use the given program.
@@ -122,6 +123,7 @@ namespace Apsis {
       std::map<std::string, int>      _uniforms;
 
       std::vector<VertexBuffer> _elementBuffer;
+      std::vector<VertexBuffer> _dataBuffer;
     };
   }
 }

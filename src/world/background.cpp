@@ -78,6 +78,7 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   _vbo.transfer(_vertices, 5 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
+  _vao.bindBuffer(_vbo);
   _vao.bindElements(_ebo);
 
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
@@ -90,8 +91,8 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   Primitives::Program program = unlinked.link();
 
   _vao.useProgram(program);
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);

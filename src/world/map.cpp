@@ -161,8 +161,6 @@ void Apsis::World::Map::_generateVAO() {
   _vbo.transfer(_vertices, 5 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
-  _vao.bindElements(_ebo);
-
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
 
@@ -173,8 +171,8 @@ void Apsis::World::Map::_generateVAO() {
   Primitives::Program program = unlinked.link();
 
   _vao.useProgram(program);
-  program.defineInput("position", _vbo, 3, Primitives::Program::Type::Float, false, 5, 0);
-  program.defineInput("texcoord", _vbo, 2, Primitives::Program::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.defineUniform("model", program);
   _vao.defineUniform("view",  program);
@@ -183,6 +181,9 @@ void Apsis::World::Map::_generateVAO() {
   _vao.defineUniform("tex", program);
   _vao.bindTexture(0, _sheet.texture());
   _vao.uploadUniform("tex", 0);
+
+  _vao.bindBuffer(_vbo);
+  _vao.bindElements(_ebo);
 }
 
 unsigned int Apsis::World::Map::width() const {

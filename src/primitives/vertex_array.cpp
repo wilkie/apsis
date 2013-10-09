@@ -2,6 +2,8 @@
 
 #include "apsis/backend/sdl.h"
 
+#define DEBUG_THROW_GL_ERRORS
+
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
@@ -24,7 +26,6 @@ static void _throwGLError(const char* function) {
 
 Apsis::Primitives::VertexArray::VertexArray() {
 #ifdef JS_MODE // Older GL / GLES2
-  glGenBuffers(1, &this->_vao);
 #else
   glGenVertexArrays(1, &this->_vao);
 #endif
@@ -37,7 +38,6 @@ Apsis::Primitives::VertexArray::VertexArray() {
 Apsis::Primitives::VertexArray::~VertexArray() {
   if (_counter.isAlone()) {
 #ifdef JS_MODE // Older GL / GLES2
-  glDeleteBuffers(1, &this->_vao);
 #else
   glDeleteVertexArrays(1, &this->_vao);
 #endif
@@ -49,11 +49,9 @@ Apsis::Primitives::VertexArray::~VertexArray() {
 }
 
 void Apsis::Primitives::VertexArray::_bind() const {
+  bindProgram();
+
 #ifdef JS_MODE
-  if (_current_vao != this->_vao) {
-    glBindBuffer(GL_ARRAY_BUFFER, this->_vao);
-    _current_vao = this->_vao;
-  }
 #else
   glBindVertexArray(this->_vao);
 #endif
@@ -81,6 +79,20 @@ void Apsis::Primitives::VertexArray::bindElements(VertexBuffer& buffer) {
   _elementBuffer.push_back(buffer);
 }
 
+void Apsis::Primitives::VertexArray::bindBuffer(VertexBuffer& buffer) {
+  _bind();
+  glBindBuffer(GL_ARRAY_BUFFER, buffer.identifier());
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("bindElements");
+#endif
+
+  if (_dataBuffer.size() > 0) {
+    _dataBuffer.clear();
+  }
+  _dataBuffer.push_back(buffer);
+}
+
 void Apsis::Primitives::VertexArray::useProgram(Program& program) {
   _bind();
   glUseProgram(program.identifier());
@@ -104,7 +116,11 @@ void Apsis::Primitives::VertexArray::draw() const {
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
     count = _elementBuffer[0].count();
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
+    _elementBuffer[0].bindElements();
+  }
+
+  if (_dataBuffer.size() > 0) {
+    _dataBuffer[0].bind();
   }
 
   _bindTextures();
@@ -120,7 +136,11 @@ void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int 
   _bind();
 
   if (_elementBuffer.size() > 0) {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
+    _elementBuffer[0].bindElements();
+  }
+
+  if (_dataBuffer.size() > 0) {
+    _dataBuffer[0].bind();
   }
 
   _bindTextures();
@@ -138,7 +158,11 @@ void Apsis::Primitives::VertexArray::drawQuads() const {
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
     count = _elementBuffer[0].count();
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
+    _elementBuffer[0].bind();
+  }
+
+  if (_dataBuffer.size() > 0) {
+    _dataBuffer[0].bind();
   }
 
   _bindTextures();
@@ -154,7 +178,11 @@ void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned
   _bind();
 
   if (_elementBuffer.size() > 0) {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer[0].identifier());
+    _elementBuffer[0].bind();
+  }
+
+  if (_dataBuffer.size() > 0) {
+    _dataBuffer[0].bind();
   }
 
   _bindTextures();
@@ -184,6 +212,7 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
                                                    const Matrix& mat) const {
+  bindProgram();
   glUniformMatrix4fv(identifier, 1, GL_FALSE, (float*)&mat.value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -200,6 +229,7 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 
 void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
                                                    int value) const {
+  bindProgram();
   glUniform1i(identifier, value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -216,6 +246,7 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 
 void Apsis::Primitives::VertexArray::uploadUniform(int   identifier,
                                                    float value) const {
+  bindProgram();
   glUniform1f(identifier, value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -232,6 +263,7 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 
 void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
                                                    const Vector3& value) const {
+  bindProgram();
   glUniform3fv(identifier, 1, (float*)&value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -248,6 +280,7 @@ void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
 
 void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
                                                    const Vector4& value) const {
+  bindProgram();
   glUniform4fv(identifier, 1, (float*)&value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
