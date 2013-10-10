@@ -67,7 +67,7 @@ endif
 
 # Asset handling
 ifeq "${BUILD}" "js"
-ASSET_FLAG=--embed-file ${ASSETS}@${ASSET_PATH}
+ASSET_FLAG:=$(patsubst %,--embed-file %@${ASSET_PATH},$(ASSETS))
 endif
 
 # Default include path is off of the source path
@@ -117,7 +117,7 @@ endif
 ifeq "${BUILD}" "js"
 OBJECT_EXTENSION=.bc
 ifdef BINARY
-OUTPUT_EXTENSION=.html
+OUTPUT_EXTENSION=.js
 endif
 else
 OBJECT_EXTENSION=.o
@@ -198,7 +198,11 @@ bin/${BUILD}/${BINARY_FILE}${OUTPUT_EXTENSION}: optimized_objs unoptimized_objs
 ifndef QUIET
 	@echo " >> Linking $@"
 endif
+ifeq "${BUILD}" "js"
 	${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD} ${ASSET_FLAG} -s TOTAL_MEMORY=100000000 #-s VERBOSE=1
+else
+	${LINKER} -o $@ $(patsubst %,%${OBJECT_EXTENSION},${LINK}) ${OBJS} ${OBJS_NO_OPT} ${DEPS_LINK} ${LIBS_CMD}
+endif
 endif
 
 # build the library
