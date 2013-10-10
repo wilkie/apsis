@@ -175,20 +175,6 @@ unsigned int
 	unsigned char* img;
 	int channels;
 	unsigned int tex_id;
-	/*	does the user want direct uploading of the image as a DDS file?	*/
-	if( flags & SOIL_FLAG_DDS_LOAD_DIRECT )
-	{
-		/*	1st try direct loading of the image as a DDS file
-			note: direct uploading will only load what is in the
-			DDS file, no MIPmaps will be generated, the image will
-			not be flipped, etc.	*/
-		tex_id = SOIL_direct_load_DDS( filename, reuse_texture_ID, flags, 0 );
-		if( tex_id )
-		{
-			/*	hey, it worked!!	*/
-			return tex_id;
-		}
-	}
 	/*	try to load the image	*/
 	img = SOIL_load_image( filename, (int*)width, (int*)height, &channels, force_channels );
 	/*	channels holds the original number of channels, which may have been forced	*/
@@ -1016,7 +1002,8 @@ unsigned int
 				GL_MAX_TEXTURE_SIZE );
 }
 
-#if SOIL_CHECK_FOR_GL_ERRORS
+#if defined(DEBUG_THROW_GL_ERRORS) || \
+    defined(SOIL_CHECK_FOR_GL_ERRORS)
 void check_for_GL_errors( const char *calling_location )
 {
 	/*	check for errors	*/
@@ -1400,9 +1387,11 @@ unsigned int
 		} else
 		{
 			/*	unsigned int clamp_mode = SOIL_CLAMP_TO_EDGE;	*/
-			unsigned int clamp_mode = GL_CLAMP;
+			unsigned int clamp_mode = GL_CLAMP_TO_EDGE;
 			glTexParameteri( opengl_texture_type, GL_TEXTURE_WRAP_S, clamp_mode );
+			check_for_GL_errors( "GL_TEXTURE_WRAP_S" );
 			glTexParameteri( opengl_texture_type, GL_TEXTURE_WRAP_T, clamp_mode );
+			check_for_GL_errors( "GL_TEXTURE_WRAP_T" );
 			if( opengl_texture_type == SOIL_TEXTURE_CUBE_MAP )
 			{
 				/*	SOIL_TEXTURE_WRAP_R is invalid if cubemaps aren't supported	*/
