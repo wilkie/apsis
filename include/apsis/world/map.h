@@ -131,7 +131,7 @@ namespace Apsis {
       float* _vertices;
       Primitives::VertexBuffer _vbo;
 
-      unsigned int* _elements;
+      unsigned short* _elements;
       Primitives::VertexBuffer _ebo;
 
       // Map unique id

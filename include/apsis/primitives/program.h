@@ -23,18 +23,6 @@ namespace Apsis {
       ~Program();
 
       /*
-       *  Uploads the given matrix to the given uniform variable.
-       */
-      void uploadUniform(const char* name,
-                         glm::mat4&  mat) const;
-
-      /*
-       *  Uploads the given integer to the given uniform variable.
-       */
-      void uploadUniform(const char* name,
-                         int         value) const;
-
-      /*
        *  Gives the identifier for this program.
        */
       unsigned int identifier() const;

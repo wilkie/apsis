@@ -33,6 +33,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
 
   _id = _batches.size();
 
+  printf("Building a new batch\n");
+
   Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
 
@@ -81,7 +83,7 @@ void Apsis::Sprite::Batch::add(unsigned int index,
     _vertices = new float[_vertexCapacity];
 
     _elementCapacity = 6*10;
-    _elements = new unsigned int[_elementCapacity];
+    _elements = new unsigned short[_elementCapacity];
   }
 
   if (_vertexCount == _vertexCapacity) {
@@ -91,10 +93,10 @@ void Apsis::Sprite::Batch::add(unsigned int index,
     memcpy(_vertices, oldVertices, _vertexCount * sizeof(float));
     delete [] oldVertices;
 
-    unsigned int* oldElements = _elements;
+    unsigned short* oldElements = _elements;
     _elementCapacity *= 2;
-    _elements = new unsigned int[_elementCapacity];
-    memcpy(_elements, oldElements, _elementCount * sizeof(unsigned int));
+    _elements = new unsigned short[_elementCapacity];
+    memcpy(_elements, oldElements, _elementCount * sizeof(unsigned short));
     delete [] oldElements;
   }
 

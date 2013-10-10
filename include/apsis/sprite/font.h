@@ -185,7 +185,7 @@ namespace Apsis {
       mutable Primitives::VertexArray _vao;
       mutable float* _vertices;
       mutable Primitives::VertexBuffer _vbo;
-      mutable unsigned int* _elements;
+      mutable unsigned short* _elements;
       mutable Primitives::VertexBuffer _ebo;
 
       // Glyph cache

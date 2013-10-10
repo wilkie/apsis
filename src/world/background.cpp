@@ -24,7 +24,7 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   // Create buffer array:
   unsigned int vertices_size = 4;
   unsigned int elements_size = 6;
-  _elements = new unsigned int[elements_size];
+  _elements = new unsigned short[elements_size];
 
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   2 per texcoord

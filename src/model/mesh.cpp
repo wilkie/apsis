@@ -9,7 +9,7 @@
 Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
                          std::vector<glm::vec3>& normals,
                          std::vector<glm::vec2>& textureCoords,
-                         std::vector<unsigned int>& elements)
+                         std::vector<unsigned short>& elements)
   : _vbo(Primitives::VertexBuffer::Target::Data),
     _ebo(Primitives::VertexBuffer::Target::Elements) {
   // Create buffer array
@@ -23,7 +23,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
     vert_array[i * 8 + 3] = normals[i].x;
     vert_array[i * 8 + 4] = normals[i].y;
     vert_array[i * 8 + 5] = normals[i].z;
-    
+
     vert_array[i * 8 + 6] = textureCoords[i].x;
     vert_array[i * 8 + 7] = textureCoords[i].y;
   }
@@ -31,7 +31,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 
   delete [] vert_array;
 
-  unsigned int * element_array = new unsigned int[elements.size()];
+  unsigned short* element_array = new unsigned short[elements.size()];
   for (unsigned int i = 0; i < elements.size(); i++) {
     element_array[i] = elements[i];
   }

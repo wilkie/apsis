@@ -51,12 +51,12 @@ namespace Apsis {
        *  Copies the given data to the buffer.
        */
       void transfer(const float* elements, unsigned int count);
-      void transfer(const unsigned int* elements, unsigned int count);
+      void transfer(const unsigned short* elements, unsigned int count);
 
       /*
        *  Updates the given data to the buffer.
        */
-      void transfer(const unsigned int* elements, unsigned int count, unsigned int at);
+      void transfer(const unsigned short* elements, unsigned int count, unsigned int at);
 
       /*
        *  Returns the number of elements in the buffer.

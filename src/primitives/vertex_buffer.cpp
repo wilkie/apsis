@@ -4,7 +4,7 @@
 
 #include "apsis/engine/log.h"
 
-#define DEBUG_THROW_GL_ERRORS
+//#define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
   Apsis::Engine::Log::error("Primitives", "VertexBuffer", function, message);
@@ -136,10 +136,10 @@ void Apsis::Primitives::VertexBuffer::transfer(const float* elements, unsigned i
   glBindBuffer(target, this->_vbo);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("transferf(glBindBuffer)");
+  _throwGLError("transferf(glBindBuffer)!");
 #endif
 
-  glBufferData(target, count * 4, elements, GL_STATIC_DRAW);
+  glBufferData(target, count * sizeof(GLfloat), elements, GL_STATIC_DRAW);
 
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("transferf(glBufferData)");
@@ -148,7 +148,7 @@ void Apsis::Primitives::VertexBuffer::transfer(const float* elements, unsigned i
   _count = count;
 }
 
-void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count) {
+void Apsis::Primitives::VertexBuffer::transfer(const unsigned short* elements, unsigned int count) {
   GLenum target = GL_ARRAY_BUFFER;
   if (_target == Target::Data) {
     target = GL_ARRAY_BUFFER;
@@ -162,7 +162,7 @@ void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, uns
   _throwGLError("transferi(glBindBuffer)");
 #endif
 
-  glBufferData(target, count * 4, elements, GL_STATIC_DRAW);
+  glBufferData(target, count * sizeof(GLushort), elements, GL_STATIC_DRAW);
 
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("transferi(glBufferData)");
@@ -171,7 +171,7 @@ void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, uns
   _count = count;
 }
 
-void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, unsigned int count, unsigned int at) {
+void Apsis::Primitives::VertexBuffer::transfer(const unsigned short* elements, unsigned int count, unsigned int at) {
   GLenum target = GL_ARRAY_BUFFER;
   if (_target == Target::Data) {
     target = GL_ARRAY_BUFFER;
@@ -185,7 +185,7 @@ void Apsis::Primitives::VertexBuffer::transfer(const unsigned int* elements, uns
   _throwGLError("transferisub(glBindBuffer)");
 #endif
 
-  glBufferSubData(target, (GLintptr)(at * sizeof(GLint)), count, elements);
+  glBufferSubData(target, (GLintptr)(at * sizeof(GLushort)), count, elements);
 
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("transferisub(glBufferData)");

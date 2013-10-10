@@ -20,6 +20,8 @@ std::vector<Apsis::World::Map*> Apsis::World::Map::_maps;
 
 const Apsis::World::Map& Apsis::World::Map::load(const char* json,
                                                  const Apsis::Engine::Object& loader) {
+  printf("Loading map %s\n", json);
+
   Apsis::World::Map* map = new Apsis::World::Map(json);
   _maps.push_back(map);
   return *map;
@@ -87,7 +89,7 @@ void Apsis::World::Map::_generateVAO() {
   // Create buffer array:
   unsigned int vertices_size = 4 * _width * _height;
   unsigned int elements_size = 6 * _width * _height;
-  _elements = new unsigned int[elements_size];
+  _elements = new unsigned short[elements_size];
 
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   2 per texcoord

@@ -2,7 +2,7 @@
 
 #include "apsis/backend/sdl.h"
 
-#define DEBUG_THROW_GL_ERRORS
+//#define DEBUG_THROW_GL_ERRORS
 
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
@@ -88,13 +88,17 @@ void Apsis::Primitives::VertexArray::bind(VertexBuffer& buffer) {
     }
     _elementBuffer.push_back(buffer);
   }
-  else if (buffer.target() == VertexBuffer::Target::Elements) {
+  else if (buffer.target() == VertexBuffer::Target::Data) {
     glBindBuffer(GL_ARRAY_BUFFER, buffer.identifier());
     if (_dataBuffer.size() > 0) {
       _dataBuffer.clear();
     }
     _dataBuffer.push_back(buffer);
   }
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("bind");
+#endif
 }
 
 void Apsis::Primitives::VertexArray::useProgram(Program& program) {
@@ -117,22 +121,23 @@ void Apsis::Primitives::VertexArray::useProgram(Program& program) {
 void Apsis::Primitives::VertexArray::draw() const {
   _bind();
 
+  if (_dataBuffer.size() > 0) {
+    _dataBuffer[0].bind();
+  }
+
   unsigned int count = 0;
   if (_elementBuffer.size() > 0) {
     count = _elementBuffer[0].count();
     _elementBuffer[0].bind();
   }
 
-  if (_dataBuffer.size() > 0) {
-    _dataBuffer[0].bind();
-  }
-
   _bindTextures();
 
-  glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
+  // TODO: Handle multiple arrays for when count is too big for GL_UNSIGNED_SHORT
+  glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, (void*)0);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("draw");
+  _throwGLError("draw(glDrawElements)");
 #endif
 }
 
@@ -149,10 +154,10 @@ void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int 
 
   _bindTextures();
 
-  glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
+  glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, (void*)(start * sizeof(GLushort)));
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("drawRange");
+  _throwGLError("drawRange(glDrawElements)");
 #endif
 }
 
@@ -171,10 +176,10 @@ void Apsis::Primitives::VertexArray::drawQuads() const {
 
   _bindTextures();
 
-  glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_QUADS, count, GL_UNSIGNED_SHORT, (void*)0);
 
 #ifdef DEBUG_THROW_GL_ERRORS
-  _throwGLError("drawQuads");
+  _throwGLError("drawQuads(glDrawElements)");
 #endif
 }
 
@@ -191,7 +196,11 @@ void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned
 
   _bindTextures();
 
-  glDrawElements(GL_QUADS, count, GL_UNSIGNED_INT, (void*)(start * sizeof(GLuint)));
+  glDrawElements(GL_QUADS, count, GL_UNSIGNED_SHORT, (void*)(start * sizeof(GLushort)));
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("drawQuadsRange(glDrawElements)");
+#endif
 }
 
 int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& program) {
@@ -335,6 +344,10 @@ void Apsis::Primitives::VertexArray::_bindTextures() const {
 }
 
 void Apsis::Primitives::VertexArray::bindProgram() const {
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("bindProgram (error on stack)");
+#endif
+
   if (_programs.size() > 0) {
     glUseProgram(_programs[0].identifier());
   }

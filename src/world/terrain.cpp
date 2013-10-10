@@ -43,7 +43,7 @@ static Apsis::Geometry::Point3d* firstControlPoints(Apsis::Geometry::Point3d* rh
 
 // It was based upon my own math and the code of http://www.codeproject.com/KB/graphics/BezierSpline.aspx
 // Adapted for 3d points and C++.
-static void controlPoints(Apsis::Geometry::Point3d* points, 
+static void controlPoints(Apsis::Geometry::Point3d* points,
                           Apsis::Geometry::Point3d* first,
                           Apsis::Geometry::Point3d* second,
                           unsigned int num) {
@@ -117,13 +117,13 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   // Create buffer array:
   unsigned int vertices_size = 4 * width * height + 6 * (2*width*height - width - height);
   unsigned int elements_size = 6 * width * height + 6 * (2*width*height - width - height);
-  _elements = new unsigned int[elements_size];
+  _elements = new unsigned short[elements_size];
 
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   3 per normal,
   //                                   2 per texcoord
   this->_vertices = new float[8 * vertices_size];
-  
+
   unsigned int i = 0;
   unsigned int ei = 0;
   for (unsigned int h = 0; h < height; h++) {
@@ -135,7 +135,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
@@ -148,12 +148,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = (float)w + 1.0f;
       _vertices[i * 8 + 1] = 1.0f + ((float)(rand() % 10) / 10);
       _vertices[i * 8 + 2] = (float)h + 1.0f;
@@ -161,12 +161,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = (float)w;
       _vertices[i * 8 + 1] = 1.0f + ((float)(rand() % 10) / 10);
       _vertices[i * 8 + 2] = (float)h + 1.0f;
@@ -174,7 +174,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 1.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
@@ -183,7 +183,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _elements[ei] = i-4; ei++;
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-1; ei++;
-      
+
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-2; ei++;
       _elements[ei] = i-1; ei++;
@@ -193,7 +193,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   for (unsigned int h = 0; h < height; h++) {
     for (unsigned int w = 0; w < width-1; w++) {
       unsigned int vi = (_width * h + w) * 4;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+1) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+1) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+1) * 8 + 2];
@@ -201,12 +201,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 1.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+4) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+4) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+4) * 8 + 2];
@@ -214,12 +214,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 1.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+7) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+7) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+7) * 8 + 2];
@@ -227,12 +227,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 1.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+2) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+2) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+2) * 8 + 2];
@@ -240,7 +240,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 1.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 0.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
@@ -309,7 +309,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _elements[ei] = i-4; ei++;
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-1; ei++;
-      
+
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-2; ei++;
       _elements[ei] = i-1; ei++;
@@ -319,7 +319,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   for (unsigned int h = 0; h < height-1; h++) {
     for (unsigned int w = 0; w < width; w++) {
       unsigned int vi = (_width * h + w) * 4;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+3) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+3) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+3) * 8 + 2];
@@ -327,12 +327,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 1.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+2) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+2) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+2) * 8 + 2];
@@ -340,12 +340,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 1.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+_width*4+1) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+_width*4+1) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+_width*4+1) * 8 + 2];
@@ -353,12 +353,12 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 1.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
       i++;
-      
+
       _vertices[i * 8 + 0] = _vertices[(vi+_width*4) * 8 + 0];
       _vertices[i * 8 + 1] = _vertices[(vi+_width*4) * 8 + 1];
       _vertices[i * 8 + 2] = _vertices[(vi+_width*4) * 8 + 2];
@@ -366,7 +366,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _vertices[i * 8 + 3] = 0.0;
       _vertices[i * 8 + 4] = 0.0;
       _vertices[i * 8 + 5] = 1.0;
-    
+
       _vertices[i * 8 + 6] = 0; //textureCoords[i].x;
       _vertices[i * 8 + 7] = 0; //textureCoords[i].y;
 
@@ -375,7 +375,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
       _elements[ei] = i-4; ei++;
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-1; ei++;
-      
+
       _elements[ei] = i-3; ei++;
       _elements[ei] = i-2; ei++;
       _elements[ei] = i-1; ei++;
@@ -423,7 +423,7 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   _materials.push_back(Apsis::Model::Material(0.2f, 5.0f, 8.0f,
                                               emission,
                                               15.0f));
-  
+
   Primitives::Vector3 position  = {0.0f, 0.0f, 0.0f};
   Primitives::Vector3 direction = {0.0f, 1.0f, 0.0f};
   Primitives::Vector3 color     = {1.0f, 0.0f, 1.0f};

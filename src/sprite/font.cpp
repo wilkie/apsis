@@ -84,6 +84,8 @@ const Apsis::Sprite::Font& Apsis::Sprite::Font::load(const char* family) {
     return *_fonts[std::distance(_ids.begin(), it)];
   }
 
+  printf("Loading font %s\n", family);
+
   _fonts.push_back(new Apsis::Sprite::Font(family));
   _ids.push_back(str);
   return *_fonts[_ids.size() - 1];
@@ -265,7 +267,7 @@ unsigned int Apsis::Sprite::Font::_addGlyph(char character,
     unsigned int vertices_size = 4 * glyph_count;
     unsigned int elements_size = 6 * glyph_count;
 
-    _elements = new unsigned int[elements_size];
+    _elements = new unsigned short[elements_size];
 
     // 8 values for each logical vertex: 3 per axis coordinate,
     //                                   2 per texcoord

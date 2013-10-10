@@ -21,7 +21,7 @@ namespace Apsis {
       Mesh(std::vector<glm::vec3>& vertices,
            std::vector<glm::vec3>& normals,
            std::vector<glm::vec2>& textureCoords,
-           std::vector<unsigned int>& elements);
+           std::vector<unsigned short>& elements);
 
       void draw(const Primitives::Matrix& projection, const World::Camera& camera, const Primitives::Matrix& model) const;
 

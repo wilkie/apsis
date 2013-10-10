@@ -92,7 +92,7 @@ namespace Apsis {
       unsigned int _vertexCapacity;
       mutable Primitives::VertexBuffer _vbo;
 
-      unsigned int* _elements;
+      unsigned short* _elements;
       unsigned int _elementCount;
       unsigned int _elementCapacity;
       mutable Primitives::VertexBuffer _ebo;

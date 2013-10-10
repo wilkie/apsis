@@ -6,6 +6,8 @@
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
 
+#include "apsis/engine/log.h"
+
 #ifndef NO_GL
   #ifdef _WIN32
   #include <windows.h>
@@ -24,6 +26,34 @@
 #include <json/json.h>
 
 #include <algorithm>
+
+#define DEBUG_THROW_GL_ERRORS
+
+static void _throwError(const char* function, const char* message) {
+  Apsis::Engine::Log::error("Sprite", "Sheet", function, message);
+}
+
+#ifdef DEBUG_THROW_GL_ERRORS
+static void _throwGLError(const char* function) {
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    const char* errorString;
+    switch ( error ) {
+      case GL_INVALID_ENUM: errorString = "invalid enumerant"; break;
+      case GL_INVALID_VALUE: errorString = "invalid value"; break;
+      case GL_INVALID_OPERATION: errorString = "invalid operation"; break;
+      case GL_STACK_OVERFLOW: errorString = "stack overflow"; break;
+      case GL_STACK_UNDERFLOW: errorString = "stack underflow"; break;
+      case GL_OUT_OF_MEMORY: errorString = "out of memory"; break;
+      case GL_TABLE_TOO_LARGE: errorString = "table too large"; break;
+      case GL_INVALID_FRAMEBUFFER_OPERATION: errorString = "invalid framebuffer operation"; break;
+//      case GL_TEXTURE_TOO_LARGE: errorString = "texture too large"; break;
+      default: errorString = "unknown GL error"; break;
+    }
+    _throwError(function, errorString);
+  }
+}
+#endif
 
 std::vector<std::string> Apsis::Sprite::Sheet::_ids;
 std::vector<Apsis::Sprite::Sheet*> Apsis::Sprite::Sheet::_sheets;
@@ -61,13 +91,17 @@ Apsis::Sprite::Sheet::Sheet(const char* filename)
   // Set GL texture options
   glBindTexture(GL_TEXTURE_2D, _texture->identifier());
 
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(glBindTexture)");
+#endif
+
   _loadStatSheet(filename);
 
   unsigned int sprite_count = this->count();
 
   unsigned int vertices_size = 4 * sprite_count;
   unsigned int elements_size = 6 * sprite_count;
-  _elements = new unsigned int[elements_size];
+  _elements = new unsigned short[elements_size];
 
   // 8 values for each logical vertex: 3 per axis coordinate,
   //                                   2 per texcoord

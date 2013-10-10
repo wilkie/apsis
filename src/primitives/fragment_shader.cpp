@@ -4,13 +4,66 @@
 
 #include "apsis/backend/sdl.h"
 
+#include "apsis/engine/log.h"
+
+#define DEBUG_THROW_GL_ERRORS
+
+static void _throwError(const char* function, const char* message) {
+  Apsis::Engine::Log::error("Primitives", "FragmentShader", function, message);
+}
+
+#ifdef DEBUG_THROW_GL_ERRORS
+static void _throwGLError(const char* function) {
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    const char* errorString;
+    switch ( error ) {
+      case GL_INVALID_ENUM: errorString = "invalid enumerant"; break;
+      case GL_INVALID_VALUE: errorString = "invalid value"; break;
+      case GL_INVALID_OPERATION: errorString = "invalid operation"; break;
+      case GL_STACK_OVERFLOW: errorString = "stack overflow"; break;
+      case GL_STACK_UNDERFLOW: errorString = "stack underflow"; break;
+      case GL_OUT_OF_MEMORY: errorString = "out of memory"; break;
+      case GL_TABLE_TOO_LARGE: errorString = "table too large"; break;
+      case GL_INVALID_FRAMEBUFFER_OPERATION: errorString = "invalid framebuffer operation"; break;
+//      case GL_TEXTURE_TOO_LARGE: errorString = "texture too large"; break;
+      default: errorString = "unknown GL error"; break;
+    }
+    _throwError(function, errorString);
+  }
+}
+#endif
+
 Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
-  printf("---\n%s\n---\n", source);
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(on stack)");
+#endif
+
   this->_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(glCreateShader)");
+#endif
+
   glShaderSource(this->_fragmentShader, 1, &source, NULL);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(glShaderSource)");
+#endif
+
   glCompileShader(this->_fragmentShader);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(glCompileShader)");
+#endif
+
   GLint status;
   glGetShaderiv(this->_fragmentShader, GL_COMPILE_STATUS, &status);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(glGetShaderiv)");
+#endif
+
   if (status != GL_TRUE) {
     // Get errors
     GLchar buffer[2048];
@@ -23,6 +76,11 @@ Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
 Apsis::Primitives::FragmentShader::~FragmentShader() {
   if (_counter.isAlone()) {
     //glDeleteShader(this->_fragmentShader);
+
+#ifdef DEBUG_THROW_GL_ERRORS
+    _throwGLError("destructor(glDeleteShader)");
+#endif
+
   }
 }
 
