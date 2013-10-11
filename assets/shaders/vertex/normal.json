@@ -1,0 +1,15 @@
+{
+  "type": "shader",
+  "process": "vertex",
+  "name": "normal",
+  "inputs": [
+  ],
+  "uniforms": [
+    {
+      "name": "model",
+      "type": "mat4"
+    }
+  ],
+  "output": "vec3",
+  "code": "return (model * vec4(normal, 1.0)).xyz;"
+}

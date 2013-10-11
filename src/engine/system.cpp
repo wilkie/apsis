@@ -27,6 +27,9 @@ Apsis::Engine::System::System(const char* path,
     // Initialize Graphics Engine
     _graphics(Apsis::Engine::Graphics::basic(videoSettings)),
 
+    // Initialize Shader Engine
+    _shaders(Apsis::Engine::Shader::basic(_graphics)),
+
     // Initialize Audio Engine
     _audio(Apsis::Engine::Audio::basic(audioSettings)),
 
@@ -44,6 +47,8 @@ Apsis::Engine::System::System(const char* path,
 
   // Parse objects and system data and populate data and caches.
   _parseJSONFile();
+
+  _objects.loadShader("vertex/position").code();
 }
 
 const Apsis::Engine::Input& Apsis::Engine::System::inputEngine() const {

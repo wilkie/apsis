@@ -10,7 +10,8 @@
     "backgrounds": "assets/backgrounds",
     "rules": "assets/rules",
     "widgets": "assets/widgets",
-    "interfaces": "assets/interfaces"
+    "interfaces": "assets/interfaces",
+    "shaders": "assets/shaders"
   },
 
   "scenes": [

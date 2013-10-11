@@ -9,6 +9,7 @@
 #include "apsis/engine/graphics.h"
 #include "apsis/engine/audio.h"
 #include "apsis/engine/interface.h"
+#include "apsis/engine/shader.h"
 
 #include "apsis/settings/video.h"
 #include "apsis/settings/audio.h"
@@ -108,6 +109,9 @@ namespace Apsis {
 
       // Graphics Engine
       Apsis::Engine::Graphics& _graphics;
+
+      // Shader Engine
+      Apsis::Engine::Shader& _shaders;
 
       // Audio Engine
       Apsis::Engine::Audio& _audio;

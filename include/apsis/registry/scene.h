@@ -15,8 +15,8 @@ namespace Apsis {
   namespace Registry {
     class Scene {
     public:
-      static const Apsis::Registry::Scene& load(const char* path,
-                                                const Apsis::Engine::Object& loader);
+      static const Registry::Scene& load(const char* path,
+                                         const Engine::Object& loader);
 
       unsigned int actorCount() const;
 

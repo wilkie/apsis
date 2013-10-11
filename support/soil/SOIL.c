@@ -20,6 +20,7 @@
 	#include <windows.h>
 	#include <wingdi.h>
 	#include <GL/gl.h>
+	#include <SDL/SDL_opengl.h>
 #elif defined(__APPLE__) || defined(__APPLE_CC__)
 	/*	I can't test this Apple stuff!	*/
 	#include <OpenGL/gl.h>

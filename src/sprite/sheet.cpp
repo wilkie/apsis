@@ -8,14 +8,7 @@
 
 #include "apsis/engine/log.h"
 
-#ifndef NO_GL
-  #ifdef _WIN32
-  #include <windows.h>
-  #endif
-
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-#endif
+#include "apsis/backend/sdl.h"
 
 #include <string.h>
 
@@ -45,8 +38,8 @@ static void _throwGLError(const char* function) {
       case GL_STACK_OVERFLOW: errorString = "stack overflow"; break;
       case GL_STACK_UNDERFLOW: errorString = "stack underflow"; break;
       case GL_OUT_OF_MEMORY: errorString = "out of memory"; break;
-      case GL_TABLE_TOO_LARGE: errorString = "table too large"; break;
-      case GL_INVALID_FRAMEBUFFER_OPERATION: errorString = "invalid framebuffer operation"; break;
+//      case GL_TABLE_TOO_LARGE: errorString = "table too large"; break;
+//      case GL_INVALID_FRAMEBUFFER_OPERATION: errorString = "invalid framebuffer operation"; break;
 //      case GL_TEXTURE_TOO_LARGE: errorString = "texture too large"; break;
       default: errorString = "unknown GL error"; break;
     }

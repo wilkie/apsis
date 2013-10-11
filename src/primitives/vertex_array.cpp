@@ -2,11 +2,6 @@
 
 #include "apsis/backend/sdl.h"
 
-//#define DEBUG_THROW_GL_ERRORS
-
-// glm::value_ptr
-#include <glm/gtc/type_ptr.hpp>
-
 #include "apsis/engine/log.h"
 
 unsigned int Apsis::Primitives::VertexArray::_current_vao = 0xffffffff;

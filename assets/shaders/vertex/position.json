@@ -1,0 +1,23 @@
+{
+  "type": "shader",
+  "process": "vertex",
+  "name": "position",
+  "inputs": [
+  ],
+  "uniforms": [
+    {
+      "name": "projection",
+      "type": "mat4"
+    },
+    {
+      "name": "view",
+      "type": "mat4"
+    },
+    {
+      "name": "model",
+      "type": "mat4"
+    }
+  ],
+  "output": "vec4",
+  "code": "return projection * view * model * vec4(position, 1.0);"
+}

@@ -119,6 +119,14 @@ void Apsis::Engine::Object::_loadFromJSON(Json::Value& value) {
     }
   }
 
+  if (value.isMember("shaders")) {
+    _shader_path = value["shaders"].asCString();
+    if (_shader_path.size() > 0 &&
+        _shader_path[_shader_path.size() - 1] != '/') {
+      _shader_path.append("/");
+    }
+  }
+
   if (value.isMember("widgets")) {
     _widget_path = value["widgets"].asCString();
     if (_widget_path.size() > 0 &&
@@ -138,6 +146,7 @@ void Apsis::Engine::Object::_loadDefaults() {
   _rule_path = "";
   _interface_path = "";
   _widget_path = "";
+  _shader_path = "";
 }
 
 const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) const {
@@ -194,6 +203,14 @@ void Apsis::Engine::Object::loadBindings(const char* name) const {
     throw "Bindings file not found or loaded.";
   }
   return Apsis::Registry::Action::load(found.c_str());
+}
+
+const Apsis::Registry::Shader& Apsis::Engine::Object::loadShader(const char* name) const {
+  std::string found = _findFile(_shader_path, std::string(name));
+  if (found == "") {
+    throw "Shader file not found or loaded.";
+  }
+  return Apsis::Registry::Shader::load(found.c_str(), *this);
 }
 
 std::string Apsis::Engine::Object::_findFile(const std::string& searchPath, const std::string& name) const {

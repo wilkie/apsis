@@ -458,6 +458,12 @@
     <ClCompile Include="..\..\src\backend\sdl.cpp">
       <Filter>backend</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\shader.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registry\shader.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis\geometry\circle.h">
@@ -931,6 +937,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\engine\log.h">
       <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\engine\shader.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\shader.h">
+      <Filter>registry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

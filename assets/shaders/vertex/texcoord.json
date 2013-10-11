@@ -1,0 +1,11 @@
+{
+  "type": "shader",
+  "process": "vertex",
+  "name": "texcoord",
+  "inputs": [
+  ],
+  "uniforms": [
+  ],
+  "output": "vec3",
+  "code": "return texcoord;"
+}

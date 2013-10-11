@@ -22,6 +22,7 @@ namespace Apsis {
     class State;
     class Interface;
     class Widget;
+    class Shader;
   }
 
   namespace World {
@@ -97,6 +98,12 @@ namespace Apsis {
       const Apsis::Registry::Widget& loadWidget(const char* name) const;
 
       /*
+       *  Loads or returns the existing Shader object with the given
+       *  name or path.
+       */
+      const Apsis::Registry::Shader& loadShader(const char* name) const;
+
+      /*
        *  Loads bindings.
        */
       void loadBindings(const char* name) const;
@@ -127,6 +134,7 @@ namespace Apsis {
       std::string _rule_path;
       std::string _interface_path;
       std::string _widget_path;
+      std::string _shader_path;
 
       // Keeps track of Object engines system-wide.
       static std::vector<Apsis::Engine::Object*> _object_engines;
@@ -142,6 +150,7 @@ namespace Apsis {
 #include "apsis/registry/state.h"
 #include "apsis/registry/interface.h"
 #include "apsis/registry/widget.h"
+#include "apsis/registry/shader.h"
 
 #include "apsis/sprite/thing.h"
 

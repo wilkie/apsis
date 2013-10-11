@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\src\engine\log.cpp" />
     <ClCompile Include="..\..\src\engine\object.cpp" />
     <ClCompile Include="..\..\src\engine\scene.cpp" />
+    <ClCompile Include="..\..\src\engine\shader.cpp" />
     <ClCompile Include="..\..\src\engine\system.cpp" />
     <ClCompile Include="..\..\src\engine\input.cpp" />
     <ClCompile Include="..\..\src\geometry\circle.cpp" />
@@ -119,6 +120,7 @@
     <ClCompile Include="..\..\src\registry\property.cpp" />
     <ClCompile Include="..\..\src\registry\rule.cpp" />
     <ClCompile Include="..\..\src\registry\scene.cpp" />
+    <ClCompile Include="..\..\src\registry\shader.cpp" />
     <ClCompile Include="..\..\src\registry\state.cpp" />
     <ClCompile Include="..\..\src\registry\widget.cpp" />
     <ClCompile Include="..\..\src\rules\actor_collider.cpp" />
@@ -239,6 +241,7 @@
     <ClInclude Include="..\..\include\apsis\engine\log.h" />
     <ClInclude Include="..\..\include\apsis\engine\object.h" />
     <ClInclude Include="..\..\include\apsis\engine\scene.h" />
+    <ClInclude Include="..\..\include\apsis\engine\shader.h" />
     <ClInclude Include="..\..\include\apsis\engine\system.h" />
     <ClInclude Include="..\..\include\apsis\engine\input.h" />
     <ClInclude Include="..\..\include\apsis\geometry\circle.h" />
@@ -278,6 +281,7 @@
     <ClInclude Include="..\..\include\apsis\registry\property.h" />
     <ClInclude Include="..\..\include\apsis\registry\rule.h" />
     <ClInclude Include="..\..\include\apsis\registry\scene.h" />
+    <ClInclude Include="..\..\include\apsis\registry\shader.h" />
     <ClInclude Include="..\..\include\apsis\registry\state.h" />
     <ClInclude Include="..\..\include\apsis\registry\widget.h" />
     <ClInclude Include="..\..\include\apsis\rules\actor_collider.h" />
