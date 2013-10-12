@@ -1,4 +1,4 @@
-#include "apsis/primitives/texture.h"
+#include "apsis/primitive/texture.h"
 
 #include "apsis/backend/sdl.h"
 
@@ -9,7 +9,7 @@
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "Texture", function, message);
+  Apsis::Engine::Log::error("Primitive", "Texture", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -34,13 +34,13 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::Texture::~Texture() {
+Apsis::Primitive::Texture::~Texture() {
   if (_counter.isAlone()) {
     glDeleteTextures(1, &_texture);
   }
 }
 
-Apsis::Primitives::Texture::Texture(const char* name) {
+Apsis::Primitive::Texture::Texture(const char* name) {
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("constructor(on stack)");
 #endif
@@ -107,7 +107,7 @@ Apsis::Primitives::Texture::Texture(const char* name) {
 
 }
 
-Apsis::Primitives::Texture::Texture(unsigned int width,
+Apsis::Primitive::Texture::Texture(unsigned int width,
                                     unsigned int height)
   : _width(width),
     _height(height) {
@@ -177,7 +177,7 @@ Apsis::Primitives::Texture::Texture(unsigned int width,
 #endif
 }
 
-Apsis::Primitives::Texture::Texture(unsigned int width,
+Apsis::Primitive::Texture::Texture(unsigned int width,
                                     unsigned int height,
                                     void*        data)
   : _width(width),
@@ -201,19 +201,19 @@ Apsis::Primitives::Texture::Texture(unsigned int width,
                0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 }
 
-unsigned int Apsis::Primitives::Texture::width() const {
+unsigned int Apsis::Primitive::Texture::width() const {
   return _width;
 }
 
-unsigned int Apsis::Primitives::Texture::height() const {
+unsigned int Apsis::Primitive::Texture::height() const {
   return _height;
 }
 
-unsigned int Apsis::Primitives::Texture::identifier() const {
+unsigned int Apsis::Primitive::Texture::identifier() const {
   return this->_texture;
 }
 
-void Apsis::Primitives::Texture::blit(unsigned int x,
+void Apsis::Primitive::Texture::blit(unsigned int x,
                                       unsigned int y,
                                       void* data,
                                       unsigned int src_width,

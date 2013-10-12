@@ -28,8 +28,8 @@
 #include "apsis/world/rule_set.h"
 #include "apsis/world/camera.h"
 
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/vertex_array.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include "apsis/registry/property.h"
 #include "apsis/registry/rule.h"
@@ -93,7 +93,7 @@ namespace Apsis {
       /*
        *  Draws the actor.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera) const;
 
       /*

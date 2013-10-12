@@ -3,7 +3,7 @@
 Apsis::Model::Material::Material(float ambientIntensity,
                                  float diffuseIntensity,
                                  float specularIntensity,
-                                 const Apsis::Primitives::Vector3& emission,
+                                 const Apsis::Primitive::Vector3& emission,
                                  float shininess) :
   _ambientIntensity(ambientIntensity),
   _diffuseIntensity(diffuseIntensity),
@@ -16,7 +16,7 @@ float Apsis::Model::Material::shininess() const {
   return _shininess;
 }
 
-const Apsis::Primitives::Vector3& Apsis::Model::Material::emission() const {
+const Apsis::Primitive::Vector3& Apsis::Model::Material::emission() const {
   return _emission;
 }
 

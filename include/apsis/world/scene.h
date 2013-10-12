@@ -80,7 +80,7 @@ namespace Apsis {
       /*
        *  Draws the scene.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera) const;
 
       /*

@@ -212,19 +212,19 @@ void Interface::CheckBox::draw(Engine::Graphics& graphics,
 
   // Draw area
   graphics.sheet(sheet.id());
-  batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+  batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
 
   if (object.has("value") && object.get("value").asInteger() == 1) {
     // Draw check
     if (window.hovered()) {
-      check_pressed_hover_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+      check_pressed_hover_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
     }
     else {
-      check_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+      check_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
     }
   }
   else if (window.hovered()) {
-    check_hover_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    check_hover_batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
 
   // Draw text

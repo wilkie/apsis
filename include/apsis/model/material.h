@@ -3,7 +3,7 @@
 
 #include "glm/glm.hpp"
 
-#include "apsis/primitives/math.h"
+#include "apsis/primitive/math.h"
 
 namespace Apsis {
   namespace Model {
@@ -15,7 +15,7 @@ namespace Apsis {
       Material(float ambientIntensity,
                float diffuseIntensity,
                float specularIntensity,
-               const Apsis::Primitives::Vector3& emission,
+               const Apsis::Primitive::Vector3& emission,
                float shininess);
 
       /*
@@ -28,7 +28,7 @@ namespace Apsis {
        *  Retrieve the type of glow the material has. The glow is the color
        *    of light that emits from the material.
        */
-      const Primitives::Vector3& emission() const;
+      const Primitive::Vector3& emission() const;
 
       /*
        *  Retrieve the diffuse intensity of the material. This affects how
@@ -54,7 +54,7 @@ namespace Apsis {
       float _diffuseIntensity;
       float _specularIntensity;
       float _shininess;
-      const Apsis::Primitives::Vector3 _emission;
+      const Apsis::Primitive::Vector3 _emission;
     };
   }
 }

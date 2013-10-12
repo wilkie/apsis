@@ -1,10 +1,10 @@
-#ifndef APSIS_PRIMITIVES_FRAGMENT_SHADER_H
-#define APSIS_PRIMITIVES_FRAGMENT_SHADER_H
+#ifndef APSIS_PRIMITIVE_FRAGMENT_SHADER_H
+#define APSIS_PRIMITIVE_FRAGMENT_SHADER_H
 
 #include "apsis/sync/reference_counter.h"
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class FragmentShader {
     public:
       /*

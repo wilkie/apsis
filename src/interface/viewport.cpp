@@ -16,7 +16,7 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float width,
                               float height)
   : _scene(scene),
-    _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
+    _camera(*(Primitive::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _window(Engine::Object::basic(),
             width / 2.0f, height / 2.0f,
             width, height,
@@ -53,7 +53,7 @@ Geometry::Point3d Interface::Viewport::target() {
 
 void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
   World::Camera camera = World::Camera(
-    *(Primitives::Vector2*)glm::value_ptr(glm::vec2((float)(int)((_window.position().width/2.0f)+0.5),
+    *(Primitive::Vector2*)glm::value_ptr(glm::vec2((float)(int)((_window.position().width/2.0f)+0.5),
                                                     (float)(int)((_window.position().height/2.0f)+0.5))),
     1.0f);
 

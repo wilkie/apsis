@@ -1,6 +1,6 @@
 #include "apsis/registry/program.h"
 
-#include "apsis/primitives/unlinked_program.h"
+#include "apsis/primitive/unlinked_program.h"
 
 #include <json/json.h>
 
@@ -206,22 +206,22 @@ void Registry::Program::_generateFragmentCode() const {
   _fragment_code = os.str();
 }
 
-const Primitives::Program& Registry::Program::program() const {
+const Primitive::Program& Registry::Program::program() const {
   if (_program == NULL) {
     if (_vertex_main == NULL) {
       if (_vertex_code.empty()) {
         _generateVertexCode();
       }
-      _vertex_main = new Primitives::VertexShader(_vertex_code.c_str());
+      _vertex_main = new Primitive::VertexShader(_vertex_code.c_str());
     }
     if (_fragment_main == NULL) {
       if (_fragment_code.empty()) {
         _generateFragmentCode();
       }
-      _fragment_main = new Primitives::FragmentShader(_fragment_code.c_str());
+      _fragment_main = new Primitive::FragmentShader(_fragment_code.c_str());
     }
 
-    Primitives::UnlinkedProgram& program = *(new Primitives::UnlinkedProgram());
+    Primitive::UnlinkedProgram& program = *(new Primitive::UnlinkedProgram());
 
     // Attach compiled shaders
     program.attach((*_vertex_position).vertexShader());
@@ -234,7 +234,7 @@ const Primitives::Program& Registry::Program::program() const {
     program.attach(*_fragment_main);
 
     // Link
-    _program = new Primitives::Program(program.link());
+    _program = new Primitive::Program(program.link());
   }
 
   return *_program;

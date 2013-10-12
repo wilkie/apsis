@@ -8,8 +8,8 @@
 
 #include "apsis/sprite/sheet.h"
 
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/vertex_array.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include "apsis/sync/reference_counter.h"
 
@@ -67,7 +67,7 @@ namespace Apsis {
       /*
        *  Renders the map.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera) const;
 
       /*
@@ -130,13 +130,13 @@ namespace Apsis {
 
       void _generateVAO();
 
-      Primitives::VertexArray _vao;
+      Primitive::VertexArray _vao;
 
       float* _vertices;
-      Primitives::VertexBuffer _vbo;
+      Primitive::VertexBuffer _vbo;
 
       unsigned short* _elements;
-      Primitives::VertexBuffer _ebo;
+      Primitive::VertexBuffer _ebo;
 
       // Map unique id
       unsigned int _id;

@@ -3,9 +3,9 @@
 
 #include "apsis/world/camera.h"
 
-#include "apsis/primitives/texture.h"
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/texture.h"
+#include "apsis/primitive/vertex_array.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include <glm/glm.hpp>
 
@@ -20,9 +20,9 @@ namespace Apsis {
     public:
       /*
        *  Constructs a Apsis::World::Background of the given width and height and
-       *    drawn using the given Apsis::Primitives::Texture.
+       *    drawn using the given Apsis::Primitive::Texture.
        */
-      Background(Apsis::Primitives::Texture* texture);
+      Background(Apsis::Primitive::Texture* texture);
 
       /*
        *  Returns the width of the background.
@@ -35,14 +35,14 @@ namespace Apsis {
       unsigned int height() const;
 
       /*
-       *  Returns the Apsis::Primitives::Texture being used to draw the background.
+       *  Returns the Apsis::Primitive::Texture being used to draw the background.
        */
-      const Apsis::Primitives::Texture& texture() const;
+      const Apsis::Primitive::Texture& texture() const;
 
       /*
        *  Renders the background.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera) const;
 
     private:
@@ -50,15 +50,15 @@ namespace Apsis {
       // Internal storage
       unsigned int _width;
       unsigned int _height;
-      Apsis::Primitives::Texture* _texture;
+      Apsis::Primitive::Texture* _texture;
 
-      Primitives::VertexArray _vao;
+      Primitive::VertexArray _vao;
 
       float* _vertices;
-      Primitives::VertexBuffer _vbo;
+      Primitive::VertexBuffer _vbo;
 
       unsigned short* _elements;
-      Primitives::VertexBuffer _ebo;
+      Primitive::VertexBuffer _ebo;
     };
   }
 }

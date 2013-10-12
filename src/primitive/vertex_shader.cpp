@@ -1,4 +1,4 @@
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
 #include "apsis/backend/sdl.h"
 
@@ -9,7 +9,7 @@
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "VertexShader", function, message);
+  Apsis::Engine::Log::error("Primitive", "VertexShader", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -34,7 +34,7 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::VertexShader::VertexShader(const char* source) {
+Apsis::Primitive::VertexShader::VertexShader(const char* source) {
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("constructor(on stack)");
 #endif
@@ -73,13 +73,13 @@ Apsis::Primitives::VertexShader::VertexShader(const char* source) {
   }
 }
 
-Apsis::Primitives::VertexShader::~VertexShader() {
+Apsis::Primitive::VertexShader::~VertexShader() {
   if (_counter.isAlone()) {
     glDeleteShader(this->_vertexShader);
   }
 }
 
-Apsis::Primitives::VertexShader Apsis::Primitives::VertexShader::fromFile(const char* path) {
+Apsis::Primitive::VertexShader Apsis::Primitive::VertexShader::fromFile(const char* path) {
   printf("Loading Vertex Shader %s\n", path);
   FILE* f = fopen(path, "rb");
   if (f == NULL) {
@@ -110,6 +110,6 @@ Apsis::Primitives::VertexShader Apsis::Primitives::VertexShader::fromFile(const 
   return ret;
 }
 
-unsigned int Apsis::Primitives::VertexShader::identifier() const {
+unsigned int Apsis::Primitive::VertexShader::identifier() const {
   return this->_vertexShader;
 }

@@ -74,12 +74,12 @@ namespace Apsis {
       /*
        *  Returns the active projection matrix.
        */
-      const Primitives::Matrix& projection() const;
+      const Primitive::Matrix& projection() const;
 
       /*
        *  Returns the active view matrix.
        */
-      const Primitives::Matrix& view() const;
+      const Primitive::Matrix& view() const;
 
       /*
        *  Draws the given string to the given 2d coordinates.
@@ -118,7 +118,7 @@ namespace Apsis {
       World::Camera _camera;
 
       // Matrices
-      Primitives::Matrix _projection;
+      Primitive::Matrix _projection;
     };
   }
 }

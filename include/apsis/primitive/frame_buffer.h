@@ -1,10 +1,10 @@
-#ifndef APSIS_PRIMITIVES_FRAME_BUFFER_H
-#define APSIS_PRIMITIVES_FRAME_BUFFER_H
+#ifndef APSIS_PRIMITIVE_FRAME_BUFFER_H
+#define APSIS_PRIMITIVE_FRAME_BUFFER_H
 
 #include "apsis/sync/reference_counter.h"
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class FrameBuffer {
     public:
       /*

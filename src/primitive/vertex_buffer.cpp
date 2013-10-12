@@ -1,11 +1,11 @@
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include "apsis/backend/sdl.h"
 
 #include "apsis/engine/log.h"
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "VertexBuffer", function, message);
+  Apsis::Engine::Log::error("Primitive", "VertexBuffer", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -30,12 +30,12 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::VertexBuffer::Target::Targets
-Apsis::Primitives::VertexBuffer::target() const {
+Apsis::Primitive::VertexBuffer::Target::Targets
+Apsis::Primitive::VertexBuffer::target() const {
   return _target;
 }
 
-Apsis::Primitives::VertexBuffer::VertexBuffer(Target::Targets target)
+Apsis::Primitive::VertexBuffer::VertexBuffer(Target::Targets target)
   : _target(target) {
   glGenBuffers(1, &this->_vbo);
 
@@ -44,7 +44,7 @@ Apsis::Primitives::VertexBuffer::VertexBuffer(Target::Targets target)
 #endif
 }
 
-Apsis::Primitives::VertexBuffer::~VertexBuffer() {
+Apsis::Primitive::VertexBuffer::~VertexBuffer() {
   if (_counter.isAlone()) {
     //glDeleteBuffers(1, &this->_vbo);
 
@@ -54,7 +54,7 @@ Apsis::Primitives::VertexBuffer::~VertexBuffer() {
   }
 }
 
-void Apsis::Primitives::VertexBuffer::defineInput(const char*    name,
+void Apsis::Primitive::VertexBuffer::defineInput(const char*    name,
                                                   const Program& program,
                                                   unsigned int   numberOfComponents,
                                                   Type::Types    type,
@@ -123,7 +123,7 @@ void Apsis::Primitives::VertexBuffer::defineInput(const char*    name,
 #endif
 }
 
-void Apsis::Primitives::VertexBuffer::transfer(const float* elements, unsigned int count) {
+void Apsis::Primitive::VertexBuffer::transfer(const float* elements, unsigned int count) {
   GLenum target = GL_ARRAY_BUFFER;
   if (_target == Target::Data) {
     target = GL_ARRAY_BUFFER;
@@ -146,7 +146,7 @@ void Apsis::Primitives::VertexBuffer::transfer(const float* elements, unsigned i
   _count = count;
 }
 
-void Apsis::Primitives::VertexBuffer::transfer(const unsigned short* elements, unsigned int count) {
+void Apsis::Primitive::VertexBuffer::transfer(const unsigned short* elements, unsigned int count) {
   GLenum target = GL_ARRAY_BUFFER;
   if (_target == Target::Data) {
     target = GL_ARRAY_BUFFER;
@@ -169,7 +169,7 @@ void Apsis::Primitives::VertexBuffer::transfer(const unsigned short* elements, u
   _count = count;
 }
 
-void Apsis::Primitives::VertexBuffer::transfer(const unsigned short* elements, unsigned int count, unsigned int at) {
+void Apsis::Primitive::VertexBuffer::transfer(const unsigned short* elements, unsigned int count, unsigned int at) {
   GLenum target = GL_ARRAY_BUFFER;
   if (_target == Target::Data) {
     target = GL_ARRAY_BUFFER;
@@ -190,15 +190,15 @@ void Apsis::Primitives::VertexBuffer::transfer(const unsigned short* elements, u
 #endif
 }
 
-unsigned int Apsis::Primitives::VertexBuffer::count() const {
+unsigned int Apsis::Primitive::VertexBuffer::count() const {
   return _count;
 }
 
-unsigned int Apsis::Primitives::VertexBuffer::identifier() const {
+unsigned int Apsis::Primitive::VertexBuffer::identifier() const {
   return this->_vbo;
 }
 
-void Apsis::Primitives::VertexBuffer::bind() const {
+void Apsis::Primitive::VertexBuffer::bind() const {
   if (_target == Target::Data) {
     glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   }

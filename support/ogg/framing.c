@@ -579,7 +579,7 @@ int ogg_stream_eos(ogg_stream_state *os){
   return os->e_o_s;
 }
 
-/* DECODING PRIMITIVES: packet streaming layer **********************/
+/* DECODING PRIMITIVE: packet streaming layer **********************/
 
 /* This has two layers to place more of the multi-serialno and paging
    control in the application's hands.  First, we expose a data buffer

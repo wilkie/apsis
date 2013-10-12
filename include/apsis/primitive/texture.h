@@ -1,12 +1,12 @@
-#ifndef APSIS_PRIMITIVES_TEXTURE_H
-#define APSIS_PRIMITIVES_TEXTURE_H
+#ifndef APSIS_PRIMITIVE_TEXTURE_H
+#define APSIS_PRIMITIVE_TEXTURE_H
 
 #include "apsis/sync/reference_counter.h"
 
 #include <vector>
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class Texture {
     public:
 

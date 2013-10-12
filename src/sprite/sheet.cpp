@@ -73,8 +73,8 @@ const Sprite::Sheet& Sprite::Sheet::loaded(unsigned int index) {
 
 Sprite::Sheet::Sheet(const char* filename,
                      const Engine::Object& loader)
-  : _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements) {
+  : _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements) {
   _id = _sheets.size();
 
   _loadStatSheet(filename);
@@ -94,7 +94,7 @@ Sprite::Sheet::Sheet(const char* filename,
   _graphic_path.append("/");
   _graphic_path.append(texture_path);
 
-  _texture = new Primitives::Texture(_graphic_path.c_str());
+  _texture = new Primitive::Texture(_graphic_path.c_str());
 
   delete [] stat_sheet;
 
@@ -178,8 +178,8 @@ Sprite::Sheet::Sheet(const char* filename,
   const Registry::Program& program = loader.loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.bindTexture(0, this->texture());
   _vao.uploadUniform("texture", 0);
@@ -219,7 +219,7 @@ void Sprite::Sheet::_loadStatSheet(const char* filename) {
   }
 }
 
-const Primitives::Texture& Sprite::Sheet::texture() const {
+const Primitive::Texture& Sprite::Sheet::texture() const {
   return *_texture;
 }
 
@@ -299,9 +299,9 @@ unsigned int Sprite::Sheet::count() const {
 }
 
 void Sprite::Sheet::draw(unsigned int              index,
-                         const Primitives::Matrix& projection,
+                         const Primitive::Matrix& projection,
                          const World::Camera& camera,
-                         const Primitives::Matrix& model) const {
+                         const Primitive::Matrix& model) const {
   _vao.bindProgram();
 
   _vao.uploadUniform("projection", projection);

@@ -1,4 +1,4 @@
-#include "apsis/primitives/fragment_shader.h"
+#include "apsis/primitive/fragment_shader.h"
 
 #include <stdio.h>
 
@@ -9,7 +9,7 @@
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "FragmentShader", function, message);
+  Apsis::Engine::Log::error("Primitive", "FragmentShader", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -34,7 +34,7 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
+Apsis::Primitive::FragmentShader::FragmentShader(const char* source) {
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("constructor(on stack)");
 #endif
@@ -73,7 +73,7 @@ Apsis::Primitives::FragmentShader::FragmentShader(const char* source) {
   }
 }
 
-Apsis::Primitives::FragmentShader::~FragmentShader() {
+Apsis::Primitive::FragmentShader::~FragmentShader() {
   if (_counter.isAlone()) {
     //glDeleteShader(this->_fragmentShader);
 
@@ -84,7 +84,7 @@ Apsis::Primitives::FragmentShader::~FragmentShader() {
   }
 }
 
-Apsis::Primitives::FragmentShader Apsis::Primitives::FragmentShader::fromFile(const char* path) {
+Apsis::Primitive::FragmentShader Apsis::Primitive::FragmentShader::fromFile(const char* path) {
   printf("Loading Fragment Shader %s\n", path);
   FILE* f = fopen(path, "rb");
   if (f == NULL) {
@@ -115,6 +115,6 @@ Apsis::Primitives::FragmentShader Apsis::Primitives::FragmentShader::fromFile(co
   return ret;
 }
 
-unsigned int Apsis::Primitives::FragmentShader::identifier() const {
+unsigned int Apsis::Primitive::FragmentShader::identifier() const {
   return this->_fragmentShader;
 }

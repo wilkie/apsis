@@ -1,4 +1,4 @@
-#include "apsis/primitives/vertex_array.h"
+#include "apsis/primitive/vertex_array.h"
 
 #include "apsis/backend/sdl.h"
 
@@ -8,10 +8,10 @@ using namespace Apsis;
 
 #define DEBUG_THROW_GL_ERRORS
 
-unsigned int Primitives::VertexArray::_current_vao = 0xffffffff;
+unsigned int Primitive::VertexArray::_current_vao = 0xffffffff;
 
 static void _throwError(const char* function, const char* message) {
-  Engine::Log::error("Primitives", "VertexArray", function, message);
+  Engine::Log::error("Primitive", "VertexArray", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -36,7 +36,7 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Primitives::VertexArray::VertexArray() {
+Primitive::VertexArray::VertexArray() {
 #ifdef JS_MODE // Older GL / GLES2
 #else
   glGenVertexArrays(1, &this->_vao);
@@ -47,7 +47,7 @@ Primitives::VertexArray::VertexArray() {
 #endif
 }
 
-Primitives::VertexArray::~VertexArray() {
+Primitive::VertexArray::~VertexArray() {
   if (_counter.isAlone()) {
 #ifdef JS_MODE // Older GL / GLES2
 #else
@@ -60,7 +60,7 @@ Primitives::VertexArray::~VertexArray() {
   }
 }
 
-void Primitives::VertexArray::_bind() const {
+void Primitive::VertexArray::_bind() const {
   bindProgram();
 
 #ifdef JS_MODE
@@ -73,11 +73,11 @@ void Primitives::VertexArray::_bind() const {
 #endif
 }
 
-void Primitives::VertexArray::use() {
+void Primitive::VertexArray::use() {
   _bind();
 }
 
-void Primitives::VertexArray::bind(VertexBuffer& buffer) {
+void Primitive::VertexArray::bind(VertexBuffer& buffer) {
   _bind();
 
   if (buffer.target() == VertexBuffer::Target::Elements) {
@@ -100,7 +100,7 @@ void Primitives::VertexArray::bind(VertexBuffer& buffer) {
 #endif
 }
 
-void Primitives::VertexArray::useProgram(const Registry::Program& program) {
+void Primitive::VertexArray::useProgram(const Registry::Program& program) {
   useProgram(program.program());
 
   for (unsigned int i = 0; i < program.uniformCount(); i++) {
@@ -108,7 +108,7 @@ void Primitives::VertexArray::useProgram(const Registry::Program& program) {
   }
 }
 
-void Primitives::VertexArray::useProgram(const Program& program) {
+void Primitive::VertexArray::useProgram(const Program& program) {
   _bind();
   glUseProgram(program.identifier());
 
@@ -125,7 +125,7 @@ void Primitives::VertexArray::useProgram(const Program& program) {
   _programs.push_back(program);
 }
 
-void Primitives::VertexArray::draw() const {
+void Primitive::VertexArray::draw() const {
   _bind();
 
   if (_dataBuffer.size() > 0) {
@@ -148,7 +148,7 @@ void Primitives::VertexArray::draw() const {
 #endif
 }
 
-void Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) const {
+void Primitive::VertexArray::drawRange(unsigned int start, unsigned int count) const {
   _bind();
 
   if (_elementBuffer.size() > 0) {
@@ -168,7 +168,7 @@ void Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) 
 #endif
 }
 
-void Primitives::VertexArray::drawQuads() const {
+void Primitive::VertexArray::drawQuads() const {
   _bind();
 
   unsigned int count = 0;
@@ -190,7 +190,7 @@ void Primitives::VertexArray::drawQuads() const {
 #endif
 }
 
-void Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
+void Primitive::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
   _bind();
 
   if (_elementBuffer.size() > 0) {
@@ -210,7 +210,7 @@ void Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int co
 #endif
 }
 
-int Primitives::VertexArray::defineUniform(const char* name) {
+int Primitive::VertexArray::defineUniform(const char* name) {
   _bind();
   const Program& program = _programs[0];
   GLint uniform = glGetUniformLocation(program.identifier(), name);
@@ -224,14 +224,14 @@ int Primitives::VertexArray::defineUniform(const char* name) {
   return uniform;
 }
 
-void Primitives::VertexArray::uploadUniform(const char* name,
+void Primitive::VertexArray::uploadUniform(const char* name,
                                             const Matrix& mat) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, mat);
 }
 
-void Primitives::VertexArray::uploadUniform(int identifier,
+void Primitive::VertexArray::uploadUniform(int identifier,
                                             const Matrix& mat) const {
   _bind();
   glUniformMatrix4fv(identifier, 1, GL_FALSE, (float*)&mat.value);
@@ -241,14 +241,14 @@ void Primitives::VertexArray::uploadUniform(int identifier,
 #endif
 }
 
-void Primitives::VertexArray::uploadUniform(const char* name,
+void Primitive::VertexArray::uploadUniform(const char* name,
                                             int         value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Primitives::VertexArray::uploadUniform(int identifier,
+void Primitive::VertexArray::uploadUniform(int identifier,
                                             int value) const {
   _bind();
   glUniform1i(identifier, value);
@@ -258,14 +258,14 @@ void Primitives::VertexArray::uploadUniform(int identifier,
 #endif
 }
 
-void Primitives::VertexArray::uploadUniform(const char* name,
+void Primitive::VertexArray::uploadUniform(const char* name,
                                             float       value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Primitives::VertexArray::uploadUniform(int   identifier,
+void Primitive::VertexArray::uploadUniform(int   identifier,
                                             float value) const {
   _bind();
   glUniform1f(identifier, value);
@@ -275,14 +275,14 @@ void Primitives::VertexArray::uploadUniform(int   identifier,
 #endif
 }
 
-void Primitives::VertexArray::uploadUniform(const char* name,
+void Primitive::VertexArray::uploadUniform(const char* name,
                                             const Vector3& value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Primitives::VertexArray::uploadUniform(int         identifier,
+void Primitive::VertexArray::uploadUniform(int         identifier,
                                             const Vector3& value) const {
   _bind();
   glUniform3fv(identifier, 1, (float*)&value);
@@ -292,14 +292,14 @@ void Primitives::VertexArray::uploadUniform(int         identifier,
 #endif
 }
 
-void Primitives::VertexArray::uploadUniform(const char* name,
+void Primitive::VertexArray::uploadUniform(const char* name,
                                             const Vector4& value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Primitives::VertexArray::uploadUniform(int         identifier,
+void Primitive::VertexArray::uploadUniform(int         identifier,
                                             const Vector4& value) const {
   _bind();
   glUniform4fv(identifier, 1, (float*)&value);
@@ -309,7 +309,7 @@ void Primitives::VertexArray::uploadUniform(int         identifier,
 #endif
 }
 
-void Primitives::VertexArray::bindTexture(unsigned int slot,
+void Primitive::VertexArray::bindTexture(unsigned int slot,
                                           const Texture& texture) {
   std::map<unsigned int, Texture>::iterator it = _textures.find(slot);
   if (it != _textures.end()) {
@@ -331,11 +331,11 @@ void Primitives::VertexArray::bindTexture(unsigned int slot,
 #endif
 }
 
-unsigned int Primitives::VertexArray::identifier() const {
+unsigned int Primitive::VertexArray::identifier() const {
   return this->_vao;
 }
 
-void Primitives::VertexArray::_bindTextures() const {
+void Primitive::VertexArray::_bindTextures() const {
   std::map<unsigned int, Texture>::const_iterator it;
 
   for (it = _textures.begin(); it != _textures.end(); ++it) {
@@ -351,7 +351,7 @@ void Primitives::VertexArray::_bindTextures() const {
   }
 }
 
-void Primitives::VertexArray::bindProgram() const {
+void Primitive::VertexArray::bindProgram() const {
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("bindProgram (error on stack)");
 #endif

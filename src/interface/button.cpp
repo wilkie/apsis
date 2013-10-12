@@ -196,13 +196,13 @@ void Apsis::Interface::Button::draw(Apsis::Engine::Graphics& graphics,
   graphics.sheet(sheet.id());
   
   if (window.hovered() && object.has("pressed") && object.get("pressed").asInteger() == 1) {
-    batch_down.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    batch_down.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
   else if (window.hovered()) {
-    batch_hover.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    batch_hover.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
   else {
-    batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitives::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
+    batch.draw(graphics.projection(), graphics.camera(), *(const Apsis::Primitive::Matrix*)glm::value_ptr(glm::translate(glm::mat4(1.0f), glm::vec3(position.left(), 0.0f, position.top()))));
   }
 
   // Draw text

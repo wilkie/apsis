@@ -1,10 +1,10 @@
-#ifndef APSIS_PRIMITIVES_VERTEX_SHADER_H
-#define APSIS_PRIMITIVES_VERTEX_SHADER_H
+#ifndef APSIS_PRIMITIVE_VERTEX_SHADER_H
+#define APSIS_PRIMITIVE_VERTEX_SHADER_H
 
 #include "apsis/sync/reference_counter.h"
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class VertexShader {
     public:
       /*

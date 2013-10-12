@@ -6,8 +6,8 @@
 
 #include "apsis/world/camera.h"
 
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/vertex_array.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include "apsis/world/tile.h"
 
@@ -21,7 +21,7 @@ namespace Apsis {
               unsigned int height);
       ~Terrain();
 
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera) const;
 
       Apsis::World::Tile tileAt(unsigned int x, unsigned int z);
@@ -30,13 +30,13 @@ namespace Apsis {
       unsigned int _width;
       unsigned int _height;
 
-      Primitives::VertexArray _vao;
+      Primitive::VertexArray _vao;
 
       float* _vertices;
-      Primitives::VertexBuffer _vbo;
+      Primitive::VertexBuffer _vbo;
 
       unsigned short* _elements;
-      Primitives::VertexBuffer _ebo;
+      Primitive::VertexBuffer _ebo;
 
       std::vector<Apsis::Model::Material> _materials;
       std::vector<Apsis::Model::Light> _lights;

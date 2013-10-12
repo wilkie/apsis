@@ -1,4 +1,4 @@
-#include "apsis/primitives/unlinked_program.h"
+#include "apsis/primitive/unlinked_program.h"
 
 #include "apsis/backend/sdl.h"
 
@@ -7,7 +7,7 @@
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "UnlinkedProgram", function, message);
+  Apsis::Engine::Log::error("Primitive", "UnlinkedProgram", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -32,7 +32,7 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::UnlinkedProgram::UnlinkedProgram() :
+Apsis::Primitive::UnlinkedProgram::UnlinkedProgram() :
   _linked(false) {
   this->_program = glCreateProgram();
 
@@ -41,7 +41,7 @@ Apsis::Primitives::UnlinkedProgram::UnlinkedProgram() :
 #endif
 }
 
-Apsis::Primitives::UnlinkedProgram::~UnlinkedProgram() {
+Apsis::Primitive::UnlinkedProgram::~UnlinkedProgram() {
   if (_counter.isAlone()) {
     if (!(this->_linked)) {
       glDeleteProgram(this->_program);
@@ -53,7 +53,7 @@ Apsis::Primitives::UnlinkedProgram::~UnlinkedProgram() {
   }
 }
 
-void Apsis::Primitives::UnlinkedProgram::attach(const VertexShader& vertexShader) {
+void Apsis::Primitive::UnlinkedProgram::attach(const VertexShader& vertexShader) {
 #ifdef DEBUG_THROW_GL_ERRORS
       _throwGLError("attach_vs(on stack)");
 #endif
@@ -67,7 +67,7 @@ void Apsis::Primitives::UnlinkedProgram::attach(const VertexShader& vertexShader
 #endif
 }
 
-void Apsis::Primitives::UnlinkedProgram::attach(const FragmentShader& fragmentShader) {
+void Apsis::Primitive::UnlinkedProgram::attach(const FragmentShader& fragmentShader) {
 #ifdef DEBUG_THROW_GL_ERRORS
       _throwGLError("attach_fs(on stack)");
 #endif
@@ -81,11 +81,11 @@ void Apsis::Primitives::UnlinkedProgram::attach(const FragmentShader& fragmentSh
 #endif
 }
 
-void Apsis::Primitives::UnlinkedProgram::defineFragmentOutput(const char* name) {
+void Apsis::Primitive::UnlinkedProgram::defineFragmentOutput(const char* name) {
   //glBindFragDataLocation(this->_program, 0, name);
 }
 
-Apsis::Primitives::Program Apsis::Primitives::UnlinkedProgram::link() {
+Apsis::Primitive::Program Apsis::Primitive::UnlinkedProgram::link() {
   if (_linked) throw "Program already linked. Cannot link again.";
   glLinkProgram(_program);
 

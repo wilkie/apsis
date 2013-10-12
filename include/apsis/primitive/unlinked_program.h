@@ -1,17 +1,17 @@
-#ifndef APSIS_PRIMITIVES_UNLINKED_PROGRAM_H
-#define APSIS_PRIMITIVES_UNLINKED_PROGRAM_H
+#ifndef APSIS_PRIMITIVE_UNLINKED_PROGRAM_H
+#define APSIS_PRIMITIVE_UNLINKED_PROGRAM_H
 
 #include "apsis/sync/reference_counter.h"
 
-#include "apsis/primitives/vertex_shader.h"
-#include "apsis/primitives/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
 
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/program.h"
 
 #include <vector>
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     using namespace std;
 
     class UnlinkedProgram {

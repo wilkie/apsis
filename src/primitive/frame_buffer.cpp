@@ -1,4 +1,4 @@
-#include "apsis/primitives/frame_buffer.h"
+#include "apsis/primitive/frame_buffer.h"
 
 // Include GLEW
 #define GLEW_STATIC
@@ -13,7 +13,7 @@
   #include <GL/glu.h>
 #endif
 
-Apsis::Primitives::FrameBuffer::FrameBuffer(unsigned int width, unsigned int height) :
+Apsis::Primitive::FrameBuffer::FrameBuffer(unsigned int width, unsigned int height) :
   _width(width),
   _height(height) {
 
@@ -106,11 +106,11 @@ Apsis::Primitives::FrameBuffer::FrameBuffer(unsigned int width, unsigned int hei
   }
 }
 
-Apsis::Primitives::FrameBuffer::~FrameBuffer() {
+Apsis::Primitive::FrameBuffer::~FrameBuffer() {
   if (_counter.isAlone()) {
   }
 }
 
-unsigned int Apsis::Primitives::FrameBuffer::identifier() const {
+unsigned int Apsis::Primitive::FrameBuffer::identifier() const {
   return this->_fbo;
 }

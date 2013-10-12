@@ -193,25 +193,25 @@ void Registry::Shader::_generateCode() const {
   _code = os.str();
 }
 
-const Primitives::FragmentShader& Registry::Shader::fragmentShader() const {
+const Primitive::FragmentShader& Registry::Shader::fragmentShader() const {
   if (_process != Process::Fragment) {
     throw "Not a fragment shader.";
   }
 
   if (_fragment_shader == NULL) {
-    _fragment_shader = new Primitives::FragmentShader(this->code());
+    _fragment_shader = new Primitive::FragmentShader(this->code());
   }
 
   return *_fragment_shader;
 }
 
-const Primitives::VertexShader& Registry::Shader::vertexShader() const {
+const Primitive::VertexShader& Registry::Shader::vertexShader() const {
   if (_process != Process::Vertex) {
     throw "Not a fragment shader.";
   }
 
   if (_vertex_shader == NULL) {
-    _vertex_shader = new Primitives::VertexShader(this->code());
+    _vertex_shader = new Primitive::VertexShader(this->code());
   }
 
   return *_vertex_shader;

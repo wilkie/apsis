@@ -34,30 +34,6 @@
     <ClCompile Include="..\..\src\world\tile.cpp">
       <Filter>world</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\primitives\fragment_shader.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\frame_buffer.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\program.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\texture.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\unlinked_program.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\vertex_array.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\vertex_buffer.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\vertex_shader.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\test.cpp" />
     <ClCompile Include="..\..\src\world\actor.cpp">
       <Filter>world</Filter>
@@ -181,9 +157,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\sprite\layout.cpp">
       <Filter>sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\primitives\math.cpp">
-      <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\interface\button.cpp">
       <Filter>interface</Filter>
@@ -467,6 +440,33 @@
     <ClCompile Include="..\..\src\sync\reference_counter.cpp">
       <Filter>sync</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\primitive\fragment_shader.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\frame_buffer.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\math.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\program.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\texture.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\unlinked_program.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\vertex_array.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\vertex_buffer.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\primitive\vertex_shader.cpp">
+      <Filter>primitive</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis\geometry\circle.h">
@@ -492,30 +492,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\tile.h">
       <Filter>world</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\fragment_shader.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\frame_buffer.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\program.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\texture.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\unlinked_program.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\vertex_array.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\vertex_buffer.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\vertex_shader.h">
-      <Filter>primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\model\animation.h">
       <Filter>model</Filter>
@@ -679,9 +655,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\sprite\layout.h">
       <Filter>sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\primitives\math.h">
-      <Filter>primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\interface\button.h">
       <Filter>interface</Filter>
@@ -950,6 +923,33 @@
     <ClInclude Include="..\..\include\apsis\sync\reference_counter.h">
       <Filter>sync</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\program.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\texture.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\unlinked_program.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\vertex_array.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\vertex_buffer.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\vertex_shader.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\fragment_shader.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\frame_buffer.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\primitive\math.h">
+      <Filter>primitive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="geometry">
@@ -960,9 +960,6 @@
     </Filter>
     <Filter Include="model">
       <UniqueIdentifier>{f722c40c-590b-4b46-bcdb-1ddc3c6aefba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="primitives">
-      <UniqueIdentifier>{307fc6cb-0334-4924-9570-f303b27660d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{adad3a5c-7303-492d-8655-e43531ea7d17}</UniqueIdentifier>
@@ -1038,6 +1035,9 @@
     </Filter>
     <Filter Include="sync">
       <UniqueIdentifier>{9b7128d3-2763-4e8b-85ab-7c07dde44f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitive">
+      <UniqueIdentifier>{307fc6cb-0334-4924-9570-f303b27660d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

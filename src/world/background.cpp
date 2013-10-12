@@ -1,10 +1,10 @@
 #include "apsis/world/background.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
@@ -13,10 +13,10 @@
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
+Apsis::World::Background::Background(Apsis::Primitive::Texture* texture)
   : _texture(texture),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements) {
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements) {
 
   _width  = _texture->width();
   _height = _texture->height();
@@ -84,8 +84,8 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   const Registry::Program& program = Engine::Object::basic().loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("tex", 0);
@@ -109,9 +109,9 @@ unsigned int Apsis::World::Background::height() const {
 }
 
 /*
-  *  Returns the Apsis::Primitives::Texture being used to draw the background.
+  *  Returns the Apsis::Primitive::Texture being used to draw the background.
   */
-const Apsis::Primitives::Texture& Apsis::World::Background::texture() const {
+const Apsis::Primitive::Texture& Apsis::World::Background::texture() const {
   return *_texture;
 }
 
@@ -125,7 +125,7 @@ const Apsis::Primitives::Texture& Apsis::World::Background::texture() const {
 /*
   *  Renders the background.
   */
-void Apsis::World::Background::draw(const Primitives::Matrix& projection,
+void Apsis::World::Background::draw(const Primitive::Matrix& projection,
                                     const World::Camera& camera) const {
   _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
@@ -135,8 +135,8 @@ void Apsis::World::Background::draw(const Primitives::Matrix& projection,
       glm::mat4 current_model = glm::translate(glm::mat4(1.0),
                                                glm::vec3(_width * w, 0.0, _height * h));
 
-      const Primitives::Matrix& model_matrix
-        = *(const Primitives::Matrix*)glm::value_ptr(current_model);
+      const Primitive::Matrix& model_matrix
+        = *(const Primitive::Matrix*)glm::value_ptr(current_model);
 
       _vao.uploadUniform("model", model_matrix);
       _vao.draw();

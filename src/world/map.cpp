@@ -2,11 +2,11 @@
 
 #include "apsis/registry/program.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -31,8 +31,8 @@ Apsis::World::Map::Map(const char* json,
   : _loader(loader),
     _jsonLoaded(false),
     _path(json),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements),
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements),
     _sheet(_loadSpriteSheet()) {
 
   _parseJSONFile();
@@ -54,8 +54,8 @@ Apsis::World::Map::Map(const Engine::Object& loader,
     _height(height),
     _sheet(spriteSheet),
     _tileWidth(tileWidth),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements),
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements),
     _tileHeight(tileHeight) {
 
   // Blank out tiles
@@ -173,8 +173,8 @@ void Apsis::World::Map::_generateVAO() {
   const Registry::Program& program = _loader.loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.bindTexture(0, _sheet.texture());
   _vao.uploadUniform("texture", 0);
@@ -203,13 +203,13 @@ const Apsis::Sprite::Sheet& Apsis::World::Map::spriteSheet() {
   return _sheet;
 }
 
-void Apsis::World::Map::draw(const Primitives::Matrix& projection,
+void Apsis::World::Map::draw(const Primitive::Matrix& projection,
                              const World::Camera& camera) const {
   _vao.bindProgram();
 
   _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
-  _vao.uploadUniform("model", Primitives::Matrix::identity());
+  _vao.uploadUniform("model", Primitive::Matrix::identity());
 
   _vao.draw();
 }

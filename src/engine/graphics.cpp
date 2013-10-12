@@ -23,7 +23,7 @@ Apsis::Engine::Graphics::Graphics(const Apsis::Settings::Video& settings,
   : _loader(loader),
     _videoSettings(settings),
     _font(NULL),
-    _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
+    _camera(*(Primitive::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _default(NULL) {
 }
 
@@ -68,7 +68,7 @@ const Apsis::Sprite::Sheet& Apsis::Engine::Graphics::sheet() const {
 void Apsis::Engine::Graphics::draw(float x, float y, const char* string) const {
   const Apsis::Sprite::Font& font = this->font();
 
-  Primitives::Vector4 color = {0.78f, 0.78f, 0.99f, 1.0f};
+  Primitive::Vector4 color = {0.78f, 0.78f, 0.99f, 1.0f};
   font.draw(_projection, _camera, color, x, y, string);
 }
 
@@ -81,8 +81,8 @@ void Apsis::Engine::Graphics::draw(float x,
   glm::mat4 model = glm::translate(glm::mat4(1.0),
     glm::vec3(x, 0.0, y));
 
-  const Primitives::Matrix& model_matrix
-    = *(const Primitives::Matrix*)glm::value_ptr(model);
+  const Primitive::Matrix& model_matrix
+    = *(const Primitive::Matrix*)glm::value_ptr(model);
 
   sheet.draw(sprite_id, _projection, _camera, model_matrix);
 }
@@ -112,7 +112,7 @@ void Apsis::Engine::Graphics::perspective() {
   glm::mat4 projection;
   projection = glm::perspective(fov, aspect, nearf, farf);
 
-  _projection = *(const Primitives::Matrix*)glm::value_ptr(projection);
+  _projection = *(const Primitive::Matrix*)glm::value_ptr(projection);
 }
 
 void Apsis::Engine::Graphics::orthographic() {
@@ -125,14 +125,14 @@ void Apsis::Engine::Graphics::orthographic() {
   glm::mat4 projection;
   projection = glm::ortho(-half_width, half_width, -half_height, half_height);
 
-  _projection = *(const Primitives::Matrix*)glm::value_ptr(projection);
+  _projection = *(const Primitive::Matrix*)glm::value_ptr(projection);
 }
 
-const Apsis::Primitives::Matrix& Apsis::Engine::Graphics::projection() const {
+const Apsis::Primitive::Matrix& Apsis::Engine::Graphics::projection() const {
   return _projection;
 }
 
-const Apsis::Primitives::Matrix& Apsis::Engine::Graphics::view() const {
+const Apsis::Primitive::Matrix& Apsis::Engine::Graphics::view() const {
   return _camera.view();
 }
 

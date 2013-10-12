@@ -1,10 +1,10 @@
 #include <apsis/interface/filler_bar.h>
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 // glm::vec3, glm::vec4, glm::ivec4, glm::mat4
 #include <glm/glm.hpp>
@@ -39,7 +39,7 @@ Apsis::Geometry::Rectangle Apsis::Hud::FillerBar::position() {
 }
 
 // Draws the actor
-void Apsis::Hud::FillerBar::draw(const Primitives::Matrix& projection,
+void Apsis::Hud::FillerBar::draw(const Primitive::Matrix& projection,
                                  const World::Camera& camera) {
   glm::mat4 model = glm::mat4(1.0);
 
@@ -56,8 +56,8 @@ void Apsis::Hud::FillerBar::draw(const Primitives::Matrix& projection,
                            glm::vec3(x, 0.0, _position.y));
     x += (unsigned int)_itemWidth;
 
-    const Primitives::Matrix& model_matrix
-      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+    const Primitive::Matrix& model_matrix
+      = *(const Primitive::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex + (_stages - 1), projection, camera, model_matrix);
   }
@@ -68,8 +68,8 @@ void Apsis::Hud::FillerBar::draw(const Primitives::Matrix& projection,
                            glm::vec3(x, 0.0, _position.y));
     x += (unsigned int)_itemWidth;
 
-    const Primitives::Matrix& model_matrix
-      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+    const Primitive::Matrix& model_matrix
+      = *(const Primitive::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex + (i - _value), projection, camera, model_matrix);
   }
@@ -80,8 +80,8 @@ void Apsis::Hud::FillerBar::draw(const Primitives::Matrix& projection,
                            glm::vec3(x, 0.0, _position.y));
     x += (unsigned int)_itemWidth;
 
-    const Primitives::Matrix& model_matrix
-      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+    const Primitive::Matrix& model_matrix
+      = *(const Primitive::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
     _spriteSheet->draw(_startIndex, projection, camera, model_matrix);
   }

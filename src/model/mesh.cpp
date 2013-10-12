@@ -1,17 +1,17 @@
 #include "apsis/model/mesh.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
                          std::vector<glm::vec3>& normals,
                          std::vector<glm::vec2>& textureCoords,
                          std::vector<unsigned short>& elements)
-  : _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements) {
+  : _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements) {
   // Create buffer array
   float* vert_array = new float[8 * vertices.size()];
 
@@ -42,26 +42,26 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.bind(_vbo);
   _vao.bind(_ebo);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/colorize.glsl");
-  Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("assets/shaders/fragment/directional_lighting.glsl");
+  Primitive::VertexShader   vs = Primitive::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+  Primitive::FragmentShader fs = Primitive::FragmentShader::fromFile("assets/shaders/fragment/colorize.glsl");
+  Primitive::FragmentShader ls = Primitive::FragmentShader::fromFile("assets/shaders/fragment/directional_lighting.glsl");
 
   const Registry::Program& program = Engine::Object::basic().loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 8, 0);
-  _vbo.defineInput("normal",   program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 8, 3);
-  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 8, 6);
+  _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 8, 0);
+  _vbo.defineInput("normal",   program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 8, 3);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 8, 6);
 
-  Primitives::Texture t = Primitives::Texture("resources/sample.png");
+  Primitive::Texture t = Primitive::Texture("resources/sample.png");
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
-  Primitives::Vector3 emission = {1.0f, 0.0f, 0.0f};
+  Primitive::Vector3 emission = {1.0f, 0.0f, 0.0f};
   _materials.push_back(Material(0.2f, 5.0f, 8.0f, emission, 15.0f));
-  Primitives::Vector3 position  = {0.0f, 0.0f, 0.0f};
-  Primitives::Vector3 direction = {0.0f, 1.0f, 0.0f};
-  Primitives::Vector3 color     = {1.0f, 0.0f, 1.0f};
+  Primitive::Vector3 position  = {0.0f, 0.0f, 0.0f};
+  Primitive::Vector3 direction = {0.0f, 1.0f, 0.0f};
+  Primitive::Vector3 color     = {1.0f, 0.0f, 1.0f};
   _lights.push_back(Light(position,
                           direction,
                           color));
@@ -76,7 +76,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   _vao.uploadUniform("light.color", _lights[0].color());
 }
 
-void Apsis::Model::Mesh::draw(const Primitives::Matrix& projection, const World::Camera& camera, const Primitives::Matrix& model) const {
+void Apsis::Model::Mesh::draw(const Primitive::Matrix& projection, const World::Camera& camera, const Primitive::Matrix& model) const {
   _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);

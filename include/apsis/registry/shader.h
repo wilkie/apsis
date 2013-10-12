@@ -3,8 +3,8 @@
 
 #include "apsis/engine/object.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
 #include <string>
 #include <vector>
@@ -55,12 +55,12 @@ namespace Apsis {
       /*
        *  Returns the compiled fragment shader.
        */
-      const Primitives::FragmentShader& fragmentShader() const;
+      const Primitive::FragmentShader& fragmentShader() const;
 
       /*
        *  Returns the compiled vertex shader.
        */
-      const Primitives::VertexShader& vertexShader() const;
+      const Primitive::VertexShader& vertexShader() const;
 
       /*
        *  Returns the number of dependent inputs.
@@ -107,8 +107,8 @@ namespace Apsis {
       std::vector<std::string> _uniform_names;
       std::vector<std::string> _uniform_types;
 
-      mutable const Primitives::VertexShader* _vertex_shader;
-      mutable const Primitives::FragmentShader* _fragment_shader;
+      mutable const Primitive::VertexShader* _vertex_shader;
+      mutable const Primitive::FragmentShader* _fragment_shader;
 
       mutable std::string _code;
       std::string _implementation;

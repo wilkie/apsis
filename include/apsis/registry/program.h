@@ -5,9 +5,9 @@
 
 #include "apsis/registry/shader.h"
 
-#include "apsis/primitives/program.h"
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/program.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
 #include <string>
 #include <set>
@@ -31,7 +31,7 @@ namespace Apsis {
       /*
        *  Returns the compiled shader program.
        */
-      const Primitives::Program& program() const;
+      const Primitive::Program& program() const;
 
       /*
        *  Returns the number of uniforms in the program.
@@ -75,10 +75,10 @@ namespace Apsis {
 
       const Registry::Shader* _fragment_final;
 
-      mutable const Primitives::VertexShader*   _vertex_main;
-      mutable const Primitives::FragmentShader* _fragment_main;
+      mutable const Primitive::VertexShader*   _vertex_main;
+      mutable const Primitive::FragmentShader* _fragment_main;
 
-      mutable const Primitives::Program* _program;
+      mutable const Primitive::Program* _program;
 
       mutable std::string _vertex_code;
       mutable std::string _fragment_code;

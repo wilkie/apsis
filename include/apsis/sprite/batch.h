@@ -70,9 +70,9 @@ namespace Apsis {
       /*
        *  Draws the Batch object with the given matrices.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera,
-                const Primitives::Matrix& model) const;
+                const Primitive::Matrix& model) const;
     private:
       // Constructor
       Batch(const Apsis::Sprite::Sheet& sheet,
@@ -86,18 +86,18 @@ namespace Apsis {
 
       const Apsis::Sprite::Sheet& _sheet;
 
-      // Graphics primitives for storing on gpu and drawing.
-      mutable Primitives::VertexArray _vao;
+      // Graphics primitive for storing on gpu and drawing.
+      mutable Primitive::VertexArray _vao;
 
       float* _vertices;
       unsigned int _vertexCount;
       unsigned int _vertexCapacity;
-      mutable Primitives::VertexBuffer _vbo;
+      mutable Primitive::VertexBuffer _vbo;
 
       unsigned short* _elements;
       unsigned int _elementCount;
       unsigned int _elementCapacity;
-      mutable Primitives::VertexBuffer _ebo;
+      mutable Primitive::VertexBuffer _ebo;
 
       mutable bool _dirty;
     };

@@ -47,10 +47,10 @@ namespace Apsis {
   }
 
   /*
-   *  Contains low-level graphics primitives used through the system to build
+   *  Contains low-level graphics primitive used through the system to build
    *  more complicated objects.
    */
-  namespace Primitives {
+  namespace Primitive {
   }
 
   /*

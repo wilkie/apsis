@@ -1,4 +1,4 @@
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/program.h"
 
 #include "apsis/backend/sdl.h"
 
@@ -10,7 +10,7 @@
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "Program", function, message);
+  Apsis::Engine::Log::error("Primitive", "Program", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -35,7 +35,7 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::Program::Program(unsigned int program,
+Apsis::Primitive::Program::Program(unsigned int program,
                                     std::vector<const VertexShader*> vertexShaders,
                                     std::vector<const FragmentShader*> fragmentShaders) :
   _program(program),
@@ -43,7 +43,7 @@ Apsis::Primitives::Program::Program(unsigned int program,
   _fragmentShaders(fragmentShaders) {
 }
 
-Apsis::Primitives::Program::~Program() {
+Apsis::Primitive::Program::~Program() {
   if (_counter.isAlone() && this->_program != 0) {
     glDeleteProgram(this->_program);
   }
@@ -53,6 +53,6 @@ Apsis::Primitives::Program::~Program() {
 #endif
 }
 
-unsigned int Apsis::Primitives::Program::identifier() const {
+unsigned int Apsis::Primitive::Program::identifier() const {
   return this->_program;
 }

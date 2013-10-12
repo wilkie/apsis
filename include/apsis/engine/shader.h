@@ -7,8 +7,8 @@
 #include "apsis/registry/program.h"
 #include "apsis/registry/shader.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
 #include <string>
 #include <vector>

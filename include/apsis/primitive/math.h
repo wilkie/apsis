@@ -1,13 +1,13 @@
-#ifndef APSIS_PRIMITIVES_MATH_H
-#define APSIS_PRIMITIVES_MATH_H
+#ifndef APSIS_PRIMITIVE_MATH_H
+#define APSIS_PRIMITIVE_MATH_H
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class Matrix {
     public:
       float value[4][4];
 
-      static Primitives::Matrix identity();
+      static Primitive::Matrix identity();
 
     private:
     };

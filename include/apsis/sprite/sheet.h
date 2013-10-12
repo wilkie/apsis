@@ -3,10 +3,10 @@
 
 #include "apsis/engine/object.h"
 
-#include "apsis/primitives/texture.h"
+#include "apsis/primitive/texture.h"
 
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/vertex_array.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include "apsis/world/camera.h"
 
@@ -37,7 +37,7 @@ namespace Apsis {
       /*
        *  Returns: The Texture for this SpriteSheet.
        */
-      const Primitives::Texture& texture() const;
+      const Primitive::Texture& texture() const;
 
       /*
        *  Fills the given coordinate array with the texture coordinates of the
@@ -100,9 +100,9 @@ namespace Apsis {
        *  Draws the given sprite at the given location.
        */
       void draw(unsigned int              index,
-                const Primitives::Matrix& projection,
+                const Primitive::Matrix& projection,
                 const World::Camera& camera,
-                const Primitives::Matrix& model) const;
+                const Primitive::Matrix& model) const;
     private:
       // Registry of sprite sheets.
       static std::vector<std::string> _ids;
@@ -115,7 +115,7 @@ namespace Apsis {
       Sync::ReferenceCounter _counter;
 
       // The texture.
-      Apsis::Primitives::Texture* _texture;
+      Apsis::Primitive::Texture* _texture;
 
       // The width and height of the sprite texture.
       unsigned int _width;
@@ -165,12 +165,12 @@ namespace Apsis {
       // Parse the description file from the given json filename.
       void  _loadStatSheet(const char* filename);
 
-      // Graphics primitives for storing on gpu and drawing.
-      Primitives::VertexArray _vao;
+      // Graphics primitive for storing on gpu and drawing.
+      Primitive::VertexArray _vao;
       float* _vertices;
-      Primitives::VertexBuffer _vbo;
+      Primitive::VertexBuffer _vbo;
       unsigned short* _elements;
-      Primitives::VertexBuffer _ebo;
+      Primitive::VertexBuffer _ebo;
     };
   }
 }

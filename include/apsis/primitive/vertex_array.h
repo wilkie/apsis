@@ -1,15 +1,15 @@
-#ifndef APSIS_PRIMITIVES_VERTEX_ARRAY_H
-#define APSIS_PRIMITIVES_VERTEX_ARRAY_H
+#ifndef APSIS_PRIMITIVE_VERTEX_ARRAY_H
+#define APSIS_PRIMITIVE_VERTEX_ARRAY_H
 
 #include "apsis/sync/reference_counter.h"
 
-#include "apsis/primitives/math.h"
+#include "apsis/primitive/math.h"
 
 #include "apsis/registry/program.h"
 
-#include "apsis/primitives/vertex_buffer.h"
-#include "apsis/primitives/program.h"
-#include "apsis/primitives/texture.h"
+#include "apsis/primitive/vertex_buffer.h"
+#include "apsis/primitive/program.h"
+#include "apsis/primitive/texture.h"
 
 #include <vector>
 #include <map>
@@ -18,7 +18,7 @@
 #include <glm/glm.hpp>
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class VertexArray {
     public:
       /*

@@ -1,10 +1,10 @@
 #include "apsis/sprite/batch.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 #include <algorithm>
 #include <string.h>
@@ -29,8 +29,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet,
     _vertices(NULL),
     _elementCount(0),
     _elements(NULL),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements),
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements),
     _dirty(false) {
 
   _id = _batches.size();
@@ -41,8 +41,8 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet,
 
   _vao.useProgram(program);
 
-  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 5, 3);
 
   _vao.bindTexture(0, _sheet.texture());
   _vao.uploadUniform("texture", 0);
@@ -171,9 +171,9 @@ void Apsis::Sprite::Batch::add(unsigned int index,
   add(index, x, y, _sheet.width(index), _sheet.height(index), 0.0f, 0.0f, _sheet.width(index), _sheet.height(index));
 }
 
-void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
+void Apsis::Sprite::Batch::draw(const Primitive::Matrix& projection,
                                 const World::Camera& camera,
-                                const Primitives::Matrix& model) const {
+                                const Primitive::Matrix& model) const {
   _vao.bindProgram();
 
   if (_dirty) {

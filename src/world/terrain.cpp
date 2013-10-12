@@ -1,10 +1,10 @@
 #include "apsis/world/terrain.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 #include "apsis/geometry/point3d.h"
 
@@ -94,8 +94,8 @@ static void controlPoints(Apsis::Geometry::Point3d* points,
 Apsis::World::Terrain::Terrain(unsigned int width,
                                unsigned int height)
   : _width(width), _height(height),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements) {
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements) {
   // width = 3, height = 2 creates map like this:
   //
   //   +---+---+---+
@@ -389,22 +389,22 @@ Apsis::World::Terrain::Terrain(unsigned int width,
   const Registry::Program& program = Engine::Object::basic().loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 8, 0);
-  _vbo.defineInput("normal",   program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 8, 3);
-  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 8, 6);
+  _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 8, 0);
+  _vbo.defineInput("normal",   program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 8, 3);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 8, 6);
 
-  Primitives::Texture t = Primitives::Texture("resources/sample.png");
+  Primitive::Texture t = Primitive::Texture("resources/sample.png");
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
-  Primitives::Vector3 emission = {1.0f, 0.0f, 0.0f};
+  Primitive::Vector3 emission = {1.0f, 0.0f, 0.0f};
   _materials.push_back(Apsis::Model::Material(0.2f, 5.0f, 8.0f,
                                               emission,
                                               15.0f));
 
-  Primitives::Vector3 position  = {0.0f, 0.0f, 0.0f};
-  Primitives::Vector3 direction = {0.0f, 1.0f, 0.0f};
-  Primitives::Vector3 color     = {1.0f, 0.0f, 1.0f};
+  Primitive::Vector3 position  = {0.0f, 0.0f, 0.0f};
+  Primitive::Vector3 direction = {0.0f, 1.0f, 0.0f};
+  Primitive::Vector3 color     = {1.0f, 0.0f, 1.0f};
 
   _lights.push_back(Apsis::Model::Light(position,
                                         direction,
@@ -435,13 +435,13 @@ Apsis::World::Terrain::~Terrain() {
 // glm::value_ptr
 #include <glm/gtc/type_ptr.hpp>
 
-void Apsis::World::Terrain::draw(const Primitives::Matrix& projection,
+void Apsis::World::Terrain::draw(const Primitive::Matrix& projection,
                                  const World::Camera& camera) const {
   _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
 
-    const Primitives::Matrix& model_matrix
-      = *(const Primitives::Matrix*)glm::value_ptr(glm::mat4(1.0f));
+    const Primitive::Matrix& model_matrix
+      = *(const Primitive::Matrix*)glm::value_ptr(glm::mat4(1.0f));
 
   _vao.uploadUniform("model", model_matrix);
 

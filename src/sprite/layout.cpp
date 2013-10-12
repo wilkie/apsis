@@ -7,14 +7,14 @@ Sprite::Layout::Layout()
     _vertices(NULL),
     _elementCount(0),
     _elements(NULL),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements),
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements),
     _dirty(false)  {
 }
 
 void Sprite::Layout::add(const char* text,
                          const Sprite::Font& font,
-                         const Primitives::Vector4& color) {
+                         const Primitive::Vector4& color) {
   Node node;
 
   node.color = color;

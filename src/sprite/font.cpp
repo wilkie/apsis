@@ -1,10 +1,10 @@
 #include "apsis/sprite/font.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 #include <ft2build.h>
 #include <freetype/freetype.h>
@@ -61,8 +61,8 @@ Apsis::Sprite::Font::Font(const char* family,
     _elements(NULL),
     _x(0),
     _y(0),
-    _vbo(Primitives::VertexBuffer::Target::Data),
-    _ebo(Primitives::VertexBuffer::Target::Elements),
+    _vbo(Primitive::VertexBuffer::Target::Data),
+    _ebo(Primitive::VertexBuffer::Target::Elements),
     _line_height(0) {
   _id = _fonts.size();
 
@@ -129,20 +129,20 @@ void Apsis::Sprite::Font::_load() {
 
   if (renderToBitmap) {
     if (_texture == NULL) {
-      _texture = new Apsis::Primitives::Texture(512, 512);
+      _texture = new Apsis::Primitive::Texture(512, 512);
 
-      Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
-      Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/color.glsl");
+      Primitive::VertexShader   vs = Primitive::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
+      Primitive::FragmentShader fs = Primitive::FragmentShader::fromFile("assets/shaders/fragment/color.glsl");
 
       const Registry::Program& program = _loader.loadProgram("basic");
 
       _vao.useProgram(program);
-      _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-      _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+      _vbo.defineInput("position", program.program(), 3, Primitive::VertexBuffer::Type::Float, false, 5, 0);
+      _vbo.defineInput("texcoord", program.program(), 2, Primitive::VertexBuffer::Type::Float, false, 5, 3);
 
       _vao.bindTexture(0, *_texture);
       _vao.uploadUniform("texture", 0);
-      Primitives::Vector4 color = {0.0f, 0.3f, 0.0f, 1.0f};
+      Primitive::Vector4 color = {0.0f, 0.3f, 0.0f, 1.0f};
       //_vao.uploadUniform("color", color);
     }
   }
@@ -344,9 +344,9 @@ const Apsis::Sprite::Font::Glyph& Apsis::Sprite::Font::glyph(unsigned int codePo
   return _glyphs[_bitmapGlyphs.at(codePoint)];
 }
 
-void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
+void Apsis::Sprite::Font::draw(const Primitive::Matrix& projection,
                                const World::Camera& camera,
-                               const Primitives::Vector4& color,
+                               const Primitive::Vector4& color,
                                float x,
                                float y,
                                unsigned int index) const {
@@ -362,15 +362,15 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
   glm::mat4 model = glm::translate(glm::mat4(1.0),
     glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
 
-  const Primitives::Matrix& model_matrix
-    = *(const Primitives::Matrix*)glm::value_ptr(model);
+  const Primitive::Matrix& model_matrix
+    = *(const Primitive::Matrix*)glm::value_ptr(model);
   _vao.uploadUniform("model", model_matrix);
   _vao.drawRange(glyph.index * 6, 6);
 }
 
-void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
+void Apsis::Sprite::Font::draw(const Primitive::Matrix& projection,
                                const World::Camera& camera,
-                               const Primitives::Vector4& color,
+                               const Primitive::Vector4& color,
                                float x,
                                float y,
                                const char* string) const {
@@ -387,8 +387,8 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
     glm::mat4 model = glm::translate(glm::mat4(1.0),
       glm::vec3(x + glyph.bearingLeft, 0.0, y - glyph.bearingTop));
 
-    const Primitives::Matrix& model_matrix
-      = *(const Primitives::Matrix*)glm::value_ptr(model);
+    const Primitive::Matrix& model_matrix
+      = *(const Primitive::Matrix*)glm::value_ptr(model);
     _vao.uploadUniform("model", model_matrix);
     _vao.drawRange(glyph.index * 6, 6);
 

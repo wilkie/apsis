@@ -2,11 +2,11 @@
 
 #include "apsis/world/collision_object.h"
 
-#include "apsis/primitives/fragment_shader.h"
-#include "apsis/primitives/vertex_shader.h"
+#include "apsis/primitive/fragment_shader.h"
+#include "apsis/primitive/vertex_shader.h"
 
-#include "apsis/primitives/unlinked_program.h"
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/unlinked_program.h"
+#include "apsis/primitive/program.h"
 
 #include <fstream>
 #include <string>
@@ -171,13 +171,13 @@ void Apsis::World::Actor::respond(Apsis::World::Scene& scene) {
   }
 }
 
-void Apsis::World::Actor::draw(const Primitives::Matrix& projection,
+void Apsis::World::Actor::draw(const Primitive::Matrix& projection,
                                const World::Camera& camera) const {
   glm::mat4 model = glm::translate(glm::mat4(1.0),
                                    glm::vec3(_position.x, 0.0, _position.y));
 
-  const Primitives::Matrix& model_matrix
-    = *(const Primitives::Matrix*)glm::value_ptr(model);
+  const Primitive::Matrix& model_matrix
+    = *(const Primitive::Matrix*)glm::value_ptr(model);
 
   _sheet.draw(_frame->spriteIndex, projection, camera, model_matrix);
 }

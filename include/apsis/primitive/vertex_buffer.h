@@ -1,14 +1,14 @@
-#ifndef APSIS_PRIMITIVES_VERTEX_BUFFER_H
-#define APSIS_PRIMITIVES_VERTEX_BUFFER_H
+#ifndef APSIS_PRIMITIVE_VERTEX_BUFFER_H
+#define APSIS_PRIMITIVE_VERTEX_BUFFER_H
 
 #include "apsis/sync/reference_counter.h"
 
-#include "apsis/primitives/program.h"
+#include "apsis/primitive/program.h"
 
 #include <vector>
 
 namespace Apsis {
-  namespace Primitives {
+  namespace Primitive {
     class VertexBuffer {
     public:
       struct Type {

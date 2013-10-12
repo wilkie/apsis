@@ -3,9 +3,9 @@
 
 #include "apsis/engine/object.h"
 
-#include "apsis/primitives/texture.h"
-#include "apsis/primitives/vertex_array.h"
-#include "apsis/primitives/vertex_buffer.h"
+#include "apsis/primitive/texture.h"
+#include "apsis/primitive/vertex_array.h"
+#include "apsis/primitive/vertex_buffer.h"
 
 #include "apsis/world/camera.h"
 
@@ -115,9 +115,9 @@ namespace Apsis {
       /*
        *  Draws the given string at the given position.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera,
-                const Primitives::Vector4& color,
+                const Primitive::Vector4& color,
                 float x,
                 float y,
                 const char* string) const;
@@ -125,9 +125,9 @@ namespace Apsis {
       /*
        *  Draws the given glyph represented by the given index.
        */
-      void draw(const Primitives::Matrix& projection,
+      void draw(const Primitive::Matrix& projection,
                 const World::Camera& camera,
-                const Primitives::Vector4& color,
+                const Primitive::Vector4& color,
                 float x,
                 float y,
                 unsigned int index) const;
@@ -179,19 +179,19 @@ namespace Apsis {
       // We need to keep a texture for this font. (small)
       // Or we need to keep a vertex buffer. (large)
       // And use a shader to render.
-      Apsis::Primitives::Texture* _texture;
+      Apsis::Primitive::Texture* _texture;
 
       // The entire glyph texture is considered a cache:
       mutable unsigned int _x;
       mutable unsigned int _y;
       mutable unsigned int _line_height;
 
-      // Graphics primitives for storing on gpu and drawing.
-      mutable Primitives::VertexArray _vao;
+      // Graphics primitive for storing on gpu and drawing.
+      mutable Primitive::VertexArray _vao;
       mutable float* _vertices;
-      mutable Primitives::VertexBuffer _vbo;
+      mutable Primitive::VertexBuffer _vbo;
       mutable unsigned short* _elements;
-      mutable Primitives::VertexBuffer _ebo;
+      mutable Primitive::VertexBuffer _ebo;
 
       // Glyph cache
       mutable std::vector<Glyph> _glyphs;

@@ -3,8 +3,8 @@
 
 #include <apsis/sprite/sheet.h>
 #include <apsis/world/camera.h>
-#include <apsis/primitives/vertex_array.h>
-#include <apsis/primitives/vertex_buffer.h>
+#include <apsis/primitive/vertex_array.h>
+#include <apsis/primitive/vertex_buffer.h>
 #include <apsis/geometry/rectangle.h>
 
 namespace Apsis {
@@ -33,7 +33,7 @@ namespace Apsis {
         Apsis::Geometry::Rectangle position();
 
         // Draws the actor
-        void draw(const Primitives::Matrix& projection,
+        void draw(const Primitive::Matrix& projection,
                   const World::Camera& camera);
 
         unsigned int value();
