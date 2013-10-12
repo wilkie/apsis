@@ -33,12 +33,12 @@ namespace Apsis {
       /*
        *  Use the given program.
        */
-      void useProgram(Program& program);
+      void useProgram(const Program& program);
 
       /*
        *  Define a uniform.
        */
-      int defineUniform(const char* name, Program& program);
+      int defineUniform(const char* name, const Program& program);
 
       /*
        *  Transfer a matrix to a uniform.

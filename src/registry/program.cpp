@@ -234,7 +234,7 @@ const Primitives::Program& Registry::Program::program() const {
     program.attach(*_fragment_main);
 
     // Link
-    _program = &program.link();
+    _program = new Primitives::Program(program.link());
   }
 
   return *_program;

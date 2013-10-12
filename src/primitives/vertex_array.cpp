@@ -4,10 +4,12 @@
 
 #include "apsis/engine/log.h"
 
-unsigned int Apsis::Primitives::VertexArray::_current_vao = 0xffffffff;
+using namespace Apsis;
+
+unsigned int Primitives::VertexArray::_current_vao = 0xffffffff;
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Primitives", "VertexArray", function, message);
+  Engine::Log::error("Primitives", "VertexArray", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -32,7 +34,7 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-Apsis::Primitives::VertexArray::VertexArray() {
+Primitives::VertexArray::VertexArray() {
 #ifdef JS_MODE // Older GL / GLES2
 #else
   glGenVertexArrays(1, &this->_vao);
@@ -43,7 +45,7 @@ Apsis::Primitives::VertexArray::VertexArray() {
 #endif
 }
 
-Apsis::Primitives::VertexArray::~VertexArray() {
+Primitives::VertexArray::~VertexArray() {
   if (_counter.isAlone()) {
 #ifdef JS_MODE // Older GL / GLES2
 #else
@@ -56,7 +58,7 @@ Apsis::Primitives::VertexArray::~VertexArray() {
   }
 }
 
-void Apsis::Primitives::VertexArray::_bind() const {
+void Primitives::VertexArray::_bind() const {
   bindProgram();
 
 #ifdef JS_MODE
@@ -69,11 +71,11 @@ void Apsis::Primitives::VertexArray::_bind() const {
 #endif
 }
 
-void Apsis::Primitives::VertexArray::use() {
+void Primitives::VertexArray::use() {
   _bind();
 }
 
-void Apsis::Primitives::VertexArray::bind(VertexBuffer& buffer) {
+void Primitives::VertexArray::bind(VertexBuffer& buffer) {
   _bind();
 
   if (buffer.target() == VertexBuffer::Target::Elements) {
@@ -96,7 +98,7 @@ void Apsis::Primitives::VertexArray::bind(VertexBuffer& buffer) {
 #endif
 }
 
-void Apsis::Primitives::VertexArray::useProgram(Program& program) {
+void Primitives::VertexArray::useProgram(const Program& program) {
   _bind();
   glUseProgram(program.identifier());
 
@@ -113,7 +115,7 @@ void Apsis::Primitives::VertexArray::useProgram(Program& program) {
   _programs.push_back(program);
 }
 
-void Apsis::Primitives::VertexArray::draw() const {
+void Primitives::VertexArray::draw() const {
   _bind();
 
   if (_dataBuffer.size() > 0) {
@@ -136,7 +138,7 @@ void Apsis::Primitives::VertexArray::draw() const {
 #endif
 }
 
-void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) const {
+void Primitives::VertexArray::drawRange(unsigned int start, unsigned int count) const {
   _bind();
 
   if (_elementBuffer.size() > 0) {
@@ -156,7 +158,7 @@ void Apsis::Primitives::VertexArray::drawRange(unsigned int start, unsigned int 
 #endif
 }
 
-void Apsis::Primitives::VertexArray::drawQuads() const {
+void Primitives::VertexArray::drawQuads() const {
   _bind();
 
   unsigned int count = 0;
@@ -178,7 +180,7 @@ void Apsis::Primitives::VertexArray::drawQuads() const {
 #endif
 }
 
-void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
+void Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int count) const {
   _bind();
 
   if (_elementBuffer.size() > 0) {
@@ -198,7 +200,8 @@ void Apsis::Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned
 #endif
 }
 
-int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& program) {
+int Primitives::VertexArray::defineUniform(const char* name,
+                                           const Program& program) {
   useProgram(program);
   GLint uniform = glGetUniformLocation(program.identifier(), name);
   if (uniform < 0) {
@@ -211,15 +214,15 @@ int Apsis::Primitives::VertexArray::defineUniform(const char* name, Program& pro
   return uniform;
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   const Matrix& mat) const {
+void Primitives::VertexArray::uploadUniform(const char* name,
+                                            const Matrix& mat) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, mat);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
-                                                   const Matrix& mat) const {
+void Primitives::VertexArray::uploadUniform(int identifier,
+                                            const Matrix& mat) const {
   bindProgram();
   glUniformMatrix4fv(identifier, 1, GL_FALSE, (float*)&mat.value);
 
@@ -228,15 +231,15 @@ void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
 #endif
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   int         value) const {
+void Primitives::VertexArray::uploadUniform(const char* name,
+                                            int         value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
-                                                   int value) const {
+void Primitives::VertexArray::uploadUniform(int identifier,
+                                            int value) const {
   bindProgram();
   glUniform1i(identifier, value);
 
@@ -245,15 +248,15 @@ void Apsis::Primitives::VertexArray::uploadUniform(int identifier,
 #endif
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   float       value) const {
+void Primitives::VertexArray::uploadUniform(const char* name,
+                                            float       value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int   identifier,
-                                                   float value) const {
+void Primitives::VertexArray::uploadUniform(int   identifier,
+                                            float value) const {
   bindProgram();
   glUniform1f(identifier, value);
 
@@ -262,15 +265,15 @@ void Apsis::Primitives::VertexArray::uploadUniform(int   identifier,
 #endif
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   const Vector3& value) const {
+void Primitives::VertexArray::uploadUniform(const char* name,
+                                            const Vector3& value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
-                                                   const Vector3& value) const {
+void Primitives::VertexArray::uploadUniform(int         identifier,
+                                            const Vector3& value) const {
   bindProgram();
   glUniform3fv(identifier, 1, (float*)&value);
 
@@ -279,15 +282,15 @@ void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
 #endif
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(const char* name,
-                                                   const Vector4& value) const {
+void Primitives::VertexArray::uploadUniform(const char* name,
+                                            const Vector4& value) const {
   std::string key = name;
   GLint uniform = _uniforms.find(key)->second;
   uploadUniform(uniform, value);
 }
 
-void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
-                                                   const Vector4& value) const {
+void Primitives::VertexArray::uploadUniform(int         identifier,
+                                            const Vector4& value) const {
   bindProgram();
   glUniform4fv(identifier, 1, (float*)&value);
 
@@ -296,8 +299,8 @@ void Apsis::Primitives::VertexArray::uploadUniform(int         identifier,
 #endif
 }
 
-void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot,
-                                                 const Texture& texture) {
+void Primitives::VertexArray::bindTexture(unsigned int slot,
+                                          const Texture& texture) {
   std::map<unsigned int, Texture>::iterator it = _textures.find(slot);
   if (it != _textures.end()) {
     _textures.erase(it);
@@ -318,11 +321,11 @@ void Apsis::Primitives::VertexArray::bindTexture(unsigned int slot,
 #endif
 }
 
-unsigned int Apsis::Primitives::VertexArray::identifier() const {
+unsigned int Primitives::VertexArray::identifier() const {
   return this->_vao;
 }
 
-void Apsis::Primitives::VertexArray::_bindTextures() const {
+void Primitives::VertexArray::_bindTextures() const {
   std::map<unsigned int, Texture>::const_iterator it;
 
   for (it = _textures.begin(); it != _textures.end(); ++it) {
@@ -338,7 +341,7 @@ void Apsis::Primitives::VertexArray::_bindTextures() const {
   }
 }
 
-void Apsis::Primitives::VertexArray::bindProgram() const {
+void Primitives::VertexArray::bindProgram() const {
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("bindProgram (error on stack)");
 #endif
