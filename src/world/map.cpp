@@ -172,15 +172,10 @@ void Apsis::World::Map::_generateVAO() {
 
   const Registry::Program& program = _loader.loadProgram("basic");
 
-  _vao.useProgram(program.program());
+  _vao.useProgram(program);
   _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
   _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
-  _vao.defineUniform("model", program.program());
-  _vao.defineUniform("view",  program.program());
-  _vao.defineUniform("projection",  program.program());
-
-  _vao.defineUniform("texture", program.program());
   _vao.bindTexture(0, _sheet.texture());
   _vao.uploadUniform("texture", 0);
 
@@ -212,7 +207,7 @@ void Apsis::World::Map::draw(const Primitives::Matrix& projection,
                              const World::Camera& camera) const {
   _vao.bindProgram();
 
-  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", Primitives::Matrix::identity());
 

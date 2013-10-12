@@ -10,7 +10,8 @@ namespace Apsis {
       /*
        *  Constructs a new Batch object using the given Sprite::Sheet.
        */
-      static Apsis::Sprite::Batch& load(const Apsis::Sprite::Sheet& sheet);
+      static Apsis::Sprite::Batch& load(const Apsis::Sprite::Sheet& sheet,
+                                        const Engine::Object& loader);
       static Apsis::Sprite::Batch& loaded(unsigned int id);
 
       /*
@@ -74,7 +75,8 @@ namespace Apsis {
                 const Primitives::Matrix& model) const;
     private:
       // Constructor
-      Batch(const Apsis::Sprite::Sheet& sheet);
+      Batch(const Apsis::Sprite::Sheet& sheet,
+            const Engine::Object& loader);
 
       // Registry of batches.
       static std::vector<Apsis::Sprite::Batch*> _batches;

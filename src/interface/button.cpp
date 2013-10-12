@@ -50,7 +50,7 @@ void Apsis::Interface::Button::init(const Apsis::Interface::Window& window,
 
   const char* fontname = object.get(font_id).asCString();
 
-  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname);
+  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname, loader);
 
   data->font = &font;
 
@@ -58,9 +58,9 @@ void Apsis::Interface::Button::init(const Apsis::Interface::Window& window,
 
   data->sheet = &sheet;
 
-  Apsis::Sprite::Batch& batch = Apsis::Sprite::Batch::load(sheet);
-  Apsis::Sprite::Batch& batch_hover = Apsis::Sprite::Batch::load(sheet);
-  Apsis::Sprite::Batch& batch_down = Apsis::Sprite::Batch::load(sheet);
+  Apsis::Sprite::Batch& batch = Apsis::Sprite::Batch::load(sheet, loader);
+  Apsis::Sprite::Batch& batch_hover = Apsis::Sprite::Batch::load(sheet, loader);
+  Apsis::Sprite::Batch& batch_down = Apsis::Sprite::Batch::load(sheet, loader);
 
   float x = 0.0f;
   float y = 0.0f;

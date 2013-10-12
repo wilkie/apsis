@@ -12,8 +12,9 @@
 
 std::vector<Apsis::Sprite::Batch*> Apsis::Sprite::Batch::_batches;
 
-Apsis::Sprite::Batch& Apsis::Sprite::Batch::load(const Apsis::Sprite::Sheet& sheet) {
-  _batches.push_back(new Apsis::Sprite::Batch(sheet));
+Apsis::Sprite::Batch& Apsis::Sprite::Batch::load(const Apsis::Sprite::Sheet& sheet,
+                                                 const Engine::Object& loader) {
+  _batches.push_back(new Apsis::Sprite::Batch(sheet, loader));
   return *_batches[_batches.size() - 1];
 }
 
@@ -21,7 +22,8 @@ Apsis::Sprite::Batch& Apsis::Sprite::Batch::loaded(unsigned int index) {
   return *_batches[index];
 }
 
-Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
+Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet,
+                            const Engine::Object& loader)
   : _sheet(sheet),
     _vertexCount(0),
     _vertices(NULL),
@@ -35,26 +37,15 @@ Apsis::Sprite::Batch::Batch(const Apsis::Sprite::Sheet& sheet)
 
   printf("Building a new batch\n");
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
-
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
+  const Registry::Program& program = loader.loadProgram("basic");
 
   _vao.useProgram(program);
 
-  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-
-  _vao.defineUniform("tex", program);
   _vao.bindTexture(0, _sheet.texture());
+  _vao.uploadUniform("texture", 0);
 }
 
 unsigned int Apsis::Sprite::Batch::id() const {
@@ -194,11 +185,11 @@ void Apsis::Sprite::Batch::draw(const Primitives::Matrix& projection,
     _vao.bind(_ebo);
 
     // TODO: Worry about texture slots
-    _vao.uploadUniform("tex", 0);
+    _vao.uploadUniform("texture", 0);
     _dirty = false;
   }
 
-  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
 

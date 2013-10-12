@@ -12,6 +12,7 @@
 #include "apsis/registry/program.h"
 
 #include "apsis/sprite/sheet.h"
+#include "apsis/sprite/font.h"
 #include "apsis/sprite/thing.h"
 
 #include "apsis/world/map.h"
@@ -152,6 +153,14 @@ void Engine::Object::_loadFromJSON(Json::Value& value) {
     }
   }
 
+  if (value.isMember("fonts")) {
+    _font_path = value["fonts"].asCString();
+    if (_font_path.size() > 0 &&
+        _font_path[_font_path.size() - 1] != '/') {
+      _font_path.append("/");
+    }
+  }
+
   if (value.isMember("widgets")) {
     _widget_path = value["widgets"].asCString();
     if (_widget_path.size() > 0 &&
@@ -172,6 +181,7 @@ void Engine::Object::_loadDefaults() {
   _interface_path = "";
   _widget_path = "";
   _shader_path = "";
+  _font_path = "";
   _program_path = "";
 }
 
@@ -239,6 +249,14 @@ void Engine::Object::loadBindings(const char* name) const {
     throw "Bindings file not found or loaded.";
   }
   return Registry::Action::load(found.c_str());
+}
+
+const Sprite::Font& Engine::Object::loadFont(const char* name) const {
+  std::string found = _findFile(_font_path, std::string(name));
+  if (found == "") {
+    throw "Font file not found or loaded.";
+  }
+  return Sprite::Font::load(found.c_str(), *this);
 }
 
 const Registry::Shader& Engine::Object::loadShader(const char* name) const {

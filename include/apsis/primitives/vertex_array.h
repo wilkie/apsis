@@ -5,6 +5,8 @@
 
 #include "apsis/primitives/math.h"
 
+#include "apsis/registry/program.h"
+
 #include "apsis/primitives/vertex_buffer.h"
 #include "apsis/primitives/program.h"
 #include "apsis/primitives/texture.h"
@@ -34,11 +36,12 @@ namespace Apsis {
        *  Use the given program.
        */
       void useProgram(const Program& program);
+      void useProgram(const Registry::Program& program);
 
       /*
        *  Define a uniform.
        */
-      int defineUniform(const char* name, const Program& program);
+      int defineUniform(const char* name);
 
       /*
        *  Transfer a matrix to a uniform.
@@ -113,7 +116,7 @@ namespace Apsis {
 
       Sync::ReferenceCounter _counter;
 
-      std::vector<Program>            _programs;
+      std::vector<const Program>      _programs;
       std::map<unsigned int, Texture> _textures;
       std::map<std::string, int>      _uniforms;
 

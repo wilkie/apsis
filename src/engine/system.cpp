@@ -25,7 +25,7 @@ Apsis::Engine::System::System(const char* path,
     _objects(_parseOrCreateObject()),
 
     // Initialize Graphics Engine
-    _graphics(Apsis::Engine::Graphics::basic(videoSettings)),
+    _graphics(Apsis::Engine::Graphics::basic(videoSettings, _objects)),
 
     // Initialize Shader Engine
     _shaders(Apsis::Engine::Shader::basic(_graphics)),

@@ -46,32 +46,14 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
   Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/colorize.glsl");
   Primitives::FragmentShader ls = Primitives::FragmentShader::fromFile("assets/shaders/fragment/directional_lighting.glsl");
 
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.attach(ls);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
+  const Registry::Program& program = Engine::Object::basic().loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 8, 0);
-  _vbo.defineInput("normal",   program, 3, Primitives::VertexBuffer::Type::Float, false, 8, 3);
-  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 8, 6);
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-  _vao.defineUniform("camera",  program);
-
-  _vao.defineUniform("material.ambient_intensity",  program);
-  _vao.defineUniform("material.diffuse_intensity",  program);
-  _vao.defineUniform("material.specular_intensity",  program);
-  _vao.defineUniform("material.shininess",  program);
-  _vao.defineUniform("material.emission",  program);
-  _vao.defineUniform("light.color",  program);
-  _vao.defineUniform("light.direction",  program);
+  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 8, 0);
+  _vbo.defineInput("normal",   program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 8, 3);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 8, 6);
 
   Primitives::Texture t = Primitives::Texture("resources/sample.png");
-  _vao.defineUniform("tex", program);
   _vao.bindTexture(0, t);
   _vao.uploadUniform("tex", 0);
 
@@ -95,7 +77,7 @@ Apsis::Model::Mesh::Mesh(std::vector<glm::vec3>& vertices,
 }
 
 void Apsis::Model::Mesh::draw(const Primitives::Matrix& projection, const World::Camera& camera, const Primitives::Matrix& model) const {
-  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
   _vao.uploadUniform("model", model);
 

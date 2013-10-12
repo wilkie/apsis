@@ -53,7 +53,7 @@ void Interface::CheckBox::init(const Interface::Window& window,
 
   const char* fontname = object.get(font_id).asCString();
 
-  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname);
+  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname, loader);
 
   data->font = &font;
 
@@ -61,7 +61,7 @@ void Interface::CheckBox::init(const Interface::Window& window,
 
   data->sheet = &sheet;
 
-  Apsis::Sprite::Batch& batch = Apsis::Sprite::Batch::load(sheet);
+  Apsis::Sprite::Batch& batch = Apsis::Sprite::Batch::load(sheet, loader);
 
   float x = 0.0f;
   float y = 0.0f;
@@ -146,7 +146,7 @@ void Interface::CheckBox::init(const Interface::Window& window,
   data->batch = &batch;
 
   // Check mark
-  Apsis::Sprite::Batch& check_batch = Apsis::Sprite::Batch::load(sheet);
+  Apsis::Sprite::Batch& check_batch = Apsis::Sprite::Batch::load(sheet, loader);
   check_batch.add(9,
                   sheet.width(0),
                   sheet.height(0),
@@ -158,7 +158,7 @@ void Interface::CheckBox::init(const Interface::Window& window,
                   sheet.height(9));
   data->check = &check_batch;
 
-  Apsis::Sprite::Batch& check_hover_batch = Apsis::Sprite::Batch::load(sheet);
+  Apsis::Sprite::Batch& check_hover_batch = Apsis::Sprite::Batch::load(sheet, loader);
   check_hover_batch.add(10,
                         sheet.width(0),
                         sheet.height(0),
@@ -170,7 +170,7 @@ void Interface::CheckBox::init(const Interface::Window& window,
                         sheet.height(9));
   data->check_hover = &check_hover_batch;
 
-  Apsis::Sprite::Batch& check_hover_2_batch = Apsis::Sprite::Batch::load(sheet);
+  Apsis::Sprite::Batch& check_hover_2_batch = Apsis::Sprite::Batch::load(sheet, loader);
   check_hover_2_batch.add(11,
                         sheet.width(0),
                         sheet.height(0),

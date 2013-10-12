@@ -80,24 +80,13 @@ Apsis::World::Background::Background(Apsis::Primitives::Texture* texture)
   _vbo.transfer(_vertices, 5 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
-
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
+  // TODO: pass in loader
+  const Registry::Program& program = Engine::Object::basic().loadProgram("basic");
 
   _vao.useProgram(program);
-  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-
-  _vao.defineUniform("tex", program);
   _vao.bindTexture(0, *_texture);
   _vao.uploadUniform("tex", 0);
 
@@ -138,7 +127,7 @@ const Apsis::Primitives::Texture& Apsis::World::Background::texture() const {
   */
 void Apsis::World::Background::draw(const Primitives::Matrix& projection,
                                     const World::Camera& camera) const {
-  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
 
   for (unsigned int w = 0; w < 20; w++) {

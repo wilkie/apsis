@@ -18,15 +18,18 @@
 
 std::vector<Apsis::Engine::Graphics*> Apsis::Engine::Graphics::_graphics_engines;
 
-Apsis::Engine::Graphics::Graphics(const Apsis::Settings::Video& settings)
-  : _videoSettings(settings),
+Apsis::Engine::Graphics::Graphics(const Apsis::Settings::Video& settings,
+                                  const Engine::Object& loader)
+  : _loader(loader),
+    _videoSettings(settings),
     _font(NULL),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
     _default(NULL) {
 }
 
-Apsis::Engine::Graphics& Apsis::Engine::Graphics::basic(const Apsis::Settings::Video& settings) {
-  Apsis::Engine::Graphics* ge = new Apsis::Engine::Graphics(settings);
+Apsis::Engine::Graphics& Apsis::Engine::Graphics::basic(const Apsis::Settings::Video& settings,
+                                                        const Engine::Object& loader) {
+  Apsis::Engine::Graphics* ge = new Apsis::Engine::Graphics(settings, loader);
   _graphics_engines.push_back(ge);
   return *ge;
 }
@@ -43,7 +46,7 @@ const Apsis::Sprite::Font& Apsis::Engine::Graphics::font() const {
   if (_font == NULL) {
     if (_default == NULL) {
       // Create default font!
-      const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("Arial");
+      const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load("Arial", _loader);
       _default = &font;
     }
 

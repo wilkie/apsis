@@ -1,6 +1,8 @@
 #ifndef APSIS_ENGINE_GRAPHICS_H
 #define APSIS_ENGINE_GRAPHICS_H
 
+#include "apsis/engine/object.h"
+
 #include "apsis/sprite/font.h"
 #include "apsis/sprite/sheet.h"
 
@@ -15,7 +17,8 @@ namespace Apsis {
      */
     class Graphics {
     public:
-      static Apsis::Engine::Graphics& basic(const Apsis::Settings::Video& settings);
+      static Apsis::Engine::Graphics& basic(const Apsis::Settings::Video& settings,
+                                            const Engine::Object& loader);
 
       /*
        *  Retrieves the current video settings.
@@ -93,7 +96,10 @@ namespace Apsis {
 
     private:
       // Constructor
-      Graphics(const Apsis::Settings::Video& settings);
+      Graphics(const Apsis::Settings::Video& settings,
+               const Engine::Object& loader);
+
+      const Engine::Object& _loader;
 
       // Keep global track of all Graphics Engines
       static std::vector<Apsis::Engine::Graphics*> _graphics_engines;

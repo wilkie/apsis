@@ -6,6 +6,8 @@
 
 using namespace Apsis;
 
+#define DEBUG_THROW_GL_ERRORS
+
 unsigned int Primitives::VertexArray::_current_vao = 0xffffffff;
 
 static void _throwError(const char* function, const char* message) {
@@ -96,6 +98,14 @@ void Primitives::VertexArray::bind(VertexBuffer& buffer) {
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("bind");
 #endif
+}
+
+void Primitives::VertexArray::useProgram(const Registry::Program& program) {
+  useProgram(program.program());
+
+  for (unsigned int i = 0; i < program.uniformCount(); i++) {
+    defineUniform(program.uniformName(i));
+  }
 }
 
 void Primitives::VertexArray::useProgram(const Program& program) {
@@ -200,9 +210,9 @@ void Primitives::VertexArray::drawQuadsRange(unsigned int start, unsigned int co
 #endif
 }
 
-int Primitives::VertexArray::defineUniform(const char* name,
-                                           const Program& program) {
-  useProgram(program);
+int Primitives::VertexArray::defineUniform(const char* name) {
+  _bind();
+  const Program& program = _programs[0];
   GLint uniform = glGetUniformLocation(program.identifier(), name);
   if (uniform < 0) {
     char error[1024];
@@ -223,7 +233,7 @@ void Primitives::VertexArray::uploadUniform(const char* name,
 
 void Primitives::VertexArray::uploadUniform(int identifier,
                                             const Matrix& mat) const {
-  bindProgram();
+  _bind();
   glUniformMatrix4fv(identifier, 1, GL_FALSE, (float*)&mat.value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -240,7 +250,7 @@ void Primitives::VertexArray::uploadUniform(const char* name,
 
 void Primitives::VertexArray::uploadUniform(int identifier,
                                             int value) const {
-  bindProgram();
+  _bind();
   glUniform1i(identifier, value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -257,7 +267,7 @@ void Primitives::VertexArray::uploadUniform(const char* name,
 
 void Primitives::VertexArray::uploadUniform(int   identifier,
                                             float value) const {
-  bindProgram();
+  _bind();
   glUniform1f(identifier, value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -274,7 +284,7 @@ void Primitives::VertexArray::uploadUniform(const char* name,
 
 void Primitives::VertexArray::uploadUniform(int         identifier,
                                             const Vector3& value) const {
-  bindProgram();
+  _bind();
   glUniform3fv(identifier, 1, (float*)&value);
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -291,7 +301,7 @@ void Primitives::VertexArray::uploadUniform(const char* name,
 
 void Primitives::VertexArray::uploadUniform(int         identifier,
                                             const Vector4& value) const {
-  bindProgram();
+  _bind();
   glUniform4fv(identifier, 1, (float*)&value);
 
 #ifdef DEBUG_THROW_GL_ERRORS

@@ -33,6 +33,7 @@ namespace Apsis {
   namespace Sprite {
     class Thing;
     class Sheet;
+    class Font;
   }
 
   namespace Engine {
@@ -109,6 +110,12 @@ namespace Apsis {
        *  Loads or returns the existing Shader object with the given
        *  name or path.
        */
+      const Apsis::Sprite::Font& loadFont(const char* name) const;
+
+      /*
+       *  Loads or returns the existing Shader object with the given
+       *  name or path.
+       */
       const Apsis::Registry::Shader& loadShader(const char* name) const;
 
       /*
@@ -147,6 +154,7 @@ namespace Apsis {
       std::string _background_path;
       std::string _rule_path;
       std::string _interface_path;
+      std::string _font_path;
       std::string _widget_path;
       std::string _shader_path;
       std::string _program_path;

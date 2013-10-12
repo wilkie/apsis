@@ -30,7 +30,7 @@ void Apsis::Interface::Label::init(const Apsis::Interface::Window& window,
 
   const char* fontname = object.get(font_id).asCString();
 
-  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname);
+  const Apsis::Sprite::Font& font = Apsis::Sprite::Font::load(fontname, loader);
   data->font = &font;
 
   const Apsis::Geometry::Rectangle& position = window.position();

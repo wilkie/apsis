@@ -177,15 +177,10 @@ Sprite::Sheet::Sheet(const char* filename,
 
   const Registry::Program& program = loader.loadProgram("basic");
 
-  _vao.useProgram(program.program());
+  _vao.useProgram(program);
   _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
   _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
-  _vao.defineUniform("model", program.program());
-  _vao.defineUniform("view",  program.program());
-  _vao.defineUniform("projection",  program.program());
-
-  _vao.defineUniform("texture", program.program());
   _vao.bindTexture(0, this->texture());
   _vao.uploadUniform("texture", 0);
 

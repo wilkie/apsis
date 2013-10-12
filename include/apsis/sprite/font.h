@@ -1,8 +1,9 @@
 #ifndef APSIS_SPRITE_FONT_H
 #define APSIS_SPRITE_FONT_H
 
-#include "apsis/primitives/texture.h"
+#include "apsis/engine/object.h"
 
+#include "apsis/primitives/texture.h"
 #include "apsis/primitives/vertex_array.h"
 #include "apsis/primitives/vertex_buffer.h"
 
@@ -73,7 +74,8 @@ namespace Apsis {
       /*
        *  Load the given font family or return an existing Font.
        */
-      static const Apsis::Sprite::Font& load(const char* family);
+      static const Apsis::Sprite::Font& load(const char* family,
+                                             const Engine::Object& loader);
 
       /*
        *  Retrieve an already loaded Font class from its id.
@@ -142,7 +144,10 @@ namespace Apsis {
 
     private:
       // Constructor
-      Font(const char* family);
+      Font(const char* family,
+           const Engine::Object& loader);
+
+      const Engine::Object& _loader;
 
       // Keeps track of Fonts system-wide.
       static std::vector<std::string> _ids;

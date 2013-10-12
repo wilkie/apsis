@@ -52,8 +52,10 @@ void Apsis::Sprite::Font::_init() {
   _initialized = true;
 }
 
-Apsis::Sprite::Font::Font(const char* family)
+Apsis::Sprite::Font::Font(const char* family,
+                          const Engine::Object& loader)
   : _family(family),
+    _loader(loader),
     _texture(NULL),
     _vertices(NULL),
     _elements(NULL),
@@ -75,7 +77,8 @@ const Apsis::Sprite::Font& Apsis::Sprite::Font::get(unsigned int id) {
   return *_fonts[id];
 }
 
-const Apsis::Sprite::Font& Apsis::Sprite::Font::load(const char* family) {
+const Apsis::Sprite::Font& Apsis::Sprite::Font::load(const char* family,
+                                                     const Engine::Object& loader) {
   std::string str = std::string(family);
 
   std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
@@ -86,7 +89,7 @@ const Apsis::Sprite::Font& Apsis::Sprite::Font::load(const char* family) {
 
   printf("Loading font %s\n", family);
 
-  _fonts.push_back(new Apsis::Sprite::Font(family));
+  _fonts.push_back(new Apsis::Sprite::Font(family, loader));
   _ids.push_back(str);
   return *_fonts[_ids.size() - 1];
 }
@@ -131,26 +134,16 @@ void Apsis::Sprite::Font::_load() {
       Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
       Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/color.glsl");
 
-      Primitives::UnlinkedProgram unlinked;
-      unlinked.attach(vs);
-      unlinked.attach(fs);
-      unlinked.defineFragmentOutput("outColor");
-      Primitives::Program program = unlinked.link();
+      const Registry::Program& program = _loader.loadProgram("basic");
 
       _vao.useProgram(program);
-      _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-      _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+      _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+      _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
-      _vao.defineUniform("model", program);
-      _vao.defineUniform("view",  program);
-      _vao.defineUniform("proj",  program);
-      _vao.defineUniform("color", program);
-
-      _vao.defineUniform("tex", program);
       _vao.bindTexture(0, *_texture);
-      _vao.uploadUniform("tex", 0);
+      _vao.uploadUniform("texture", 0);
       Primitives::Vector4 color = {0.0f, 0.3f, 0.0f, 1.0f};
-      _vao.uploadUniform("color", color);
+      //_vao.uploadUniform("color", color);
     }
   }
   else {
@@ -359,10 +352,10 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
                                unsigned int index) const {
   _vao.bindProgram();
 
-  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
 
-  _vao.uploadUniform("color", color);
+  //_vao.uploadUniform("color", color);
 
   const Glyph& glyph = _glyphs[index];
 
@@ -383,10 +376,10 @@ void Apsis::Sprite::Font::draw(const Primitives::Matrix& projection,
                                const char* string) const {
   _vao.bindProgram();
 
-  _vao.uploadUniform("proj", projection);
+  _vao.uploadUniform("projection", projection);
   _vao.uploadUniform("view", camera.view());
 
-  _vao.uploadUniform("color", color);
+  //_vao.uploadUniform("color", color);
 
   while(*string != '\0') {
     const Glyph& glyph = this->glyph(*string);
