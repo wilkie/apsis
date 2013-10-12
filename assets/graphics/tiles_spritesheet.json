@@ -4,6 +4,8 @@
   "author":  "Kenney",
   "license": "CC0",
 
+  "graphic": "tiles_spritesheet.png",
+
   "frames": [
     {
       "name": "box",

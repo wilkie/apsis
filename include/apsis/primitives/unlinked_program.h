@@ -25,12 +25,12 @@ namespace Apsis {
       /*
        *  Attach the given vertex shader.
        */
-      void attach(VertexShader& vertexShader);
+      void attach(const VertexShader& vertexShader);
 
       /*
        *  Attach the given fragment shader.
        */
-      void attach(FragmentShader& fragmentShader);
+      void attach(const FragmentShader& fragmentShader);
 
       /*
        *  Define the fragment shader's output location.
@@ -45,8 +45,8 @@ namespace Apsis {
     private:
       bool _linked;
       unsigned int _program;
-      vector<VertexShader> _vertexShaders;
-      vector<FragmentShader> _fragmentShaders;
+      vector<const VertexShader*> _vertexShaders;
+      vector<const FragmentShader*> _fragmentShaders;
       Sync::ReferenceCounter _counter;
     };
   }

@@ -34,15 +34,6 @@
     <ClCompile Include="..\..\src\world\tile.cpp">
       <Filter>world</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sync\atomic_counter.cpp">
-      <Filter>sync</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\sync\clock.cpp">
-      <Filter>sync</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\sync\reference_counter.cpp">
-      <Filter>sync</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\primitives\fragment_shader.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
@@ -464,6 +455,18 @@
     <ClCompile Include="..\..\src\registry\shader.cpp">
       <Filter>registry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\registry\program.cpp">
+      <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sync\atomic_counter.cpp">
+      <Filter>sync</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sync\clock.cpp">
+      <Filter>sync</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sync\reference_counter.cpp">
+      <Filter>sync</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\apsis\geometry\circle.h">
@@ -489,15 +492,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\world\tile.h">
       <Filter>world</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h">
-      <Filter>sync</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\sync\clock.h">
-      <Filter>sync</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\apsis\sync\reference_counter.h">
-      <Filter>sync</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\apsis\primitives\fragment_shader.h">
       <Filter>primitives</Filter>
@@ -944,6 +938,18 @@
     <ClInclude Include="..\..\include\apsis\registry\shader.h">
       <Filter>registry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\apsis\registry\program.h">
+      <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sync\atomic_counter.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sync\clock.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\apsis\sync\reference_counter.h">
+      <Filter>sync</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="geometry">
@@ -963,9 +969,6 @@
     </Filter>
     <Filter Include="support">
       <UniqueIdentifier>{2e9b43c6-a3ff-4761-8ab5-cfd96dddd7be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sync">
-      <UniqueIdentifier>{4ff79dad-c7ae-451b-83d5-5b6687a88bd5}</UniqueIdentifier>
     </Filter>
     <Filter Include="world">
       <UniqueIdentifier>{aed94e8b-4232-42c9-bf22-442cfc5ada0f}</UniqueIdentifier>
@@ -1032,6 +1035,9 @@
     </Filter>
     <Filter Include="support\SDL_mixer">
       <UniqueIdentifier>{febe2a51-a5f2-4cab-a784-740a3ea8cc54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sync">
+      <UniqueIdentifier>{9b7128d3-2763-4e8b-85ab-7c07dde44f92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

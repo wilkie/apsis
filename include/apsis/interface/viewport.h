@@ -58,7 +58,8 @@ namespace Apsis {
 
     private:
       static void _init(const Apsis::Interface::Window& window,
-                        Apsis::World::Object& object);
+                        Apsis::World::Object& object,
+                        const Engine::Object& loader);
 
       static void _draw(Apsis::Engine::Graphics& graphics,
                         const Apsis::Interface::Window& window,

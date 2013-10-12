@@ -1,9 +1,10 @@
 #ifndef APSIS_ENGINE_SHADER_H
 #define APSIS_ENGINE_SHADER_H
 
-#include "apsis/engine/graphics.h"
 #include "apsis/engine/object.h"
+#include "apsis/engine/graphics.h"
 
+#include "apsis/registry/program.h"
 #include "apsis/registry/shader.h"
 
 #include "apsis/primitives/fragment_shader.h"
@@ -23,6 +24,12 @@ namespace Apsis {
        */
       const Registry::Shader& load(const char* json,
                                    const Engine::Object& loader);
+
+      /*
+       *  Loads the given program.
+       */
+      const Registry::Program& loadProgram(const char* json,
+                                           const Engine::Object& loader);
 
     private:
       Shader(const Engine::Graphics& graphics);

@@ -1,34 +1,51 @@
 #include "apsis/engine/object.h"
 #include "apsis/registry/interface.h"
 
+#include "apsis/registry/scene.h"
+#include "apsis/registry/action.h"
+#include "apsis/registry/rule.h"
+#include "apsis/registry/property.h"
+#include "apsis/registry/state.h"
+#include "apsis/registry/interface.h"
+#include "apsis/registry/widget.h"
+#include "apsis/registry/shader.h"
+#include "apsis/registry/program.h"
+
+#include "apsis/sprite/sheet.h"
+#include "apsis/sprite/thing.h"
+
+#include "apsis/world/map.h"
+
 #include <fstream>
 #include <sys/stat.h>
 
-std::vector<Apsis::Engine::Object*> Apsis::Engine::Object::_object_engines;
+using namespace Apsis;
 
-Apsis::Engine::Object& Apsis::Engine::Object::load(const char* path) {
-  Apsis::Engine::Object* oe = new Apsis::Engine::Object(path);
+std::vector<Engine::Object*> Engine::Object::_object_engines;
+
+Engine::Object& Engine::Object::load(const char* path) {
+  Engine::Object* oe = new Engine::Object(path);
   _object_engines.push_back(oe);
   return *oe;
 }
 
-Apsis::Engine::Object& Apsis::Engine::Object::load(Json::Value& value) {
-  Apsis::Engine::Object* oe = new Apsis::Engine::Object(value);
+Engine::Object& Engine::Object::load(Json::Value& value) {
+  Engine::Object* oe = new Engine::Object(value);
   _object_engines.push_back(oe);
   return *oe;
 }
 
-Apsis::Engine::Object& Apsis::Engine::Object::basic() {
-  Apsis::Engine::Object* oe = new Apsis::Engine::Object();
+Engine::Object& Engine::Object::basic() {
+  Engine::Object* oe = new Engine::Object();
   _object_engines.push_back(oe);
   return *oe;
 }
 
-Apsis::Engine::Object::Object() {
+Engine::Object::Object() {
   _loadDefaults();
 }
 
-Apsis::Engine::Object::Object(const char* path) {
+Engine::Object::Object(const char* path) {
   Json::Value value;
 
   Json::Reader reader;
@@ -48,12 +65,12 @@ Apsis::Engine::Object::Object(const char* path) {
   }
 }
 
-Apsis::Engine::Object::Object(Json::Value& value) {
+Engine::Object::Object(Json::Value& value) {
   _loadDefaults();
   _loadFromJSON(value);
 }
 
-void Apsis::Engine::Object::_loadFromJSON(Json::Value& value) {
+void Engine::Object::_loadFromJSON(Json::Value& value) {
   // TODO: Cleanup
   if (value.isMember("scenes")) {
     _scene_path = value["scenes"].asCString();
@@ -127,6 +144,14 @@ void Apsis::Engine::Object::_loadFromJSON(Json::Value& value) {
     }
   }
 
+  if (value.isMember("programs")) {
+    _program_path = value["programs"].asCString();
+    if (_program_path.size() > 0 &&
+        _program_path[_shader_path.size() - 1] != '/') {
+      _program_path.append("/");
+    }
+  }
+
   if (value.isMember("widgets")) {
     _widget_path = value["widgets"].asCString();
     if (_widget_path.size() > 0 &&
@@ -136,7 +161,7 @@ void Apsis::Engine::Object::_loadFromJSON(Json::Value& value) {
   }
 }
 
-void Apsis::Engine::Object::_loadDefaults() {
+void Engine::Object::_loadDefaults() {
   _scene_path = "";
   _thing_path = "";
   _map_path = "";
@@ -147,17 +172,18 @@ void Apsis::Engine::Object::_loadDefaults() {
   _interface_path = "";
   _widget_path = "";
   _shader_path = "";
+  _program_path = "";
 }
 
-const Apsis::Sprite::Thing& Apsis::Engine::Object::loadThing(const char* name) const {
+const Sprite::Thing& Engine::Object::loadThing(const char* name) const {
   std::string found = _findFile(_thing_path, std::string(name));
   if (found == "") {
     throw "Thing description not found or loaded.";
   }
-  return Apsis::Sprite::Thing::load(found.c_str());
+  return Sprite::Thing::load(found.c_str(), *this);
 }
 
-const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) const {
+const World::Map& Engine::Object::loadMap(const char* name) const {
   std::string found = _findFile(_map_path, std::string(name));
   if (found == "") {
     throw "Map description not found or loaded.";
@@ -165,7 +191,17 @@ const Apsis::World::Map& Apsis::Engine::Object::loadMap(const char* name) const 
   return Apsis::World::Map::load(found.c_str(), *this);
 }
 
-const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) const {
+const Sprite::Sheet& Engine::Object::loadSheet(const char* name) const {
+  std::string found = _findFile(_graphics_path, std::string(name));
+  if (found == "") {
+    char foo[1024];
+    sprintf(foo, "Sheet description not found or loaded: %s", name);
+    throw foo;
+  }
+  return Sprite::Sheet::load(found.c_str(), *this);
+}
+
+const Registry::Rule& Engine::Object::loadRule(const char* name) const {
   std::string found = _findFile(_rule_path, std::string(name));
   if (found == "") {
     throw "Rule description not found or loaded.";
@@ -173,47 +209,55 @@ const Apsis::Registry::Rule& Apsis::Engine::Object::loadRule(const char* name) c
   return Apsis::Registry::Rule::load(found.c_str());
 }
 
-const Apsis::Registry::Scene& Apsis::Engine::Object::loadScene(const char* name) const {
+const Registry::Scene& Engine::Object::loadScene(const char* name) const {
   std::string found = _findFile(_scene_path, std::string(name));
   if (found == "") {
     throw "Scene description not found or loaded.";
   }
-  return Apsis::Registry::Scene::load(found.c_str(), *this);
+  return Registry::Scene::load(found.c_str(), *this);
 }
 
-const Apsis::Registry::Interface& Apsis::Engine::Object::loadInterface(const char* name) const {
+const Registry::Interface& Engine::Object::loadInterface(const char* name) const {
   std::string found = _findFile(_interface_path, std::string(name));
   if (found == "") {
     throw "Interface description not found or loaded.";
   }
-  return Apsis::Registry::Interface::load(found.c_str(), *this);
+  return Registry::Interface::load(found.c_str(), *this);
 }
 
-const Apsis::Registry::Widget& Apsis::Engine::Object::loadWidget(const char* name) const {
+const Registry::Widget& Engine::Object::loadWidget(const char* name) const {
   std::string found = _findFile(_widget_path, std::string(name));
   if (found == "") {
     throw "Widget description not found or loaded.";
   }
-  return Apsis::Registry::Widget::load(found.c_str(), *this);
+  return Registry::Widget::load(found.c_str(), *this);
 }
 
-void Apsis::Engine::Object::loadBindings(const char* name) const {
+void Engine::Object::loadBindings(const char* name) const {
   std::string found = _findFile(_binding_path, std::string(name));
   if (found == "") {
     throw "Bindings file not found or loaded.";
   }
-  return Apsis::Registry::Action::load(found.c_str());
+  return Registry::Action::load(found.c_str());
 }
 
-const Apsis::Registry::Shader& Apsis::Engine::Object::loadShader(const char* name) const {
+const Registry::Shader& Engine::Object::loadShader(const char* name) const {
   std::string found = _findFile(_shader_path, std::string(name));
   if (found == "") {
     throw "Shader file not found or loaded.";
   }
-  return Apsis::Registry::Shader::load(found.c_str(), *this);
+  return Registry::Shader::load(found.c_str(), *this);
 }
 
-std::string Apsis::Engine::Object::_findFile(const std::string& searchPath, const std::string& name) const {
+const Registry::Program& Engine::Object::loadProgram(const char* name) const {
+  std::string found = _findFile(_program_path, std::string(name));
+  if (found == "") {
+    throw "Program file not found or loaded.";
+  }
+  return Registry::Program::load(found.c_str(), *this);
+}
+
+std::string Engine::Object::_findFile(const std::string& searchPath, const std::string& name) const {
   // TODO: We could actually cache the result of the file search
   //       with a map on searchPath and name.
   //       Then we could have an object cache that uses the unique id.
@@ -242,7 +286,7 @@ std::string Apsis::Engine::Object::_findFile(const std::string& searchPath, cons
   return "";
 }
 
-bool Apsis::Engine::Object::_fileExists(std::string& path) const {
+bool Engine::Object::_fileExists(std::string& path) const {
   struct stat info;
   int ret = -1;
 

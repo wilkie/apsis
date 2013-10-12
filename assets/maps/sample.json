@@ -7,7 +7,7 @@
   "tile_width": 70,
   "tile_height": 70,
 
-  "sprites": "assets/graphics/tiles_spritesheet.png",
+  "sprites": "tiles_spritesheet",
 
   "tile_descriptions": [
     {

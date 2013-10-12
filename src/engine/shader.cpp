@@ -22,3 +22,8 @@ const Registry::Shader& Engine::Shader::load(const char* json,
                                              const Engine::Object& loader) {
   return Registry::Shader::load(json, loader);
 }
+
+const Registry::Program& Engine::Shader::loadProgram(const char* json,
+                                                     const Engine::Object& loader) {
+  return Registry::Program::load(json, loader);
+}

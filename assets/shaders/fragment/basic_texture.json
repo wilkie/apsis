@@ -1,0 +1,16 @@
+{
+  "type": "shader",
+  "process": "fragment",
+  "name": "basic_texture",
+
+  "uniforms": [
+    {
+      "name": "texture",
+      "type": "sampler2D"
+    }
+  ],
+
+  "output": "vec4",
+
+  "code": "return texture2D(texture, texcoord);"
+}

@@ -6,7 +6,7 @@
 
   "move_rate": 64,
 
-  "sprites": "assets/graphics/p3_spritesheet.png",
+  "sprites": "p3_spritesheet",
 
   "animations": [
     {

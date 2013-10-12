@@ -1,6 +1,8 @@
 #ifndef APSIS_INTERFACE_CHECK_BOX_H
 #define APSIS_INTERFACE_CHECK_BOX_H
 
+#include "apsis/engine/object.h"
+
 #include "apsis/interface/window.h"
 
 #include "apsis/world/object.h"
@@ -10,7 +12,8 @@ namespace Apsis {
     class CheckBox {
     public:
       static void init(const Apsis::Interface::Window& window,
-                       Apsis::World::Object& object);
+                       Apsis::World::Object& object,
+                       const Engine::Object& loader);
 
       static void draw(Apsis::Engine::Graphics& graphics,
                        const Apsis::Interface::Window& window,

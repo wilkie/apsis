@@ -17,7 +17,10 @@ Interface::Viewport::Viewport(const Apsis::Engine::Scene& scene,
                               float height)
   : _scene(scene),
     _camera(*(Primitives::Vector2*)glm::value_ptr(glm::vec2(0,0)), 0.0f),
-    _window(width / 2.0f, height / 2.0f, width, height, _init, _draw, _input, _motion, _update, _enter, _leave_) {
+    _window(Engine::Object::basic(),
+            width / 2.0f, height / 2.0f,
+            width, height,
+            _init, _draw, _input, _motion, _update, _enter, _leave_) {
 }
 
 void Interface::Viewport::position(Apsis::Geometry::Point3d& point) const {
@@ -62,7 +65,8 @@ void Interface::Viewport::draw(Apsis::Engine::Graphics& graphics) const {
 }
 
 void Interface::Viewport::_init(const Apsis::Interface::Window& window,
-                                Apsis::World::Object& object) {
+                                Apsis::World::Object& object,
+                                const Engine::Object& loader) {
 }
 
 void Interface::Viewport::_draw(Apsis::Engine::Graphics& graphics,

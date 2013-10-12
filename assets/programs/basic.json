@@ -1,0 +1,15 @@
+{
+  "type": "program",
+  "name": "basic",
+
+  "vertex": {
+    "position": "vertex/world_position",
+    "normal":   "vertex/basic_normal",
+    "texcoord": "vertex/basic_texcoord",
+    "final":    "vertex/screen_position"
+  },
+
+  "fragment": {
+    "final": "fragment/basic_texture"
+  },
+}

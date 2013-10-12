@@ -3,7 +3,8 @@
 using namespace Apsis;
 
 void Interface::Event::defaultInit(const Apsis::Interface::Window& window,
-                                   Apsis::World::Object& object) {
+                                   Apsis::World::Object& object,
+                                   const Engine::Object& loader) {
 }
 
 void Interface::Event::defaultDraw(Apsis::Engine::Graphics&        graphics,

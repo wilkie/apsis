@@ -1,7 +1,7 @@
 {
   "type": "shader",
   "process": "vertex",
-  "name": "normal",
+  "name": "world_position",
   "inputs": [
   ],
   "uniforms": [
@@ -11,5 +11,5 @@
     }
   ],
   "output": "vec3",
-  "code": "return (model * vec4(normal, 1.0)).xyz;"
+  "code": "return (model * vec4(position, 1.0)).xyz;"
 }

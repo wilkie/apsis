@@ -26,7 +26,8 @@ struct ButtonData {
 };
 
 void Apsis::Interface::Button::init(const Apsis::Interface::Window& window,
-                                    Apsis::World::Object& object) {
+                                    Apsis::World::Object& object,
+                                    const Engine::Object& loader) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
   static unsigned int text_id    = Apsis::Registry::Property::id("text");
   static unsigned int sprite_id = Apsis::Registry::Property::id("sprite");
@@ -53,7 +54,7 @@ void Apsis::Interface::Button::init(const Apsis::Interface::Window& window,
 
   data->font = &font;
 
-  const Apsis::Sprite::Sheet& sheet = Apsis::Sprite::Sheet::load("assets/graphics/button2.png");
+  const Apsis::Sprite::Sheet& sheet = loader.loadSheet("button2");
 
   data->sheet = &sheet;
 

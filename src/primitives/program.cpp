@@ -36,8 +36,8 @@ static void _throwGLError(const char* function) {
 #endif
 
 Apsis::Primitives::Program::Program(unsigned int program,
-                                    std::vector<VertexShader> vertexShaders,
-                                    std::vector<FragmentShader> fragmentShaders) :
+                                    std::vector<const VertexShader*> vertexShaders,
+                                    std::vector<const FragmentShader*> fragmentShaders) :
   _program(program),
   _vertexShaders(vertexShaders),
   _fragmentShaders(fragmentShaders) {

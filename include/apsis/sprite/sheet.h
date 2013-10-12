@@ -1,6 +1,8 @@
 #ifndef APSIS_SPRITE_SHEET_H
 #define APSIS_SPRITE_SHEET_H
 
+#include "apsis/engine/object.h"
+
 #include "apsis/primitives/texture.h"
 
 #include "apsis/primitives/vertex_array.h"
@@ -25,15 +27,17 @@ namespace Apsis {
        *    exists by looking for a file with the same name with a 'txt'
        *    extension.
        */
-      Sheet(const char* filename);
+      Sheet(const char* filename, const Engine::Object& loader);
 
-      static const Apsis::Sprite::Sheet& load(const char* filename);
-      static const Apsis::Sprite::Sheet& loaded(unsigned int id);
+      static const Sprite::Sheet& load(const char* filename,
+                                       const Engine::Object& loader);
+
+      static const Sprite::Sheet& loaded(unsigned int id);
 
       /*
        *  Returns: The Texture for this SpriteSheet.
        */
-      const Apsis::Primitives::Texture& texture() const;
+      const Primitives::Texture& texture() const;
 
       /*
        *  Fills the given coordinate array with the texture coordinates of the
@@ -104,6 +108,8 @@ namespace Apsis {
       static std::vector<std::string> _ids;
       static std::vector<Apsis::Sprite::Sheet*> _sheets;
 
+      std::string _graphic_path;
+
       unsigned int _id;
 
       Sync::ReferenceCounter _counter;
@@ -116,7 +122,7 @@ namespace Apsis {
       unsigned int _height;
 
       // Describes an individual sprite.
-      struct Sprite {
+      struct _Sprite {
         /*
          *  The x coordinate of the sprite on the sprite sheet in pixels.
          */
@@ -154,13 +160,9 @@ namespace Apsis {
       };
 
       // An array of all sprites in the sprite sheet.
-      std::vector<Sprite> _sprites;
+      std::vector<_Sprite> _sprites;
 
-      // Yields the filename of the sprite description file from the given
-      //   image filename.
-      char* _determineStatSheetFilename(const char* filename);
-
-      // Parse the description file from the given image filename.
+      // Parse the description file from the given json filename.
       void  _loadStatSheet(const char* filename);
 
       // Graphics primitives for storing on gpu and drawing.

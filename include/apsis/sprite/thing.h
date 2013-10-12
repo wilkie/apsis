@@ -1,6 +1,8 @@
 #ifndef APSIS_SPRITE_THING_H
 #define APSIS_SPRITE_THING_H
 
+#include "apsis/engine/object.h"
+
 #include "apsis/sprite/sheet.h"
 #include "apsis/sprite/animation.h"
 
@@ -24,12 +26,13 @@ namespace Apsis {
       /*
        *  Constructs a Thing from the given thing file.
        */
-      Thing(const char* path);
+      Thing(const char* path, const Engine::Object& loader);
 
       /*
        *  Loads a Thing from the thing info represented by the given file.
        */
-      static const Apsis::Sprite::Thing& load(const char* path);
+      static const Apsis::Sprite::Thing& load(const char* path,
+                                              const Engine::Object& object);
 
       /*
        *  Retrieves an already loaded Thing of the given id.
@@ -85,6 +88,8 @@ namespace Apsis {
       // Keeps track of Things system-wide.
       static std::vector<std::string> _ids;
       static std::vector<Apsis::Sprite::Thing*> _things;
+
+      const Engine::Object& _loader;
 
       // The path to the thing description.
       std::string _path;

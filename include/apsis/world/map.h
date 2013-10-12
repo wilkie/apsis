@@ -81,17 +81,21 @@ namespace Apsis {
       static std::vector<Apsis::World::Map*> _maps;
 
       // Constructor
-      Map(const char* json);
+      Map(const char* json,
+          const Engine::Object& loader);
 
       /*
        *  Constructs a Apsis::World::Map of the given width and height and
        *    drawn using the given Apsis::Sprite::Sheet.
        */
-      Map(unsigned int width,
+      Map(const Engine::Object& loader,
+          unsigned int width,
           unsigned int height,
           float tileWidth,
           float tileHeight,
           const Apsis::Sprite::Sheet& spriteSheet);
+
+      const Engine::Object& _loader;
 
       // JSON parsing
 

@@ -30,6 +30,8 @@ namespace Apsis {
       Interface(const char* path,
                 const Engine::Object& loader);
 
+      const Engine::Object& _loader;
+
       // Keeps track of Interfaces system-wide.
       static std::vector<std::string> _ids;
       static std::vector<Registry::Interface*> _interfaces;

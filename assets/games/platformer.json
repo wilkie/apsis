@@ -11,6 +11,7 @@
     "rules": "assets/rules",
     "widgets": "assets/widgets",
     "interfaces": "assets/interfaces",
+    "programs": "assets/programs",
     "shaders": "assets/shaders"
   },
 

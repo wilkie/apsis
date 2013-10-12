@@ -6,7 +6,8 @@ struct PanelData {
 };
 
 void Apsis::Interface::Panel::init(const Apsis::Interface::Window& window,
-                                   Apsis::World::Object& object) {
+                                   Apsis::World::Object& object,
+                                   const Engine::Object& loader) {
   PanelData* data = new PanelData;
   object.userData(data);
 }

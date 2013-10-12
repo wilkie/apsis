@@ -10,7 +10,8 @@ namespace Apsis {
     class Panel {
     public:
       static void init(const Apsis::Interface::Window& window,
-                       Apsis::World::Object& object);
+                       Apsis::World::Object& object,
+                       const Engine::Object& loader);
 
       static void draw(Apsis::Engine::Graphics& graphics,
                        const Apsis::Interface::Window& window,

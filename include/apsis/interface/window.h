@@ -1,6 +1,8 @@
 #ifndef APSIS_INTERFACE_WINDOW_H
 #define APSIS_INTERFACE_WINDOW_H
 
+#include "apsis/engine/object.h"
+
 #include "apsis/engine/graphics.h"
 
 #include "apsis/geometry/rectangle.h"
@@ -20,7 +22,8 @@ namespace Apsis {
     class Window {
     public:
 
-      Window(float x,
+      Window(const Engine::Object& loader,
+             float x,
              float y,
              float width,
              float height,
@@ -34,6 +37,7 @@ namespace Apsis {
 
       Window(const Registry::Widget& widget,
              const World::Object& object,
+             const Engine::Object& loader,
              float x,
              float y,
              float width,

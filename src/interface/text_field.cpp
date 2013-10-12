@@ -13,7 +13,8 @@ struct TextFieldData {
 };
 
 void Apsis::Interface::TextField::init(const Apsis::Interface::Window& window,
-                                       Apsis::World::Object& object) {
+                                       Apsis::World::Object& object,
+                                       const Engine::Object& loader) {
   static unsigned int font_id = Apsis::Registry::Property::id("font");
   static unsigned int text_id = Apsis::Registry::Property::id("text");
 

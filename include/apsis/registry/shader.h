@@ -71,6 +71,21 @@ namespace Apsis {
        *  Returns the input through the given index.
        */
       const Registry::Shader& input(unsigned int index) const;
+
+      /*
+       *  Returns the number of uniforms.
+       */
+      unsigned int uniformCount() const;
+
+      /*
+       *  Returns the name of the uniform through the given index.
+       */
+      const char* uniformName(unsigned int index) const;
+
+      /*
+       *  Returns the type of the uniform through the given index.
+       */
+      const char* uniformType(unsigned int index) const;
     private:
       // Constructors
       Shader(const char* path,

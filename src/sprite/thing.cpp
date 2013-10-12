@@ -8,8 +8,10 @@
 std::vector<std::string> Apsis::Sprite::Thing::_ids;
 std::vector<Apsis::Sprite::Thing*> Apsis::Sprite::Thing::_things;
 
-Apsis::Sprite::Thing::Thing(const char* path)
-  : _jsonLoaded(false),
+Apsis::Sprite::Thing::Thing(const char* path,
+                            const Engine::Object& loader)
+  : _loader(loader),
+    _jsonLoaded(false),
     _path(path),
     _sheet(Apsis::Sprite::Thing::_loadSpriteSheet()) {
 
@@ -26,7 +28,8 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::get(unsigned int id) {
   return *_things[id];
 }
 
-const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
+const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path,
+                                                       const Engine::Object& loader) {
   std::string str = std::string(path);
 
   std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
@@ -36,7 +39,7 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path) {
   }
 
   printf("Loading thing %s\n", path);
-  _things.push_back(new Apsis::Sprite::Thing(path));
+  _things.push_back(new Apsis::Sprite::Thing(path, loader));
   _ids.push_back(str);
   return *_things[_ids.size() - 1];
 }
@@ -63,7 +66,9 @@ void Apsis::Sprite::Thing::_openJSONFile() {
   _jsonLoaded = true;
 
   if (_value.isMember("inherit")) {
-    const Apsis::Sprite::Thing& inherited = Apsis::Sprite::Thing::load(_value["inherit"].asCString());
+    const char* inherit_name = _value["inherit"].asCString();
+    const Sprite::Thing& inherited = Sprite::Thing::load(inherit_name,
+                                                         _loader);
     _object = inherited._object;
     if (inherited._animations.size() > 0) {
       _animations = inherited._animations;
@@ -87,7 +92,7 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Thing::_loadSpriteSheet() {
   if (_value.isMember("inherit")) {
     return _inherited->sheet();
   }
-  return Apsis::Sprite::Sheet::load(_value["sprites"].asCString());
+  return _loader.loadSheet(_value["sprites"].asCString());
 }
 
 void Apsis::Sprite::Thing::_parseJSONFile() {

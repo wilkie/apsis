@@ -20,10 +20,12 @@
 
 #include <algorithm>
 
+using namespace Apsis;
+
 #define DEBUG_THROW_GL_ERRORS
 
 static void _throwError(const char* function, const char* message) {
-  Apsis::Engine::Log::error("Sprite", "Sheet", function, message);
+  Engine::Log::error("Sprite", "Sheet", function, message);
 }
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -48,10 +50,11 @@ static void _throwGLError(const char* function) {
 }
 #endif
 
-std::vector<std::string> Apsis::Sprite::Sheet::_ids;
-std::vector<Apsis::Sprite::Sheet*> Apsis::Sprite::Sheet::_sheets;
+std::vector<std::string> Sprite::Sheet::_ids;
+std::vector<Sprite::Sheet*> Sprite::Sheet::_sheets;
 
-const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
+const Sprite::Sheet& Sprite::Sheet::load(const char* name,
+                                         const Engine::Object& loader) {
   std::string str = std::string(name);
 
   std::vector<std::string>::iterator it = std::find(_ids.begin(), _ids.end(), str);
@@ -63,21 +66,42 @@ const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::load(const char* name) {
   printf("Loading sprite sheet %s\n", name);
 
   _ids.push_back(str);
-  Apsis::Sprite::Sheet* sheet = new Apsis::Sprite::Sheet(name);
+  Sprite::Sheet* sheet = new Sprite::Sheet(name, loader);
   _sheets.push_back(sheet);
   return *_sheets[_ids.size() - 1];
 }
 
-const Apsis::Sprite::Sheet& Apsis::Sprite::Sheet::loaded(unsigned int index) {
+const Sprite::Sheet& Sprite::Sheet::loaded(unsigned int index) {
   return *_sheets[index];
 }
 
-Apsis::Sprite::Sheet::Sheet(const char* filename)
+Sprite::Sheet::Sheet(const char* filename,
+                     const Engine::Object& loader)
   : _vbo(Primitives::VertexBuffer::Target::Data),
     _ebo(Primitives::VertexBuffer::Target::Elements) {
   _id = _sheets.size();
 
-  _texture = new Apsis::Primitives::Texture(filename);
+  _loadStatSheet(filename);
+
+  char* stat_sheet = new char[strlen(filename)+_graphic_path.size()+1];
+  strncpy(stat_sheet, filename, strlen(filename));
+
+  for (unsigned int i = strlen(filename); i > 0; i--) {
+    if (stat_sheet[i] == '/') {
+      stat_sheet[i] = '\0';
+      break;
+    }
+  }
+
+  std::string texture_path = _graphic_path;
+  _graphic_path = stat_sheet;
+  _graphic_path.append("/");
+  _graphic_path.append(texture_path);
+
+  _texture = new Primitives::Texture(_graphic_path.c_str());
+
+  delete [] stat_sheet;
+
   _width = _texture->width();
   _height = _texture->height();
 
@@ -87,8 +111,6 @@ Apsis::Sprite::Sheet::Sheet(const char* filename)
 #ifdef DEBUG_THROW_GL_ERRORS
   _throwGLError("constructor(glBindTexture)");
 #endif
-
-  _loadStatSheet(filename);
 
   unsigned int sprite_count = this->count();
 
@@ -107,7 +129,7 @@ Apsis::Sprite::Sheet::Sheet(const char* filename)
   for (unsigned int si = 0; si < sprite_count; si++) {
     float coords[4];
     this->textureCoordinates(si, coords);
-    Apsis::Sprite::Sheet::Sprite& sprite = _sprites[si];
+    Sprite::Sheet::_Sprite& sprite = _sprites[si];
 
     _vertices[i * 5 + 0] = -(float)sprite.center_x;
     _vertices[i * 5 + 1] = 0.0f;
@@ -182,39 +204,24 @@ Apsis::Sprite::Sheet::Sheet(const char* filename)
   _vao.bind(_ebo);
 }
 
-unsigned int Apsis::Sprite::Sheet::id() const {
+unsigned int Sprite::Sheet::id() const {
   return _id;
 }
 
-char* Apsis::Sprite::Sheet::_determineStatSheetFilename(const char* filename) {
-  char* stat_sheet = new char[strlen(filename)+3];
-  strncpy(stat_sheet, filename, strlen(filename));
-
-  for (unsigned int i = strlen(filename); i > 0; i--) {
-    if (stat_sheet[i] == '.') {
-      stat_sheet[i] = '\0';
-    }
-  }
-
-  strcat(stat_sheet, ".json");
-
-  return stat_sheet;
-}
-
-void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
-  char* stat_sheet = _determineStatSheetFilename(filename);
-
+void Sprite::Sheet::_loadStatSheet(const char* filename) {
   Json::Reader reader;
   Json::Value value;
 
-  std::ifstream file(stat_sheet);
+  std::ifstream file(filename);
   reader.parse(file, value);
   file.close();
+
+  _graphic_path = value["graphic"].asCString();
 
   // Sprite List
   // TODO: better handling of invalid values
   for (Json::Value::iterator it = value["frames"].begin(); it != value["frames"].end(); it++) {
-    Sprite sprite;
+    _Sprite sprite;
 
     strcpy(sprite.name, (*it)["name"].asCString());
     sprite.x        = (unsigned int)(*it)["x"].asUInt();
@@ -226,16 +233,14 @@ void Apsis::Sprite::Sheet::_loadStatSheet(const char* filename) {
 
     _sprites.push_back(sprite);
   }
-
-  delete [] stat_sheet;
 }
 
-const Apsis::Primitives::Texture& Apsis::Sprite::Sheet::texture() const {
+const Primitives::Texture& Sprite::Sheet::texture() const {
   return *_texture;
 }
 
-void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) const {
-  const Sprite& sprite = _sprites[index];
+void Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4]) const {
+  const _Sprite& sprite = _sprites[index];
 
   float tu = ((float)sprite.x + 0.1f)  / (float)_width;
   float tv = ((float)sprite.y + 0.1f)  / (float)_height;
@@ -258,7 +263,7 @@ void Apsis::Sprite::Sheet::textureCoordinates(unsigned int index, float coords[4
   coords[3] = (float)tv2;
 }
 
-bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4]) const {
+bool Sprite::Sheet::textureCoordinates(const char* name, float coords[4]) const {
   for (unsigned int i = 0; i < _sprites.size(); i++) {
     if (strncmp(name, _sprites[i].name, 64) == 0) {
       textureCoordinates(i, coords);
@@ -268,7 +273,7 @@ bool Apsis::Sprite::Sheet::textureCoordinates(const char* name, float coords[4])
   return false;
 }
 
-int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int last) const {
+int Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int last) const {
   int star_pos = -1;
 
   // Determine where the '*' is in the wildcard
@@ -305,11 +310,11 @@ int Apsis::Sprite::Sheet::enumerateSprites(const char* wildcard, unsigned int la
   return -1;
 }
 
-unsigned int Apsis::Sprite::Sheet::count() const {
+unsigned int Sprite::Sheet::count() const {
   return _sprites.size();
 }
 
-void Apsis::Sprite::Sheet::draw(unsigned int              index,
+void Sprite::Sheet::draw(unsigned int              index,
                                 const Primitives::Matrix& projection,
                                 const World::Camera& camera,
                                 const Primitives::Matrix& model) const {
@@ -322,18 +327,18 @@ void Apsis::Sprite::Sheet::draw(unsigned int              index,
   _vao.drawRange(index * 6, 6);
 }
 
-float Apsis::Sprite::Sheet::width(unsigned int index) const {
+float Sprite::Sheet::width(unsigned int index) const {
   return (float)_sprites[index].width;
 }
 
-float Apsis::Sprite::Sheet::height(unsigned int index) const {
+float Sprite::Sheet::height(unsigned int index) const {
   return (float)_sprites[index].height;
 }
 
-float Apsis::Sprite::Sheet::left(unsigned int index) const {
+float Sprite::Sheet::left(unsigned int index) const {
   return (float)_sprites[index].x;
 }
 
-float Apsis::Sprite::Sheet::top(unsigned int index) const {
+float Sprite::Sheet::top(unsigned int index) const {
   return (float)_sprites[index].y;
 }

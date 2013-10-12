@@ -4,6 +4,8 @@
   "author":  "wilkie",
   "license": "CC0",
 
+  "graphic": "button2.png",
+
   "frames": [
     {
       "name": "topleft",

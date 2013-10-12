@@ -25,7 +25,8 @@ Registry::Interface::load(const char* path,
 }
 
 Registry::Interface::Interface(const char* path,
-                               const Engine::Object& loader) {
+                               const Engine::Object& loader)
+  : _loader(loader) {
   _id = _ids.size();
 
   Json::Reader reader;
@@ -156,6 +157,7 @@ void Registry::Interface::_buildWidgets(Apsis::Interface::Window* parent,
     // Create the window
     Apsis::Interface::Window* window = new Apsis::Interface::Window(widget,
                                                                     object,
+                                                                    _loader,
                                                                     x,
                                                                     y,
                                                                     w,
@@ -183,7 +185,8 @@ void Registry::Interface::_buildWidgets(Apsis::Interface::Window* parent,
 Apsis::Interface::Window* Registry::Interface::instance(float width,
                                                         float height) const {
   Apsis::Interface::Window* ret
-    = new Apsis::Interface::Window(width  / 2.0f,
+    = new Apsis::Interface::Window(_loader,
+                                   width  / 2.0f,
                                    height / 2.0f,
                                    width,
                                    height,

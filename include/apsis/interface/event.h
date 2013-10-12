@@ -2,8 +2,12 @@
 #define APSIS_INTERFACE_EVENT_H
 
 #include "apsis/engine/graphics.h"
+#include "apsis/engine/object.h"
+
 #include "apsis/input/binding.h"
+
 #include "apsis/geometry/rectangle.h"
+
 #include "apsis/world/object.h"
 
 namespace Apsis {
@@ -13,7 +17,8 @@ namespace Apsis {
     namespace Event {
       // Init function
       typedef void(Init)(const Apsis::Interface::Window& window,
-                         Apsis::World::Object& object);
+                         Apsis::World::Object& object,
+                         const Engine::Object& loader);
 
       // Draw function
       typedef void(Draw)(Apsis::Engine::Graphics&        graphics,
@@ -48,7 +53,8 @@ namespace Apsis {
                           Apsis::World::Object&           object);
 
       void defaultInit(const Apsis::Interface::Window& window,
-                       Apsis::World::Object& object);
+                       Apsis::World::Object& object,
+                       const Engine::Object& loader);
 
       void defaultDraw(Apsis::Engine::Graphics&        graphics,
                        const Apsis::Interface::Window& window,

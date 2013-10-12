@@ -117,6 +117,7 @@
     <ClCompile Include="..\..\src\registry\action.cpp" />
     <ClCompile Include="..\..\src\registry\event.cpp" />
     <ClCompile Include="..\..\src\registry\interface.cpp" />
+    <ClCompile Include="..\..\src\registry\program.cpp" />
     <ClCompile Include="..\..\src\registry\property.cpp" />
     <ClCompile Include="..\..\src\registry\rule.cpp" />
     <ClCompile Include="..\..\src\registry\scene.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="..\..\include\apsis\registry\action.h" />
     <ClInclude Include="..\..\include\apsis\registry\event.h" />
     <ClInclude Include="..\..\include\apsis\registry\interface.h" />
+    <ClInclude Include="..\..\include\apsis\registry\program.h" />
     <ClInclude Include="..\..\include\apsis\registry\property.h" />
     <ClInclude Include="..\..\include\apsis\registry\rule.h" />
     <ClInclude Include="..\..\include\apsis\registry\scene.h" />

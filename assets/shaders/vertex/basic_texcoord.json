@@ -1,11 +1,11 @@
 {
   "type": "shader",
   "process": "vertex",
-  "name": "texcoord",
+  "name": "basic_texcoord",
   "inputs": [
   ],
   "uniforms": [
   ],
-  "output": "vec3",
+  "output": "vec2",
   "code": "return texcoord;"
 }

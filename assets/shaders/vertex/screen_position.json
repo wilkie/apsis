@@ -1,7 +1,7 @@
 {
   "type": "shader",
   "process": "vertex",
-  "name": "position",
+  "name": "screen_position",
   "inputs": [
   ],
   "uniforms": [

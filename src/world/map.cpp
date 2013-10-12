@@ -22,13 +22,15 @@ const Apsis::World::Map& Apsis::World::Map::load(const char* json,
                                                  const Apsis::Engine::Object& loader) {
   printf("Loading map %s\n", json);
 
-  Apsis::World::Map* map = new Apsis::World::Map(json);
+  Apsis::World::Map* map = new Apsis::World::Map(json, loader);
   _maps.push_back(map);
   return *map;
 }
 
-Apsis::World::Map::Map(const char* json)
-  : _jsonLoaded(false),
+Apsis::World::Map::Map(const char* json,
+                       const Engine::Object& loader)
+  : _loader(loader),
+    _jsonLoaded(false),
     _path(json),
     _vbo(Primitives::VertexBuffer::Target::Data),
     _ebo(Primitives::VertexBuffer::Target::Elements),
@@ -42,12 +44,14 @@ unsigned int Apsis::World::Map::id() const {
   return _id;
 }
 
-Apsis::World::Map::Map(unsigned int width,
+Apsis::World::Map::Map(const Engine::Object& loader,
+                       unsigned int width,
                        unsigned int height,
                        float tileWidth,
                        float tileHeight,
                        const Apsis::Sprite::Sheet& spriteSheet)
-  : _width(width),
+  : _loader(loader),
+    _width(width),
     _height(height),
     _sheet(spriteSheet),
     _tileWidth(tileWidth),
@@ -248,7 +252,7 @@ void Apsis::World::Map::_openJSONFile() {
 const Apsis::Sprite::Sheet& Apsis::World::Map::_loadSpriteSheet() {
   _openJSONFile();
 
-  return Apsis::Sprite::Sheet::load(_value["sprites"].asCString());
+  return _loader.loadSheet(_value["sprites"].asCString());
 }
 
 void Apsis::World::Map::_parseJSONFile() {

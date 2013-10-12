@@ -18,8 +18,8 @@ namespace Apsis {
        *  Links the given unlinked program.
        */
       Program(unsigned int program,
-              std::vector<VertexShader> vertexShaders,
-              std::vector<FragmentShader> fragmentShaders);
+              std::vector<const VertexShader*> vertexShaders,
+              std::vector<const FragmentShader*> fragmentShaders);
       ~Program();
 
       /*
@@ -29,8 +29,8 @@ namespace Apsis {
 
     private:
       unsigned int _program;
-      std::vector<VertexShader> _vertexShaders;
-      std::vector<FragmentShader> _fragmentShaders;
+      std::vector<const VertexShader*> _vertexShaders;
+      std::vector<const FragmentShader*> _fragmentShaders;
       Sync::ReferenceCounter _counter;
     };
   }

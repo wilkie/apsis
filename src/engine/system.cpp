@@ -47,8 +47,6 @@ Apsis::Engine::System::System(const char* path,
 
   // Parse objects and system data and populate data and caches.
   _parseJSONFile();
-
-  _objects.loadShader("vertex/position").code();
 }
 
 const Apsis::Engine::Input& Apsis::Engine::System::inputEngine() const {

@@ -16,7 +16,8 @@ Engine::Interface& Engine::Interface::basic(float width,
 
 Engine::Interface::Interface(float width,
                              float height)
-  : _mainWindow(width / 2.0f, height / 2.0f, width, height,
+  : _mainWindow(Engine::Object::basic(),
+                width / 2.0f, height / 2.0f, width, height,
                 Apsis::Interface::Event::defaultInit,
                 Apsis::Interface::Event::defaultDraw,
                 Apsis::Interface::Event::defaultInput,

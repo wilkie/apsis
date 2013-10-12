@@ -4,6 +4,8 @@
   "author":  "Kenney",
   "license": "CC0",
 
+  "graphic": "p3_spritesheet.png",
+
   "frames": [
     {
       "name": "p3_duck",

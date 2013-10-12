@@ -2,7 +2,8 @@
 
 using namespace Apsis;
 
-Interface::Window::Window(float x,
+Interface::Window::Window(const Engine::Object& loader,
+                          float x,
                           float y,
                           float width,
                           float height,
@@ -33,11 +34,12 @@ Interface::Window::Window(float x,
     _hovered(false) {
 
   // Call init method
-  _init(*this, _object);
+  _init(*this, _object, loader);
 }
 
 Interface::Window::Window(const Registry::Widget& widget,
                           const World::Object& object,
+                          const Engine::Object& loader,
                           float x,
                           float y,
                           float width,
@@ -63,7 +65,7 @@ Interface::Window::Window(const Registry::Widget& widget,
     _object(object) {
 
   // Call init method
-  _init(*this, _object);
+  _init(*this, _object, loader);
 }
 
 const Apsis::Geometry::Rectangle& Apsis::Interface::Window::position() const {

@@ -35,6 +35,10 @@ static void _throwGLError(const char* function) {
 Apsis::Primitives::UnlinkedProgram::UnlinkedProgram() :
   _linked(false) {
   this->_program = glCreateProgram();
+
+#ifdef DEBUG_THROW_GL_ERRORS
+  _throwGLError("constructor(glCreateProgram)");
+#endif
 }
 
 Apsis::Primitives::UnlinkedProgram::~UnlinkedProgram() {
@@ -49,13 +53,13 @@ Apsis::Primitives::UnlinkedProgram::~UnlinkedProgram() {
   }
 }
 
-void Apsis::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) {
+void Apsis::Primitives::UnlinkedProgram::attach(const VertexShader& vertexShader) {
 #ifdef DEBUG_THROW_GL_ERRORS
       _throwGLError("attach_vs(on stack)");
 #endif
 
   if (_linked) throw "Program already linked. Cannot attach vertex shader.";
-  _vertexShaders.push_back(vertexShader);
+  _vertexShaders.push_back(&vertexShader);
   glAttachShader(this->_program, vertexShader.identifier());
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -63,9 +67,13 @@ void Apsis::Primitives::UnlinkedProgram::attach(VertexShader& vertexShader) {
 #endif
 }
 
-void Apsis::Primitives::UnlinkedProgram::attach(FragmentShader& fragmentShader) {
+void Apsis::Primitives::UnlinkedProgram::attach(const FragmentShader& fragmentShader) {
+#ifdef DEBUG_THROW_GL_ERRORS
+      _throwGLError("attach_fs(on stack)");
+#endif
+
   if (_linked) throw "Program already linked. Cannot attach fragment shader.";
-  _fragmentShaders.push_back(fragmentShader);
+  _fragmentShaders.push_back(&fragmentShader);
   glAttachShader(this->_program, fragmentShader.identifier());
 
 #ifdef DEBUG_THROW_GL_ERRORS
@@ -93,8 +101,13 @@ Apsis::Primitives::Program Apsis::Primitives::UnlinkedProgram::link() {
 #endif
 
   if (status != GL_TRUE) {
-    throw "Cannot link program";
+    // Get errors
+    GLchar buffer[2048];
+    GLsizei buffer_len;
+    glGetProgramInfoLog(this->_program, sizeof(buffer), &buffer_len, buffer);
+    throw buffer;
   }
   _linked = true;
+
   return Program(_program, _vertexShaders, _fragmentShaders);
 }

@@ -12,8 +12,6 @@ using namespace Apsis;
 std::vector<std::string> Registry::Shader::_ids;
 std::vector<Apsis::Registry::Shader*> Registry::Shader::_shaders;
 
-#include <Windows.h>
-
 const Registry::Shader& Registry::Shader::load(const char* path,
                                                const Engine::Object& loader) {
   std::string str = std::string(path);
@@ -26,14 +24,17 @@ const Registry::Shader& Registry::Shader::load(const char* path,
 
   char foo[1024];
   sprintf(foo, "Loading shader %s\n", path);
-  OutputDebugStringA(foo);
+  printf("%s", foo);
+
   _shaders.push_back(new Registry::Shader(path, loader));
   _ids.push_back(str);
   return *_shaders[_ids.size() - 1];
 }
 
 Registry::Shader::Shader(const char* path,
-                         const Engine::Object& loader) {
+                         const Engine::Object& loader)
+  : _vertex_shader(NULL),
+    _fragment_shader(NULL) {
   Json::Reader reader;
   Json::Value  value;
 
@@ -147,8 +148,6 @@ const char* Registry::Shader::output() const {
   return _output.c_str();
 }
 
-#include <Windows.h>
-
 void Registry::Shader::_generateCode() const {
   std::ostringstream os;
 
@@ -161,34 +160,6 @@ void Registry::Shader::_generateCode() const {
     os << std::endl;
   }
   else {
-  }
-
-  const char* in_type = "varying";
-  const char* out_type = "varying";
-  if (_process == Process::Fragment) {
-    in_type = "varying";
-    out_type = "";
-  }
-  else {
-    in_type = "attribute";
-    out_type = "varying";
-  }
-
-  if (_process == Process::Vertex) {
-    os << in_type << " vec3 normal" << std::endl;
-    os << in_type << " vec3 position" << std::endl;
-    os << in_type << " vec2 texcoord" << std::endl;
-    os << std::endl;
-    os << out_type << " vec3 Normal" << std::endl;
-    os << out_type << " vec3 Position" << std::endl;
-    os << out_type << " vec2 Texcoord" << std::endl;
-    os << std::endl;
-  }
-  else {
-    os << in_type << " vec3 Normal" << std::endl;
-    os << in_type << " vec3 Position" << std::endl;
-    os << in_type << " vec2 Texcoord" << std::endl;
-    os << std::endl;
   }
 
   for (unsigned int i = 0; i < _uniform_names.size(); i++) {
@@ -209,6 +180,10 @@ void Registry::Shader::_generateCode() const {
     }
   }
 
+  if (_inputs.size() == 0) {
+    os << "vec3 position, vec3 normal, vec2 texcoord";
+  }
+
   os << ") {" << std::endl;
 
   os << _implementation << std::endl;
@@ -216,8 +191,6 @@ void Registry::Shader::_generateCode() const {
   os << "}" << std::endl;
 
   _code = os.str();
-
-  OutputDebugStringA(_code.c_str());
 }
 
 const Primitives::FragmentShader& Registry::Shader::fragmentShader() const {
@@ -250,4 +223,16 @@ unsigned int Registry::Shader::inputCount() const {
 
 const Registry::Shader& Registry::Shader::input(unsigned int index) const {
   return *_input_shaders[index];
+}
+
+unsigned int Registry::Shader::uniformCount() const {
+  return _uniform_names.size();
+}
+
+const char* Registry::Shader::uniformName(unsigned int index) const {
+  return _uniform_names[index].c_str();
+}
+
+const char* Registry::Shader::uniformType(unsigned int index) const {
+  return _uniform_types[index].c_str();
 }

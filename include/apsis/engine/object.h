@@ -23,6 +23,7 @@ namespace Apsis {
     class Interface;
     class Widget;
     class Shader;
+    class Program;
   }
 
   namespace World {
@@ -31,6 +32,7 @@ namespace Apsis {
 
   namespace Sprite {
     class Thing;
+    class Sheet;
   }
 
   namespace Engine {
@@ -74,6 +76,12 @@ namespace Apsis {
       const Apsis::World::Map& loadMap(const char* name) const;
 
       /*
+       *  Loads or returns the existing Sheet object with the given
+       *  name or path.
+       */
+      const Apsis::Sprite::Sheet& loadSheet(const char* name) const;
+
+      /*
        *  Loads or returns the existing Rule object with the given
        *  name or path.
        */
@@ -102,6 +110,12 @@ namespace Apsis {
        *  name or path.
        */
       const Apsis::Registry::Shader& loadShader(const char* name) const;
+
+      /*
+       *  Loads or returns the existing Program object with the given
+       *  name or path.
+       */
+      const Apsis::Registry::Program& loadProgram(const char* name) const;
 
       /*
        *  Loads bindings.
@@ -135,25 +149,12 @@ namespace Apsis {
       std::string _interface_path;
       std::string _widget_path;
       std::string _shader_path;
+      std::string _program_path;
 
       // Keeps track of Object engines system-wide.
       static std::vector<Apsis::Engine::Object*> _object_engines;
     };
   }
 }
-
-// We have to include these afterward
-#include "apsis/registry/scene.h"
-#include "apsis/registry/action.h"
-#include "apsis/registry/rule.h"
-#include "apsis/registry/property.h"
-#include "apsis/registry/state.h"
-#include "apsis/registry/interface.h"
-#include "apsis/registry/widget.h"
-#include "apsis/registry/shader.h"
-
-#include "apsis/sprite/thing.h"
-
-#include "apsis/world/map.h"
 
 #endif
