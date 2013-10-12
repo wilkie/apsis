@@ -6,8 +6,6 @@
 
 #include "apsis/engine/log.h"
 
-#define DEBUG_THROW_GL_ERRORS
-
 static void _throwError(const char* function, const char* message) {
   Apsis::Engine::Log::error("Primitive", "FragmentShader", function, message);
 }
@@ -85,7 +83,7 @@ Apsis::Primitive::FragmentShader::~FragmentShader() {
 }
 
 Apsis::Primitive::FragmentShader Apsis::Primitive::FragmentShader::fromFile(const char* path) {
-  printf("Loading Fragment Shader %s\n", path);
+  Engine::Log::printf("Loading Fragment Shader %s\n", path);
   FILE* f = fopen(path, "rb");
   if (f == NULL) {
     throw "Shader not found.";

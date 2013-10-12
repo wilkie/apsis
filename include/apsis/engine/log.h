@@ -10,6 +10,7 @@ namespace Apsis {
                         const char* src_function,
                         const char* message);
       static void warning();
+      static void printf(const char* fmt, ...);
 
     private:
     };

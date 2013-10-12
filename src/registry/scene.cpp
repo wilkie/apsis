@@ -1,5 +1,7 @@
 #include "apsis/registry/scene.h"
 
+#include "apsis/engine/log.h"
+
 #include <algorithm>
 #include <fstream>
 
@@ -16,7 +18,7 @@ const Apsis::Registry::Scene& Apsis::Registry::Scene::load(const char* path,
     return *_scenes[std::distance(_ids.begin(), it)];
   }
 
-  printf("Loading scene %s\n", path);
+  Engine::Log::printf("Loading scene %s\n", path);
   _scenes.push_back(new Apsis::Registry::Scene(path, loader));
   _ids.push_back(str);
   return *_scenes[_ids.size() - 1];

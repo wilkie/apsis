@@ -4,7 +4,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef __linux
+#ifdef _WIN32
+#include <Windows.h>
+
+static void _backtrace() {
+}
+#elif defined(__linux)
   #include <execinfo.h>
   #include <dlfcn.h>
   #include <cxxabi.h>
@@ -54,10 +59,6 @@ static void _backtrace(int skip = 1) {
     printf("[truncated]\n");
   }
 }
-
-#else
-static void _backtrace() {
-}
 #endif
 
 void Apsis::Engine::Log::error(const char* src_namespace,
@@ -65,14 +66,36 @@ void Apsis::Engine::Log::error(const char* src_namespace,
                                const char* src_function,
                                const char* message) {
   static char foo[1024];
-  sprintf(foo, "%s::%s#%s Error: %s", src_namespace,
-                                      src_class,
-                                      src_function,
-                                      message);
+
+#ifdef _WIN32
+  _snprintf(
+#else
+  snprintf(
+#endif
+    foo,  1024, "%s::%s#%s Error: %s", src_namespace,
+                                                 src_class,
+                                                 src_function,
+                                                 message);
 
   printf("%s\n", foo);
 
   _backtrace();
 
   throw foo;
+}
+
+void Apsis::Engine::Log::printf(const char* fmt, ...) {
+#ifdef __linux
+  va_list args;
+  va_start(args, fmt);
+  
+  vprintf(fmt, args);
+#elif defined(_WIN32)
+  va_list args;
+  va_start(args, fmt);
+
+  char str[1024];
+  vsnprintf(str, 1024, fmt, args);
+  OutputDebugStringA(str);
+#endif
 }

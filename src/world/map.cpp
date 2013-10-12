@@ -1,5 +1,7 @@
 #include "apsis/world/map.h"
 
+#include "apsis/engine/log.h"
+
 #include "apsis/registry/program.h"
 
 #include "apsis/primitive/fragment_shader.h"
@@ -19,7 +21,7 @@ std::vector<Apsis::World::Map*> Apsis::World::Map::_maps;
 
 const Apsis::World::Map& Apsis::World::Map::load(const char* json,
                                                  const Apsis::Engine::Object& loader) {
-  printf("Loading map %s\n", json);
+  Engine::Log::printf("Loading map %s\n", json);
 
   Apsis::World::Map* map = new Apsis::World::Map(json, loader);
   _maps.push_back(map);

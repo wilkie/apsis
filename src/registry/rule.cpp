@@ -1,7 +1,6 @@
 #include "apsis/registry/rule.h"
 
-#include <fstream>
-#include <algorithm>
+#include "apsis/engine/log.h"
 
 #include "apsis/rules/act_function.h"
 #include "apsis/rules/update_function.h"
@@ -20,6 +19,9 @@
 #include "apsis/rules/up.h"
 #include "apsis/rules/down.h"
 #include "apsis/rules/fall.h"
+
+#include <fstream>
+#include <algorithm>
 
 std::vector<std::string> Apsis::Registry::Rule::_ids;
 std::vector<Apsis::Registry::Rule*> Apsis::Registry::Rule::_all_rules;
@@ -95,7 +97,7 @@ const Apsis::Registry::Rule& Apsis::Registry::Rule::load(const char* path) {
     return *_all_rules[std::distance(_ids.begin(), it)];
   }
 
-  printf("Loading rule %s\n", path);
+  Engine::Log::printf("Loading rule %s\n", path);
   _all_rules.push_back(new Apsis::Registry::Rule(path));
   _ids.push_back(str);
   return *_all_rules[_ids.size() - 1];

@@ -4,8 +4,6 @@
 
 #include "apsis/engine/log.h"
 
-#define DEBUG_THROW_GL_ERRORS
-
 static void _throwError(const char* function, const char* message) {
   Apsis::Engine::Log::error("Primitive", "UnlinkedProgram", function, message);
 }

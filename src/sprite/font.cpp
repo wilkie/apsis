@@ -1,5 +1,7 @@
 #include "apsis/sprite/font.h"
 
+#include "apsis/engine/log.h"
+
 #include "apsis/primitive/fragment_shader.h"
 #include "apsis/primitive/vertex_shader.h"
 
@@ -87,7 +89,7 @@ const Apsis::Sprite::Font& Apsis::Sprite::Font::load(const char* family,
     return *_fonts[std::distance(_ids.begin(), it)];
   }
 
-  printf("Loading font %s\n", family);
+  Engine::Log::printf("Loading font %s\n", family);
 
   _fonts.push_back(new Apsis::Sprite::Font(family, loader));
   _ids.push_back(str);

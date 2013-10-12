@@ -45,7 +45,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG_THROW_GL_ERRORS;_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)\%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>

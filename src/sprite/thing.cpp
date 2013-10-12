@@ -1,5 +1,7 @@
 #include "apsis/sprite/thing.h"
 
+#include "apsis/engine/log.h"
+
 #include "apsis/registry/event.h"
 
 #include <algorithm>
@@ -38,7 +40,7 @@ const Apsis::Sprite::Thing& Apsis::Sprite::Thing::load(const char* path,
     return *_things[std::distance(_ids.begin(), it)];
   }
 
-  printf("Loading thing %s\n", path);
+  Engine::Log::printf("Loading thing %s\n", path);
   _things.push_back(new Apsis::Sprite::Thing(path, loader));
   _ids.push_back(str);
   return *_things[_ids.size() - 1];

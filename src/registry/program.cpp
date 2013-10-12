@@ -1,5 +1,7 @@
 #include "apsis/registry/program.h"
 
+#include "apsis/engine/log.h"
+
 #include "apsis/primitive/unlinked_program.h"
 
 #include <json/json.h>
@@ -14,8 +16,6 @@ using namespace Apsis;
 std::vector<std::string> Registry::Program::_ids;
 std::vector<Apsis::Registry::Program*> Registry::Program::_programs;
 
-#include <Windows.h>
-
 const Registry::Program& Registry::Program::load(const char* path,
                                                  const Engine::Object& loader) {
   std::string str = std::string(path);
@@ -26,9 +26,8 @@ const Registry::Program& Registry::Program::load(const char* path,
     return *_programs[std::distance(_ids.begin(), it)];
   }
 
-  char foo[1024];
-  sprintf(foo, "Loading program %s\n", path);
-  OutputDebugStringA(foo);
+  Engine::Log::printf("Loading program: %s\n", path);
+
   _programs.push_back(new Registry::Program(path, loader));
   _ids.push_back(str);
   return *_programs[_ids.size() - 1];

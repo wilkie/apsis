@@ -6,8 +6,6 @@
 
 using namespace Apsis;
 
-#define DEBUG_THROW_GL_ERRORS
-
 unsigned int Primitive::VertexArray::_current_vao = 0xffffffff;
 
 static void _throwError(const char* function, const char* message) {

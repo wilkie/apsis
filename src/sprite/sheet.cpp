@@ -18,8 +18,6 @@
 
 using namespace Apsis;
 
-#define DEBUG_THROW_GL_ERRORS
-
 static void _throwError(const char* function, const char* message) {
   Engine::Log::error("Sprite", "Sheet", function, message);
 }
@@ -59,7 +57,7 @@ const Sprite::Sheet& Sprite::Sheet::load(const char* name,
     return *_sheets[std::distance(_ids.begin(), it)];
   }
 
-  printf("Loading sprite sheet %s\n", name);
+  Engine::Log::printf("Loading sprite sheet %s\n", name);
 
   _ids.push_back(str);
   Sprite::Sheet* sheet = new Sprite::Sheet(name, loader);

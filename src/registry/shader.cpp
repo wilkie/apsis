@@ -1,5 +1,7 @@
 #include "apsis/registry/shader.h"
 
+#include "apsis/engine/log.h"
+
 #include <json/json.h>
 
 #include <algorithm>
@@ -22,9 +24,7 @@ const Registry::Shader& Registry::Shader::load(const char* path,
     return *_shaders[std::distance(_ids.begin(), it)];
   }
 
-  char foo[1024];
-  sprintf(foo, "Loading shader %s\n", path);
-  printf("%s", foo);
+  Engine::Log::printf("Loading shader %s\n", path);
 
   _shaders.push_back(new Registry::Shader(path, loader));
   _ids.push_back(str);
