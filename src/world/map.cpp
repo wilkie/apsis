@@ -1,16 +1,15 @@
 #include "apsis/world/map.h"
 
-#include <stdlib.h>
-#include <string.h>
-
-#include <algorithm>
-#include <fstream>
+#include "apsis/registry/program.h"
 
 #include "apsis/primitives/fragment_shader.h"
 #include "apsis/primitives/vertex_shader.h"
 
 #include "apsis/primitives/unlinked_program.h"
 #include "apsis/primitives/program.h"
+
+#include <stdlib.h>
+#include <string.h>
 
 #include <algorithm>
 #include <fstream>
@@ -171,26 +170,19 @@ void Apsis::World::Map::_generateVAO() {
   _vbo.transfer(_vertices, 5 * vertices_size);
   _ebo.transfer(_elements, elements_size);
 
-  Primitives::VertexShader   vs = Primitives::VertexShader::fromFile("assets/shaders/vertex/position.glsl");
-  Primitives::FragmentShader fs = Primitives::FragmentShader::fromFile("assets/shaders/fragment/flat.glsl");
+  const Registry::Program& program = _loader.loadProgram("basic");
 
-  Primitives::UnlinkedProgram unlinked;
-  unlinked.attach(vs);
-  unlinked.attach(fs);
-  unlinked.defineFragmentOutput("outColor");
-  Primitives::Program program = unlinked.link();
+  _vao.useProgram(program.program());
+  _vbo.defineInput("position", program.program(), 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
+  _vbo.defineInput("texcoord", program.program(), 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
 
-  _vao.useProgram(program);
-  _vbo.defineInput("position", program, 3, Primitives::VertexBuffer::Type::Float, false, 5, 0);
-  _vbo.defineInput("texcoord", program, 2, Primitives::VertexBuffer::Type::Float, false, 5, 3);
+  _vao.defineUniform("model", program.program());
+  _vao.defineUniform("view",  program.program());
+  _vao.defineUniform("projection",  program.program());
 
-  _vao.defineUniform("model", program);
-  _vao.defineUniform("view",  program);
-  _vao.defineUniform("proj",  program);
-
-  _vao.defineUniform("tex", program);
+  _vao.defineUniform("texture", program.program());
   _vao.bindTexture(0, _sheet.texture());
-  _vao.uploadUniform("tex", 0);
+  _vao.uploadUniform("texture", 0);
 
   _vao.bind(_vbo);
   _vao.bind(_ebo);
